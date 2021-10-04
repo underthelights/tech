@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache">
+
+    <!-- Primary Meta Tags -->
+    <title>3.1. Stacks</title>
+    <meta name="title" content="3.1. Stacks">
+    <meta name="description" content="Stack is a specialized type of an ordered list." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/data-structure/3.stack--queue/3.1.-stacks/">
+    <meta property="og:title" content="3.1. Stacks">
+    <meta property="og:description" content="Stack is a specialized type of an ordered list.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/data-structure/3.stack--queue/3.1.-stacks/">
+    <meta property="twitter:title" content="3.1. Stacks">
+    <meta property="twitter:description" content="Stack is a specialized type of an ordered list.">
+    
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="/tech/favicon.ico" rel="icon" />
+    <link href="/tech/resources/css/retype.css?v=1.10.686650090674" rel="stylesheet" data-turbo-track="reload" />
+
+    <script type="text/javascript" src="/tech/resources/js/config.js?v=1.10.686650090674" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/tech/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
+    <script id="prism-js" type="text/javascript" src="/tech/resources/js/prism.js?v=1.10.686650090674" defer></script>
+</head>
+    <body>
+        <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+    <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+
+    <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+    <div class="container relative flex items-center justify-between flex-grow pr-6 md:justify-start">
+        <!-- Mobile menu button skeleton -->
+        <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center flex-shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+        <div v-cloak id="docs-sidebar-toggle"></div>
+
+        <!-- Logo -->
+        <div class="flex items-center justify-between h-full py-2 md:w-75">
+            <div class="flex items-center px-2 md:px-6">
+                <a id="docs-site-logo" href="/tech/" class="flex items-center leading-snug text-2xl">
+                    <span class="w-10 mr-2 flex-grow-0 flex-shrink-0 overflow-hidden">
+                        <img class="max-h-10 dark:hidden md:inline-block" src="/tech/static/retype-logo.svg">
+                        <img class="max-h-10 hidden dark:inline-block" src="/tech/static/retype-logo-dark.svg">
+                    </span>
+                    <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                </a>
+            </div>
+
+            <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+        </div>
+
+        <div class="flex justify-between md:flex-grow">
+            <!-- Top Nav -->
+            <nav class="hidden md:flex">
+    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="/tech/">Home</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://github.com/underthelights/">GitHub</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://underthelights.github.io">GitBlog</a>
+        </li>
+    </ul>
+</nav>
+
+            <!-- Header Right Skeleton -->
+            <div v-cloak class="flex justify-end flex-grow skeleton">
+
+                <!-- Search input mock -->
+                <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                    <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                    </div>
+
+                    <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                    style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search docs" />
+                </div>
+
+                <!-- Mobile search button mock -->
+                <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                </div>
+
+                <!-- Dark mode switch placehokder -->
+                <div class="w-10 h-10 lg:ml-2"></div>
+
+                <!-- History button mock -->
+                <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                </div>
+            </div>
+
+            <div v-cloak class="flex items-center justify-end flex-grow">
+                <div id="docs-mobile-search-button"></div>
+                <doc-search-desktop></doc-search-desktop>
+
+                <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                <doc-history></doc-history>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <div class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+<div v-cloak class="fixed flex flex-col flex-shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+
+    <!-- Render this div, if config.showSidebarFilter is `true` -->
+    <div class="flex items-center h-16 px-6">
+        <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+    </div>
+
+    <div class="pl-6 mb-4 mt-1">
+        <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+    </div>
+
+    <div class="flex-shrink-0 mt-auto bg-transparent dark:border-dark-650">
+        <a
+    class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in"
+    target="_blank"
+    href="https://retype.com/"
+    rel="noopener"
+>
+    <span class="text-xs whitespace-nowrap">Powered by</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+</a>
+
+    </div>
+</div>
+
+<!-- Sidebar component -->
+<doc-sidebar v-cloak>
+    <template #sidebar-footer>
+        <div
+            class="flex-shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650"
+        >
+
+            <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                <nav>
+                    <ul class="flex flex-wrap justify-center items-center">
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="/README.md">Home</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <a
+    class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in"
+    target="_blank"
+    href="https://retype.com/"
+    rel="noopener"
+>
+    <span class="text-xs whitespace-nowrap">Powered by</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+</a>
+
+        </div>
+    </template>
+</doc-sidebar>
+
+
+        <div class="flex-grow min-w-0 dark:bg-dark-850">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+            <div class="flex">
+    <div class="flex-grow min-w-0 px-6 md:px-16">
+        <main class="relative pt-6 pb-16">
+            <div class="docs-markdown" id="docs-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="docs-sidebar-right-toggle"></div>
+               
+                <!-- Page content  -->
+<doc-anchor-target id="31-stacks" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#31-stacks">#</doc-anchor-trigger>
+        <span>3.1. Stacks</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="stacks-chapter-31">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#stacks-chapter-31">#</doc-anchor-trigger>
+        <span>Stacks (Chapter 3.1)</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="definition-of-stack">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#definition-of-stack">#</doc-anchor-trigger>
+        <span>Definition of Stack</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Stack is a specialized type of an ordered list.</li>
+<li>One end is called top.</li>
+<li>The other end is called bottom.</li>
+<li>Additions to and removals from the top end only.</li>
+</ul>
+<img width="225" alt="image-20211003151005422" src="https://user-images.githubusercontent.com/46957634/135750339-7a5715b4-f4a0-4cd5-ac32-da04182a0ffd.png">
+<doc-anchor-target id="analogy">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#analogy">#</doc-anchor-trigger>
+        <span>Analogy</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>A stack of cups
+<ul>
+<li>We can only put (add) a cup to the top of the stack</li>
+<li>We can only remove the cup on the top of the stack</li>
+<li>This type of behavior is called Last-In-First-Out (LIFO)
+<ul>
+<li>The last cup inserted to the stack is removed first.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="366" alt="image-20211003151138083" src="https://user-images.githubusercontent.com/46957634/135750389-5998d677-5b17-4a22-918f-50bfe8c7aa63.png">
+<doc-anchor-target id="stack-lifo-behavior">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#stack-lifo-behavior">#</doc-anchor-trigger>
+        <span>Stack: LIFO behavior</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Inserting to the stack is called &quot;push&quot;.</li>
+<li>Removing from the stack is called &quot;pop&quot;.</li>
+</ul>
+<img width="366" alt="image-20211003151151863" src="https://user-images.githubusercontent.com/46957634/135750409-243d8008-052e-4f35-982f-86bd94f11421.png">
+<doc-anchor-target id="stack-example-usage">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#stack-example-usage">#</doc-anchor-trigger>
+        <span>Stack: Example Usage</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Function call stack:
+<ul>
+<li>when a function is called in a program, the function data is inserted into the call stack. When the function returns, the function data is removed from the stack.</li>
+</ul>
+</li>
+</ul>
+<img width="381" alt="image-20211003151218932" src="https://user-images.githubusercontent.com/46957634/135750418-9c1457e7-2d47-484c-a09e-2b073f3b47fd.png">
+<doc-anchor-target id="stack-abstract-data-type">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#stack-abstract-data-type">#</doc-anchor-trigger>
+        <span>Stack: Abstract Data Type</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">pseudocode</div>
+<pre class="language-none"><code v-pre class="language-none">ADT Stack is
+ objects : a finite ordered list with zero or more elements.
+ 
+ functions : for all stack ∈ Stack, item ∈ element, maxStackSize ∈ positive integer
+
+Stack CreateS(maxStackSize) ::=
+ create an empty stack whose maximum size is maxStackSize
+
+Boolean IsFull(stack, maxStackSize) ::=
+ If (number of elements in stack==maxStackSize) return TRUE else return FALSE
+
+Stack Push(stack, item) ::=
+ if (IsFull(stack)) stackFull
+
+else insert item into top of stack and return Boolean IsEmpty(stack) ::=
+
+if (stack==Create(maxStackSize)) return TRUE
+
+else return FALSE Element Pop(stack) ::=
+
+if (IsEmpty(stack)) return
+ else remove and return the item on the top of the stack.</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="ordered-lists">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ordered-lists">#</doc-anchor-trigger>
+        <span>Ordered Lists</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>One of the simplest abstract data types.</p>
+</li>
+<li><p>Object: list of items (of the same type) that have a certain order</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">(item1, item2, item3, ..., itemn)</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Functions</p>
+<ul>
+<li>Finding the length, reading an item from the list, retrieving an item from the list, replacing an item in the list, inserting a new item to the list, deleting an item from the list, etc.</li>
+</ul>
+</li>
+<li><p>Chronologically ordered list</p>
+<ul>
+<li><p>In a chronologically ordered list, elements are ordered according to time.</p>
+</li>
+<li><p>Examples: round robin, stack, queue</p>
+</li>
+<li><p>Stack: elements are in reverse chronological order</p>
+<ul>
+<li>The first element deleted is the last element (top) in the stack</li>
+<li>The last element deleted is the first element (bottom) in the stack</li>
+</ul>
+</li>
+<li><p>Stack is a special type of an ordered list with restricted operations.</p>
+<ul>
+<li>Can only access the item at the top.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="implementation-of-a-stack">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementation-of-a-stack">#</doc-anchor-trigger>
+        <span>Implementation of a stack</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>We can implement a stack using a one-dimensional array.</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#define MAX_STACK_SIZE 100 /* maximum stack size */
+typedef struct {
+  int key;
+  /* other fields if necessary */
+} element;
+element stack[MAX_STACK_SIZE];
+int top = -1; /* if top is -1, it means the stack is empty */</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="implementing-push-and-pop-ex018">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-push-and-pop-ex018">#</doc-anchor-trigger>
+        <span>Implementing push and pop [ex018]</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>push: insert an element to the stack</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void push(element item) {
+  /* add an item to the global stack */
+  if(top &gt;= MAX_STACK_SIZE-1)
+    stackFull(); /* error handler */
+  stack[++top] = item;
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>pop: delete and return an element from the stack</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">element pop() {
+  /* return the top element from the stack */
+  if(top == -1)
+    return stackEmpty(); /* error handler */
+  return stack[top--];
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="example-tower-of-hanoi">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-tower-of-hanoi">#</doc-anchor-trigger>
+        <span>Example: Tower of Hanoi</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>64 gold disks to be moved from tower A to tower C</li>
+<li>Each tower operates as a stack</li>
+<li>Cannot place a bigger disk on top of a smaller one</li>
+</ul>
+<img width="373" alt="image-20211003151432027" src="https://user-images.githubusercontent.com/46957634/135750440-2292a8a0-5bea-4ec9-98bf-7219ac80a584.png">
+<ul>
+<li>Simple case: let us assume we only have 3 disks to move from A to C.</li>
+</ul>
+<img width="373" alt="image-20211003151543035" src="https://user-images.githubusercontent.com/46957634/135750429-229f9d88-259e-42a5-b72b-74d44f112dda.png">
+<ul>
+<li>Step 1: move disk 3 to C.</li>
+</ul>
+<img width="373" alt="image-20211003151549893" src="https://user-images.githubusercontent.com/46957634/135750445-36e4045c-4cfb-4153-80ac-c7c77350c3a1.png">
+<ul>
+<li>Step 2: move disk 2 to B.</li>
+</ul>
+<img width="373" alt="image-20211003151556363" src="https://user-images.githubusercontent.com/46957634/135750454-b3b23088-de4a-4eda-95a5-885ce232182c.png">
+<ul>
+<li>Step 3: move disk 3 to B.</li>
+</ul>
+<img width="373" alt="image-20211003151604814" src="https://user-images.githubusercontent.com/46957634/135750463-5d0ba02d-2bba-4f10-baf3-d328df52daf6.png">
+<ul>
+<li>Step 4: move disk 1 to C.</li>
+</ul>
+<img width="373" alt="image-20211003151610447" src="https://user-images.githubusercontent.com/46957634/135750468-d8032a21-2f6e-4f99-8c62-954154bc52b1.png">
+<ul>
+<li>Step 5: move disk 3 to A.</li>
+</ul>
+<img width="373" alt="image-20211003151618523" src="https://user-images.githubusercontent.com/46957634/135750471-2dfeffb9-7fc3-4781-808b-86484a6afea1.png">
+<ul>
+<li>Step 6: move disk 2 to C.</li>
+</ul>
+<img width="373" alt="image-20211003151624739" src="https://user-images.githubusercontent.com/46957634/135750478-f54f7c9a-0034-4b0c-bb21-eb675116d439.png">
+<ul>
+<li>Step 7: move disk 3 to C. Done. Total 7 disk moves required.</li>
+</ul>
+<img width="373" alt="image-20211003151635900" src="https://user-images.githubusercontent.com/46957634/135750488-b65f807d-9955-49dc-a047-e47694ce3e24.png">
+<ul>
+<li>General case: moving n disks from A to C (using B).</li>
+</ul>
+<img width="373" alt="image-20211003151643592" src="https://user-images.githubusercontent.com/46957634/135750494-55362405-95f1-44ce-a6a0-531cb51e5593.png">
+<ul>
+<li>First, move the top n-1 disks from A to B (using C).</li>
+</ul>
+<img width="373" alt="image-20211003151650239" src="https://user-images.githubusercontent.com/46957634/135750500-6b8502a6-bd88-47eb-8d10-48dd0d5c6549.png">
+<ul>
+<li>Then, move disk 1 to C.</li>
+</ul>
+<img width="373" alt="image-20211003151705173" src="https://user-images.githubusercontent.com/46957634/135750501-17c3f71b-1648-49f8-8a4a-4203c04dbb54.png">
+<ul>
+<li>Then, move the top n-1 disks to C. Done.</li>
+</ul>
+<img width="373" alt="image-20211003151719289" src="https://user-images.githubusercontent.com/46957634/135750516-3240ded0-9f65-461b-84f1-40662c4bf0cb.png">
+<ul>
+<li><p>A recursive solution: Moving n disks from A to C</p>
+<ul>
+<li>Move top n-1 disks to B</li>
+<li>Move disk 1(thebiggest disk) to C</li>
+<li>Move top n-1 disks to C</li>
+</ul>
+</li>
+<li><p>Using the recursive solution, we are converting the problem with input size n to a problem with input size n-1.</p>
+</li>
+<li><p>What is the number of moves required to move n disks to C?</p>
+<ul>
+<li>Let us denote T(n) to be the number of moves required to move n disks.</li>
+</ul>
+</li>
+<li><p>Steps</p>
+<ul>
+<li>Move top n-1 disks to B → T(n-1)</li>
+<li>Move disk 1 to C→1</li>
+<li>Move top n-1disks to C→T(n-1)</li>
+</ul>
+</li>
+<li><p>T(n)=2xT(n-1)+1</p>
+</li>
+<li><p>T(n)=2n-1</p>
+</li>
+<li><p>How many times do we need to move disks to move 64 disks from one tower to another?</p>
+<ul>
+<li>T(64) = 264 - 1 = 1.8 * 1019 (approximately)</li>
+</ul>
+</li>
+<li><p>If a computer performs 109 moves/second, it would take about 570 years to complete this task.</p>
+</li>
+<li><p>If a monk moves 1 disk per minute, it will take him about 3.4 * 1013 years.</p>
+</li>
+</ul>
+<doc-anchor-target id="example-rat-in-a-maze">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-rat-in-a-maze">#</doc-anchor-trigger>
+        <span>Example: Rat in a Maze</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>A rat enters a maze and needs to find its way to the exit.</p>
+<ul>
+<li><p>The rat cannot step on the blue blocks.</p>
+</li>
+<li><p>The rat can move in four directions: up, down, left, right</p>
+</li>
+</ul>
+</li>
+<li><p>How can we program so that the rat will eventually find the exit if there exists a path from entrance to exit?</p>
+</li>
+<li><p>We can program the rat so that it has a rule for movement.</p>
+<ul>
+<li><p>The move order is right, down, left, up</p>
+<ul>
+<li>If the rat can move right, it will. If not, it will try moving down, left, and then up.</li>
+</ul>
+</li>
+<li><p>If the rat has nowhere to move, it will backtrack its path until it can move again.</p>
+<ul>
+<li>The rat should remember the blocks it went in the past to avoid revisiting.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img width="259" alt="image-20211003151917373" src="https://user-images.githubusercontent.com/46957634/135750525-9fc07c52-93d1-4182-8291-96c992ff436c.png">
+<ul>
+<li><p>Example run: the rat will move right as long as it can.</p>
+<img width="263" alt="image-20211003152009233" src="https://user-images.githubusercontent.com/46957634/135750527-9b809148-1b94-4fdb-ae77-6a7beec5f3ee.png">
+</li>
+<li><p>Since the rat can move nowhere from there, it will backtrack until it can move again.</p>
+</li>
+</ul>
+<img width="263" alt="image-20211003152015064" src="https://user-images.githubusercontent.com/46957634/135750530-eb9b0ab2-2f6b-40dc-ba63-da18b725dddc.png">
+<ul>
+<li>The rat moves down.</li>
+</ul>
+<img width="263" alt="image-20211003152022903" src="https://user-images.githubusercontent.com/46957634/135750531-a454f999-2a62-4a4e-833d-0b9a3da04553.png">
+<ul>
+<li>The rat moves left.</li>
+</ul>
+<img width="263" alt="image-20211003152030020" src="https://user-images.githubusercontent.com/46957634/135750534-c04576bf-bfd6-4fe8-b5c6-a4be7ef09cc5.png">
+<ul>
+<li>The rat moves down.</li>
+</ul>
+<img width="263" alt="image-20211003152036576" src="https://user-images.githubusercontent.com/46957634/135750535-922903cb-00d1-475e-b8b6-e1b2b27c47f3.png">
+<ul>
+<li>The rat backtracks until it can move to a new block.</li>
+</ul>
+<img width="263" alt="image-20211003152042749" src="https://user-images.githubusercontent.com/46957634/135750537-a52b15e6-717f-4f98-91bb-1a97ca9d5a43.png">
+<ul>
+<li>The rat backtracks until it can move to a new block.</li>
+</ul>
+<img width="263" alt="image-20211003152050590" src="https://user-images.githubusercontent.com/46957634/135750538-28386a50-9e38-44b7-b5b0-9789f56a4e46.png">
+<ul>
+<li>The rat moves according to the order of movement and backtracks whenever it bumps into a dead end.</li>
+</ul>
+<img width="423" alt="image-20211003152103984" src="https://user-images.githubusercontent.com/46957634/135750579-7c7e054f-70c4-425f-92e8-b5025baebd84.png">
+<ul>
+<li>The rat moves according to the order of movement and backtracks whenever it bumps into a dead end.</li>
+</ul>
+<img width="423" alt="image-20211003152116133" src="https://user-images.githubusercontent.com/46957634/135750582-440e97db-eafd-4fff-aed1-6ae810347c9d.png">
+<ul>
+<li>The rat moves according to the order of movement and backtracks whenever it bumps into a dead end.</li>
+</ul>
+<img width="423" alt="image-20211003152126420" src="https://user-images.githubusercontent.com/46957634/135750584-17017acb-dff5-4a20-a504-681ccec8daf5.png">
+<doc-anchor-target id="programming---representation-of-a-maze">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#programming---representation-of-a-maze">#</doc-anchor-trigger>
+        <span>Programming - Representation of a maze</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Two-dimensional array in which 0&#x27;s represent the open paths and 1&#x27;s the barriers.</p>
+</li>
+<li><p>To avoid checking for the border conditions we can surround the maze by a border of 1&#x27;s. Then, an m x p maze will require an (m+2) x (p+2) array.</p>
+</li>
+<li><p>The entrance is at position[1][1] and the exit at [m][p]</p>
+</li>
+</ul>
+<img width="423" alt="image-20211003152153718" src="https://user-images.githubusercontent.com/46957634/135750606-20cf3c22-359f-4cd1-9c58-e5c2a82f63fd.png">
+<ul>
+<li><p>In the previous example, the rat could move in four directions.</p>
+</li>
+<li><p>This time we will let the rat move in eight directions</p>
+<ul>
+<li>N,NE,E,SE,S,SW,W,NW</li>
+</ul>
+<img width="367" alt="image-20211003152214646" src="https://user-images.githubusercontent.com/46957634/135750607-4694e449-6604-48e1-941b-e812a4942838.png">
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">typedef struct {
+  short int vert;
+  short int horiz;
+} offsets;
+offsets move[8]; /* array of moves for each direction */</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Table of moves</li>
+</ul>
+<img width="214" alt="image-20211003152233113" src="https://user-images.githubusercontent.com/46957634/135750609-9b82c8b2-6bbb-49ae-a452-b036697562e5.png">
+<ul>
+<li><p>If we are at position maze[row][col], we can find the position after next move, maze[nextRow][nextCol], by setting</p>
+<ul>
+<li>nextRow = row + move[dir].vert</li>
+<li>nextCol = col + move[dir].horiz</li>
+</ul>
+</li>
+<li><p>To record the maze positions already visited, we can maintain a second two- dimensional array.</p>
+</li>
+<li><p>A stack is used to store the positions on the path from the entrance to the current position.</p>
+</li>
+</ul>
+<doc-anchor-target id="a-pseudocode-for-the-maze-program">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#a-pseudocode-for-the-maze-program">#</doc-anchor-trigger>
+        <span>A pseudocode for the maze program</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">pseudocode</div>
+<pre class="language-none"><code v-pre class="language-none">initialize a stack to the maze's entrance coordinates and direction to north; 
+
+while (stack is not empty) {
+	/* move to position at the top of stack */
+	&lt;row,col,dir&gt; = delete from top of stack;
+  while (there are more moves from current position) {
+  	&lt;nextRow, nextCol&gt; = coordinates of next move;
+    dir = direction of move;
+    if ((nextRow==EXIT_ROW) &amp;&amp;(nextCol==EXIT_COL))
+    	success;
+    if ((maze[nextRow][nextCol]==0) &amp;&amp;(mark[nextRow][nextCol]==0)) {
+    	/* legal move and haven't been there */ mark[nextRow][nextCol] = 1;
+      /* save current position and direction */
+      add &lt;row,col,dir&gt; to the top of the stack; 
+      row = nextRow; 
+      col = nextCol; 
+      dir = north;
+      } 
+	}
+}
+printf(&quot;No path found&quot;);</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Defining the stack for the program</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#define MAX_STACK_SIZE 100
+typedef struct {
+  short int row;
+  short int col;
+  short int dir;
+} element;
+element stack[MAX_STACK_SIZE];</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Need to determine a reasonable bound for the stack size.</li>
+</ul>
+<p>[Figure 3.11] Simple maze with a long path</p>
+<img width="65" alt="image-20211003152411739" src="https://user-images.githubusercontent.com/46957634/135750610-3574cb02-880c-4e53-a59b-c21faa15e40a.png">
+<doc-anchor-target id="ex019---maze-search-function">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex019---maze-search-function">#</doc-anchor-trigger>
+        <span>[ex019] - Maze search function</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>we assume that arrays maze, mark, move, stack, and constants EXIT_ROW, EXIT_COL, TRUE, FALSE, and variable top are declared as global.</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void path(void) {
+    /* output a path through the maze if such a path exists */ int i, row, col, nextRow, nextCol, dir, found = FALSE;
+    element position;
+    mark[1][1] = 1;
+    top = 0;
+    stack[0].row = 1;
+    stack[0].col = 1;
+    stack[0].dir = 1;
+    while (top &gt; -1 &amp;&amp; !found) {
+        position = pop();
+        row = position.row;
+        col = position.col;
+        dir = position.dir;
+        while (dir &lt; 8 &amp;&amp; !found) {
+            /* move in direction dir */
+            nextRow = row + move[dir].vert;
+            nextCol = col + move[dir].horiz;
+            if (nextRow == EXIT_ROW &amp;&amp; nextCol == EXIT_COL)
+                found = TRUE;
+            else if (!maze[nextRow][nextCol] &amp;&amp; !mark[nextRow][nextCol]) {
+                mark[nextRow][nextCol] = 1;
+                position.row = row;
+                position.col = col;
+                position.dir = ++dir;
+                push(position);
+                row = nextRow;
+                col = nextCol;
+                dir = 0;
+            } else ++dir;
+        }
+    }
+    if (found) {
+        printf(&quot;The path is: \n&quot;);
+        printf(&quot;row col\n&quot;);
+        for (i = 0; i &lt;= top; i++)
+            printf(&quot;%2d%5d\n&quot;, stack[i].row, stack[i].col);
+        printf(&quot;%2d%5d\n&quot;, row, col);
+        printf(&quot;%2d%5d\n&quot;, EXIT_ROW, EXIT_COL);
+    } else printf(&quot;The maze does not have a path.\n&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="analysis-of-function-path">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#analysis-of-function-path">#</doc-anchor-trigger>
+        <span>Analysis of function path</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>Since each position within the maze is visited no more than once, the worse case time complexity of the algorithm is O(mp) where m and p are, respectively, the number of rows and columns of the maze.</li>
+<li>A position may be pushed and popped multiple times due to backtracking, but this number cannot exceed number of directions, which is 8 in this case.</li>
+</ul>
+
+
+
+
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results />
+            </div>
+
+            
+<nav class="flex mt-14">
+    <div class="w-1/2">
+        <a class="px-5 py-4 h-full flex items-center break-all md:break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="/tech/data-structure/3.stack--queue/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+            <span>
+                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                <span class="block mt-1">3.Stack & Queue</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="w-1/2">
+        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-all md:break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="/tech/data-structure/3.stack--queue/3.2.-a-note-on-asymptotic-time-complexity/">
+            <span>
+                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                <span class="block mt-1">3.2. A Note on Asymptotic Time Complexity</span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+        </a>
+    </div>
+</nav>
+
+
+        </main>
+
+        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between">
+    <div>
+        <ul class="flex flex-wrap items-center text-sm">
+</ul>
+
+    </div>
+    <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2021 KyuHwan Shim, All rights reserved.</p>
+</div>
+</footer>
+
+        </div>
+    </div>
+    
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 transform translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:flex-shrink-0 lg:pt-6 lg:transform-none lg:w-56 lg:z-0 md:w-72 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+        </div>
+    </div>
+    
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+        <div id="docs-overlay-target"></div>
+
+        <script>window.__DOCS__ = { "title": "3.1. Stacks", icon: "file", hasPrism: true, hasMermaid: false, hasMath: false }</script>
+    </body>
+</html>
