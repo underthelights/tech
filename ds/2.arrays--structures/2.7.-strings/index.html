@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache">
+
+    <!-- Primary Meta Tags -->
+    <title>Arrays and Structures (Chapter 2)</title>
+    <meta name="title" content="Arrays and Structures (Chapter 2)">
+    <meta name="description" content="In C, strings are represented as character arrays terminated with the null character." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/ds/2.arrays--structures/2.7.-strings/">
+    <meta property="og:title" content="Arrays and Structures (Chapter 2)">
+    <meta property="og:description" content="In C, strings are represented as character arrays terminated with the null character.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/ds/2.arrays--structures/2.7.-strings/">
+    <meta property="twitter:title" content="Arrays and Structures (Chapter 2)">
+    <meta property="twitter:description" content="In C, strings are represented as character arrays terminated with the null character.">
+    
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="/tech/favicon.ico" rel="icon" />
+    <link href="/tech/resources/css/retype.css?v=1.10.686649135930" rel="stylesheet" data-turbo-track="reload" />
+
+    <script type="text/javascript" src="/tech/resources/js/config.js?v=1.10.686649135930" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/tech/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
+    <script id="prism-js" type="text/javascript" src="/tech/resources/js/prism.js?v=1.10.686649135930" defer></script>
+    <link href="/tech/resources/css/katex.css?v=1.10" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="/tech/resources/js/katex.js?v=1.10" defer></script>
+</head>
+    <body>
+        <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+    <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+
+    <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+    <div class="container relative flex items-center justify-between flex-grow pr-6 md:justify-start">
+        <!-- Mobile menu button skeleton -->
+        <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center flex-shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+        <div v-cloak id="docs-sidebar-toggle"></div>
+
+        <!-- Logo -->
+        <div class="flex items-center justify-between h-full py-2 md:w-75">
+            <div class="flex items-center px-2 md:px-6">
+                <a id="docs-site-logo" href="/tech/" class="flex items-center leading-snug text-2xl">
+                    <span class="w-10 mr-2 flex-grow-0 flex-shrink-0 overflow-hidden">
+                        <img class="max-h-10 dark:hidden md:inline-block" src="/tech/static/retype-logo.svg">
+                        <img class="max-h-10 hidden dark:inline-block" src="/tech/static/retype-logo-dark.svg">
+                    </span>
+                    <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                </a>
+            </div>
+
+            <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+        </div>
+
+        <div class="flex justify-between md:flex-grow">
+            <!-- Top Nav -->
+            <nav class="hidden md:flex">
+    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="/tech/">Home</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://github.com/underthelights/">GitHub</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://underthelights.github.io">GitBlog</a>
+        </li>
+    </ul>
+</nav>
+
+            <!-- Header Right Skeleton -->
+            <div v-cloak class="flex justify-end flex-grow skeleton">
+
+                <!-- Search input mock -->
+                <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                    <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                    </div>
+
+                    <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                    style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search docs" />
+                </div>
+
+                <!-- Mobile search button mock -->
+                <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                </div>
+
+                <!-- Dark mode switch placehokder -->
+                <div class="w-10 h-10 lg:ml-2"></div>
+
+                <!-- History button mock -->
+                <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                </div>
+            </div>
+
+            <div v-cloak class="flex items-center justify-end flex-grow">
+                <div id="docs-mobile-search-button"></div>
+                <doc-search-desktop></doc-search-desktop>
+
+                <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                <doc-history></doc-history>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <div class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+<div v-cloak class="fixed flex flex-col flex-shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+
+    <!-- Render this div, if config.showSidebarFilter is `true` -->
+    <div class="flex items-center h-16 px-6">
+        <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+    </div>
+
+    <div class="pl-6 mb-4 mt-1">
+        <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+    </div>
+
+    <div class="flex-shrink-0 mt-auto bg-transparent dark:border-dark-650">
+        <a
+    class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in"
+    target="_blank"
+    href="https://retype.com/"
+    rel="noopener"
+>
+    <span class="text-xs whitespace-nowrap">Powered by</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+</a>
+
+    </div>
+</div>
+
+<!-- Sidebar component -->
+<doc-sidebar v-cloak>
+    <template #sidebar-footer>
+        <div
+            class="flex-shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650"
+        >
+
+            <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                <nav>
+                    <ul class="flex flex-wrap justify-center items-center">
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="/README.md">Home</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <a
+    class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in"
+    target="_blank"
+    href="https://retype.com/"
+    rel="noopener"
+>
+    <span class="text-xs whitespace-nowrap">Powered by</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+</a>
+
+        </div>
+    </template>
+</doc-sidebar>
+
+
+        <div class="flex-grow min-w-0 dark:bg-dark-850">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+            <div class="flex">
+    <div class="flex-grow min-w-0 px-6 md:px-16">
+        <main class="relative pt-6 pb-16">
+            <div class="docs-markdown" id="docs-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="docs-sidebar-right-toggle"></div>
+               
+                <!-- Page content  -->
+<doc-anchor-target id="arrays-and-structures-chapter-2" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#arrays-and-structures-chapter-2">#</doc-anchor-trigger>
+        <span>Arrays and Structures (Chapter 2)</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="strings-chapter-27">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#strings-chapter-27">#</doc-anchor-trigger>
+        <span>Strings (Chapter 2.7)</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="271-adt-strings">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#271-adt-strings">#</doc-anchor-trigger>
+        <span>2.7.1 ADT Strings</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">pseudocode</div>
+<pre class="language-none"><code v-pre class="language-none">ADT String is
+
+ objects : a finite sequence of zero or more characters.
+ 
+ functions : for all s, t ∈ String, i, j, m ∈ non-negative integers
+
+String Null(m) 
+::= return a string whose maximum length is m characters, but is initially set to NULL. We write NULL as &quot;&quot;.
+
+Integer Compare(s, t)
+::= if s equals t return 0
+ else if s precedes t return –1
+else return +1.
+
+
+Boolean IsNull(s) 
+ ::= if (Compare(s, NULL)) 
+ return FALSE
+ else return TRUE. 
+ 
+ Integer Length(s) 
+ ::= if (Compare(s, NULL))
+ return the number of characters in s else return 0. 
+
+	String Concat(s, t)
+	::= if (Compare(t, NULL))
+	return a string whose elements are those of s followed by those of t else return s.
+
+
+String Substr(s,i,j)
+::= if ((j&gt;0) &amp;&amp; (i+j-1)&lt;Length(s))
+return the string containing the characters of s at positions i, i+1,.... i+j-1. 
+else return NULL.</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="272-strings-in-c---representation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#272-strings-in-c---representation">#</doc-anchor-trigger>
+        <span>2.7.2 Strings in C - Representation</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>In C, strings are represented as character arrays terminated with the null character.</p>
+</li>
+<li><p>Example</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#define MAX_SIZE 100
+char s[MAX_SIZE] = &quot;dog&quot;;
+char t[MAX_SIZE] = &quot;house&quot;;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Internal representation in C</li>
+</ul>
+<img width="338" alt="image-20211003143908910" src="https://user-images.githubusercontent.com/46957634/135751703-279339f6-c668-4478-876d-91980769d529.png">
+<ul>
+<li>Alternative declaration
+<ul>
+<li>If the character array variable is initialized at the time of declaration, we do not need to specify the array size.</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">char s[] = &quot;dog&quot;;
+char t[] = &quot;house&quot;;
+char u[];   // compile error!</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>If no initialization is done, we need to specify the array size, or we get a compile error.</p>
+</li>
+<li><p>Contenating two strings</p>
+<ul>
+<li>You can use strcat(s, t), which adds string t at the end of string s. The result is stored in s.</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt; // need to include this in order to use string functions.
+# define MAX_SIZE 100
+void main() {
+  char s[MAX_SIZE] = &quot;dog&quot;;
+  char t[MAX_SIZE] = &quot;house&quot;;
+  printf(&quot;%s\n&quot;, s);
+  printf(&quot;%s\n&quot;, t);
+  strcat(s, t);
+  printf(&quot;%s\n&quot;, s);
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="ex013">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex013">#</doc-anchor-trigger>
+        <span>[ex013]</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>You should be careful when using functions such as strcat.</li>
+<li>What is the problem with the following code?
+<ul>
+<li>(For brevity, the following code does not show #include statements.)</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void main() {
+  char s[] = &quot;dog&quot;;
+  char t[] = &quot;house&quot;;
+  char u[] = &quot;rainbow&quot;;
+  printf(&quot;%s\n&quot;, s);
+  printf(&quot;%s\n&quot;, t);
+  printf(&quot;%s\n\n&quot;, u);
+  strcat(s, u);
+  printf(&quot;%s\n&quot;, s);
+  printf(&quot;%s\n&quot;, t);
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>How can you modify the code to remove the problem?
+<ul>
+<li>Try using dynamic memory allocation to allocate just enough amount of memory.</li>
+<li>Beware that a string has a null character at the end.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="string-insertion">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#string-insertion">#</doc-anchor-trigger>
+        <span>String insertion</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Suppose we want to implement a function that inserts a string in between another string.</p>
+<img width="338" alt="image-20211003144036070" src="https://user-images.githubusercontent.com/46957634/135751705-ec15156c-1232-403b-aebd-da3777c821df.png">
+</li>
+<li><p>We want to insert t to s at the position after &#x27;a&#x27;, so that the resulting string is &quot;automobile&quot;.</p>
+</li>
+<li><p>Function prototype</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* insert string t into string s at position i*/
+void strnins(char *s, char *t, int i);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="string-insertion-design">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#string-insertion-design">#</doc-anchor-trigger>
+        <span>String insertion: design</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>We will use a temp string, and library functions such as strncpy and strcat to implement this function</li>
+<li>strncpy(temp, s, i): copy i bytes from string s to string temp.</li>
+</ul>
+<img width="395" alt="image-20211003144145691" src="https://user-images.githubusercontent.com/46957634/135751707-e91b1217-88b6-4c50-a821-79c884735025.png">
+<doc-anchor-target id="ex014">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex014">#</doc-anchor-trigger>
+        <span>[ex014]</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>This function implementation has a potential problem. Can you identify the problem and fix it?</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void strnins(char *s, char *t, int i) {
+  /* insert string t into string s at position i */ 
+  char string[MAX_SIZE], *temp = string;
+  if(i&lt;0 &amp;&amp; i&gt;strlen(s)) {
+    fprintf(stderr, &quot;position is out of bounds.\n&quot;); 
+    exit(1);
+  }
+  if(!strlen(s)) strcpy(s, t); 
+  else if(strlen(t)) {
+    strncpy(temp, s, i);
+    strcat(temp, t);
+    strcat(temp, (s+i));
+    strcpy(s, temp);
+  } 
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="ex015">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex015">#</doc-anchor-trigger>
+        <span>[ex015]</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>In the problem of pattern matching, we check whether a string pattern appear inside a string.</p>
+<ul>
+<li>Does the pattern &quot;ello&quot; exist in the string &quot;hello, world!&quot;? YES</li>
+<li>Does the pattern &quot;abab&quot; exist in the string &quot;abbabba&quot;? NO</li>
+</ul>
+</li>
+<li><p>A library function strstr implements this operation.</p>
+<ul>
+<li>t = strstr(string, pat)</li>
+<li>if pat is not in string, a null pointer is returned.</li>
+<li>if pat is in the string, a pointer to the start of pat in string is returned.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="273-pattern-matching">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#273-pattern-matching">#</doc-anchor-trigger>
+        <span>2.7.3 Pattern Matching</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Let us assume there was not strstr function provided by the library, and we need to make our own function.</p>
+</li>
+<li><p>A simple matching algorithm</p>
+<ul>
+<li>At each position i of string, check if pat is equal to string[i] ~ string[i+strlen(pat)-1]</li>
+<li>strlen: a library function that returns number of characters in the given string.</li>
+</ul>
+</li>
+<li><p>In the worst case, which is when pat is not in string, the algorithm will have a time complexity of O(nm), where n is the length of pat and m is the length of string.</p>
+</li>
+<li><p>Slight improvements</p>
+<ul>
+<li><p>Quitting when strlen(pat) is greater than the number of remaining characters in the string.</p>
+</li>
+<li><p>Checking the first and last characters of pat before checking the remaining characters.</p>
+</li>
+</ul>
+</li>
+</ul>
+<img width="395" alt="image-20211003144337055" src="https://user-images.githubusercontent.com/46957634/135751708-4473cd0d-f95c-4302-a98f-25f2f675519d.png">
+<doc-anchor-target id="ex016">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex016">#</doc-anchor-trigger>
+        <span>[ex016]</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">int nfind(char *string, char *pat) {
+  /* match the last character of the pattern first, then match from the beginning */ 
+  int i, j, start = 0;
+  int lasts = strlen(string)-1;
+  int lastp = strlen(pat)-1;
+  int endmatch = lastp;
+  for(i = 0; endmatch &lt;= lasts; endmatch++, start++) {
+    if(string[endmatch] == pat[lastp])
+      for(j = 0, i = start; j &lt; lastp &amp;&amp; string[i] == pat[j]; i++, j++);
+    if(j == lastp) return start;
+  }
+  return -1; 
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Analysis of function nfind
+<ul>
+<li><p>For string = &quot;aa...a&quot; and pat = &quot;aa...ab&quot;, the computing time is <span class="math">O(m)</span>.</p>
+</li>
+<li><p>But for string = &quot;aa...a&quot; and pat = &quot;aa...aba&quot;, the computing time is still <span class="math">O(nm)</span>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="kmp-knuth-morris-pratt-algorithm">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#kmp-knuth-morris-pratt-algorithm">#</doc-anchor-trigger>
+        <span>KMP (Knuth-Morris-Pratt) Algorithm</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>KMP algorithm: A better algorithm for finding a pattern in a string.</p>
+</li>
+<li><p>Idea: When a mismatch occurs, use our knowledge of the characters in the pattern and the position in the pattern where the mismatch occurred, to determine where we should continue the search.</p>
+</li>
+<li><p>We want to search the string for the pattern <strong>without moving backwards</strong> in the string.</p>
+</li>
+<li><p>Consider the following example.</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">String: A B C F A B C D A B F A B C D A B C D A B D E
+Pattern: A B C D A B D</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>Before looking at the KMP algorithm, we will see how the &quot;naive&quot; algorithm finds the pattern in the string.</p>
+<ul>
+<li>The &quot;naive&quot; algorithm is the one we&#x27;ve looked at.</li>
+<li>It has the time complexity of O(mn) where m is len(string) and n is len(pattern).</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">String: A B C F A B C D A B F A B C D A B C D A B D E
+Pattern: A B C D A B D</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+<doc-anchor-target id="naive-algorithm">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#naive-algorithm">#</doc-anchor-trigger>
+        <span>Naive algorithm</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>It will start from the beginning of the string and iterate through the string, looking for the pattern. We will call this the outer iteration. (Blue arrow)</li>
+<li>For each starting position of string, it will iterate through the string and the pattern until there is a mismatch of a full match has been found. We will call this the inner iteration. (Green arrow)</li>
+</ul>
+<img width="410" alt="image-20211003141915378" src="https://user-images.githubusercontent.com/46957634/135751741-6ebae69f-593e-4e4a-a3fc-d16388caae39.png">
+<ul>
+<li>The first inner iteration ends when a mismatch is found at the fourth character.</li>
+</ul>
+<img width="391" alt="image-20211003141934058" src="https://user-images.githubusercontent.com/46957634/135751742-fab567f2-948d-41f6-bed3-89d4ab811a75.png">
+<ul>
+<li>Once the inner iteration ends, we move on to the next outer iteration.</li>
+<li>The inner iteration begins again.</li>
+<li>This time, the first character is a mismatch, so the inner iteration ends there.</li>
+</ul>
+<img width="402" alt="image-20211003141950876" src="https://user-images.githubusercontent.com/46957634/135751743-c96fcf44-f71f-4fb2-82e1-078139082e70.png">
+<ul>
+<li>We move on to the next outer iteration... and so on.</li>
+</ul>
+<img width="402" alt="image-20211003142017765" src="https://user-images.githubusercontent.com/46957634/135751745-43005bac-974e-4bb6-9d69-6d1a4b4a85c8.png">
+<ul>
+<li>When the starting position is the fifth character, the string matches the pattern until the last character, which is a mismatch.</li>
+</ul>
+<img width="402" alt="image-20211003142032488" src="https://user-images.githubusercontent.com/46957634/135751746-28bcc872-4c3d-43df-ab32-8ef78a890d3d.png">
+<ul>
+<li>When the starting position is 15, we find a match. Then, the program terminates.</li>
+<li>We can see that in the worst case, we need to compare characters for:
+<ul>
+<li>number of outer iterations x number of inner iterations</li>
+</ul>
+</li>
+</ul>
+<img width="402" alt="image-20211003142102365" src="https://user-images.githubusercontent.com/46957634/135751748-7492651f-81b8-4c0e-bb7b-d13ae0d0264a.png">
+<ul>
+<li>The following case shows an example of almost the worst case.
+<ul>
+<li>For each outer iteration, we need to compare 5 characters until we find a mismatch.</li>
+<li>Time complexity: <span class="math">O(mn)</span></li>
+</ul>
+</li>
+</ul>
+<img width="402" alt="image-20211003142125299" src="https://user-images.githubusercontent.com/46957634/135751750-0507b642-ccb7-462e-9f80-4d700d6b617b.png">
+<doc-anchor-target id="can-we-do-better">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#can-we-do-better">#</doc-anchor-trigger>
+        <span>Can we do better?</span>
+    </h4>
+</doc-anchor-target>
+<img width="402" alt="image-20211003142140561" src="https://user-images.githubusercontent.com/46957634/135751753-49e3bf1b-6a8b-4429-9aa2-7170baa858a6.png">
+<ul>
+<li>Suppose we have done the first iteration.</li>
+</ul>
+<img width="402" alt="image-20211003142147609" src="https://user-images.githubusercontent.com/46957634/135751834-f1102e5f-cab2-4762-a96d-da0680d34a2a.png">
+<ul>
+<li>Do we need to move the blue arrow just one position and restart search from there?</li>
+</ul>
+<img width="402" alt="image-20211003142202790" src="https://user-images.githubusercontent.com/46957634/135751836-3cebbe5a-6e03-4578-9ba5-1a78cab705bd.png">
+<ul>
+<li>Can&#x27;t we just move to the position where the mismatch occurred?</li>
+</ul>
+<img width="402" alt="image-20211003142214668" src="https://user-images.githubusercontent.com/46957634/135751838-592961a6-272e-4845-832c-42f1b4cd41c5.png">
+<ul>
+<li><p>In this case, moving to the fourth position is possible. Why?</p>
+</li>
+<li><p>It is because the starting character &#x27;A&#x27; does not appear in the pattern (&#x27;ABC&#x27;) after the first character.</p>
+</li>
+<li><p>Let&#x27;s look at the next case where the search begins at position 5 of the string. There was a mismatch at the last character of the pattern.</p>
+</li>
+</ul>
+<img width="402" alt="image-20211003142305793" src="https://user-images.githubusercontent.com/46957634/135751839-bc234e32-cd68-46f5-aa51-17772e9b3522.png">
+<ul>
+<li>In this case, can we skip the characters and move to the position where mismatch has occurred?</li>
+</ul>
+<img width="402" alt="image-20211003142316117" src="https://user-images.githubusercontent.com/46957634/135751842-88f945ec-dbf5-45b3-84d2-9c3c61517d4e.png">
+<ul>
+<li>No! we must consider the possibility that there is a pattern match that starts from position 9, because the character at position 9 is an &#x27;A&#x27;.</li>
+</ul>
+<img width="402" alt="image-20211003142329938" src="https://user-images.githubusercontent.com/46957634/135751844-fdf54f5e-e738-4222-80fd-f2e9a04d3028.png">
+<ul>
+<li>No! we must consider the possibility that there is a pattern match that starts from position 9, because the character at position 9 is an &#x27;A&#x27;.</li>
+</ul>
+<img width="402" alt="image-20211003142336752" src="https://user-images.githubusercontent.com/46957634/135751845-b825a5d4-33ae-4bca-9329-f832dd73c8e5.png">
+<ul>
+<li><p>But that means we are moving the pointer backwards, and we don&#x27;t want to do this!</p>
+</li>
+<li><p>Can we avoid moving the green arrow backwards?</p>
+</li>
+<li><p>Suppose we know that if we start searching from position 9, the first two characters match the pattern.</p>
+</li>
+<li><p>Then, we do not need to compare these two characters, and we can start from the position where the green arrow was already at!</p>
+</li>
+</ul>
+<img width="402" alt="image-20211003142401145" src="https://user-images.githubusercontent.com/46957634/135751848-6c90e0a6-f3d4-4c67-bc69-c625b6b07911.png">
+<ul>
+<li>So how do we know that if we start searching from a certain position, the first few characters already match the pattern?</li>
+<li>Let&#x27;s look at the pattern.</li>
+</ul>
+<p>![image-20211003142418081](/Users/kyuhwanshim/Library/Application Support/typora-user-images/image-20211003142418081.png)</p>
+<ul>
+<li>In the previous iteration, suppose we had a match in the first three characters, and the fourth character was a mismatch.</li>
+</ul>
+<p>![image-20211003142425846](/Users/kyuhwanshim/Library/Application Support/typora-user-images/image-20211003142425846.png)</p>
+<ul>
+<li><p>Then, we know that we can just move three places for the next outer iteration, because the <strong>first part of the pattern is not repeated in the searched pattern</strong>.</p>
+</li>
+<li><p>Now, suppose we had a match in the first six characters, and the seventh character was a mismatch.</p>
+</li>
+</ul>
+<p>![image-20211003142449251](/Users/kyuhwanshim/Library/Application Support/typora-user-images/image-20211003142449251.png)</p>
+<ul>
+<li>Then, we know that the last two letters are the first part of the pattern.
+<ul>
+<li>We say the prefix two letters and the suffix two letters match.</li>
+</ul>
+</li>
+</ul>
+<p>![image-20211003142515534](/Users/kyuhwanshim/Library/Application Support/typora-user-images/image-20211003142515534.png)</p>
+<ul>
+<li><p>In this case, the search should start from the character A, but we do not need to compare the first two characters because they are already a match.</p>
+</li>
+<li><p>We can find out where to begin the next search and how many characters are already matched by analyzing the pattern itself.</p>
+</li>
+<li><p>We calculate what we call a &quot;failure function&quot; or a &quot;partial match function&quot; which is basically a number of each index of the pattern. We will denote this index as T[ ].</p>
+</li>
+<li><p>The value of the first index is -1. This means that when the search finds a match up to this letter, there is no partial match to be considered in the next iteration.</p>
+</li>
+</ul>
+<img width="251" alt="image-20211003142418081" src="https://user-images.githubusercontent.com/46957634/135751867-daf4765a-c544-4449-bc2b-7cdd9ef14da1.png">
+<ul>
+<li>We start an iteration from j=1 to j&lt;n. n is the number of letters in the pattern.</li>
+<li>When j=1,wesetitoT[j-1]whichis-1.</li>
+<li>This means that the previous position was not a part of a suffix that matches the prefix of the pattern.</li>
+<li>In this case, all is left is to see whether this character matches the start of the pattern. Since the character is not &#x27;A&#x27;, then T[1] is set to -1.</li>
+<li>We compare pat[j] and pat[i+1], and if they are the same character we set T[j] = i+1. Otherwise T[j] = -1.</li>
+</ul>
+<img width="386" alt="image-20211003142743476" src="https://user-images.githubusercontent.com/46957634/135751899-77d7eb3e-635d-47d3-893f-9cd9d93b7c30.png">
+<ul>
+<li>T[2] also becomes -1 based on the same logic.</li>
+</ul>
+<img width="386" alt="image-20211003142735753" src="https://user-images.githubusercontent.com/46957634/135751931-d7a6b430-f4ad-419b-9050-78311b56a65b.png">
+<ul>
+<li>T[3] also becomes -1 based on the same logic.</li>
+</ul>
+<img width="386" alt="image-20211003142757242" src="https://user-images.githubusercontent.com/46957634/135751938-421ca511-e118-43f4-b52e-2b69c506cb51.png">
+<ul>
+<li>Now for T[4], i is also set to -1 because T[3] = -1.</li>
+<li>However, since pat[j] == pat[i+1], we set T[j] = i+1. Thus T[4] becomes 0.</li>
+<li>We can think of this 0 as: &quot;the suffix matches the prefix up to index 0&quot;.</li>
+</ul>
+<img width="386" alt="image-20211003142810253" src="https://user-images.githubusercontent.com/46957634/135751943-eeb12560-a27f-4f54-ba34-a5a759097019.png">
+<ul>
+<li><p>Now we go to j=5 which is&#x27;B&#x27;.</p>
+</li>
+<li><p>In this case, i = T[4] = 0, which means before this character there is a suffix that matches the prefix up to index 0.</p>
+</li>
+<li><p>So we check if current letter matches index 1. In this case, it does!</p>
+</li>
+<li><p>Since pat[j] == pat[i+1], we set T[5] to be i+1 which is 1.</p>
+</li>
+</ul>
+<img width="386" alt="image-20211003143002475" src="https://user-images.githubusercontent.com/46957634/135751948-a2bb292e-cb68-4944-887a-e15af8cbc33e.png">
+<ul>
+<li>Now we go to j=6 which is &#x27;D&#x27;.</li>
+<li>In this case, i = T[5] = 1, which means before this character there is a suffix that matches the prefix up to index 1.</li>
+<li>So we check if current letter matches index 2. In this case, it does not.</li>
+<li>Then, we update i to be T[i]. This is basically looking for a previous &#x27;AB&#x27; sequence. Updating i is done repeatedly using a while loop.</li>
+<li>Since T[1] = -1, i becomes -1.</li>
+<li>Then, we check whether pat[j] == pat[i+1]. Since they are not equal, T[6] becomes -1.</li>
+</ul>
+<img width="386" alt="image-20211003143053815" src="https://user-images.githubusercontent.com/46957634/135751954-df28ebd1-75d4-472e-b8a1-7a656b56ebfc.png">
+<ul>
+<li>Now we have the failure function for the pattern.</li>
+<li>We will use this information to do pattern matching.</li>
+</ul>
+<img width="399" alt="image-20211003143119077" src="https://user-images.githubusercontent.com/46957634/135751962-9e764ced-6321-4f71-8c18-6ce15c578a7d.png">
+<ul>
+<li>In the first iteration, a mismatch occurs at the fourth character (index 3).</li>
+</ul>
+<img width="399" alt="image-20211003143133856" src="https://user-images.githubusercontent.com/46957634/135751964-283caf38-e39d-4ea9-b08d-0ffb7f6c7a58.png">
+<ul>
+<li>Then, we just move the blue arrow to index 3. (blue moves along with green.)</li>
+<li>The green arrow will be set to T[j-1] + 1. In this case, it is 0.</li>
+</ul>
+<img width="399" alt="image-20211003143258371" src="https://user-images.githubusercontent.com/46957634/135751970-11e34469-dcc4-4a5f-b807-fb955f2e0cf4.png">
+<ul>
+<li>In the following iteration, since the first characters do not match (&#x27;F&#x27; ≠ &#x27;A&#x27;), we just move the blue arrow one position.</li>
+</ul>
+<img width="399" alt="image-20211003143316522" src="https://user-images.githubusercontent.com/46957634/135751974-28bd5cfd-8cc2-4327-8740-85450d9e8fff.png">
+<ul>
+<li>In the next iteration, the mismatch occurs at the last character.</li>
+</ul>
+<img width="399" alt="image-20211003143328961" src="https://user-images.githubusercontent.com/46957634/135751982-67eac9d1-3c05-43f7-889a-1a1a2572b0ba.png">
+<ul>
+<li>In this case, T[j-1] = 1. Thus, i becomes 10 and j becomes 2.</li>
+</ul>
+<img width="399" alt="image-20211003143342749" src="https://user-images.githubusercontent.com/46957634/135751985-c04b6553-43dd-4c21-bdb0-3560ff9bcb87.png">
+<ul>
+<li>We continue, until the string ends or we find a match.</li>
+<li>We know we have found a match if j = strlen(pattern).</li>
+</ul>
+<img width="420" alt="image-20211003143402296" src="https://user-images.githubusercontent.com/46957634/135751990-5d488e38-26bd-4f88-9e76-71c2afb6dbda.png">
+<doc-anchor-target id="program-214-ex017">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#program-214-ex017">#</doc-anchor-trigger>
+        <span>Program 2.14 [ex017]</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>We need to run function &quot;fail&quot; first in order to obtain failure[].</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">int pmatch(char *string, char *pat) {
+  /* Knuth, Morris, Pratt string matching algorithm */ 
+  int i=0, j=0;
+  int lens = strlen(string);
+  int lenp = strlen(pat);
+  while(i &lt; lens &amp;&amp; j &lt; lenp) {
+    if(string[i] == pat[j]) { 
+      i++; j++; 
+    }
+    else if(j == 0) 
+      i++;
+    else 
+      j = failure[j-1] + 1;
+  }return ((j == lenp) ? (i-lenp) : -1);
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Time complexity of running pmatch: O(m), m: strlen(string).
+<ul>
+<li>Inside the while loop, i is always incremented and does not go back.</li>
+<li>The function ends when i reaches strlen(string).</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="program-215">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#program-215">#</doc-anchor-trigger>
+        <span>Program 2.15</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void fail(char *pat) {
+  /* compute the pattern's failure function */ 
+  int i, n = strlen(pat);
+  failure[0] = -1;
+  for(j = 1; j &lt; n; j++) {
+    i = failure[j-1];
+    while((pat[j] != pat[i+1]) &amp;&amp; (i &gt;= 0)) 
+      i = failure[i]; 
+    if(pat[j] == pat[i+1]) 
+      failure[j] = i+1;
+    else failure[j] = -1;
+  } 
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>Time complexity of running fail: O(n), n: strlen(pattern).</p>
+<ul>
+<li>The for loop is iterated n-1 times, and j is never incremented inside the loop.</li>
+<li>In each iteration of the while loop, the value of i decreases.</li>
+<li>The variable i is reset at the beginning of each iteration of the for loop.</li>
+<li>i is either reset to -1, or it is reset to a value 1 greater than its terminal value on the previous iteration.</li>
+<li>Since the for loop is iterated only n-1 times, the value of i has a total increment of at most n-1.</li>
+<li>Hence, it cannot be decremented more than n-1 times.</li>
+<li>Consequently, the while loop is iterated at most n-1 times over the whole algorithm.</li>
+</ul>
+</li>
+<li><p>Time complexity for running the KMP algorithm</p>
+<ul>
+<li>Time for calling fail(): O(n)</li>
+<li>Time for calling pmatch(): O(m)</li>
+<li>Thus, the total time complexity is O(m+n). It is much smaller than O(mn).</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="try-it-yourself">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#try-it-yourself">#</doc-anchor-trigger>
+        <span>Try-It-Yourself</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Try building up the failure function (T) for the following pattern.</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">pseudocode</div>
+<pre class="language-none"><code v-pre class="language-none">Pattern: A  B  A  A  B  A  B  A  A  A  B  A</code></pre>
+</doc-codeblock></div>
+
+
+
+
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results />
+            </div>
+
+            
+<nav class="flex mt-14">
+    <div class="w-1/2">
+        <a class="px-5 py-4 h-full flex items-center break-all md:break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="/tech/ds/2.arrays--structures/2.5.-sparse-matrix-/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+            <span>
+                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                <span class="block mt-1">Arrays and Structures (Chapter 2)</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="w-1/2">
+        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-all md:break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="/tech/ds/3.stack--queue/">
+            <span>
+                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                <span class="block mt-1">3.Stack & Queue</span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+        </a>
+    </div>
+</nav>
+
+
+        </main>
+
+        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between">
+    <div>
+        <ul class="flex flex-wrap items-center text-sm">
+</ul>
+
+    </div>
+    <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2021 KyuHwan Shim, All rights reserved.</p>
+</div>
+</footer>
+
+        </div>
+    </div>
+    
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 transform translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:flex-shrink-0 lg:pt-6 lg:transform-none lg:w-56 lg:z-0 md:w-72 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+        </div>
+    </div>
+    
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+        <div id="docs-overlay-target"></div>
+
+        <script>window.__DOCS__ = { "title": "Arrays and Structures (Chapter 2)", icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+    </body>
+</html>
