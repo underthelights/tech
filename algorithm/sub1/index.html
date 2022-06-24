@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache">
+
+    <!-- Primary Meta Tags -->
+    <title>Sub1</title>
+    <meta name="title" content="Sub1">
+    <meta name="description" content="Algorithm Design & Analysis**[Sub1] Introduction to Algorithms and Complexity**" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/algorithm/sub1/">
+    <meta property="og:title" content="Sub1">
+    <meta property="og:description" content="Algorithm Design & Analysis**[Sub1] Introduction to Algorithms and Complexity**">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/122639250-de6aa380-d133-11eb-9a3a-b43a8519b070.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/algorithm/sub1/">
+    <meta property="twitter:title" content="Sub1">
+    <meta property="twitter:description" content="Algorithm Design & Analysis**[Sub1] Introduction to Algorithms and Complexity**">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/122639250-de6aa380-d133-11eb-9a3a-b43a8519b070.png">
+    
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="/tech/favicon.ico" rel="icon" />
+    <link href="/tech/resources/css/retype.css?v=1.10.688476511181" rel="stylesheet" data-turbo-track="reload" />
+
+    <script type="text/javascript" src="/tech/resources/js/config.js?v=1.10.688476511181" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/tech/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
+    <script id="prism-js" type="text/javascript" src="/tech/resources/js/prism.js?v=1.10.688476511181" defer></script>
+    <link href="/tech/resources/css/katex.css?v=1.10" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="/tech/resources/js/katex.js?v=1.10" defer></script>
+</head>
+    <body>
+        <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+    <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+
+    <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+    <div class="container relative flex items-center justify-between flex-grow pr-6 md:justify-start">
+        <!-- Mobile menu button skeleton -->
+        <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center flex-shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+        <div v-cloak id="docs-sidebar-toggle"></div>
+
+        <!-- Logo -->
+        <div class="flex items-center justify-between h-full py-2 md:w-75">
+            <div class="flex items-center px-2 md:px-6">
+                <a id="docs-site-logo" href="/tech/" class="flex items-center leading-snug text-2xl">
+                    <span class="w-10 mr-2 flex-grow-0 flex-shrink-0 overflow-hidden">
+                        <img class="max-h-10 dark:hidden md:inline-block" src="/tech/static/retype-logo.svg">
+                        <img class="max-h-10 hidden dark:inline-block" src="/tech/static/retype-logo-dark.svg">
+                    </span>
+                    <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                </a>
+            </div>
+
+            <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+        </div>
+
+        <div class="flex justify-between md:flex-grow">
+            <!-- Top Nav -->
+            <nav class="hidden md:flex">
+    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="/tech/">Home</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://github.com/underthelights/">GitHub</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+        </li>
+        <li class="md:mr-6">
+            <a class="block py-2 text-sm text-gray-400 whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="https://underthelights.github.io">GitBlog</a>
+        </li>
+    </ul>
+</nav>
+
+            <!-- Header Right Skeleton -->
+            <div v-cloak class="flex justify-end flex-grow skeleton">
+
+                <!-- Search input mock -->
+                <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                    <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                    </div>
+
+                    <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                    style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search docs" />
+                </div>
+
+                <!-- Mobile search button mock -->
+                <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                </div>
+
+                <!-- Dark mode switch placehokder -->
+                <div class="w-10 h-10 lg:ml-2"></div>
+
+                <!-- History button mock -->
+                <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                </div>
+            </div>
+
+            <div v-cloak class="flex items-center justify-end flex-grow">
+                <div id="docs-mobile-search-button"></div>
+                <doc-search-desktop></doc-search-desktop>
+
+                <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                <doc-history></doc-history>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <div class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+<div v-cloak class="fixed flex flex-col flex-shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+
+    <!-- Render this div, if config.showSidebarFilter is `true` -->
+    <div class="flex items-center h-16 px-6">
+        <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+    </div>
+
+    <div class="pl-6 mb-4 mt-1">
+        <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+        <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+    </div>
+
+    <div class="flex-shrink-0 mt-auto bg-transparent dark:border-dark-650">
+        <a
+    class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in"
+    target="_blank"
+    href="https://retype.com/"
+    rel="noopener"
+>
+    <span class="text-xs whitespace-nowrap">Powered by</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+</a>
+
+    </div>
+</div>
+
+<!-- Sidebar component -->
+<doc-sidebar v-cloak>
+    <template #sidebar-footer>
+        <div
+            class="flex-shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650"
+        >
+
+            <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                <nav>
+                    <ul class="flex flex-wrap justify-center items-center">
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="/README.md">Home</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="block py-1 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <a
+    class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in"
+    target="_blank"
+    href="https://retype.com/"
+    rel="noopener"
+>
+    <span class="text-xs whitespace-nowrap">Powered by</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+</a>
+
+        </div>
+    </template>
+</doc-sidebar>
+
+
+        <div class="flex-grow min-w-0 dark:bg-dark-850">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+            <div class="flex">
+    <div class="flex-grow min-w-0 px-6 md:px-16">
+        <main class="relative pt-6 pb-16">
+            <div class="docs-markdown" id="docs-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="docs-sidebar-right-toggle"></div>
+               
+                <!-- Page content  -->
+<doc-anchor-target id="sub1" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#sub1">#</doc-anchor-trigger>
+        <span>Sub1</span>
+    </h1>
+</doc-anchor-target>
+<p>Algorithm Design &amp; Analysis<br />
+<strong>[Sub1] Introduction to Algorithms and Complexity</strong></p>
+<!--more-->
+<doc-anchor-target id="주제-1-introduction-to-algorithms-and-complexity">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#주제-1-introduction-to-algorithms-and-complexity">#</doc-anchor-trigger>
+        <span>[주제 1] Introduction to Algorithms and Complexity</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="1-how-to-think-and-solve-problems-with-computer">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-how-to-think-and-solve-problems-with-computer">#</doc-anchor-trigger>
+        <span>1. How to think and solve problems with computer</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="data-structurealgorithmtheory-of-computation">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#data-structurealgorithmtheory-of-computation">#</doc-anchor-trigger>
+        <span>Data Structure→Algorithm→Theory of Computation</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>어떻게 하면 주어진 복잡한 문제를 이진수 형태의 낮은 수준의 명령어만 이해하는 ‘단순한’ 컴퓨터 상에서 효율적으로 해결할 수 있을까?
+<ol>
+<li>[Data Structure] 주어진 추상적인 문제를 <strong>어떠한 자료 구조</strong>를 사용하여 컴 퓨터의 구조에 최적화된 형태로 표현할 수 있을까?</li>
+<li>[Algorithm] 주어진 추상적인 문제를 어떠한 <strong>알고리즘을</strong> 사용하여 컴퓨터를 사용하여 가장 효율적으로 해결할 수 있을까</li>
+<li>[Complexity] 과연 컴퓨터가 주어진 문제를 <strong>효율적으로</strong> 해결할 수 있을까 ?</li>
+<li>[Computability] 과연 컴퓨터가 세상의 <strong>모든 문제를 해결</strong>할 수 있을까?
+<ul>
+<li>Data Structure &amp; Algorithm <span class="math">\rightarrow</span> 1, 2, 3</li>
+<li>Automata Theory <span class="math">\rightarrow</span> 4</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<doc-anchor-target id="2-def-of-algorithm">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-def-of-algorithm">#</doc-anchor-trigger>
+        <span>2. Def. of Algorithm</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="definition-of-algorithm">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#definition-of-algorithm">#</doc-anchor-trigger>
+        <span>Definition of Algorithm</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>from [Horowitz 1.2]</p>
+</li>
+<li><p>An <strong>algorithm</strong> is a <strong>finite set of instructions that</strong>, if followed, accomplishes a particular task. In addition, all algorithms must satisfy the following criteria:</p>
+<ol>
+<li><p><strong>Input</strong>. Zero or more quantities from the outside. 외부로부터 0개 이상의 수량이 입력으로서 들어온다.</p>
+</li>
+<li><p><strong>Output</strong>. At least one quantity is produced. 하나 이상의 결과값이 수행된다.</p>
+</li>
+<li><p><strong>Definiteness</strong>. Each instruction is clear and unambiguous. 각 지침은 모두 명확하며, 애매하게 쓰여 있지 않다.</p>
+</li>
+<li><p><strong>Finiteness</strong>. If we trace out the instructions of an algorithm, then for all cases, the algorithm terminates after a finite number of steps. 제한된 수의 단계 후 종료된다.</p>
+</li>
+<li><p><strong>Effectiveness</strong>. Every instruction must be basic enough to be carried out, in principle, by a person using only pencil and paper. 손으로 풀 수 있을 만큼 효과적이어야 한다.</p>
+</li>
+</ol>
+<ul>
+<li>It is not enough that each operation be definite as in (3);</li>
+<li>it also must be feasible. 또한 실현 가능하여야 한다.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="thoughts-on-4-finiteness-computability">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thoughts-on-4-finiteness-computability">#</doc-anchor-trigger>
+        <span>Thoughts on 4) Finiteness: [Computability]</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Problem (<a href="https://en.wikipedia.org/wiki/Post_correspondence_problem">Post’s correspondence problem</a> 포스트 대응 문제)</p>
+<ul>
+<li>결정 불가능한 결정 문제의 예시, 1946년 emil post 에 의해 고안</li>
+<li>Input Size</li>
+<li>Consider a finite set <span class="math">P</span> of ordered pairs of nonempty strings such as <span class="math">P = \{(a, ab), (b, ca), (ca, a), (abc, c)\}</span></li>
+<li>A match of <span class="math">P</span> is any string w such that, for some <span class="math">m &gt; 0</span> and some pairs <span class="math">(u_1, v_1), (u_2, v_2), ..., (u_m, v_m) \in P</span>, <span class="math">w = u_1 u_2...u_m = v_1 v_2...v_m</span>.</li>
+<li>Design an algorithm that determine, given P, whether P has a match.</li>
+</ul>
+</li>
+<li><p>Cheolsu’s algorithm</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">For i = 1, 2, 3, ... do 
+  For each permutation of P of length i, do
+    If it is a match, print ‘yes’ and exit. 
+    If not, continue.</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Can this be regarded as an algorithm?</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="thoughts-on-efficiency-complexity">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thoughts-on-efficiency-complexity">#</doc-anchor-trigger>
+        <span>Thoughts on Efficiency: [Complexity]</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>An algorithm is regarded as efficient or good if there exist a polynomial P(n) such that the time required for solving any instance of size n is bounded above by P(n).</li>
+<li>NP-Complete problems:
+<ul>
+<li>Nobody has found so far any good algorithm for any problem in this class.</li>
+<li>It has been proved that if a good algorithm exists for some algorithm in this class, then a good algorithm exists for all NP-Complete Problem.</li>
+</ul>
+</li>
+<li>Examples
+<ul>
+<li>Suppose a CD-ROM can store up to 720MBytes of data. You have a sequence of n files of sizes <span class="math">s_1, s_2, ..., s_n</span>  Mbytes, to dump into backup CDs. What is the minimum number of necessary CDs to store all the files?</li>
+<li>Consider n tasks to be executed on CPU. All the tasks must be finished within the time requirement L (seconds). If the i-th task takes si seconds, and you can harness multiple processors, what would be the minimum number of processors needed to accomplish this?</li>
+<li>Ex. L = 10, n = 6, and (s1, s2, s3, s4, s5, s6) = (5, 6, 3, 7, 5, 4)</li>
+<li>then (5, 5), (6, 4), (7, 3)</li>
+</ul>
+</li>
+</ul>
+<p>어떻게 하면 좀 더 “효율적으로” 문제를 해결할까?</p>
+<doc-anchor-target id="example-1">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-1">#</doc-anchor-trigger>
+        <span>Example 1</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Sequential search vs binary search</p>
+<ul>
+<li>Problem: Determine whether x is in the sorted array S of n keys.</li>
+<li>Inputs: positive integer n, sorted (nondecreasing order) arrays of keys S indexed from 0 to n - 1, a key x.</li>
+<li>Outputs: the location of x in S (-1 if x is not in S).</li>
+</ul>
+</li>
+<li><p>Sequential search: <span class="math">T(n) = O(n)</span></p>
+</li>
+<li><p>Binary search: <span class="math">T(n) = O(log n)</span></p>
+</li>
+<li><img width="426" alt="스크린샷 2021-06-19 오후 3 13 01" src="https://user-images.githubusercontent.com/46957634/122632962-ea913980-d110-11eb-9b03-b6829e58c6fc.png">
+- From Neapolitan
+</li>
+<li><p>Why is the binary search more efficient? 왜 이진검색이 더 효율적인가?</p>
+</li>
+</ul>
+<doc-anchor-target id="example-2">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-2">#</doc-anchor-trigger>
+        <span>Example 2</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>The Fibonacci Sequence</p>
+</li>
+<li><p>Problem: Determine the nth term in the Fibonacci sequence.</p>
+</li>
+<li><p>Inputs: a nonnegative integer n.</p>
+</li>
+<li><p>Outputs: the nth term of the Fibonacci sequence.</p>
+<p><span class="math">f_0 = 0</span></p>
+<p><span class="math">f_1 = 1</span></p>
+<p><span class="math">f_n = f_{n-1} + f_{n-2}</span> for <span class="math">n \geq 2</span></p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">//&lt;recursive: divide-and-conquer&gt;
+int fib (int n) {
+  if (n == 0) return 0;
+  else if (n == 1) return 1;
+  else return fib(n-1) + fib(n-2);
+}
+
+//&lt;iterative: dynamic programming&gt;
+  int fib(int n) {
+  index i;
+  int f[0 .. n];
+  f[0] = 0; 
+  if (n &gt; 0) {
+  	f[1] = 1;
+    for (i = 2; i &lt;= n; i++)
+      f[i] = f[i-1] + f[i-2];
+  }return f[n];
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Recursive: T(n) = O(2n)</li>
+<li>Iterative: <em>T</em>(n) = O(n)</li>
+<li>Why is the iterative version more efficient?
+<ul>
+<li><img width="297" alt="스크린샷 2021-06-19 오후 3 19 16" src="https://user-images.githubusercontent.com/46957634/122633106-c550fb00-d111-11eb-9ca9-9cbe3b4fa085.png">
+</li>
+<li><span class="math">T(n) &gt; 2 ^{\frac n 2}</span> for <span class="math">n \geq 2</span></li>
+<li>Mathematical induction을 써서 증명해볼 것!</li>
+</ul>
+</li>
+<li>Linear versus exponential
+<ul>
+<li><img width="450" alt="스크린샷 2021-06-19 오후 4 11 33" src="https://user-images.githubusercontent.com/46957634/122634407-13b5c800-d119-11eb-8474-5ecb80ed0216.png">
+</li>
+<li>From Neapolitan,</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="3-order-of-algorithms">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#3-order-of-algorithms">#</doc-anchor-trigger>
+        <span>3. Order of Algorithms</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="-o-big--notation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-o-big--notation">#</doc-anchor-trigger>
+        <span>$ O$ (Big <span class="math">O</span> Notation)</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>for given two functions <span class="math">f(n)</span> and <span class="math">g(n)</span> , <span class="math">g(n) = O(f(n))</span></p>
+<p>$\iff \exists c \in \mathbb{R}, N \in \mathbb{N}\quad s.t. \quad g(n)\leq c\cdot f(n) $ <span class="math">\forall n \geq  N</span></p>
+</li>
+<li><p>then we say that : <span class="math">g(n)</span> is big O of <span class="math">f(n)</span></p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = x + 1;
+for (i = 1; i &lt;= n; i++)
+	y = y + 2;
+for (i = n; i &gt;=1; i--)
+	for (j = n; j &gt;= 1; j--)
+		z = z + 1;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>정답 : <span class="math">g(n) = c_0 + c_1 n + c_2 n^2</span></p>
+</li>
+<li><p>예 : <span class="math">g(n) = 5 + 6 + 7n^2 \leq 8n^2 \quad \forall n \geq 8</span></p>
+<ul>
+<li><span class="math">g(n) = O(n^2)</span></li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="notes-for-big-o">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#notes-for-big-o">#</doc-anchor-trigger>
+        <span>Notes for big O</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>[Note 1] The big O puts an <strong>asymptotic</strong> upper bound on a function.</p>
+<ul>
+<li><p>Asymptotic analysis (from Wikipedia)</p>
+<blockquote>
+<p>If f(n) = n2 + 3n, then as n becomes very large, the term 3n becomes insignificant compared to n2. The function f(n) is said to be &quot;asymptotically equivalent to n2, as n → ∞&quot;. This is often written symbolically as f(n) ~ n2, which is read as &quot;f(n) is asymptotic to n2&quot;.</p>
+</blockquote>
+</li>
+<li><p>계산 비용이 <span class="math">0.01n^2</span> 과 <span class="math">100n</span> 알고리즘 중 어떤 것이 더 효율적인가?</p>
+</li>
+<li><p>(Tight) upper bound</p>
+<ul>
+<li><span class="math">37log n + 0.1n = O(n)</span></li>
+<li><span class="math">n2 + 10n = O(n^2)</span></li>
+<li>$4(log n)^2 + nlog n + 100n = O(nlog n) $</li>
+<li><span class="math">n^2 + 10n = O(n^200)</span> ???</li>
+</ul>
+</li>
+<li><p>Growth Rates of Some Common Complexity Functions</p>
+<ul>
+<li><img width="269" alt="스크린샷 2021-06-13 오후 3 16 51" src="https://user-images.githubusercontent.com/46957634/121797301-68110180-cc5a-11eb-9164-4e52de117e24.png">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[Note 2] Given a cost function g(n), how do you find the proper complexity function <span class="math">f(n)</span> such that <span class="math">g(n) = O(f(n))</span>?</p>
+<ul>
+<li>Suppress lower-order terms and constant factors!</li>
+<li>Example:
+<ul>
+<li><span class="math">10^3 + 10^3n + 10^-3 n^2 = O(n^2)</span> then $ lim_{n \to \infty} \frac{n^2}{n} = \infty$</li>
+<li><span class="math">5nlog_3 n + 3(log_2 n)^2 + n + 6n^2 = O(n^2)</span> then $ lim_{n \to \infty} \frac{n}{log_en} = lim _{n \to \infty} = \infty$</li>
+<li><span class="math">3(log_2 n)^2+ 0.1n = O(?)</span></li>
+<li><span class="math">2^{n+5} = O(2^n)</span> ??</li>
+<li><span class="math">2^{5n} = O(2^n)</span> ??</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="comparing-orders-of-growth">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#comparing-orders-of-growth">#</doc-anchor-trigger>
+        <span>Comparing Orders of Growth</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>How do you compare orders of growth of two functions?
+<ul>
+<li>One possible way is to compute the limit of the ratio of two functions in question.</li>
+<li>$ x = lim_{n \to \infty } \frac{f_1(n)}{f_2(n)}$
+<ul>
+<li>if <span class="math">x=0</span>, <span class="math">f_1</span> has a smaller order of growth than <span class="math">f_2</span></li>
+<li>if <span class="math">x=c</span>, <span class="math">f_1</span> has a same order of growth than <span class="math">f_2</span></li>
+<li>if <span class="math">x=\infty</span>, <span class="math">f_1</span> has a larer order of growth than <span class="math">f_2</span></li>
+</ul>
+</li>
+<li>Ex.1: $ log_2 n$  vs $ \sqrt{n}$
+<ul>
+<li>$lim_{n \to \infty} \frac{log_2 n}{\sqrt(n)} = lim_{n \to \infty} \frac{(log_2 n)&#x27;}{(\sqrt(n))&#x27;} = lim_{n \to \infty} \frac{(log_2 e)\frac{1}{n}}{\sqrt\frac{1}{2\sqrt(n)}} = $</li>
+</ul>
+</li>
+<li>Ex.2: $n! $ vs <span class="math">2^n</span>
+<ul>
+<li><span class="math">lim_{n \to \infty} \frac{ n!}{2^n} = lim_{n \to \infty} \frac{\sqrt{2 \pi n} (\frac {n}{e})^n}{2^n}=lim_{n \to \infty }\sqrt{2 \pi n} \frac{({n})^n}{2^n e^n}</span></li>
+<li>stirling&#x27;s formula : <span class="math">n! \approx \sqrt{2 \pi n} (\frac {n}{e})^n</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="-big-omega-notation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-big-omega-notation">#</doc-anchor-trigger>
+        <span><span class="math">\Omega</span> (Big Omega Notation)</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>for two given functions  <span class="math">f(n)</span>  , <span class="math">g(n)</span> and  <span class="math">g(n) = \Omega(f(n))</span>  <span class="math">\iff</span> <span class="math">\exists  c \in \mathbb{R}</span> and <span class="math">N \in \mathbb{Z^+ \cup {0}}</span> such that $g(n) \geq cf(n) $ <span class="math">\forall n \geq N</span></p>
+</li>
+<li><p>We say that <span class="math">g(n)</span> is omega of  $ f(n)$ .</p>
+</li>
+<li><p>The <span class="math">\Omega</span> puts an asymptotic lower bound on a function.</p>
+</li>
+<li><p>Ex:</p>
+<ul>
+<li><span class="math">37logn+0.1n=\Omega(n)</span></li>
+<li><span class="math">n^2 + 10n = \Omega(n^2)</span></li>
+<li><span class="math">4(logn)^2 +nlogn+100n=\Omega(nlogn)</span></li>
+<li><span class="math">n^{200} +10n=\Omega(n^2)</span>...</li>
+<li><img width="116" alt="스크린샷 2021-06-13 오후 3 20 53" src="https://user-images.githubusercontent.com/46957634/121797403-f7b6b000-cc5a-11eb-9fed-5823b8e67001.png">
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="-theta-big-theta-notation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-theta-big-theta-notation">#</doc-anchor-trigger>
+        <span>$ \Theta$ (Big Theta Notation)</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>for two given functions  <span class="math">f(n)</span>  , <span class="math">g(n)</span> and  <span class="math">g(n) = \Theta(f(n))</span>  $\iff $ $g(n) = O(f(n)) $ and <span class="math">g(n) = \Omega (f(n))</span></p>
+</li>
+<li><p>that is, $g(n) = \Theta (f(n)) $ <span class="math">\iff</span> <span class="math">\exists  c,d \in \mathbb{R}</span> and <span class="math">N \in \mathbb{Z^+ \cup {0}}</span> such that <span class="math">g(n) \geq cf(n)</span> $ \forall n \geq N$</p>
+</li>
+<li><p>We say that <span class="math">g(n)</span> is order of <span class="math">f(n)</span>.</p>
+</li>
+<li><p>The <span class="math">\Theta</span> puts an asymptotic bound on a function.</p>
+</li>
+<li><p>Ex:</p>
+<ul>
+<li><span class="math">37logn+0.1n=\Theta(n)</span></li>
+<li><span class="math">n^2 + 10n = \Theta(n^2)</span></li>
+<li><span class="math">4(logn)^2 +nlogn+100n=\Theta(nlogn)</span></li>
+<li><span class="math">\Theta(1)&lt;\Theta(log n)&lt;\Theta(n)&lt;\Theta(n log n)&lt;\Theta(n^2)&lt;\Theta(n^3)&lt;\Theta(n^j)&lt;\Theta(n^k)&lt;\Theta(a^n)&lt;\Theta(b^n)&lt;\Theta(n!)</span>
+<ul>
+<li>for $ k&gt;j&gt;3$ and <span class="math">b&gt;a&gt;1</span></li>
+</ul>
+</li>
+<li>$O(1) $ or <span class="math">O(c)</span> : constant
+<ul>
+<li>$g(n) = 0.000001 \cdot n $</li>
+<li><span class="math">g(n) = 1000000</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>$Ref. $ Neapolitan Ex. (pp.42) 19, 24, 26, 28]</p>
+</li>
+</ul>
+<doc-anchor-target id="big-o-omega-and-order">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#big-o-omega-and-order">#</doc-anchor-trigger>
+        <span>Big O, Omega, and Order</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><img width="498" alt="스크린샷 2021-06-13 오후 3 23 48" src="https://user-images.githubusercontent.com/46957634/121797483-5f6cfb00-cc5b-11eb-9e3d-4e12939a7723.png">
+</li>
+<li><p>$ Ref.$ [ Neapolitan Chapter 1.]</p>
+</li>
+<li><p>Execution Times for Algorithms with the Given Time Complexities</p>
+</li>
+</ul>
+<img width="522" alt="스크린샷 2021-06-13 오후 3 24 46" src="https://user-images.githubusercontent.com/46957634/121797495-83c8d780-cc5b-11eb-8b4c-eb530732d32e.png">
+<img width="411" alt="스크린샷 2021-06-13 오후 3 25 25" src="https://user-images.githubusercontent.com/46957634/121797525-abb83b00-cc5b-11eb-9c00-50193f7b4e3c.png">
+<doc-anchor-target id="worst-case-versus-average-case-time-complexity">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#worst-case-versus-average-case-time-complexity">#</doc-anchor-trigger>
+        <span>Worst-Case versus Average-Case Time Complexity</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Expected value (from Wikipedia)</p>
+<ul>
+<li><p>let <span class="math">X</span> be a random variable with a finite number of finite outcomes <span class="math">x_1, x_2, ..., x_k</span> occuring with probabilities <span class="math">p_1, p_2, ... p_k</span> respectively.</p>
+</li>
+<li><p>the Expectation of X is defined as : <span class="math">E(X) = \sum_{i=1}^{k }{x_i p_i} = x_1p_1+ x_2 p_2 + ... + x_k p_k</span></p>
+</li>
+<li><p>since the sum of all probabilities <span class="math">p_i</span> is 1 (<span class="math">\sum_{i=1}^{k} {p_i}=1</span>) , the expected value is the weighted sum of the <span class="math">x_i</span> values, with the <span class="math">p_i</span> values being the weights</p>
+</li>
+</ul>
+</li>
+<li><p>Worst-case complexity</p>
+<ul>
+<li><span class="math">T_W (n) = max \{ c(I)| I \in S_n \}</span></li>
+</ul>
+</li>
+<li><p>Average-case complexity</p>
+<ul>
+<li>$T_A (n) = \sum_{I \in S_n} p(I) c(I) $</li>
+</ul>
+</li>
+<li><p>Problem</p>
+<ul>
+<li><p>Find the index of a given value <span class="math">a</span> in a givven array <span class="math">(a_0, a_1, ...,a _{n-1})</span>. if <span class="math">a</span> doesn&#x27;t exist in the array return <span class="math">-1</span></p>
+</li>
+<li><p>Cost for a linear search algorithm</p>
+<ul>
+<li><p>let <span class="math">P_i</span> be the probability such that $ a= a_i$</p>
+</li>
+<li><p>then the average cost is :</p>
+<p><span class="math">g(n) = 1 \cdot P_0 + 2 \cdot P_1 + 3 \cdot P_2 + ...+ n \cdot P_{n-1} + n (1 - \sum_{k=0}^{n-1} P_k)</span></p>
+<p><span class="math">= \sum_{k=0}^{n-1} (k+1)P_k + n (1 - \sum_{k=0}^{n-1} P_k)</span></p>
+</li>
+<li><p>Ex.1. <span class="math">n = 10^9</span>, <span class="math">P_0 + P_1 + ...+ P_{10^3} = 1</span> so <span class="math">g(n) = O(1)</span></p>
+</li>
+<li><p>Ex.2. <span class="math">n = 10^9</span>, <span class="math">P_0 + P_1 + ...+ P_{\frac n {100} }= 1</span> so <span class="math">g(n) = O(n)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>참고: Quick sort 알고리즘 → Worst-case <span class="math">O(n^2)</span>, Average-Case $O(n log n) $</p>
+</li>
+</ul>
+<doc-anchor-target id="reviews---summation">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#reviews---summation">#</doc-anchor-trigger>
+        <span>Reviews - Summation</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Sums of powers</p>
+<ul>
+<li><span class="math">\sum_{i=1}^{n} i = \frac {n(n+1)} {2}</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^2 = \frac {n(n+1)(2n+1)} {6}</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^3 = (\frac {n(n+1)} {2})^2</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^4 = \frac {n(n+1)(2n+1)(3n^2+3n-1)} {30}</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^s = \frac {(n+1)^{s+1}} {s+1} + \sum_{k=1}^{s} \frac {B_k} {s-k+1} {s \choose k} (n+1)^{s-k+1}</span>
+<ul>
+<li><span class="math">B_k</span> is the <span class="math">k^{th}</span> Bernoulli Number.</li>
+</ul>
+</li>
+<li><span class="math">\sum_{i=1}^{n} i^{-s} = \prod_{p prime} \frac {1} {1 - p^{-s}} = \zeta(s)</span>
+<ul>
+<li><span class="math">\zeta_k</span> is the Riemann zeta function</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Growth rates</p>
+<ul>
+<li><p><span class="math">\sum_{i=1}^{n} i^c \in \Theta(n^{c+1})</span> for real <span class="math">c</span> greater than <span class="math">-1</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} \frac 1 i \in \Theta(log n)</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} c^i \in \Theta( n \cdot log(n)^{c+1})</span> for real <span class="math">c</span> greater than <span class="math">1</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} log(i)^c \in \Theta(n \cdot log(n)^{c})</span> for nonnegative real <span class="math">c</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} log(i)^c \cdot i^d \in \Theta(n^{d+1} \cdot log(n)^{c})</span> for nonnegative real <span class="math">c, d</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} log(i)^c \cdot i^d \cdot b^i \in \Theta(n^{d} \cdot log(n)^{c} \cdot b^n)</span> for nonnegative real <span class="math">b&gt;1, c, d</span></p>
+</li>
+</ul>
+</li>
+<li><p><strong>Read</strong> <strong><a href="http://en.wikipedia.org/wiki/Summation">http://en.wikipedia.org/wiki/Summation</a></strong></p>
+</li>
+<li><p><a href="http://en.wikipedia.org/wiki/List_of_mathematical_series.*">http://en.wikipedia.org/wiki/List_of_mathematical_series.*</a>*</p>
+</li>
+</ul>
+<doc-anchor-target id="reviews---run-time-analysis">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#reviews---run-time-analysis">#</doc-anchor-trigger>
+        <span>Reviews - Run Time Analysis</span>
+    </h5>
+</doc-anchor-target>
+<p>What is the worst-case time complexity of each loop?</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 0; i &lt; N; i++) 
+  for (j = 0; j &lt; N; j++)
+    a[i][j] = b[i][j] + c[i][j];</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = 0;
+ for (i = 1; i &lt;= N; i++)
+   for (j = 1; j &lt;= i; j++) 
+     x += i + j;</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 1; i &lt;= N; i++)
+  if (i % 2 == 0) a[i] = 1;
+	else a[i] = -1;
+
+for (i = 1; i &lt;= N; i++)
+	for (j = 1; j &lt;= N; j++) 
+    a[i][j] = i + j;</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = 0;
+ for (i = 1; i &lt;= N; i++)
+   for (j = 1; j &lt;= i; j++) 
+     //What if this is i*i?
+     for (k = 1; k &lt;= j; k++)
+       x += i + j + k;</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 1; i &lt;= N; i++) {
+  if (i % 2) {
+		for (j = 1; j &lt;= N; j++)
+      a[i][j] = i + j;
+  }else {
+    for (j = 1; j &lt;= N; j++) { 
+    	a[i][j] = 0; 
+	    for (k = 1; k &lt;= N; k++)
+        a[i][j] += k;
+    }
+  } 
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = 0;
+for (i = 1; i&lt;=N;i++)
+  for (j = 1; j &lt;= i*i; j++) 
+    if (j % i == 0)
+      for (k = 1; k &lt;= j; k++) 
+        x++;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><span class="math">\rightarrow</span> <span class="math">O(N^4)</span></li>
+<li>What is the worst-case time complexity of each loop?</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// float x[n][n+1];
+for (i = 0; i &lt;= n-2; i++)
+  for (j = i+1; j &lt;= n-1; j++) 
+    for (k = i; k &lt;= n; k++)
+      x[j][k] = x[j][k] – x[i][k]*x[j][i]/x[i][i];</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Could this be faster?</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// n = 2^k for some positive // integer k
+for (i = 1; i &lt; N; i++) {  
+  j = n;  
+  while (j &gt;= 1) {  
+    // some O(1) computation   
+    j = j/2;   
+  }
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// n: odd integer
+for (i = 0; i &lt; n; i++)    
+  for (j = 0; j &lt; n; j++)      
+    s[i][j] = 0;   
+s[0][(n-1)/2] = 1;   
+j = (n-1)/2;
+for (key = 2; key &lt;= n*n; key++) { 
+  k = (i) ? (i-1) : (n-1);   
+  l = (j) ? (j-1) : (n-1); 
+  if (s[k][l]) i = (i+1)%n;
+  else {  
+    i = k; j = l;  
+  }
+  s[i][j] = key;
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Magic square : Could this be faster?</li>
+</ul>
+<table class="comfortable">
+<thead>
+<tr>
+<th><strong>15</strong></th>
+<th><strong>8</strong></th>
+<th><strong>1</strong></th>
+<th><strong>24</strong></th>
+<th><strong>17</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td>14</td>
+<td>7</td>
+<td>5</td>
+<td>23</td>
+</tr>
+<tr>
+<td>22</td>
+<td>20</td>
+<td>13</td>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>21</td>
+<td>19</td>
+<td>12</td>
+<td>10</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2</td>
+<td>25</td>
+<td>18</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// n = 2^k for some positive
+// integer k
+i = n;
+while (i &gt;= 1){
+    j = i;
+    while (j &lt;= n){ 
+      // some O(1) computation    
+	    j = 2*j;   
+  	  }i = i/2; 
+    }
+</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// compute x^n (n &gt;= 0) 
+m = n; 
+power = 1; 
+z = x; 
+while (m &gt; 0) {	
+    while (!(m%2)) {   
+         m /= 2;     
+         z *= z;  
+    }m--;
+    power *=z; 
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = x + 1;
+for (i = 1; i &lt;= n; i++) 
+	y = y + 2;
+	for (i = n; i &gt;=1; i--) 
+		for (j = n; j &gt;= 1; j--)    
+			z = z + 1;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>time complexity. :  $ c_0 + c_1 n + c_2 n<sup>2 = O(n</sup>2)$</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">c = 0; // n &gt; 0
+for (i = 1; i &lt;= n; i++) 
+	for (j = 1; j &lt;= n; j++)    
+		for (k = 1; k &lt;= n; k = k*2)      
+			c += 2;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>time complexity. :  $ c( ⌊{log_2 n}⌋+1) \cdot n<sup>2 = O(n</sup>2)$</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">i = 1; j = 1; m = 0; // n &gt; 0
+while (j &lt;= n) {  
+	i++; 
+	j = j + i; 
+	m = m + 2;
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>time complexity. :  <span class="math">??= O( \sqrt n)</span></li>
+</ul>
+<doc-anchor-target id="4-최대-부분-수열의-합-maximum-subsequence-sum">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#4-최대-부분-수열의-합-maximum-subsequence-sum">#</doc-anchor-trigger>
+        <span>4. 최대 부분 수열의 합 Maximum Subsequence Sum</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="algorithm-design-example">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#algorithm-design-example">#</doc-anchor-trigger>
+        <span>Algorithm Design Example</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p><span class="math">Ref.</span> <strong>[M. Weiss,</strong> <strong>Data Structure and Algorithm Analysis in C</strong> (2nd<strong>ed.), Pearson, 1997. 2.4.3]</strong></p>
+</li>
+<li><p>Maximum Subsequence Sum (MSS) Problem</p>
+<ul>
+<li><p>Given <span class="math">N</span> (possiblly negative) $ \mathbb{Z}$ <span class="math">A_0, A_1, ..., A_{N-1}</span></p>
+</li>
+<li><p>find the maximum value of $\sum_{k=i}^{j} {A_k } <span class="math">for</span> 0 \leq i \leq j \leq N-1$</p>
+</li>
+<li><p>for convenience, the max subseuqence sum is 0 if all the integers &#x27;re &lt;0</p>
+</li>
+</ul>
+</li>
+<li><p>Example</p>
+<ul>
+<li>(-2, 11, -4, 13, -5, -2).  →  MSS = 20</li>
+<li><img width="395" alt="스크린샷 2021-06-13 오후 4 00 54" src="https://user-images.githubusercontent.com/46957634/121798325-9abdf880-cc60-11eb-915f-e6c439a2810c.png">
+</li>
+</ul>
+</li>
+<li><p>Maximum Subarray Problem</p>
+</li>
+<li><p>Maximum Positive Sum Subarray Problem</p>
+</li>
+<li><doc-anchor-target id="max-sum-subsequence-versus-max-subsequence-sum">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#max-sum-subsequence-versus-max-subsequence-sum">#</doc-anchor-trigger>
+        <span>Max. Sum Subsequence versus Max. Subsequence Sum</span>
+    </h2>
+</doc-anchor-target>
+</li>
+</ul>
+<doc-anchor-target id="alg-of-maximum-subsequence-sum">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#alg-of-maximum-subsequence-sum">#</doc-anchor-trigger>
+        <span>Alg of Maximum Subsequence Sum</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>길이 <em>n</em>인 정수의 수열 <span class="math">a_0, a_1, ..., a_n-1</span> 이 입력으로 주어져 있다. 여기서부분 수열 [<em>i</em>, <em>j</em>]라는 것은 $a_i, a_{i+1}, a_{i+2}..., , a_{j}$를 말한다.</p>
+</li>
+<li><p>본 문제는 주어진 수열의 부분 수열의 합,즉 <span class="math">\sum_{i \leq k \leq j} {a_k}</span> 의 최대값을 구하는 문제이다. (이때 주어진 수열의 정수가 모두 음수이면 최대 부분 수열의 합은 0 이라고 간주한다)</p>
+<ul>
+<li><p>예를 들어 다음과 같은 수열이 주어졌을 때,
+$ + 31, −41, +59, +26, −53, +58, +97, −93, −23, +84$</p>
+<p>최대 부분 수열은 [2,6]이며 수열의 합은 187 이 된다.</p>
+</li>
+</ul>
+</li>
+<li><p>이 문제는 최대 부분 수열의 합을 구하는 것이지만, 앞으로 소개할 알고리즘을 조금만 수정하면 최대 부분 수열도 쉽게 구할 수 있다.</p>
+<blockquote>
+<p>Algorithm1 : 모든 경우의 수 찾기 - <span class="math">O(N^3)</span></p>
+<p>Algorithm2 : Sum구할 때 중복 조금 피하기 - <span class="math">O(N^2)</span></p>
+<p>Algorithm3 : Divide n Conquer - <span class="math">O(N log N)</span></p>
+<p>Algorithm4 : Dynamic Programming - <span class="math">O(N)</span></p>
+</blockquote>
+<ul>
+<li><img src="https://user-images.githubusercontent.com/46957634/122639250-de6aa380-d133-11eb-9a3a-b43a8519b070.png" alt="image" /></li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-1">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-1">#</doc-anchor-trigger>
+        <span>MSS Algorithm 1</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Strategy</p>
+<ul>
+<li><p>Enumerate all possibilities one at a time.</p>
+</li>
+<li><p>No efficiency is considered, resulting in a lot of unnecessary computation!</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Maxsum = 0
+for (i=0; i &lt; n; i++){
+    for (j=i; j &lt; n; j++){
+        Thissum = sum(A[i:j])
+      	Maxsum = max(Thissum, Maxsum)
+    }
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>모든 경우의 수를 하나하나 모두 따져보는 방법.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubsequenceSum(const int A[], int N){
+int ThisSum, MaxSum, i, j, k;
+  //i = 리스트 왼쪽 끝 인덱스, j = 리스트 오른쪽 끝 인덱스, ThisSum = 고려 대상 부분 리스트 합, MaxSum = 문제 최종결론
+MaxSum = 0;
+for (i = 0; i &lt; N; i++)
+    for (j = i; j &lt; N; j++)
+    {
+        ThisSum = 0;
+        for (k = i; k &lt;= j; k++)
+            ThisSum += A[k];
+        if (ThisSum &gt; MaxSum)
+            MaxSum = ThisSum;
+    }
+return MaxSum;
+}
+</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Is this for-loop OK for you?</p>
+</li>
+<li><p>Time Complexity : $ O(N^3)$</p>
+<ul>
+<li>𝑖와 관련된 반복문은 𝑛n번, 𝑗와 관련된 반복문은 최대 𝑛번, Thissum을 구할 때 최대 𝑛개의 요소를 계산해야 하기에</li>
+<li><span class="math">\sum_{i=0}^{N-1} \sum_{j=i}^{N-1} \sum_{k=i}^{j} 1 = \frac{N^3 + 3N^2 + 2N}{6}</span></li>
+<li><span class="math">\sum_{j=i}^{N-1}\ (j-i+1) = \frac{(N-i+1)(N-i)}{2}</span></li>
+<li><span class="math">\sum_{k=i}^{j} 1 = j-i+1</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-2">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-2">#</doc-anchor-trigger>
+        <span>MSS Algorithm 2</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Strategy</p>
+<ul>
+<li><p>Get rid of the inefficiency in the innermost for-loop. Algorithm 1보다 중복을 줄이는 방법</p>
+</li>
+<li>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Maxsum = 0
+for (i=0; i &lt; n; i++){
+      for (j=i; j &lt; n; j++){
+          Thissum = sum(A[i:j])
+        	Maxsum = max(Thissum, Maxsum)
+        }
+    }</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>Notice that <span class="math">\sum_{k=i}^{j } {A_k} = A_j + \sum_{k=i}^{j-1} {A_k}</span></p>
+</li>
+<li>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubsequenceSum(const int A[], int N)
+{
+  int ThisSum, MaxSum, i, j;
+  MaxSum = 0;
+for (i = 0; i &lt; N; i++){
+  ThisSum = 0;
+  for (j = i; j &lt; N; j++){
+      ThisSum += A[j];
+    if (ThisSum &gt; MaxSum)
+      MaxSum = ThisSum;
+  }
+}return MaxSum;</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+<p>}</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none"></code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>time complexity : <span class="math">O(N^2)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-3">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-3">#</doc-anchor-trigger>
+        <span>MSS Algorithm 3</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Strategy</p>
+<ul>
+<li><p>Use the Divide-and-Conquer strategy.</p>
+<ul>
+<li>원 문제를 작은 문제로 나눠 풀고, 그 결과를 합쳐 문제를 해결하는 알고리즘</li>
+</ul>
+</li>
+<li><p>The maximum subsequence sum can be in one of three places.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubSum(const int A[], int Left, int Right){
+int MaxLeftSum, MaxRightSum;
+int MaxLeftBorderSum, MaxRightBorderSum;
+int LeftBorderSum, RightBorderSum;
+int Center, i;
+  //종료조건
+if (Left == Right){
+    if (A[Left] &gt; 0)
+				return A[Left];
+    else
+        return 0;
+}
+//divide n conquer 
+Center = (Left + Right) / 2;
+//왼쪽, 오른쪽, 중간
+MaxLeftSum = MaxSubSum(A, Left, Center);
+MaxRightSum = MaxSubSum(A, Center + 1, Right);
+MaxLeftBorderSum = 0;
+LeftBorderSum = 0;
+
+//1. left ending 끝으로 하는 mss
+for (i = Center; i &gt;= Left; i--){
+    LeftBorderSum += A[i];
+    if (LeftBorderSum &gt; MaxLeftBorderSum)
+        MaxLeftBorderSum = LeftBorderSum;
+}
+MaxRightBorderSum = 0;
+RightBorderSum = 0;
+//2. right ending 시작으로 하는 mss
+for (i = Center; i &lt;= Right; i++){
+    RightBorderSum += A[i];
+    if (RightBorderSum &gt; MaxRightBorderSum)
+        MaxRightBorderSum = RightBorderSum;
+}
+return Max3(MaxLeftSum, MaxRightSum, MaxLeftBorderSum + MaxRightBorderSum);
+}
+int MaxSubsequenceSum(const int A[], int N) { 
+	return MaxSubSum(A, 0, N - 1); 
+}
+</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+</li>
+<li><p>cost : <span class="math">T(n) = 2T(n/2) + cn</span>, <span class="math">T(1) = d</span></p>
+</li>
+<li><p>why <span class="math">O(N log N)</span> ?</p>
+<ul>
+<li><p><span class="math">T(n) = 2T(\frac n 2) + cn</span>, <span class="math">T(1) = d</span></p>
+<p><span class="math">= 2 [ 2T(\frac n {2^2}) + c \frac n 2 ] + cn</span></p>
+<p>$= 2<sup>2 T [ \frac n {2</sup>2}] + 2cn $</p>
+<p><span class="math">= 2^3 T [ \frac n {2^3}] + 3cn =...</span></p>
+<p>$= 2<sup>i T [ \frac n {2</sup>i}] + icn $</p>
+<p><span class="math">= 2^{log_2 n} T(1) + log_2 n \cdot cn</span></p>
+<p><span class="math">=nT(1) + log_2 n \cdot cn</span></p>
+<p><span class="math">= O(n) + O(n log_2 n) = O(n log_2 n)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-4-kadanes-algorithm">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-4-kadanes-algorithm">#</doc-anchor-trigger>
+        <span>MSS Algorithm 4; Kadane’s algorithm</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Strategy</p>
+<ul>
+<li><p>Use the Dynamic Programming strategy.</p>
+</li>
+<li><p>subsequence sum&lt;0인 경우, 논리적으로 최대값이 될 수 없음에 착안한 전략</p>
+</li>
+<li><p>만약에 sum이 음수라도 무방하고 1개 이상의 원소로 구 성된 Subsequence (subarray)를 구하는 문제라면?</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubsequenceSum(const int A[], int N){
+    int ThisSum, MaxSum, i;
+
+    ThisSum = 0; MaxSum = 0;
+    for(i = 0; i &lt; N; i++){
+        ThisSum += A[i];
+        if(ThisSum &gt; MaxSum)
+            MaxSum = ThisSum;
+        else if(ThisSum &lt; 0)
+            ThisSum = 0;
+    }
+    return MaxSum;
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Time Complexity : <span class="math">O(n)</span></p>
+<ul>
+<li>for i, iteration n times, and <span class="math">O(1)</span> for 1 calculation</li>
+</ul>
+</li>
+<li><p>C Implementation</p>
+<p>Maximum sum rectangle in a 2D matrix (DP-27) by GeeksforGeeks</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int kadane(int* arr, int* start, int* finish, int n) { int sum = 0, maxSum = INT_MIN;
+
+*finish = -1;int local_start = 0;
+for (int i = 0; i &lt; n; ++i) {
+    sum += arr[i];
+    if (sum &lt; 0) {
+        sum = 0; local_start = i+1;
+    }
+    else if (sum &gt; maxSum) {
+        maxSum = sum;
+      *start = local_start; *finish = i; }
+  **}
+** if (*finish != -1) return **maxSum**; // at least one non-negative number.
+                                                      // When all numbers in the array are negative
+maxSum = arr[0]; *start = *finish = 0;
+for (int i = 1; i &lt; n; i++)  {
+    if (arr[i] &gt; maxSum) {
+        maxSum = arr[i]; *start = *finish = i;
+    }
+}
+                                                      return maxSum; 
+                                                     }
+</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Empty subsequence를 허용하면 0을 리턴 (원래 문제)</li>
+<li>Empty subsequence를 허용하지 않으면 음수 중 가장 큰 원소를 리턴</li>
+</ul>
+<doc-anchor-target id="so-why-do-we-bother-with-the-time-complexity">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#so-why-do-we-bother-with-the-time-complexity">#</doc-anchor-trigger>
+        <span>So, why do we bother with the time complexity?</span>
+    </h5>
+</doc-anchor-target>
+<doc-anchor-target id="5-maximum-sum-subrectangle-in-2d-array">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#5-maximum-sum-subrectangle-in-2d-array">#</doc-anchor-trigger>
+        <span>5. Maximum Sum Subrectangle in 2D Array</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>= max sum submatrix</li>
+<li>Problem
+<ul>
+<li>Given an mxn array of integers, find a subrectangle with the largest sum. (In this problem, we assume that a subrectangle is <strong>any contiguous sub-array of size 1x1 or greater</strong> located within the whole array.)</li>
+</ul>
+</li>
+<li>Note
+<ul>
+<li>What is the input size of this problem?→ (m, n)
+<ul>
+<li>If m = n→n</li>
+</ul>
+</li>
+<li>How many subrectangles are there in an mxn array?</li>
+<li>For the case of m = n,
+<ul>
+<li>Design an <span class="math">O(n^6)</span> algorithm.</li>
+<li>Design an <span class="math">O(n^5)</span> algorithm.</li>
+<li>Design an <span class="math">O(n^4)</span> algorithm.</li>
+<li>Design an <span class="math">O(n^3)</span> algorithm.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<table class="comfortable">
+<thead>
+<tr>
+<th>0</th>
+<th>-2</th>
+<th>-7</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>2</td>
+<td>-6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>-4</td>
+<td>1</td>
+<td>-4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>8</td>
+<td>0</td>
+<td>-2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>How many subrectangles are there in an mxn array?</p>
+<ul>
+<li><p>for an <span class="math">m * n</span> rectangle,</p>
+<p><span class="math">\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   1</span></p>
+<p><span class="math">= (\sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   1)(\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} 1)</span></p>
+<p>$$ = { \sum_{k=0}<sup>{m-1}(m-k)}{\sum_{i=0}</sup>{n-1}{(n-i)} }$$</p>
+<p><span class="math">= \frac {m(m+1)} {2} \frac {n(n+1)} {2} = O(m^2 n^2) = O(n^4)</span> if <span class="math">m=n</span></p>
+</li>
+<li><p>[1D case]</p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="maximum-sum-subrectangle-a-naive-approach">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#maximum-sum-subrectangle-a-naive-approach">#</doc-anchor-trigger>
+        <span>Maximum Sum Subrectangle: A Naïve Approach</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>For each subrectangle, find its sum.</p>
+</li>
+<li><p>[가정] <span class="math">n=m</span></p>
+<p>$$\sum_{i=0}<sup>{n-1} \sum_{j=i}</sup>{n-1} \sum_{k=0}<sup>{m-1} \sum_{l=k}</sup>{m-1}   (j-i+1)(l-k+1) = \sum_{i=0}<sup>{n-1} \sum_{j=i}</sup>{n-1} {(j-i+1)} \sum_{k=0}<sup>{m-1} \sum_{l=k}</sup>{m-1}   {(l-k+1)} $$</p>
+<p>let <span class="math">A</span> = $$\sum_{i=0}<sup>{n-1} \sum_{j=i}</sup>{n-1} {(j-i+1)} $$</p>
+<p>$$A = 1<em>n + 2</em>(n-1) +3(n-2) + ... + n*1 = \sum_{i=1}^{n} {i(n-i+1)} = n \sum_{i=1}^n i - \sum_{i=1}<sup>n i</sup>2 + \sum_{i=1}<sup>n i \frac{1}{6} n</sup>3 $$ so <span class="math">O(\frac{1}{36} n^6 )</span></p>
+</li>
+<li><p>Time Complexity : <span class="math">O(n^6)</span></p>
+</li>
+</ul>
+<doc-anchor-target id="maximum-sum-subrectangle-summed-area-table">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#maximum-sum-subrectangle-summed-area-table">#</doc-anchor-trigger>
+        <span>Maximum Sum Subrectangle: Summed Area Table</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Table construction: <span class="math">O(n^2)</span></li>
+<li>Sum comparisons: <span class="math">O(n^4)</span></li>
+<li>Time Complexity : <span class="math">O(n^4)</span></li>
+</ul>
+<doc-anchor-target id="maximum-sum-subrectangle-kadane-algo-based">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#maximum-sum-subrectangle-kadane-algo-based">#</doc-anchor-trigger>
+        <span>Maximum Sum Subrectangle: Kadane Algo.-Based</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Idea
+<ul>
+<li>ref. <a href="https://www.geeksforgeeks.org/maximum-sum-rectangle-in-a-2d-matrix-dp-27/">geeksforgeeks</a></li>
+<li>MSS(2D)의 해당 열은 어디이건 i에서 j까지 임.</li>
+<li>가능한 모든 (i, j) 조합에 대하여 MSS(1D)를 Kadane 알고리즘을 사용하여 찾음.</li>
+<li>그렇게 하기 위하여, ...</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// Program to find maximum sum subarray
+// in a given 2D array
+#include &lt;stdio.h&gt;
+#include &lt;iostream&gt;
+#include &lt;string.h&gt;
+
+using namespace std;
+#define INT_MAX 2147483647
+#define INT_MIN 2147483648
+#define ROW 4
+#define COL 5
+
+// Implementation of Kadane's algorithm for
+// 1D array. The function returns the maximum
+// sum and stores starting and ending indexes
+// of the maximum sum subarray at addresses
+// pointed by start and finish pointers
+// respectively.
+int kadane(int* arr, int* start, int* finish, int n)
+{
+	// initialize sum, maxSum and
+	int sum = 0, maxSum = INT_MIN, i;
+
+	// Just some initial value to check
+	// for all negative values case
+	*finish = -1;
+
+	// local variable
+	int local_start = 0;
+
+	for (i = 0; i &lt; n; ++i)
+	{
+		sum += arr[i];
+		if (sum &lt; 0)
+		{
+			sum = 0;
+			local_start = i + 1;
+		}
+		else if (sum &gt; maxSum)
+		{
+			maxSum = sum;
+			*start = local_start;
+			*finish = i;
+		}
+	}
+
+	// There is at-least one
+	// non-negative number
+	if (*finish != -1)
+		return maxSum;
+
+	// Special Case: When all numbers
+	// in arr[] are negative
+	maxSum = arr[0];
+	*start = *finish = 0;
+
+	// Find the maximum element in array
+	for (i = 1; i &lt; n; i++)
+	{
+		if (arr[i] &gt; maxSum)
+		{
+			maxSum = arr[i];
+			*start = *finish = i;
+		}
+	}
+	return maxSum;
+}
+
+// The main function that finds
+// maximum sum rectangle in M[][]
+void findMaxSum(int M[][COL])
+{
+	// Variables to store the final output
+	int maxSum = INT_MIN,
+				finalLeft,
+				finalRight,
+				finalTop,
+				finalBottom;
+
+	int left, right, i;
+	int temp[ROW], sum, start, finish;
+
+	// Set the left column
+	for (left = 0; left &lt; COL; ++left) {
+		// Initialize all elements of temp as 0
+		memset(temp, 0, sizeof(temp));
+
+		// Set the right column for the left
+		// column set by outer loop
+		for (right = left; right &lt; COL; ++right) {
+
+			// Calculate sum between current left
+			// and right for every row 'i'
+			for (i = 0; i &lt; ROW; ++i)
+				temp[i] += M[i][right];
+
+			// Find the maximum sum subarray in temp[].
+			// The kadane() function also sets values
+			// of start and finish. So 'sum' is sum of
+			// rectangle between (start, left) and
+			// (finish, right) which is the maximum sum
+			// with boundary columns strictly as left
+			// and right.
+			sum = kadane(temp, &amp;start, &amp;finish, ROW);
+
+			// Compare sum with maximum sum so far.
+			// If sum is more, then update maxSum and
+			// other output values
+			if (sum &gt; maxSum) {
+				maxSum = sum;
+				finalLeft = left;
+				finalRight = right;
+				finalTop = start;
+				finalBottom = finish;
+			}
+		}
+	}
+
+	// Print final values
+	cout &lt;&lt; &quot;(Top, Left) (&quot;
+		&lt;&lt; finalTop &lt;&lt; &quot;, &quot;
+		&lt;&lt; finalLeft
+		&lt;&lt; &quot;)&quot; &lt;&lt; endl;
+	cout &lt;&lt; &quot;(Bottom, Right) (&quot;
+		&lt;&lt; finalBottom &lt;&lt; &quot;, &quot;
+		&lt;&lt; finalRight &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+	cout &lt;&lt; &quot;Max sum is: &quot; &lt;&lt; maxSum &lt;&lt; endl;
+}
+
+// Driver Code
+int main(){
+	int M[ROW][COL] = { { 1, 2, -1, -4, -20 },
+						{ -8, -3, 4, 2, 1 },
+						{ 3, 8, 10, 1, 3 },
+						{ -4, -1, 1, 7, -6 } };
+
+	// Function call
+	findMaxSum(M);
+
+	return 0;
+}</code></pre>
+</doc-codeblock></div>
+<p>결과는 아래와 같다.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">(Top, Left) (1, 1)
+(Bottom, Right) (3, 3)
+Max sum is: 29</code></pre>
+</doc-codeblock></div>
+
+
+
+
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results />
+            </div>
+
+            
+<nav class="flex mt-14">
+    <div class="w-1/2">
+        <a class="px-5 py-4 h-full flex items-center break-all md:break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="/tech/algorithm/sub5/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+            <span>
+                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                <span class="block mt-1">Greedy Method</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="w-1/2">
+        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-all md:break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="/tech/algorithm/sub2-2/">
+            <span>
+                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                <span class="block mt-1">Sub2 2</span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+        </a>
+    </div>
+</nav>
+
+
+        </main>
+
+        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between">
+    <div>
+        <ul class="flex flex-wrap items-center text-sm">
+</ul>
+
+    </div>
+    <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2021 KyuHwan Shim, All rights reserved.</p>
+</div>
+</footer>
+
+        </div>
+    </div>
+    
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 transform translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:flex-shrink-0 lg:pt-6 lg:transform-none lg:w-56 lg:z-0 md:w-72 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+        </div>
+    </div>
+    
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+        <div id="docs-overlay-target"></div>
+
+        <script>window.__DOCS__ = { "title": "Sub1", icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+    </body>
+</html>
