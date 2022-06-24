@@ -7,5 +7,4 @@ label: Contact
 ## How to reach me
 
 
-
-Aug 2021
+[kyuhwan.shim@u.sogang.ac.kr](mailto:kyuhwan.shim@u.sogang.ac.kr)

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: /tech/sitemap.xml

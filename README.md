@@ -36,7 +36,6 @@ TBA
 
 - 2016 - 2018
 - The Informatica, Informatics student research group
-- That's it! Your new Retype website should be up and running.
 
 ---
 
@@ -44,7 +43,7 @@ TBA
 
 #### Government Issued FIreFighter 
 
-- 충청북도 영동
+- Yeongdong-gun, Chungcheongbuk-do
 
 ---
 
