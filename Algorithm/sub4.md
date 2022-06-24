@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Dynamic Programming
+title: DP
 tags: alg
 category: alg
 picture_frame: shadow

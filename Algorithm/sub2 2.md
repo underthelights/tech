@@ -1,10 +1,12 @@
-## layout: article
-title: Heap-based Priority Queues and Heap Sort 
+---
+layout: article
+title: Heap
 tags: alg
 category: alg
 picture_frame: shadow
 use_math: true
 
+---
 
 Algorithm Design & Analysis  
 **[Sub2] Heap-based Priority Queues and Heap Sort**

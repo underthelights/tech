@@ -1,6 +1,6 @@
 ---
 layout: article
-title: [Sub1] Introduction to Algorithms and Complexity
+title: Intro & Complexity
 tags: alg
 category: alg
 picture_frame: shadow
