@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Divide-and-Conquer Techniques and Sorting Techniques
+title: DnC & Sorting
 tags: alg
 category: alg
 picture_frame: shadow
