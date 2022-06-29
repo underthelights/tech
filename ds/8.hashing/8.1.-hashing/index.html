@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.709803048888">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>8.1. Hashing</title>
+    <meta name="title" content="8.1. Hashing">
+    <meta name="description" content="In this course, we have looked at many different abstract data types." />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/ds/8.hashing/8.1.-hashing/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/ds/8.hashing/8.1.-hashing/">
+    <meta property="og:title" content="8.1. Hashing">
+    <meta property="og:description" content="In this course, we have looked at many different abstract data types.">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/135798649-5f523d15-91fa-471f-9338-d2fd04a2414d.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/ds/8.hashing/8.1.-hashing/">
+    <meta property="twitter:title" content="8.1. Hashing">
+    <meta property="twitter:description" content="In this course, we have looked at many different abstract data types.">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/135798649-5f523d15-91fa-471f-9338-d2fd04a2414d.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../../favicon.ico" rel="icon" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.709803048888" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.709803048888" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.709803048888" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.709803048888" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="81-hashing" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#81-hashing">#</doc-anchor-trigger>
+        <span>8.1. Hashing</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="hashing-chapter-8">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hashing-chapter-8">#</doc-anchor-trigger>
+        <span>Hashing (Chapter 8)</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="introduction">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction">#</doc-anchor-trigger>
+        <span>Introduction</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>In this course, we have looked at many different abstract data types.</p>
+</li>
+<li><p>We need data structures to organize a large amount of data and efficiently support application requirements.</p>
+</li>
+<li><p>The best data structure depends on the application.</p>
+</li>
+<li><p>For a data structure, there could be many operations, but the most basic and</p>
+<p>essential operations are insert, delete, and search.</p>
+</li>
+<li><p>Hashing is a data structure in which the expected time of insert, delete, and search is <span class="math">O(1)</span>, the best asymptotic time complexity you can achieve.</p>
+<ul>
+<li>The worst case time complexity for the three operations is <span class="math">O(n)</span>, where n is the number of elements.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="hashing-overview">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hashing-overview">#</doc-anchor-trigger>
+        <span>Hashing: Overview</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Suppose we have a one-dimensional array (or table): table[0:b-1].</p>
+</li>
+<li><p>Each data element stored in this array is a dictionary pair (key, element).</p>
+</li>
+<li><p>Each position of this array is called a bucket.</p>
+<ul>
+<li><p>A bucket can typically hold one dictionary pair.</p>
+</li>
+<li><p>Sometimes a bucket has multiple slots, where each slot can hold a dictionary pair.</p>
+</li>
+</ul>
+</li>
+<li><p>In hashing, we have a hash function f that converts the key k into an index in the range [0, b-1].</p>
+</li>
+<li><p>f(k) is called the home bucket for key k.
+A dictionary pair (key, element) is stored in its home bucket table[f[key]].</p>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135798649-5f523d15-91fa-471f-9338-d2fd04a2414d.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="hashing-example">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hashing-example">#</doc-anchor-trigger>
+        <span>Hashing: Example</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Suppose we have the following dictionary pairs.</p>
+<ul>
+<li><span class="math">(22, a), (33, c), (3, d), (71, e), (85, f)</span></li>
+</ul>
+</li>
+<li><p>Hash table is table[0:7], b = 8.</p>
+</li>
+<li><p>Hash function is f(k) = k % 8. (remainder when k is divided by 8.)</p>
+</li>
+<li><p>Pairs are stored in the table as below.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135798693-968f17ac-2c73-404b-a6a2-bf495a55f056.png" alt="image" /></p>
+</li>
+<li><p>In this case, search, insert, delete takes $O(1) time.</p>
+<ul>
+<li>We can just access the dictionary pair by hashing its key.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="hashing-collision-and-overflow">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hashing-collision-and-overflow">#</doc-anchor-trigger>
+        <span>Hashing: Collision and Overflow</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Suppose the state of our hashing table was like this.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135798797-8a335708-b433-4e24-87fd-b99cd893d159.png" alt="image" /></p>
+</li>
+<li><p>We would like to insert a new dictionary pair, (27, g).</p>
+</li>
+<li><p>Using our hash function, (27, g) should be inserted to table[3]. However, (3, d) is already occupying that bucket.</p>
+</li>
+<li><p>Keys that have the same home bucket are called synonyms.</p>
+<ul>
+<li>3 and 27 are synonyms for the hash function we use.</li>
+</ul>
+</li>
+<li><p>A collision occurs when the home bucket for a new pair is occupied by a pair with a different key.</p>
+</li>
+<li><p>An overflow occurs when there is no space in the home bucket for the new pair.</p>
+</li>
+<li><p>When a bucket can hold only one dictionary pair, a collision and an overflow occur together.</p>
+<ul>
+<li>If a bucket has multiple slots, a collision may not lead to an overflow.</li>
+</ul>
+</li>
+<li><p>We need a method to handle overflows.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135798834-166d844d-9d48-47f1-932b-e123fbb704e4.png" alt="image" /></p>
+</li>
+</ul>
+<doc-anchor-target id="hashing-loading-density-loading-factor">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hashing-loading-density-loading-factor">#</doc-anchor-trigger>
+        <span>Hashing: Loading Density (Loading Factor)</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>The loading density (or loading factor) α indicates how much the hash table is filled with dictionary pairs.</p>
+</li>
+<li><p>α=n/(sb)</p>
+<ul>
+<li><p>n: number of dictionary pairs in the table.</p>
+</li>
+<li><p>s: number of slots in a bucket</p>
+</li>
+<li><p>b: number of buckets in the hash table.</p>
+</li>
+</ul>
+</li>
+<li><p>In the hash table below : b=8, s=1, n=5</p>
+</li>
+<li><p>Its loading factor is 5 / 8 = 0.625 (62.5%).</p>
+</li>
+<li><p>If the loading factor is high, we should consider increasing the size of hash table.</p>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135798891-6d4418aa-d547-4da9-8452-b67f73a92fee.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="issues-in-hashing">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#issues-in-hashing">#</doc-anchor-trigger>
+        <span>Issues in Hashing</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>What hash function should we use?</li>
+<li>How should we handle overflow?</li>
+<li>What is the optimal size of a hash table?</li>
+</ul>
+<doc-anchor-target id="hash-functions">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hash-functions">#</doc-anchor-trigger>
+        <span>Hash Functions</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>We use hashing because it is fast for searching elements in a hash table.</p>
+</li>
+<li><p>Thus, the hash function should be easy to compute.</p>
+</li>
+<li><p>Also, it should minimize the number of collisions.</p>
+</li>
+<li><p>Minimizing number of collisions</p>
+<ul>
+<li><p>Suppose we have a key space where the keys are generated.- Example key space: [0:10000]</p>
+</li>
+<li><p>If a key is generated randomly from the key space, we want the probability that h(k) = i to be 1/b for all buckets i.</p>
+<ul>
+<li>A random key has an equal chance of hashing into any buckets.</li>
+</ul>
+</li>
+<li><p>A hash function that satisfies this property is called a uniform hashing function.</p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="popular-hash-functions">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#popular-hash-functions">#</doc-anchor-trigger>
+        <span>Popular Hash Functions</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Division</p>
+<ul>
+<li><p>One of the most widely used hash function.</p>
+</li>
+<li><p>h(k)=k%D</p>
+<ul>
+<li>D is called divisor.</li>
+<li>Since this function gives bucket address in the range 0 through D-1, b should be larger or equal to D.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Choice of D</p>
+<ul>
+<li>We can just set D equal to b, but sometimes other choices can be better.</li>
+<li>For example, suppose the number of even keys is much larger than the number of odd keys in an application.</li>
+<li>If D is even, odd keys are always mapped to odd buckets, and even keys are always mapped to even buckets.</li>
+<li>Thus, using a even divisor will lead to biased selection of buckets.</li>
+<li>If we use an odd divisor, this problem does not occur.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="division-example">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#division-example">#</doc-anchor-trigger>
+        <span>Division: Example</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Divisor = 5003</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Key Value</th>
+<th>Address Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>123456789</td>
+<td>2761</td>
+</tr>
+<tr>
+<td>987654321</td>
+<td>2085</td>
+</tr>
+<tr>
+<td>000000472</td>
+<td>0472</td>
+</tr>
+<tr>
+<td>100064183</td>
+<td>4813</td>
+</tr>
+<tr>
+<td>200120472</td>
+<td>0472</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>Mid-Square</p>
+<ul>
+<li>Square the key and then use an appropriate number of bits (digits) from the middle of the square to obtain the bucket address.</li>
+<li>Example
+<ul>
+<li>key=4567</li>
+<li>square = 4567 * 4567 = 20857489</li>
+<li>bucket address = 57 (the middle two digits)</li>
+</ul>
+</li>
+<li>All digits of the original key contribute to the middle two digits of the squared value.</li>
+<li>Thus, the result is not dominated by the distribution of the bottom digit or the top digit of the original key value.</li>
+</ul>
+</li>
+<li><p>Folding</p>
+<ul>
+<li><p>Key k is partitioned into several parts, all but possibly the last being of the same length.</p>
+</li>
+<li><p>The partitions are then added together to obtain the hash address for k.</p>
+</li>
+<li><p>Example</p>
+<ul>
+<li>k = 12320324111220</li>
+<li>we partition it into parts that are three decimal digits long.</li>
+<li><span class="math">P_1 =123,P_2 =203,P_3 =241,P_4 =112,P_5 =20</span></li>
+<li>If we use &quot;shift folding&quot;, the bucket address is:
+<ul>
+<li><span class="math">123+203+241+112+20=699</span></li>
+</ul>
+</li>
+<li>If we use &quot;folding at the boundaries&quot;, the bucket address is:
+<ul>
+<li><span class="math">123+302+241+211+20=897</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Digit Analysis</p>
+<ul>
+<li><p>Each digit of the key is examined, and digits having the most balanced distribution are selected.</p>
+</li>
+<li><p>Useful when the keys (or pattern of the keys) are known a priori.</p>
+</li>
+<li><p>Example</p>
+<ul>
+<li>keys: 012-452-0236, 012-153-0530, 015-342-0935, 012-752-1032, 012-852-0470</li>
+<li>The first and the second digits are common to all keys -  not used</li>
+<li>Duplicate digits appear in the the third key -  not used</li>
+<li>The fourth digit is well distributed -  used</li>
+<li>In the digits 5-7, many duplicates are seen -  not used</li>
+<li>The eighth digit is well distributed -  used</li>
+<li>The ninth digits have duplicates -  not used</li>
+<li>For the tenth digit, two keys have duplicates, but still it is well distributed -  used.</li>
+<li>Bucket addresses: 426, 150, 395, 702, 840.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="hash-functions---converting-keys-to-integers">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#hash-functions---converting-keys-to-integers">#</doc-anchor-trigger>
+        <span>Hash Functions - Converting Keys to Integers</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>The keys are not always integers. It may be other types such as a string.</p>
+</li>
+<li><p>Suppose an application uses a 2 character string as the key in the dictionary pairs.</p>
+</li>
+<li><p>In the hash function, the key is first converted into a non-negative integer (of type int).</p>
+</li>
+<li><p>An int is represented using 4 bytes, whereas the key is 2 bytes.</p>
+</li>
+<li><p>In this case we can represent all keys uniquely, using the int.</p>
+</li>
+<li><p>The following code can be used to convert the keys.</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">number = key[0];
+number += ((int) key[1]) &lt;&lt; 8;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>If the string key is longer than 4 characters, we cannot have a unique non-negative int representation.</p>
+</li>
+<li><p>A function that converts a string into a nonnegative int.</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">unsigned int stringToInt(char *key) {
+  int number = 0;
+  while(*key) {
+    number += *key++;
+    if(*key)
+      number += ((int) *key++) &lt;&lt; 8;
+  }
+  return number;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="overflow-handling">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#overflow-handling">#</doc-anchor-trigger>
+        <span>Overflow Handling</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Even when an overflow occurs, we still need to store the dictionary pair.</li>
+<li>Two popular ways to handle overflows:
+<ul>
+<li>open addressing: if the home bucket is already full, search for a bucket that is not full yet.
+<ul>
+<li>linear probing</li>
+<li>quadratic probing</li>
+<li>rehashing</li>
+</ul>
+</li>
+<li>chaining: a bucket holds a list where all dictionary pairs addressed to the bucket are stored.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="open-addressing---linear-probing">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#open-addressing---linear-probing">#</doc-anchor-trigger>
+        <span>Open Addressing - Linear probing</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Suppose we would like to insert a dictionary pair whose key is k, into the hash table ht[].</li>
+<li>We apply the hash function to get the bucket address h(k).</li>
+<li>If the bucket ht[h(k)] is full, then we try the next bucket, ht[(h(k) + 1) % b].</li>
+<li>If the bucket ht[(h(k) + 1) % b] is also full, then we try ht[(h(k) + 2) % b].</li>
+<li>We search ht[(h(k)+i)%b], 0 ≤ i ≤ b-1.</li>
+<li>If we find an unfilled bucket, we store the dictionary pair in that bucket.</li>
+</ul>
+<doc-anchor-target id="example">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example">#</doc-anchor-trigger>
+        <span>Example</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Suppose we have the following string keys:</p>
+<ul>
+<li>for, do, while, if, else, function</li>
+</ul>
+</li>
+<li><p>Our hash function does the following:</p>
+<ul>
+<li>We convert each character in the key string to its ASCII code.</li>
+<li>Then, we add the numbers to get the integer key.</li>
+<li>Then, we divide the key by 13 and its remainder is the bucket address.</li>
+</ul>
+</li>
+<li><p>Bucket addresses for the keys</p>
+<ul>
+<li>for:102+111+114=327,327%13=2</li>
+<li>do:100+111=211,211%13=3</li>
+<li>while:119+104+105+108+101=537,537%13=4</li>
+<li>if:105+102=207,207%13=12</li>
+<li>else:101+108+115+101=425,425%13=9</li>
+<li>function:102+117+110+99+116+105+111+110=870,870%13=12</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="linear-probing-example">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#linear-probing-example">#</doc-anchor-trigger>
+        <span>Linear probing: Example</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>The dictionary pairs are stored in their home buckets.</li>
+<li>When &quot;function&quot; is to be added, its home bucket [12] is already occupied by &quot;if&quot;.</li>
+<li>So we try the next bucket [0].</li>
+<li>Since it is unfilled, we store &quot;function&quot; there.</li>
+</ul>
+<doc-anchor-target id="linear-probing-search">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#linear-probing-search">#</doc-anchor-trigger>
+        <span>Linear probing: Search</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Seaching should be done in a similar way</li>
+<li>We first compute h(k)</li>
+<li>Examine the hash table buckets in the order ht[h(k)], ht[(h(k)+1)%b], ..., ht[(h(k)+j)%b]</li>
+<li>If find the key, search is done.</li>
+<li>If we do not find the key and come back to ht[h(k)], the key is not in the table.</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135811258-6531e151-a087-4a38-bbee-8c3f3ce8bd33.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="linear-probing-another-example">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#linear-probing-another-example">#</doc-anchor-trigger>
+        <span>Linear probing: another example</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>The keys are lower-case strings.</p>
+</li>
+<li><p>The hash function simply takes the first character of the keys and map to integers</p>
+<ul>
+<li>a- 0,b- 1,c- 2,...,z- 25.</li>
+</ul>
+</li>
+<li><p>We have a total of 26 buckets in the hash table.</p>
+</li>
+<li><p>Suppose we have the following 11 keys:</p>
+</li>
+<li><p>acos, atoi, char, define, exp, ceil, cos, float, atol, floor, ctime</p>
+</li>
+<li><p>What is the number of buckets searched for each key?</p>
+</li>
+</ul>
+<doc-anchor-target id="linear-probing-another-example-1">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#linear-probing-another-example-1">#</doc-anchor-trigger>
+        <span>Linear probing: another example</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>acos, atoi, char, define, exp, ceil, cos, float, atol, floor, ctime</li>
+<li>acos is mapped to bucket 0. Since the bucket is empty, acos is stored there.</li>
+<li>atoi is mapped to bucket 0. Since the bucket is full, bucket 1 is checked. Since it is empty, atoi is stored there.</li>
+<li>char is stored in bucket 2.</li>
+<li>define is stored in bucket 3.</li>
+<li>exp is stored in bucket 4.</li>
+<li>ceil is mapped to bucket 2. Since buckets 2-4 are all full, ceil is stored in bucket 5. 4 bucket searches are needed.</li>
+<li>ctime is mapped to bucket 2. Since buckets 2-9 are all full, ctime is mapped to bucket 10. 9 bucket searches are needed until we find an unfilled bucket.</li>
+</ul>
+<doc-anchor-target id="other-open-addressing-methods">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#other-open-addressing-methods">#</doc-anchor-trigger>
+        <span>Other open addressing methods</span>
+    </h4>
+</doc-anchor-target>
+<doc-anchor-target id="quadratic-probing">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#quadratic-probing">#</doc-anchor-trigger>
+        <span>Quadratic probing</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>If ht[h(k)] is full, then we look at ht[(h(k) + i2) % b] and ht[(h(k) - i2) % b].</li>
+<li>We search for <span class="math">1≤i≤\frac{(b-1)}2</span>.</li>
+</ul>
+<doc-anchor-target id="rehashing">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#rehashing">#</doc-anchor-trigger>
+        <span>Rehashing</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>We prepare a series of hash functions h1, h2, ..., hm.</li>
+<li>Buckets are searched in the order hi(k), 1 ≤ i ≤ m.</li>
+</ul>
+<doc-anchor-target id="overflow-handling-chaining">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#overflow-handling-chaining">#</doc-anchor-trigger>
+        <span>Overflow Handling: Chaining</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Linear probing can perform poorly, because search for a key involves comparison with keys with different hash values.</p>
+<ul>
+<li>To search for ctime, we need to compare keys 9 times.</li>
+</ul>
+</li>
+<li><p>In chaining, we maintain one list per bucket. The list contains all the synonyms for that bucket.</p>
+<ul>
+<li>A list could be a simple linked list (chain), but it could also be a more complex data structure such as a tree.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="chaining-example">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#chaining-example">#</doc-anchor-trigger>
+        <span>Chaining: Example</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>The keys are lower-case strings.</p>
+</li>
+<li><p>The hash function simply takes the first character of the keys and map to integers</p>
+<ul>
+<li>a- 0,b- 1,c- 2,...,z- 25.</li>
+</ul>
+</li>
+<li><p>We have a total of 26 buckets in the hash table.</p>
+</li>
+<li><p>We have the following 11 keys:</p>
+<ul>
+<li>acos, atoi, char, define, exp, ceil, cos, float, atol, floor, ctime</li>
+</ul>
+</li>
+<li><p>The dictionary pairs are stored as follows.</p>
+</li>
+</ul>
+<doc-anchor-target id="an-implementation-of-chain-search">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#an-implementation-of-chain-search">#</doc-anchor-trigger>
+        <span>An implementation of chain search</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">element* search(int k) {
+  nodePointer current;
+  int homeBucket = h(k);
+  for(current = ht[homeBucket]; current; current = current-&gt;link) {
+    if(current-&gt;data.key == k) 
+      return &amp;current-&gt;data;
+  }
+  return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="performance-analysis">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-analysis">#</doc-anchor-trigger>
+        <span>Performance Analysis</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Worst-case performance of hashing</p>
+<ul>
+<li><p>insertion, search, deletion takes $O(n).</p>
+</li>
+<li><p>consider the case where all keys are mapped to the same bucket.</p>
+</li>
+</ul>
+</li>
+<li><p>What is the expected performance?</p>
+<ul>
+<li><p>Let ht[0:b-1] be a hash table with b buckets, each bucket having one slot.</p>
+</li>
+<li><p>Let h be a uniform hash function with range [0, b-1].</p>
+</li>
+<li><p>If n keys k1, k2, ..., kn are entered into the hash table, there are bn distinct hash sequences h(k1), h(k2), ..., h(kn). We assume that each sequence is equally likely to occur.</p>
+</li>
+<li><p>Let Sn denote the average number of comparisons needed to find jth key kj, averaged over 1 ≤ j ≤ n.</p>
+</li>
+<li><p>Let Un be the expected number of key comparisons when a search is made for a key not in the hash table.</p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="performance-of-hashing-when-chaining-is-used">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-of-hashing-when-chaining-is-used">#</doc-anchor-trigger>
+        <span>Performance of hashing when chaining is used</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>If the key being sought has h(k) = i, and chain i has q nodes on it, then q comparisons are needed if k is not on the chain.</p>
+</li>
+<li><p>When the n keys are distributed uniformly over the b possible chains, the expected number in each chain is n/b = α.</p>
+</li>
+<li><p>Since Un equals the expected number of keys on a chain, Un = α.</p>
+</li>
+<li><p>When the ith key, ki, is being entered into the table, the expected number of keys on any chain is (i-1)/b. Hence, the expected number of comparisons needed to search for ki, after all n keys have been entered is 1 + (i-1)/b.</p>
+</li>
+<li><p n="" i-1="" b="">Thus, $S_n = \frac{1} {\Sigma_^ {(1+\frac)}} $ <span class="math">=1+\frac{n-1}{2b} = 1 + \frac \alpha 2</span></p>
+</li>
+</ul>
+<doc-anchor-target id="performance-of-hashing-when-linear-probing-is-used">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-of-hashing-when-linear-probing-is-used">#</doc-anchor-trigger>
+        <span>Performance of hashing when linear probing is used</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><span class="math">U_n = \frac 1 2 (1+ \frac {1}{(1-\alpha)^2})</span></li>
+<li><span class="math">S_n = \frac 1 2 (1+ \frac {1}{1-\alpha})</span></li>
+</ul>
+
+                                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../ds/8.hashing/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">8.​Hashing</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../sp/sp-7.-synchronization--basics/7-synchronization-basics-ad6224628cdd42339a53e963841c6c68/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">7. Synchronization: Basics</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "8.1. Hashing", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>
