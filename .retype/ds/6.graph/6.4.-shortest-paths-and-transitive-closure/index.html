@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.709801329795">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>6.4. Shortest Paths and Transitive Closure</title>
+    <meta name="title" content="6.4. Shortest Paths and Transitive Closure">
+    <meta name="description" content="Suppose we have a graph that represents the highway system." />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/ds/6.graph/6.4.-shortest-paths-and-transitive-closure/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/ds/6.graph/6.4.-shortest-paths-and-transitive-closure/">
+    <meta property="og:title" content="6.4. Shortest Paths and Transitive Closure">
+    <meta property="og:description" content="Suppose we have a graph that represents the highway system.">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/135762262-cf8e9d83-6fab-4223-902a-53d33b784c8d.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/ds/6.graph/6.4.-shortest-paths-and-transitive-closure/">
+    <meta property="twitter:title" content="6.4. Shortest Paths and Transitive Closure">
+    <meta property="twitter:description" content="Suppose we have a graph that represents the highway system.">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/135762262-cf8e9d83-6fab-4223-902a-53d33b784c8d.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../../favicon.ico" rel="icon" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.709801329795" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.709801329795" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.709801329795" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.709801329795" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="64-shortest-paths-and-transitive-closure" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#64-shortest-paths-and-transitive-closure">#</doc-anchor-trigger>
+        <span>6.4. Shortest Paths and Transitive Closure</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="shortest-paths-and-transitive-closure-chapter-64">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#shortest-paths-and-transitive-closure-chapter-64">#</doc-anchor-trigger>
+        <span>Shortest Paths and Transitive Closure (Chapter 6.4)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Suppose we have a graph that represents the highway system.</li>
+<li>In this graph, the vertices represent cities and edges represent sections of the highway</li>
+<li>Each edge has a weight representing the distance between the two cities connected by the edge.</li>
+<li>A motorist who wish to drive from city A to B will ask questions like:
+<ul>
+<li>Is there a path from A to B?</li>
+<li>If there is more than one path from A to B, which path is the shortest?</li>
+</ul>
+</li>
+<li>We define the length of a path as the sum of the weights of the edges on that path.</li>
+</ul>
+<doc-anchor-target id="641-single-sourceall-destinations-nonnegative-edge-costs">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#641-single-sourceall-destinations-nonnegative-edge-costs">#</doc-anchor-trigger>
+        <span>6.4.1 Single Source/All Destinations: Nonnegative Edge Costs</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>We are given the followings:
+<ul>
+<li>A directed graph G = (V, E)</li>
+<li>A weighting function w(e) for the edges of G. (w(e) ≥ 0)</li>
+<li>A source vertex. (vertex 1)</li>
+</ul>
+</li>
+<li>Our goal is to determine a shortest path from vertex 1 to each of the remaining vertices of G.</li>
+</ul>
+<img width="353" alt="image-20211004010852261" src="https://user-images.githubusercontent.com/46957634/135762273-9dbdc3f9-d4de-4f5c-b7eb-30a96933a0a4.png">
+<doc-anchor-target id="dijkstras-algorithm">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dijkstras-algorithm">#</doc-anchor-trigger>
+        <span>Dijkstra&#x27;s algorithm</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>A greedy algorithm to calculate shortest path from a single vertex to all other vertices.</li>
+</ul>
+<doc-anchor-target id="example-1">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-1">#</doc-anchor-trigger>
+        <span>example 1</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Each vertex maintains &quot;distance&quot; from the source vertex.</p>
+<ul>
+<li>Initially, the distance of the source vertex is 0, while distance of all other vertices is set to infinity (a very large number).</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762262-cf8e9d83-6fab-4223-902a-53d33b784c8d.png" alt="image" /></p>
+</li>
+<li><p>At each step of the algorithm we will extend SPT (shortest-path tree).</p>
+</li>
+<li><p>At the 1st step, we include the source vertex to SPT.</p>
+</li>
+<li><p>Then we update the distance to direct neighbors of the source vertex.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762282-5db528b9-50a0-4daa-889d-4ed723dcc121.png" alt="image" /></p>
+</li>
+<li><p>At the 2nd step, we choose a vertice that is not yet included in SPT and has the minimum distance. This time it is vertex 2.</p>
+</li>
+<li><p>We include vertex 2 in the SPT.</p>
+</li>
+<li><p>Then, we update distance to adjacent vertices of vertex 2.</p>
+<ul>
+<li>If a new path that passes through vertex 2 is shorter than the current distance, then the distance is updated.</li>
+<li>Distance of vertex 3 is updated because d[2] + w(2,3) = 3 &lt; d[3] = 4</li>
+</ul>
+</li>
+<li><p>d[u] is the current distance from source vertex to u. w(e) is the weight of edge e.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762287-bbf1a705-20a4-44ef-914a-1ec8a7d99863.png" alt="image" /></p>
+</li>
+<li><p>We repeat the same process.</p>
+</li>
+<li><p>At the 3rd step, we choose vertex 3 and include it to SPT.</p>
+</li>
+<li><p>Then, we update distance of adjacent vertices of vertex 3.</p>
+<ul>
+<li>Distance of vertex 5 is updated to 6.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762300-f945079e-bcab-4bab-a78d-e70a46a13cee.png" alt="image" /></p>
+</li>
+<li><p>We repeat the same process.</p>
+</li>
+<li><p>At the 4th step, we choose vertex 5 and include it to SPT.</p>
+</li>
+<li><p>Then, we update distance of adjacent vertices of vertex 5.</p>
+<ul>
+<li>Distance of vertex 4 is updated to 8.</li>
+<li>Distance of vertex 6 is updated to 11.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762310-f3f5055c-0a0a-4245-a77b-c9b09a5ca940.png" alt="image" /></p>
+</li>
+<li><p>We repeat the same process.</p>
+</li>
+<li><p>At the 5th step, we choose vertex 4 and include it to SPT.</p>
+</li>
+<li><p>Then, we update distance of adjacent vertices of vertex 4.</p>
+<ul>
+<li>Distance of vertex 6 is updated to 9.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762325-1587222c-a7c9-4b20-93ba-4a2481c963ef.png" alt="image" /></p>
+</li>
+<li><p>Finally all vertices are included in the SPT.</p>
+</li>
+<li><p>The &quot;length&quot; column of the table has the length of the shortest path from the source vertex to each of the vertices.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762328-0cc91c7e-c3fa-445c-9ec8-bd0c2871b346.png" alt="image" /></p>
+</li>
+</ul>
+<doc-anchor-target id="example-2">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-2">#</doc-anchor-trigger>
+        <span>example 2</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Find shortest path from vertex 0 to all other vertices.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762333-f237d1a7-4a8f-4231-89e8-5406fd1ec31e.png" alt="image" /></p>
+</li>
+<li><p>Initially, SPT includes vertex 0.</p>
+</li>
+<li><p>At this point, we can use only the incident edges of vertex 0.</p>
+</li>
+<li><p>The distances to vertices are updated.</p>
+</li>
+<li><p>We can see that vertex 3 has the shortest distance from vertex 0.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762345-c6df476d-4605-40f3-b09f-9a5188ddc6e8.png" alt="image" /></p>
+</li>
+<li><p>We choose vertex 3 and include it in SPT.</p>
+</li>
+<li><p>Then, we consider vertices where we have an edge from vertex 3.</p>
+</li>
+<li><p>In this case, vertex 4 is the only one.</p>
+</li>
+<li><p>We check whether we can get a shorter path to vertex 4. - This is called relaxation.</p>
+</li>
+<li><p>If <span class="math">d[u]+w(u,v)&lt;d[v]</span>, then <span class="math">d[v]=d[u]+w(u,v)</span></p>
+</li>
+<li><p>We choose vertex 4 and include it in SPT.</p>
+</li>
+<li><p>Then, we consider vertices where we have an edge from vertex 4.</p>
+<ul>
+<li>vertex 1 and vertex 2 are candidates.</li>
+</ul>
+</li>
+<li><p>We perform relaxation.</p>
+<ul>
+<li>Distance to vertex 1 is updated to 45.</li>
+<li>Distance to vertex 2 remains the same.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762348-c6656050-d3ca-45ab-a34b-244a1ed6dbc5.png" alt="image" /></p>
+</li>
+<li><p>We choose vertex 1 and include it in SPT.</p>
+</li>
+<li><p>Then, we consider vertices where we have an edge from vertex 1.</p>
+<ul>
+<li>vertex 2 and vertex 3 are candidates.</li>
+</ul>
+</li>
+<li><p>We perform relaxation.</p>
+<ul>
+<li>The distances to vertices remain the same.</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135762366-6ebe64ba-8e1a-4e36-a136-92570a932087.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<ul>
+<li>We choose vertex 2 and include it in SPT.</li>
+<li>Then, we consider vertices where we have an edge from vertex 2.
+<ul>
+<li>vertex 4 is already visited, so there is no candidate for relaxation.</li>
+</ul>
+</li>
+<li>Vertex 5 is next, but its distance is infinity. It means vertex 5 cannot be reached from vertex 0.</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135762377-01823f7e-c3d7-4ee5-9566-4d59752cef27.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="single-sourceall-destinations-nonnegative-edge-costs-ex045">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#single-sourceall-destinations-nonnegative-edge-costs-ex045">#</doc-anchor-trigger>
+        <span>Single Source/All Destinations: Nonnegative Edge Costs [ex045]</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void shortestPath(int v, int cost[][MAX_VERTICES], int distance[], int n, short int found[]) {
+  /* distance[i] represents the shortest path from v to i, cost is the adjacency matrix */
+  int i, u, w;
+  for(i = 0; i &lt; n; i++) {
+    found[i] = FALSE;
+    distance[i] = cost[v][i];
+  }
+  found[v] = TRUE; distance[v] = 0;
+  for(i = 0; i &lt; n-2; i++) {
+    u = choose(distance, n, found); found[u] = TRUE;
+    for(w = 0; w &lt; n; w++)
+      if(!found[w])
+        if(distance[u] + cost[u][w] &lt; distance[w])
+          distance[w] = distance[u] + cost[u][w];
+  }
+}
+
+int choose(int distance[], int n, short int found[]) { 
+  /* find the smallest distance not yet checked */
+  int i, min, minpos;
+  min = INT_MAX;
+  minpos = -1;
+  for(i = 0; i &lt; n; i++)
+    if(distance[i] &lt; min &amp;&amp; !found[i]) { 
+      min = distance[i];
+      minpos = i;
+    }return minpos;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="analysis-of-dijkstras-algorithm">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#analysis-of-dijkstras-algorithm">#</doc-anchor-trigger>
+        <span>Analysis of Dijkstra&#x27;s algorithm</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>The first for loop in function shortestPath needs to be iterated n times.</p>
+</li>
+<li><p>The second for loop in the function needs to be iterated n-2 times.</p>
+<ul>
+<li>Inside the loop, calling function choose takes O(n), because it has a for loop.</li>
+<li>After calling choose, there is a for loop which iterates n times.</li>
+</ul>
+</li>
+<li><p>Thus, the total time complexity for this implementation of Dijkstra&#x27;s algorithm is O(n2)</p>
+</li>
+<li><p>Using heap, it is also possible to implement Dijkstra&#x27;s algorithm in which the time complexity is O(e log n).</p>
+</li>
+</ul>
+<doc-anchor-target id="applying-dijkstras-algorithm-on-undirected-graphs">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#applying-dijkstras-algorithm-on-undirected-graphs">#</doc-anchor-trigger>
+        <span>Applying Dijkstra&#x27;s algorithm on undirected graphs</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>We can simply convert the undirected graph to a directed graph by converting each undirected edge to two directed edges in either direction.</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135762392-76b3f069-9f64-4e97-a247-966c6b9fe099.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="642-single-sourceall-destinations-general-weights">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#642-single-sourceall-destinations-general-weights">#</doc-anchor-trigger>
+        <span>6.4.2 Single Source/All Destinations: General Weights</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Dijkstra&#x27;s algorithm only works when the edge weights are nonnegative.</li>
+<li>We now consider a single-source all-destinations shortest-path problem when negative edges are allowed.</li>
+<li>Although negative edges are allowed, the graph cannot have a negative cycle.
+<ul>
+<li>If there is a negative cycle, a path can become infinitely short by going through the cycle repeatedly.</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/135762402-fcf1a6b1-41b9-4f77-901e-bbcab7a4552f.png" alt="image" />
+    <figcaption class="caption">image</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="bellman-ford-algorithm">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#bellman-ford-algorithm">#</doc-anchor-trigger>
+        <span>Bellman-Ford Algorithm</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Bellman-Ford algorithm can be used to solve this problem.</p>
+</li>
+<li><p>Let us first go through an example.</p>
+</li>
+<li><p>In the following graph, we would like to find the shortest path from vertex 0 to all other vertices.</p>
+<ul>
+<li><img src="https://user-images.githubusercontent.com/46957634/135762419-9f890bad-1998-4a34-8ce3-c158d674f940.png" alt="image" /></li>
+</ul>
+</li>
+<li><p>Initially, the distance to the source vertex is zero, and the distance to all other vertices is infinity.</p>
+</li>
+<li><p>In each stage of the algorithm, we perform relaxation on all edges.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762434-ffc4f47b-3c16-40ab-b1fb-00507de82e25.png" alt="image" /></p>
+</li>
+<li><p>Suppose the order of edges in the adjacency list is:</p>
+<ul>
+<li>(0,1),(0,2),(0,3),(1,4),(2,1),(2,4),(3,2),(3,5),(4,6),(5,6)</li>
+</ul>
+</li>
+<li><p>We perform relaxation on each edge</p>
+<ul>
+<li><p>ifd[1]&gt;d[0]+w(0,1),d[1]=d[0]+w(0,1)→d[1]becomes6</p>
+</li>
+<li><p>ifd[2]&gt;d[0]+w(0,2),d[2]=d[0]+w(0,2)→d[2]becomes5</p>
+</li>
+<li><p>ifd[3]&gt;d[0]+w(0,3),d[3]=d[0]+w(0,3)→d[3]becomes5</p>
+</li>
+<li><p>ifd[4]&gt;d[1]+w(1,4),d[4]=d[1]+w(1,4)→d[4]becomes5</p>
+</li>
+<li><p>ifd[1]&gt;d[2]+w(2,1),d[1]=d[2]+w(2,1)→d[1]becomes3</p>
+</li>
+<li><p>ifd[4]&gt;d[2]+w(2,4),d[4]=d[2]+w(2,4)→d[4]remains5</p>
+</li>
+<li><p>ifd[2]&gt;d[3]+w(3,2),d[2]=d[3]+w(3,2)→d[2]becomes3</p>
+</li>
+<li><p>ifd[5]&gt;d[3]+w(3,5),d[5]=d[3]+w(3,5)→d[5]becomes4</p>
+</li>
+<li><p>ifd[6]&gt;d[4]+w(4,6),d[6]=d[4]+w(4,6)→d[6]becomes8</p>
+</li>
+<li><p>ifd[6]&gt;d[5]+w(5,6),d[6]=d[5]+w(5,6)→d[6]becomes7</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762444-7e2e8d95-66a3-426c-9f93-d2632408189b.png" alt="image" /></p>
+</li>
+</ul>
+</li>
+<li><p>2nd iteration</p>
+<ul>
+<li><p>ifd[1]&gt;d[0]+w(0,1),d[1]=d[0]+w(0,1)→d[1]remains3</p>
+</li>
+<li><p>ifd[2]&gt;d[0]+w(0,2),d[2]=d[0]+w(0,2)→d[2]remains3</p>
+</li>
+<li><p>ifd[3]&gt;d[0]+w(0,3),d[3]=d[0]+w(0,3)→d[3]remains5</p>
+</li>
+<li><p>ifd[4]&gt;d[1]+w(1,4),d[4]=d[1]+w(1,4)→d[4]becomes2</p>
+</li>
+<li><p>ifd[1]&gt;d[2]+w(2,1),d[1]=d[2]+w(2,1)→d[1]becomes1</p>
+</li>
+<li><p>ifd[4]&gt;d[2]+w(2,4),d[4]=d[2]+w(2,4)→d[4]remains2</p>
+</li>
+<li><p>ifd[2]&gt;d[3]+w(3,2),d[2]=d[3]+w(3,2)→d[2]remains3</p>
+</li>
+<li><p>ifd[5]&gt;d[3]+w(3,5),d[5]=d[3]+w(3,5)→d[5]remains4</p>
+</li>
+<li><p>ifd[6]&gt;d[4]+w(4,6),d[6]=d[4]+w(4,6)→d[6]becomes5</p>
+</li>
+<li><p>ifd[6]&gt;d[5]+w(5,6),d[6]=d[5]+w(5,6)→d[6]remains5</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762448-ce11976e-ddee-48ea-b983-763899c32583.png" alt="image" /></p>
+</li>
+</ul>
+</li>
+<li><p>3rd iteration</p>
+<ul>
+<li>ifd[1]&gt;d[0]+w(0,1),d[1]=d[0]+w(0,1)→d[1]remains1</li>
+<li>ifd[2]&gt;d[0]+w(0,2),d[2]=d[0]+w(0,2)→d[2]remains3</li>
+<li>ifd[3]&gt;d[0]+w(0,3),d[3]=d[0]+w(0,3)→d[3]remains5</li>
+<li>ifd[4]&gt;d[1]+w(1,4),d[4]=d[1]+w(1,4)→d[4]becomes0</li>
+<li>ifd[1]&gt;d[2]+w(2,1),d[1]=d[2]+w(2,1)→d[1]remains1</li>
+<li>ifd[4]&gt;d[2]+w(2,4),d[4]=d[2]+w(2,4)→d[4]remains0</li>
+<li>ifd[2]&gt;d[3]+w(3,2),d[2]=d[3]+w(3,2)→d[2]remains3</li>
+<li>ifd[5]&gt;d[3]+w(3,5),d[5]=d[3]+w(3,5)→d[5]remains4</li>
+<li>ifd[6]&gt;d[4]+w(4,6),d[6]=d[4]+w(4,6)→d[6]becomes3</li>
+<li>ifd[6]&gt;d[5]+w(5,6),d[6]=d[5]+w(5,6)→d[6]remains3</li>
+<li><img src="https://user-images.githubusercontent.com/46957634/135762458-21543c00-b71e-4262-a52b-93c85affe867.png" alt="image" /></li>
+</ul>
+</li>
+<li><p>4th iteration</p>
+<ul>
+<li>ifd[1]&gt;d[0]+w(0,1),d[1]=d[0]+w(0,1)→d[1]remains1</li>
+<li>ifd[2]&gt;d[0]+w(0,2),d[2]=d[0]+w(0,2)→d[2]remains3</li>
+<li>ifd[3]&gt;d[0]+w(0,3),d[3]=d[0]+w(0,3)→d[3]remains5</li>
+<li>ifd[4]&gt;d[1]+w(1,4),d[4]=d[1]+w(1,4)→d[4]remains0</li>
+<li>ifd[1]&gt;d[2]+w(2,1),d[1]=d[2]+w(2,1)→d[1]remains1</li>
+<li>ifd[4]&gt;d[2]+w(2,4),d[4]=d[2]+w(2,4)→d[4]remains0</li>
+<li>ifd[2]&gt;d[3]+w(3,2),d[2]=d[3]+w(3,2)→d[2]remains3</li>
+<li>ifd[5]&gt;d[3]+w(3,5),d[5]=d[3]+w(3,5)→d[5]remains4</li>
+<li>ifd[6]&gt;d[4]+w(4,6),d[6]=d[4]+w(4,6)→d[6]remains3</li>
+<li>ifd[6]&gt;d[5]+w(5,6),d[6]=d[5]+w(5,6)→d[6]remains3</li>
+<li><img src="https://user-images.githubusercontent.com/46957634/135762461-35f7cbb3-7920-4768-990f-0913ab6fc2e2.png" alt="image" /></li>
+</ul>
+</li>
+<li><p>No update was made in this iteration.</p>
+</li>
+<li><p>Then, this will be the answer.</p>
+</li>
+<li><p>In the Bellman-Ford algorithm, we perform relaxation for every edge in each step.</p>
+</li>
+<li><p>We repeat this step n-1 times.</p>
+<ul>
+<li>At kth step, we at least obtain the shortest path from the source vertex to another vertex using k edges.</li>
+</ul>
+</li>
+<li><p><img src="https://user-images.githubusercontent.com/46957634/135762479-6ff91161-992a-4526-9e66-a0a4dcb67323.png" alt="image" /></p>
+</li>
+</ul>
+<doc-anchor-target id="another-example">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#another-example">#</doc-anchor-trigger>
+        <span>Another example</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><p>Find shortest path from vertex 0 to all other vertices.</p>
+</li>
+<li><p>Dijkstra&#x27;s algorithm does not work for this graph due to the negative edge.</p>
+</li>
+<li><p>Edge order: (1, 2), (1, 4), (3, 2), (4, 3)</p>
+</li>
+<li><p>Edge order: (1, 2), (1, 4), (3, 2), (4, 3)</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762489-2478c1b0-6b01-4c56-b0e3-162dd41ecd83.png" alt="image" /></p>
+</li>
+<li><p>1st iteration</p>
+<ul>
+<li><p>if d[2] &gt; d[1] + w(1,2), d[2] = d[1] + w(1,2) → d[2] becomes 3</p>
+</li>
+<li><p>if d[4] &gt; d[1] + w(1,4), d[4] = d[1] + w(1,4) → d[4] becomes 5</p>
+</li>
+<li><p>if d[2] &gt; d[3] + w(3,2), d[2] = d[3] + w(3,2) → d[2] remains 3</p>
+</li>
+<li><p>if d[3] &gt; d[4] + w(4,3), d[3] = d[4] + w(4,3) → d[3] becomes 7</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762494-0f81280b-b9d6-4b88-b1d2-095d0db996c1.png" alt="image" /></p>
+</li>
+</ul>
+</li>
+<li><p>Edge order: (1, 2), (1, 4), (3, 2), (4, 3)</p>
+</li>
+<li><p>2nd iteration</p>
+<ul>
+<li>if d[2] &gt; d[1] + w(1,2), d[2] = d[1] + w(1,2) → d[2] remains 3</li>
+<li>if d[4] &gt; d[1] + w(1,4), d[4] = d[1] + w(1,4) → d[4] remains 5</li>
+<li>if d[2] &gt; d[3] + w(3,2), d[2] = d[3] + w(3,2) → d[2] becomes 1</li>
+<li>if d[3] &gt; d[4] + w(4,3), d[3] = d[4] + w(4,3) → d[3] remains 7</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762530-65d2b35f-27d9-499b-bccc-058713d73998.png" alt="image" /></p>
+</li>
+<li><p>Edge order: (1, 2), (1, 4), (3, 2), (4, 3)</p>
+</li>
+<li><p>3rd iteration</p>
+<ul>
+<li>if d[2] &gt; d[1] + w(1,2), d[2] = d[1] + w(1,2) → d[2] remains 3</li>
+<li>if d[4] &gt; d[1] + w(1,4), d[4] = d[1] + w(1,4) → d[4] remains 5</li>
+<li>if d[2] &gt; d[3] + w(3,2), d[2] = d[3] + w(3,2) → d[2] remains 1</li>
+<li>if d[3] &gt; d[4] + w(4,3), d[3] = d[4] + w(4,3) → d[3] remains 7</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135762533-e70e5784-b424-46fc-a558-8d1b58b17602.png" alt="image" /></p>
+</li>
+</ul>
+<doc-anchor-target id="ex046---pseudocode-of-bellman-ford-algorithm">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex046---pseudocode-of-bellman-ford-algorithm">#</doc-anchor-trigger>
+        <span>[ex046] - Pseudocode of Bellman-Ford algorithm</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void BellmanFord(int n, int v) {
+  /* single source all destination shortest paths with negative edge weights. */
+  for(int i = 0; i &lt; n; i++)
+    dist[i] = length[v][i];  /* initialize dist */
+  for(int k = 2; k &lt;= n-1; k++)
+    for (each u such that u != v and u has at least one incoming edge)
+      for(each &lt;i, u&gt; in the graph)
+        if(dist[u] &gt; dist[i] + length[i][u])
+          dist[u] = dist[i] + length[i][u];</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="time-complexity-of-bellman-ford-algorithm">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#time-complexity-of-bellman-ford-algorithm">#</doc-anchor-trigger>
+        <span>Time complexity of Bellman-Ford algorithm</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>The outer for loop iterates for O(n) times.</li>
+<li>In the inner for loop, basically we need to traverse every node in the adjacency list, or every element in the adjacency matrix.</li>
+<li>If an adjacency list is used, it will take O(e) time.</li>
+<li>If an adjacency matrix is used, it will take O(n2) time.</li>
+<li>Thus, the total time complexity of Bellman-Ford algorithm is: - O(ne) or O(n3)</li>
+</ul>
+<doc-anchor-target id="643-all-pairs-shortest-paths">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#643-all-pairs-shortest-paths">#</doc-anchor-trigger>
+        <span>6.4.3 All Pairs Shortest Paths</span>
+    </h3>
+</doc-anchor-target>
+<ul class="contains-task-list">
+<li><p>In the all-pairs-shortest-path problem, we must find the shortest paths between all pairs of vertices.</p>
+</li>
+<li><p>If the edge weights are nonnegative, we could run Dijkstra’s algorithm to find the shortest paths from a single vertex to all other vertices.</p>
+</li>
+<li><p>We can apply Dijkstra’s algorithm n times to obtain solution for the all-pairs- shortest-path problem. Since Dijkstra’s algorithm has <span class="math">O(n^2)</span> time complexity, it will take <span class="math">O(n^3)</span> to calculate all pairs shortest path.</p>
+</li>
+<li><p>We have another solution for this problem called Floyd-Warshall algorithm, which is still asymptotically O(n3) but in practice runs faster.</p>
+</li>
+<li><p>Also, Floyd-Warshall algorithm works with negative edges as well.</p>
+<ul>
+<li>Negative cycles are still disallowed.</li>
+</ul>
+</li>
+<li class="task-list-item"><p>We represent the graph G by the cost adjacency matrix, cost[ ]<input disabled="disabled" type="checkbox" />.</p>
+<ul>
+<li>cost[i][j]=0ifi==j</li>
+<li>cost[i][j] = inf (a very large number) if edge &lt;i, j&gt; is not in G.</li>
+<li>cost[i][j] = cost of edge &lt;i, j&gt; if &lt;i, j&gt; is in G.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135796649-cd909112-2872-44e3-929e-a8bec50f587a.png" alt="image" /></p>
+</li>
+<li><p>Now we will define a matrix, Ak[][], that represents the length of shortest paths from a source vertex to a destination vertex.</p>
+</li>
+<li><p><span class="math">A^k [i][j]</span> is defined as the shortest path length from vertex i to vertex j, only taking vertices 1 through k as intermediate vertices.</p>
+<ul>
+<li><span class="math">A^0[i][j]</span> is the shortest path length from vertex i to j, where the path cannot include any intermediate vertex.</li>
+<li>Thus, <span class="math">A^0[][]</span> is the same as the cost adjacency matrix.
+<ul>
+<li>In the example graph, we use 1 as the starting index for naming vertices. If we start at 0, the initial shortest path matrix should become <span class="math">A^{-1}[][]</span></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135796660-6041c5b2-b319-4447-975e-c8541da08dd9.png" alt="image" /></p>
+</li>
+<li><p>From <span class="math">A^0</span>, we make <span class="math">A^1</span>.</p>
+<ul>
+<li><p><span class="math">A^1[i][j]</span> indicates length of the shortest path from i to j, where the path may include <strong>vertex 1 as an intermediate vertex.</strong></p>
+</li>
+<li><p>Suppose we consider a path from vertex 4 to 2.</p>
+</li>
+<li><p>There is no edge &lt;4, 2&gt; in G, so <span class="math">A^0[4][2]</span> = inf.</p>
+</li>
+<li><p>In A1, the path through vertex 1 is allowed. (4 → 1 → 2)</p>
+<ul>
+<li>Its length is <span class="math">A^0[4][1] + A^0[1][2]</span></li>
+</ul>
+</li>
+<li><p>If <span class="math">A^0[4][1] + A^0[1][2]</span> <span class="math">&lt; A^0[4][2], A^1[4][2]</span> <span class="math">= A^0[4][1] + A^0[1][2].</span></p>
+</li>
+<li><p>Otherwise, <span class="math">A^1[4][2] = A^0[4][2]</span></p>
+</li>
+<li><p>In the example graph, <span class="math">A^1[4][2] = A^0[4][1] + A^0[1][2] = 5</span></p>
+</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135797003-3d2e7ac6-ff99-4a47-85ed-31218164e46d.png" alt="image" /></p>
+</li>
+<li><p>For each vertex pair (i, j), we perform relaxation.</p>
+<ul>
+<li>If <span class="math">A^0[i][j] &gt; A^0[i][1] + A^0[1][j]</span>, <span class="math">A^1[i][j] = A^0[i][1] + A^0[1][j]</span></li>
+<li>Otherwise, <span class="math">A^1[i][j] = A^0[i][j]</span></li>
+</ul>
+</li>
+<li><p>Resulting A1 indicates the shortest paths where the paths can take only vertex 1 as an intermediate vertex.</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/135797057-c7613ed2-9f51-4928-bc7a-e6fc41ec4ef4.png" alt="image" /></p>
+</li>
+<li><p>From <span class="math">A^1</span>, we make <span class="math">A^2</span>.</p>
+<ul>
+<li><p>For each vertex pair (i, j), we perform relaxation.</p>
+<ul>
+<li>If <span class="math">A^1[i][j] &gt; A^1[i][2] + A^1[2][j]</span>,<span class="math">A^2[i][j] = A^1[i][2] + A^1[2][j]</span>,</li>
+<li>Otherwise, <span class="math">A^2[i][j] = A^1[i][j]</span></li>
+</ul>
+</li>
+<li><p>For example, let us consider the path from vertex 4 to 3.</p>
+<ul>
+<li><span class="math">A^1[4][2]</span> is the shortest path length from 4 to 2, possibly taking 1 as an intermediate.</li>
+<li><span class="math">A^1[2][3]</span> is the shortest path length from 2 to 3, possibly taking 1 as an intermediate.</li>
+<li>Then, <span class="math">A^1[4][2] + A^1[2</span>][3] is length of the path from 4 to 3, which passes through 2.</li>
+<li><span class="math">A^1[4][3]</span> is the length of the path from 4 to 3, which does not pass through 2.</li>
+<li>Thus, minimum of the two is the shortest path from 4 to 3, possibly taking 1 and 2 as intermediates.</li>
+<li><span class="math">A^2[4][3] = min(A^1[4][3], A^1[4][2] + A^1[2][3])</span></li>
+<li><img width="364" alt="image-20211004141126380" src="https://user-images.githubusercontent.com/46957634/135797629-0a09366c-4d67-4e32-a3f4-b11444369430.png">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>From <span class="math">A^2</span>, we make <span class="math">A^3</span>.</p>
+<ul>
+<li><p>For each vertex pair (i, j), we perform relaxation.</p>
+</li>
+<li><p>If <span class="math">A^2[i][j] &gt; A^2[i][3] + A^2[3][j]</span>, <span class="math">A^3[i][j] = A^2[i][3] + A^2[3][j]</span>,</p>
+</li>
+<li><p>Otherwise, <span class="math">A^3[i][j] = A^2[i][j]</span></p>
+</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135797638-ff39ef30-06c1-422b-ace1-11fe810caa25.png" alt="image" /></p>
+</li>
+<li><p>From <span class="math">A^3</span>, we make <span class="math">A^4</span>.</p>
+<ul>
+<li>For each vertex pair (i, j), we perform relaxation.</li>
+<li>If <span class="math">A^3[i][j] &gt; A^3[i][4] + A^3[4</span>][j]$, $ <span class="math">A^4[i][j] = A^3[i][4] + A^3[4][j]</span>
+<ul>
+<li>Otherwise, <span class="math">A^4[i][j] = A^3[i][j]</span></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/46957634/135797640-8524f0d7-321b-4eb1-8e1b-d7e6b0950e66.png" alt="image" /></p>
+<ul>
+<li><span class="math">A^4</span> is our final answer, because it allows any vertex to become an intermediate vertex.</li>
+</ul>
+</li>
+<li><p>Another example</p>
+<ul>
+<li>Note that the initial matrix here is A-1 because the vertex index starts from 0.</li>
+</ul>
+<img width="229" alt="image-20211004141532294" src="https://user-images.githubusercontent.com/46957634/135798303-43e21037-c625-4cd9-b3ba-fd43b5b60bef.png">
+<img width="281" alt="image-20211004141539515" src="https://user-images.githubusercontent.com/46957634/135798308-02f063f4-c882-4e03-b2ea-fed22e1c3a38.png">
+</li>
+</ul>
+<doc-anchor-target id="ex047---implementation-of-floyd-warshall-algorithm">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex047---implementation-of-floyd-warshall-algorithm">#</doc-anchor-trigger>
+        <span>[ex047] - Implementation of Floyd-Warshall algorithm</span>
+    </h4>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void allCosts(int cost[][MAX_VERTICES], int distance[][MAX_VERTICES], int n) {
+  int i, j, k;
+  for(i = 0; i &lt; n; i++)
+    for(j = 0; j &lt; n; j++)
+      distance[i][j] = cost[i][j];
+  for(k = 0; k &lt; n; k++)
+    for(i = 0; i &lt; n; i++)
+      for(j = 0; j &lt; n; j++)
+        if(distance[i][k] + distance[k][j] &lt; distance[i][j])
+          distance[i][j] = distance[i][k] + distance[k][j];
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Time complexity: <span class="math">O(n^3)</span>. (triple nested for loop, <span class="math">O(n)</span> each).</li>
+</ul>
+<doc-anchor-target id="644-transitive-closure">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#644-transitive-closure">#</doc-anchor-trigger>
+        <span>6.4.4 Transitive Closure</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Suppose we have a directed graph G with unweighted edges.</p>
+</li>
+<li><p>Our goal is to determine if there&#x27;s a path from i to j for all values of i and j.</p>
+</li>
+<li><p>Definitions</p>
+<ul>
+<li>The transitive closure matrix, denoted <span class="math">A^+</span>, of a directed graph, G, is a matrix such that $A^+[i][j] = $1 if there is a path of length &gt; 0 from i to j; otherwise, <span class="math">A^+ [i][j] = 0</span>.</li>
+<li>The reflexive transitive closure matrix, denoted <span class="math">A^*</span>, of a directed graph, G, is a matrix such that <span class="math">A^* [i][j] = 1</span> if there is a path of length ≥ 0 from i to j; otherwise, <span class="math">A^*[i][j] = 0</span>.</li>
+<li>The only difference between the two is that the reflexive transitive closure matrix allows zero-length paths. Thus, <span class="math">A^*[i][i]</span> is always 1. On the other hand, <span class="math">A^+[i][i]</span> is 1 only when there is a cycle starting and ending at vertex i.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="example">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example">#</doc-anchor-trigger>
+        <span>Example</span>
+    </h4>
+</doc-anchor-target>
+<img width="327" alt="image-20211004141941463" src="https://user-images.githubusercontent.com/46957634/135798311-b20ee071-84b7-4d86-bbac-a0e3b4095e37.png">
+<img width="411" alt="image-20211004141951888" src="https://user-images.githubusercontent.com/46957634/135798313-0a7e1cd7-649e-4cbb-a966-86a687f70538.png">
+<ul>
+<li><p>Calculating A+</p>
+<ul>
+<li><p>First, we assign 1 to all the edges in G.</p>
+<img width="258" alt="image-20211004142031724" src="https://user-images.githubusercontent.com/46957634/135798316-13d16766-0457-4a7f-9a1e-ebaf7e78ecc8.png">
+</li>
+<li><p>In the adjacency matrix, we let A[i][j] = inf if &lt;i, j&gt; is not in G. Otherwise, A[i][j]=1.</p>
+</li>
+<li><p>Then, we run Floyd-Warshall algorithm on G and obtain the &quot;distance&quot; matrix.</p>
+</li>
+<li><p>Then, we change all non-infinity values to 1, and change infinity to 0 to obtain A+.</p>
+</li>
+<li><p>From A+, we change all values in the diagonal to 1 to obtain A*.</p>
+</li>
+</ul>
+<img width="402" alt="image-20211004142044569" src="https://user-images.githubusercontent.com/46957634/135798317-a75589c7-4933-47b7-b36c-808f39e81fd4.png">
+</li>
+<li><p>Implementation of Transitive Closure (<span class="math">A^+</span>)</p>
+<ul>
+<li><span class="math">cost[i][j] = 1</span> when &lt;i, j&gt; is in G.</li>
+<li><span class="math">cost[i][j] = 0</span> otherwise.</li>
+</ul>
+</li>
+<li><p>Time Complexity: <span class="math">O(n^3)</span> (same as allCosts)</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void transtiveClosure(int cost[][MAX_VERTICES], int distance[][MAX_VERTICES], int n) {
+  int i, j, k;
+  for(i = 0; i &lt; n; i++)
+    for(j = 0; j &lt; n; j++)
+      distance[i][j] = cost[i][j];
+  for(k = 0; k &lt; n; k++)
+    for(i = 0; i &lt; n; i++)
+      for(j = 0; j &lt; n; j++)
+         distance[i][j] = distance[i][j] || (distance[i][k] &amp;&amp; distance[k][j])
+}</code></pre>
+</doc-codeblock></div>
+
+                                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../ds/6.graph/6.3.-minimum-cost-spanning-trees/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">6.​3. Minimum Cost Spanning Trees</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../ds/8.hashing/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">8.​Hashing</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "6.4. Shortest Paths and Transitive Closure", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>
