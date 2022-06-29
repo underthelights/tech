@@ -233,26 +233,26 @@ linux >
     - $l_i$ denotes that thread i executes instruction I
     - %rdx_i is the content of %rdx in thread i’s context
         
-        ![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled.png)
+        ![Untitled](7/0/Untitled.png)
         
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%201.png)
+![Untitled](7/0/Untitled%201.png)
 
 - Incorrect ordering : two threads increment the counter, but the result is 1 instead of 2
     - thread 1이 cnt를 2단계에서 Load한 후에 thread 1이 자신의 갱신된 값을 6단계에서 저장하기 전 thread 2가 cnt를 5단계에서 load하기 때문에 일어난다.
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%202.png)
+![Untitled](7/0/Untitled%202.png)
 
 - How bout this ordering?
     - We can analyze the behavior using a progress graph
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%203.png)
+![Untitled](7/0/Untitled%203.png)
 
 ## Progress Graphs
 
 - instruction 순서를 process graph를 통해 명확히 할 수 있다.
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%204.png)
+![Untitled](7/0/Untitled%204.png)
 
 - A progress graph depicts the discrete execution state space of concurrent threads.
     - 하나의 상태에서 다른 상태로의 전환으로 Modeling
@@ -265,7 +265,7 @@ linux >
 
 ### Trajectories in Progress Graphs
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%205.png)
+![Untitled](7/0/Untitled%205.png)
 
 - A trajectory is a sequence of legal state transitions that describes one possible concurrent execution of the threads.
 - Example: H1, L1, U1, H2, L2, S1, T1, U2, S2, T2
@@ -277,7 +277,7 @@ linux >
 
 ### Critical Sections and Unsafe Regions
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%206.png)
+![Untitled](7/0/Untitled%206.png)
 
 - Critical section : L, U, S instruction에 의해 형성 (thread i에 대해 shared var의 내용 조작)
     - 다른 Thread의 Critical section과 중첩되면 안됨
@@ -288,8 +288,7 @@ linux >
     - 같이 interleaving되면 안되는 구간 “critical section”
         - 한 thread 실행 중 다른 thread가 껴드면 안됨
         - unsafe region
-
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%207.png)
+![Untitled](7/0/Untitled%207.png)
 
 - unsafe zone 은 둘레의 state에 접해 있지만 이들을 포함하지는 않는다.
 
@@ -488,7 +487,8 @@ test와 감소 연산은 semaphore s가 0이 아니면 s의 감소가 중단 없
     - 맞습니다 (starvation문제 : 경쟁을 계속 시키다보니까)
     - OS program 자체도 thread
 
-![Untitled](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%208.png)
+
+![Untitled](7/0/Untitled%208.png)
 
 - 가정
     - critical session에서 t1, t2, t3 경쟁하는 상황에서 thread 하나밖에 들어갈 수 없으므로 lock을 잡아 들어가야 한다. 물론 누가 들어갈지는 모른다 - 3개 중 하나가 lock을 잡게 될 것이다.
@@ -680,8 +680,7 @@ How can we fix this using semaphores ?
 
 ### Why Mutexes Work
 
-![s<0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지](7%20Synchronization%20Basics%20ad6224628cdd42339a53e963841c6c68/Untitled%209.png)
-
+![s<0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지](7/0/Untitled%209.png)
 s<0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지
 
 P, V의 조합이 forbidden region이라 불리는 state set을 생성한다 : s<0
