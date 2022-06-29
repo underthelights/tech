@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.709808118852">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>13. Virtual Memory: Concepts</title>
+    <meta name="title" content="13. Virtual Memory: Concepts">
+    <meta name="description" content="Untitled" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/sp/13-virtual-memory-concepts-3806d1e0627b4582804ad455340aca9a/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/sp/13-virtual-memory-concepts-3806d1e0627b4582804ad455340aca9a/">
+    <meta property="og:title" content="13. Virtual Memory: Concepts">
+    <meta property="og:description" content="Untitled">
+    <meta property="og:image" content="/tech/sp/13/untitled.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/sp/13-virtual-memory-concepts-3806d1e0627b4582804ad455340aca9a/">
+    <meta property="twitter:title" content="13. Virtual Memory: Concepts">
+    <meta property="twitter:description" content="Untitled">
+    <meta property="twitter:image" content="/tech/sp/13/untitled.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../favicon.ico" rel="icon" />
+    <link href="../../resources/css/retype.css?v=2.3.0.709808118852" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.709808118852" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.709808118852" data-turbo-eval="false" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="13-virtual-memory-concepts" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#13-virtual-memory-concepts">#</doc-anchor-trigger>
+        <span>13. Virtual Memory: Concepts</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="address-spaces">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#address-spaces">#</doc-anchor-trigger>
+        <span>Address spaces</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="a-system-using-physical-addressing">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#a-system-using-physical-addressing">#</doc-anchor-trigger>
+        <span>A System Using Physical Addressing</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="../13/untitled.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ul>
+<li>address space : 주소 공간
+<ol>
+<li>process가 보는 address space -&gt; virtual address</li>
+<li>Physical memory가 보는 -&gt; physical address</li>
+</ol>
+</li>
+</ul>
+<p>CPU입장에서 보자.</p>
+<ul>
+<li>CPU가 main memory 접근을 하게 되면 CPU가 addressing하는 주소는 physical address에 해당하는 주소에 있는 data를 load/store할 수 있게 한다
+<ul>
+<li>ex. Physical memory고 load 를 통해 word를 가지고 옴</li>
+</ul>
+</li>
+<li>→ Used in “simple” systems like embedded microcontrollers in devices like cars, elevators, and digital picture frames Physical address (PA) CPU 4 3 ...
+CPU가 볼 때 물리적으로 load/store하며 수행하는 simple한 system에서 활용</li>
+<li>VM지원하지 않는 경우에는 physical memory로 활용 (VM 개념자체가 없다)</li>
+</ul>
+<doc-anchor-target id="a-system-using-virtual-addressing">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#a-system-using-virtual-addressing">#</doc-anchor-trigger>
+        <span>A System Using Virtual Addressing</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="1320virtual20memory20concepts203806d1e0627b4582804ad455340aca9a/untitled201.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ul>
+<li>CPU에서 virutal addreessing : 접근하는 주소가 virtual address (Not Physical addressing)</li>
+<li>MMU : (memory managing unit) : 4100번지에서 load/store한다고 하면 physical address로 변환해 주는 HW (CPU안에 들어가 잇음)
+<ul>
+<li>Microcontrolloer 처럼 사실 CPU가 굉장히 간단했는데 VM 해주는 system에서는 CPU chip 자체가 앞에 있는 것 보다 복잡해졌는데, virtual address를 physical address로 변환해주는 역할을 MMU에서 수행(4100(VA) - 4(PA))</li>
+<li>Used in all modern servers, laptops, and smart phones</li>
+<li>One of the great ideas in computer science M-1: ...</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="address-spaces-1">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#address-spaces-1">#</doc-anchor-trigger>
+        <span>Address Spaces</span>
+    </h2>
+</doc-anchor-target>
+<p>어떻게 va-&gt; pa 변환될까?일단 정의부터 살펴보자.</p>
+<ul>
+<li>Linear address space:
+<ul>
+<li>순서화 되어 있는 음수가 아닌 continguous한 정수 주소</li>
+<li>Ordered set of contiguous non-negative integer addresses</li>
+<li>{0, 1, 2, 3 ... }</li>
+</ul>
+</li>
+<li>Virtual address space:
+<ul>
+<li>n개의 bit로 표현한다고 하면 N = 2^n만큼으로</li>
+<li>Set of N = 2n virtual addresses</li>
+<li>{0, 1, 2, 3, ..., N-1}
+<ul>
+<li>ex. n=4면 N = 2^4 = 16이므로 {0 ~ 15}까지 VA로 표현됨</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Physical address space:
+<ul>
+<li>물리적인 주소로 표현</li>
+<li>VA&gt;PA인 경우가 많음 (일반 modern PC에서는) - VA를 PA로 표현하기 위한 N &gt; M (N!=M)</li>
+<li>Set of M = 2m physical addresses</li>
+<li>{0, 1, 2, 3, ..., M-1}</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="why-virtual-memory-vm">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#why-virtual-memory-vm">#</doc-anchor-trigger>
+        <span>Why Virtual Memory (VM)?</span>
+    </h2>
+</doc-anchor-target>
+<p>(의문) Linear address 그냥 쓰면 되는데 왜 VA/PA 쓰는 것일까?</p>
+<ul>
+<li><p><strong>Uses main memory efficiently
+DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
+<ul>
+<li>Use DRAM as a cache for parts of a virtual address space</li>
+<li>VA의 일부만 DRAM에 올려 둔다 : process 공부할 때 text/ data /heap/ stack도 있고, 실제 process가 보는 virtual한 space</li>
+<li>실제 program이 수행되면 .text, .data, .heap, .stack이 있을 것이고 중간에 memory map이 존재할 것이다.</li>
+<li>프로그램이 실행되면 text나 data의 경우에도 time의 축에서 VM의 모든 구역을 다 memory에 올려둘 필요 없이 필요에 따라 DRAM에 올려 둔 main memory 공간을 cache: 특정 w time 구간동안 접근.</li>
+<li>VA에 해당하는 모든 주소 공간에 있는 것들을 모드 memory에 올려놓을 필요는 없고, 자주/많이 접근되는 부분들만 VA일부로 하여 올려두겠다. DRAM은 정말 비싼 자원이기에 정말 필요한 것만 올려두는 역할을 수행하도록 한다.</li>
+<li>그냥 물리적 주소였다면 그냥 memory mapping을 하면 됨</li>
+</ul>
+</li>
+<li><p>Simplifies memory management</p>
+<ul>
+<li>Each process gets the same uniform linear address space</li>
+</ul>
+<p>0~특정한 값까지 동일하게</p>
+<ul>
+<li>모든 process가 자기가 접근하는 VA의 값을 0~특정 공간까지 관리할 수 있도록 해 주자</li>
+</ul>
+</li>
+<li><p>Isolates address spaces</p>
+<ul>
+<li>One process can’t interfere with another’s memory</li>
+<li>User program cannot access privileged kernel information and code 6</li>
+<li>address space를 각 process마다 자신의 address space만 사용하게 고립시키자 :서로 isolate되어 있어 서로의 영역에 대해 접근할 수 없게 한다.
+<ul>
+<li>→ 다른 process의 memory와 interference (접근 못하게) 방지</li>
+</ul>
+</li>
+<li>kernel은 접근할 수 있지만 process끼리는 서로 접근 못하게 하고 process는 kernel 정보를 touch하지 못하게 하여 access/modify 못 하게 해주기 위해 필요한 기술 중 하나.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="vm-as-a-tool-for-caching">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#vm-as-a-tool-for-caching">#</doc-anchor-trigger>
+        <span>VM as a Tool for Caching</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>Conceptually, <strong>virtual memory</strong> is an array of N contiguous bytes stored on disk.</p>
+<p><strong>개념적으로 어떻게 표현할 것인가</strong></p>
+<ul>
+<li>process가 보는 memory = VM</li>
+<li>conceptually, process가 실제 memory에 올라와 구동되게 되는데, 개념적으로 VM이라는 것은 disk 공간에서 n개의 연속된 byte array로 보겠다는 것이다.</li>
+</ul>
+<p>= 어떤 process가 있다고 하면 contiguous한 linear addreess (0~)</p>
+<ul>
+<li>4KB/8KB page : 동일한 page들을 가상 주소가 disk에 mapping되어 있는 연속된 n개의 byte array로 표현한다고 가정하고 생각을 해 보면 실제 main memory에 올라온 physical memory 영역에서는 cached 부분만 올라옴</li>
+<li>그리고 실제 main memory에 있는 공간은 : VM에 0번지 ~ N-1번지 까지 N개의 page가 있었다고 하면, PM에 0 ~ M-1번지, M&lt;N</li>
+<li>
+<blockquote>
+<p>실제 가상 memory의 특정 page들이 사용되서 main meory에 mapping되어 올라와 있는 경우에 다음처럼 보인다. 나머지는 empty된 상태이다.</p>
+</blockquote>
+</li>
+<li>물리적 메모리를 가져다 가상 메모리의 cache처럼 본다.</li>
+</ul>
+</li>
+<li><p>The contents of the array on disk are cached in <strong>physical memory (DRAM cache)</strong></p>
+<ul>
+<li>These cache blocks are called pages (size is P = 2p bytes)</li>
+</ul>
+<p>DRAM Cache : disk에 있다고 하면 (virtual page )</p>
+<p>main memory에 있는 건 DRAM에 있는 disk 주소 공간의 cache (physical page)</p>
+<ul>
+<li>활성화된 active page들만 memory에 올라와 있음</li>
+<li>
+<blockquote>
+<p>virtual memory를 cacheingg하기 위한 tool이라고 볼 수 있다!</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>![Untitled](13/Untitled 2.png)</p>
+<hr />
+<doc-anchor-target id="dram-cache-organization">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dram-cache-organization">#</doc-anchor-trigger>
+        <span>DRAM Cache Organization</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Fixed 크기의 block : page / block이라고 이야기함</li>
+<li>PP에서 cached page 제외 나머지 empty공간을 내가 못 쓴다고 하면 다른 녀석을 가져다 caching하게 될 때 누군가를 쫓아내야 함 -&gt; 굉장히 복잡하지만 그 알고리즘도 overhead가 됨</li>
+<li>cached page에 대해 mapping function 관리</li>
+<li>DRAM cache organization driven by the enormous miss penalty
+<ul>
+<li>DRAM is about 10x slower than SRAM</li>
+<li>Disk is about 10,000x slower than DRAM</li>
+</ul>
+</li>
+<li>Consequences
+<ul>
+<li><p>Large page (block) size: typically 4 KB, sometimes 4 MB</p>
+<ul>
+<li>page는 통상적으로 4KB (가끔 4MB)</li>
+</ul>
+</li>
+<li><p>Fully associative</p>
+<ul>
+<li><p>Any VP can be placed in any PP</p>
+</li>
+<li><p>Requires a “large” mapping function – different from cache memories</p>
+<p>virtual page들을 physical page로 mapping할 수 있는데 어느 VP도 어느 PP로 들어갈 수 있다.  = CPU Cache는 VP가 물리적 slot에 어디나 들어가도 된다</p>
+</li>
+</ul>
+</li>
+<li><p>Highly sophisticated, expensive replacement algorithms</p>
+<ul>
+<li>Too complicated and open-ended to be implemented in hardware</li>
+</ul>
+</li>
+<li><p>Write-back rather than write-through 9</p>
+<ul>
+<li>write 하게 되면 cache에 있는 page가 있어 실제 disk공간에 있는 page들인데</li>
+<li>(1) write through : PP를 씀과 동시에 같이 쓸 것이냐</li>
+<li>(2) write back
+<ul>
+<li>PP에 먼저 쓰고 나중에 evict할 때 VP와 동기화 할 것이냐</li>
+<li>먼저 DRAM(cache)에 있는 것을 써 놓고 나중에 disk 공간에 있는 page가 evict될 때 VP와 동기화하여 씀</li>
+<li>VM 개념을 도입했는데 실제 구현하려면</li>
+<li>CPU 밖의 main memory를 이야기 중.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<ul>
+<li>SRAM Cache는 CPU안에 있음
+<ul>
+<li>HW로도 구현 : main memory중 어떤 memory에 cache한다고 할 때 누구를 쫓아내는가 등은 실제 program이 실행 될 때 cycle을 많이 소요 -&gt; HW로 faster 구현</li>
+<li>SRAM&gt;DRAM&gt;Disk</li>
+<li>SRAM Cache : CPU chip안에 있는 processor cache가 hw적으로 설계됨 -
+CPU안에서 instruction fetch할 때 활용
+(L1, L2) : cpu chip 안에 있어서 on chip cache
+(L3) : off chip cache - 바로 밖에 붙어 있음</li>
+<li>DRAM : CPU 밖 memory, l3 옆 가장 붙어 있는 memory</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="enabling-data-structure-page-table">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#enabling-data-structure-page-table">#</doc-anchor-trigger>
+        <span>Enabling Data Structure: Page Table</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>A <strong>page table</strong> is an array of page table entries (PTEs) that maps virtual pages to physical pages.</p>
+<ul>
+<li><p>앞에 있었던(8) : VA-&gt;PA로 mapping function</p>
+</li>
+<li><p>무언가 어쨌든 이 주소를 VP1이 PP1에 mapping되어있다는 정보 + page들의 mapping 정보. 다시 말하면 어떤 page들이 어떤 물리적 page에 mapping되어 있는가에 대한 정보가 필요함. 이를 관리하기 위한 table이 page table</p>
+</li>
+<li><p>inear table의 entry가 VA를 PA로 변환해주는 역할을 수행(translator) - page : 각각의 memory에서의 물리적인 공간</p>
+</li>
+<li><p>일정 크기의 page (block)을 mapping하기 위한 entry가 table에 들어가 있음</p>
+</li>
+<li><p>Entry는 가상 주소에 해당하며 이를 보게 되면 0번부터 N에 해당하는 index에서 N=8이라고 하면 PTE 0~7,</p>
+</li>
+<li><p>page : unallocated/ cached / uncached … - process 공간에서 data와 text로 보게 되고 heap을 쓰게 되면 위로 올라감/ 중간에 allcoate되지 않는 공간이 있을 것임. 영역을 할당하게 되면 위쪽PTE=0이 text/code, n-1쪽으로부터 heap이 쭉 올라간다고 보면 됨</p>
+</li>
+<li><p>entry안의 내용을 보게 되면 실제 physical page number가 들어가 있음</p>
+</li>
+<li><p>process마다 가지고 있는 OS의 data structure: OS Kernel DS로서 10개 프로세스에 해당하는 다음과 같은 table을 process마다 가지고 있음</p>
+</li>
+<li><p>Per-process kernel data structure in DRAM</p>
+</li>
+</ul>
+<p><img src="13/untitled203.png" alt="Untitled" /></p>
+</li>
+<li><p>질문</p>
+<ul>
+<li>CPU 개수랑은 완전히 orthogonal : process 개수 만큼</li>
+<li>page table size : 1MB/4MB (OS시간에 배움)</li>
+<li>page table 자체가 DRAM에 저장됨. 자체 주소는 process의</li>
+</ul>
+<p>process마다 process control block이라고 해서 자료구조가 있는데 여기서 page table에 대한 주소를 가지고 있음. 그 주소에 대한 page table이 선형적으로 들어가 있고, 나중에는 base line register에다가 process가 context switch될 때 주소를 가져다 넣는다.</p>
+<ul>
+<li>
+<blockquote>
+<p>Page Table은 kernel이 보는 것이고, kernel은 physical 주소를 본다. Virtual 주소도 보기는 하지만 physical 주소와도 1대1 대응하기에 Page table자체의 주소는 물리주소로 저장된다고 봐도 될 듯.</p>
+</blockquote>
+</li>
+<li>fork하면 child process는 parent process와 같은 page table을 공유하는가? 그럼 같은 virtual memory가 서로 다른 physical memory를 가리키게 되는가? -&gt; page table이 복제되는데 새로은 page table로 update됨 (공유하지 않음) 부모 것 하나, 자식 것 하나 각각 따로따로 가지고 있음. 즉, 서로 다른 physical memory를 가리키게 됨.</li>
+</ul>
+</li>
+<li><p>(PM) 실제 physically mapped : cached 영역 (1,2,7,4) to PP 0,1,2,3</p>
+</li>
+<li><p>(VM) unallocate / allocate되어 있지만 아직 cached 안 됨</p>
+</li>
+<li><p>page table을 통해서 주소 변환</p>
+</li>
+</ul>
+<p>→Disk공간이라고 봐도 되고</p>
+<p>page table을 통하여 주소 변환을 해 주는 역할을 감당하게 된다.</p>
+<doc-anchor-target id="page-hit">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#page-hit">#</doc-anchor-trigger>
+        <span>Page Hit</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="13/untitled204.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ul>
+<li>Page hit: reference to VM word that is in physical memory (DRAM cache hit)</li>
+<li>나중에 VM을 가지고 mem copy를 한다고 하면 다른 VM으로 copy하게 되는데 그 주소는 ‘VA’
+<ul>
+<li>결국 내부적으로는 PA를 접근해야 한다. OS기저로 들어가면 내부 변환 작업을 수행해주어야 한다.</li>
+<li>가상 주소가 DRAM에 있는가, Disk에 있는가는 page table 앞의 validity를 본다.
+<ul>
+<li>1인경우에만 main memory에 올라가 있는 형태: DRAM Cache에서 hit가 일어나서 DRAM에 접근하면 됨</li>
+<li>0인경우: allocate 안 되어 있거나 VA가 실제 disk에 연결</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>해당하는 Validty를 확인한 후 DRAM Cache를 뒤져봄
+<ul>
+<li>Fault 발생</li>
+<li>실제 접근했는데 접근하는 Page의 validity가 0으로 되어 있음 : physical하게 dram cache에 있는 게 아니라 dram cache에 있음</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="page-fault">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#page-fault">#</doc-anchor-trigger>
+        <span>Page Fault</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Page fault: reference to VM word that is not in physical memory (DRAM cache miss)</p>
+<ul>
+<li>Page가 없기 때문에 page missing →fault handling 필요</li>
+</ul>
+<p><img src="13/untitled205.png" alt="Untitled" /></p>
+</li>
+</ul>
+<doc-anchor-target id="handling-page-fault">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-page-fault">#</doc-anchor-trigger>
+        <span>Handling Page Fault</span>
+    </h3>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="13/untitled206.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ul>
+<li>Page miss causes page fault (an exception)</li>
+</ul>
+<hr />
+<ul>
+<li>Page Fault Handler가
+<ul>
+<li>PP 0~3 중 모종의 이유로 PP3을 쫓아내겠다고 결정 (evict)</li>
+<li>evict하게 될 때 VP4는 VM으로, VP3은 PM으로 이동</li>
+<li>3번이 올라왔으니깐 virtual page number 3번으로 이동하게 된다. 이러한 어떤 작업을 수행해주어야 한다.</li>
+</ul>
+</li>
+</ul>
+<p>→ Fault가 나오게 되면 누군가를 evict시켜주고 page table 을 update해주어야 한다. (4를 disk mapping, 3은 DRAM에 mapping)</p>
+<ul>
+<li><p>demand paging</p>
+</li>
+<li><p>누군가를 evict하고 누군가를 가져와야 함</p>
+</li>
+<li><p>Page miss causes page fault (an exception)</p>
+<p><img src="13/untitled207.png" alt="Untitled" /></p>
+</li>
+<li><p>Page fault handler selects a victim to be evicted (here VP 4)</p>
+<p><img src="13/untitled208.png" alt="Untitled" /></p>
+<p><img src="13/untitled209.png" alt="Untitled" /></p>
+</li>
+<li><p>Offending instruction is restarted : page hit</p>
+<p><img src="13/untitled210.png" alt="Untitled" /></p>
+</li>
+</ul>
+<hr />
+<doc-anchor-target id="allocating-pages">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#allocating-pages">#</doc-anchor-trigger>
+        <span>Allocating Pages</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Allocating a new page (VP 5) of virtual memory.</p>
+<p><img src="13/untitled211.png" alt="Untitled" /></p>
+</li>
+</ul>
+<hr />
+<doc-anchor-target id="locality-to-the-rescue-again">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#locality-to-the-rescue-again">#</doc-anchor-trigger>
+        <span>Locality to the Rescue Again!</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Virtual memory seems terribly inefficient, but it works because of locality.</p>
+</li>
+<li><p>At any point in time, programs tend to access a set of active virtual pages called the <strong>working set</strong></p>
+<ul>
+<li>Programs with better temporal locality will have smaller working sets</li>
+<li>process 관점에서 봤을 때, VA를 PA로 바꾸어 주는 과정 자체가
+내가 접근되는 memory주소에 따라서 어떤 놈은 DRAM, 어떤 놈은 DIsk에 있기 때문에 handling overhead가 상당히 큼
+<ul>
+<li>→ working set : 가상 메모리 페이지들의 집합.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>If (working set size &lt; main memory size)
+Working set &lt; 내가 가진 main memory size</p>
+<ul>
+<li>Good performance for one process after compulsory misses
+(Page fault가 발생하지 않을 것이니까)</li>
+</ul>
+</li>
+<li><p>If ( SUM(working set sizes) &gt; main memory size )
+Working set &gt; 내가 가진 main memory size</p>
+<ul>
+<li><strong>Thrashing:</strong> Performance meltdown where pages are swapped (copied) in and out continuously 18</li>
+<li>working set이 커지게 되면 thrashing문제 발생 : 자꾸 disk mapping / dram 이랬다 저랬다 하면 disk 접근 때문에 발생하게 된다. (어떤 페이지가 in and out from disk -&gt; 성능이 완전히 melt down된다)</li>
+</ul>
+</li>
+<li><p>cache size라는 것은 어느정도 적당한 크기로 보장되어야 함.</p>
+<p>CPU 성능도 중요하지만 메모리 성능이 중요한 이유이다: 여러 프로그램을 돌리기 때문에 각 process마다 지금과 같은 process마다 dram cache영역이 확보되어야 한다. 구동시키는 프로그램(웹/다양한 프로그램)들로 인한 in n out으로 인해  thrashing 이 발생하여 속도가 완전히 죽어버림.</p>
+<p>→ 가급적이면 memory 큰 pc를 구입</p>
+</li>
+</ul>
+<doc-anchor-target id="vm-as-a-tool-for-memory-management">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#vm-as-a-tool-for-memory-management">#</doc-anchor-trigger>
+        <span>VM as a Tool for Memory Management</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="key-idea-each-process-has-its-own-virtual-address-space">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#key-idea-each-process-has-its-own-virtual-address-space">#</doc-anchor-trigger>
+        <span>Key idea: each process has its own virtual address space</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>It can view memory as a simple linear array</p>
+</li>
+<li><p>Mapping function scatters addresses through physical memory</p>
+<ul>
+<li>Well-chosen mappings can improve locality</li>
+</ul>
+<p><img src="13/untitled2012.png" alt="Untitled" /></p>
+<hr />
+</li>
+</ul>
+<p>VM as a Tool for Memory Management</p>
+<ul>
+<li><strong>Simplifying memory allocation</strong>
+<ul>
+<li>Each virtual page can be mapped to any physical page</li>
+<li>A virtual page can be stored in different physical pages at different times</li>
+</ul>
+</li>
+<li>Sharing code and data among processes
+<ul>
+<li>Map virtual pages to the same physical page (here: PP 6)</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="13/untitled2013.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="simplifying-linking-and-loading">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#simplifying-linking-and-loading">#</doc-anchor-trigger>
+        <span>Simplifying Linking and Loading</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="13/untitled2014.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ul>
+<li>Linking
+<ul>
+<li>Each program has similar virtual address space</li>
+<li>Code, data, and heap always start at the same addresses.</li>
+</ul>
+</li>
+<li>Loading
+<ul>
+<li><code v-pre>execve</code> allocates virtual pages brk for .text and .data sections &amp; creates PTEs marked as invalid</li>
+<li>The <code v-pre>.text</code> and <code v-pre>.data</code> sections are copied, page by page, on demand by the virtual memory system</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="vm-as-a-tool-for-memory-protection">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#vm-as-a-tool-for-memory-protection">#</doc-anchor-trigger>
+        <span>VM as a Tool for Memory Protection</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>Extend PTEs with Permission bits</li>
+<li>MMU checks these bits on each access</li>
+</ul>
+
+                                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../sp/12-linking-153b2a5f6c5f4fec9bb0a9ef3ba14036/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">12. Linking</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../computer-vision/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">Computer Vision</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "13. Virtual Memory: Concepts", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false }</script>
+</body>
+</html>

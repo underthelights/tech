@@ -236,7 +236,7 @@ linux >
         ![Untitled](7/0/Untitled.png)
         
 
-![Untitled](7/0/Untitled%201.png)
+![Untitled](7/0/Untitled 1.png)
 
 - Incorrect ordering : two threads increment the counter, but the result is 1 instead of 2
     - thread 1이 cnt를 2단계에서 Load한 후에 thread 1이 자신의 갱신된 값을 6단계에서 저장하기 전 thread 2가 cnt를 5단계에서 load하기 때문에 일어난다.
