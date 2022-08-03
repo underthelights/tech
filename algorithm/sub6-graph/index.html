@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.711096529962">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.712828703802">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 2.3.0">
+    <meta name="generator" content="Retype 2.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Graph</title>
@@ -32,14 +32,14 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.711096529962" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.712828703802" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.711096529962" data-turbo-eval="false" defer></script>
-    <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.711096529962" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.711096529962" defer></script>
-    <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
-    <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.712828703802" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.712828703802" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.712828703802" defer></script>
+    <link href="../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -272,7 +272,7 @@
 <li>A <em>weighted graph</em> is a graph in which a number, called the <em>weight</em>, is assigned to each edge.</li>
 </ul>
 <p><span class="math">V = \{ 1, 2, 3, 4, 5, 6 \}</span>
-$ E = { (1, 2), (1, 5), (2, 3), (2, 5), (3, 4), (4, 5), (4, 6) }$</p>
+<span class="math">E = \{ (1, 2), (1, 5), (2, 3), (2, 5), (3, 4), (4, 5), (4, 6) \}</span></p>
 <p>From Wikipedia</p>
 <ul>
 <li><p>A <em>subgraph</em> of a graph <em>G</em> is simply a graph, all of whose vertices belong to <em>V</em>(<em>G</em>) and all of whose edges belong to <em>E</em>(<em>G</em>).</p>
@@ -743,7 +743,7 @@ while (Q is not empty){
 <ul>
 <li><p>Let <span class="math">A^k [i][j]</span> be the cost of the shortest path from <em>i</em> to <em>j</em>, using only those intermediate vertices with an index ≤ <em>k</em>.</p>
 </li>
-<li><p>The goal is to compute <span class="math">A^{n-1} [i][j]</span> $ \forall i,j = 0,1,2,...,n-1$</p>
+<li><p>The goal is to compute <span class="math">A^{n-1} [i][j]</span> <span class="math">\forall i,j = 0,1,2,...,n-1</span></p>
 </li>
 <li><p>Optimal substructure for computing <span class="math">A^k [i][j]</span> from <span class="math">A^{k-1} [i][j]</span></p>
 <ol>
@@ -760,8 +760,8 @@ while (Q is not empty){
 <li><p>The table computation</p>
 <ul>
 <li>Initialization / Table traversal order</li>
-<li>Example: <em>k</em> = 4 (<em>A**k</em>[<em>i</em>][<em>j</em>]<em>A**k</em>-1[<em>i</em>][<em>j</em>])</li>
-<li>$O(n^3)$time</li>
+<li>Example: <span class="math">k = 4 (A_k[i][j] A_{k-1}[i][j])</span></li>
+<li><span class="math">O(n^3)</span> time</li>
 <li>An in-place implementation is possible.</li>
 </ul>
 </li>
@@ -905,7 +905,7 @@ while (Q is not empty){
 <li><p>Proof:</p>
 <ul>
 <li>Assume that there is an MST <span class="math">T</span> that does not contain e.</li>
-<li>Adding <span class="math">e</span> to <span class="math">T</span> will produce a cycle, that crosses the cut once at e and crosses back at another edge $e&#x27; $.</li>
+<li>Adding <span class="math">e</span> to <span class="math">T</span> will produce a cycle, that crosses the cut once at e and crosses back at another edge <span class="math">e'</span>.</li>
 <li>Deleting e&#x27; we get a spanning tree <span class="math">T∖{e'}∪{e}</span> of strictly smaller weight than <span class="math">T</span>. This contradicts the assumption that T was a MST.</li>
 </ul>
 </li>
@@ -1070,7 +1070,7 @@ while (Q is not empty){
 <li><p>Proof:</p>
 <ul>
 <li>Assume that there is an MST <span class="math">T</span> that does not contain e.</li>
-<li>Adding <span class="math">e</span> to <span class="math">T</span> will produce a cycle, that crosses the cut once at e and crosses back at another edge $e&#x27; $.</li>
+<li>Adding <span class="math">e</span> to <span class="math">T</span> will produce a cycle, that crosses the cut once at e and crosses back at another edge <span class="math">e'</span>.</li>
 <li>Deleting e&#x27; we get a spanning tree <span class="math">T∖{e'}∪{e}</span> of strictly smaller weight than <span class="math">T</span>. This contradicts the assumption that T was a MST.</li>
 </ul>
 </li>
@@ -1436,7 +1436,7 @@ until (an MST is found)
     </h4>
 </doc-anchor-target>
 <ul>
-<li><span class="math">V=\{ v_0,v_1,v_2,...,v_{n-1} \}</span> with <span class="math">|V| = n</span></li>
+<li>$ V={ v_0,v_1,v_2,...,v_ }<span class="math">with</span>|V| = n$</li>
 <li><span class="math">T^k →T^{k+1}</span>
 <ul>
 <li>매번 가장 비용이 낮은 fringe edge를 선택하여 <span class="math">T^k</span> 로 옮긴 후 그에 따른 처리를 함.</li>
@@ -1748,7 +1748,7 @@ void GRAPHpfs(Graph G, int st[], double wt[]){
 </li>
 </ul>
 <ol>
-<li><p>$S^1={ v_0 } $로 설정하고 시작.</p>
+<li><p>$S^1={ v_0 }$로 설정하고 시작.</p>
 </li>
 <li><p>($i=k$일 때) $S<sup>k$의 꼭지점들만 사용할 경우에 대한 $v_0$에서 $v$까지의 shortest path가 구해져 있음. ($v$는 $S</sup>k$의 꼭지점)</p>
 </li>
@@ -1759,7 +1759,7 @@ void GRAPHpfs(Graph G, int st[], double wt[]){
 <li>다시 2. 로 감</li>
 </ul>
 </li>
-<li><p>Sn이 다 구해졌을 경우</p>
+<li><p><span class="math">S_n</span> 이 다 구해졌을 경우</p>
 </li>
 </ol>
 <doc-anchor-target id="from-prof-kenji-ikedas-home-page">
@@ -1881,7 +1881,7 @@ while Q != zero-set
 <ul>
 <li>Theorem
 <ul>
-<li>Dijkstra algorithm, run on a weighted, directed graph $ G=(V,E)$ with nonnegative weight function $w : E \rightarrow R $ and source <span class="math">s</span>, terminates with <span class="math">v.d = \delta(s,v)</span> $\forall $vertices <span class="math">v \in V</span></li>
+<li>Dijkstra algorithm, run on a weighted, directed graph $ G=(V,E)$ with nonnegative weight function <span class="math">w : E \rightarrow R</span> and source <span class="math">s</span>, terminates with <span class="math">v.d = \delta(s,v)</span> <span class="math">\forall</span> vertices <span class="math">v \in V</span></li>
 </ul>
 </li>
 <li>Loop invariant

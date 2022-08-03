@@ -10,24 +10,24 @@
     <meta name="generator" content="Retype 2.4.0">
 
     <!-- Primary Meta Tags -->
-    <title>5.6. Heaps</title>
-    <meta name="title" content="5.6. Heaps">
-    <meta name="description" content="Definitions" />
+    <title>Intro &amp; Complexity</title>
+    <meta name="title" content="Intro & Complexity">
+    <meta name="description" content="Algorithm Design & Analysis[Sub1] Introduction to Algorithms and Complexity" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="/tech/ds/5.trees/5.6.-heaps/" />
+    <link rel="canonical" href="/tech/algorithm/1.-intro--complexity/1.0/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/tech/ds/5.trees/5.6.-heaps/">
-    <meta property="og:title" content="5.6. Heaps">
-    <meta property="og:description" content="Definitions">
+    <meta property="og:url" content="/tech/algorithm/1.-intro--complexity/1.0/">
+    <meta property="og:title" content="Intro & Complexity">
+    <meta property="og:description" content="Algorithm Design & Analysis[Sub1] Introduction to Algorithms and Complexity">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/tech/ds/5.trees/5.6.-heaps/">
-    <meta property="twitter:title" content="5.6. Heaps">
-    <meta property="twitter:description" content="Definitions">
+    <meta property="twitter:url" content="/tech/algorithm/1.-intro--complexity/1.0/">
+    <meta property="twitter:title" content="Intro & Complexity">
+    <meta property="twitter:description" content="Algorithm Design & Analysis[Sub1] Introduction to Algorithms and Complexity">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
@@ -37,7 +37,8 @@
     <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.712828703802" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
     <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.712828703802" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.712828703802" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -197,364 +198,168 @@
                                 <div id="docs-sidebar-right-toggle"></div>
                 
                                 <!-- Page content  -->
-<doc-anchor-target id="56-heaps" class="break-words">
+<doc-anchor-target id="intro--complexity" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#56-heaps">#</doc-anchor-trigger>
-        <span>5.6. Heaps</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#intro--complexity">#</doc-anchor-trigger>
+        <span>Intro &amp; Complexity</span>
     </h1>
 </doc-anchor-target>
-<doc-anchor-target id="heaps-chapter-56">
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../../categories/alg/">alg</a></div>
+</div>
+
+<p>Algorithm Design &amp; Analysis<br />
+<strong>[Sub1] Introduction to Algorithms and Complexity</strong></p>
+<!--more-->
+<doc-anchor-target id="주제-0-computational-thinking" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#주제-0-computational-thinking">#</doc-anchor-trigger>
+        <span>[주제 0] Computational Thinking</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="definition-of-computational-thinking">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#heaps-chapter-56">#</doc-anchor-trigger>
-        <span>Heaps (Chapter 5.6)</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#definition-of-computational-thinking">#</doc-anchor-trigger>
+        <span>Definition of computational thinking</span>
     </h2>
 </doc-anchor-target>
-<doc-anchor-target id="561-the-heap-abstract-data-type">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#561-the-heap-abstract-data-type">#</doc-anchor-trigger>
-        <span>5.6.1 The Heap Abstract Data Type</span>
-    </h3>
+<p>The thought processes involved in (i) formulating a problem and (ii) expressing its solutions in such a way that a computer --human or machine- can effectively carry out.</p>
+<ol>
+<li>Problem formulation (abstraction)</li>
+<li>Solution expression (automation)</li>
+<li>Solution execution &amp; evaluation (analyses)</li>
+</ol>
+<doc-anchor-target id="characteristics-of-computational-thinking">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#characteristics-of-computational-thinking">#</doc-anchor-trigger>
+        <span>Characteristics of computational thinking</span>
+    </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Definitions</p>
+<li>Formulating problems in a way that enables us to use a computer and other tools to help solve them</li>
+<li>Logically organizing and analyzing data → Data structure</li>
+<li>Representing data though abstractions such as models and simulations → Data Structure</li>
+<li>Automating solutions through algorithmic thinking (a series of ordered steps) → Algorithm</li>
+<li>Identifying, analyzing, and implementing possible solutions with the goal of achieving the most efficient and effective combination of steps and resources → time and space complexity</li>
+<li>Generalizing and transferring the problem solving process to a wide variety of problems</li>
+</ul>
+<doc-anchor-target id="problem-solving-in-computer-science-and-engineering">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#problem-solving-in-computer-science-and-engineering">#</doc-anchor-trigger>
+        <span>Problem Solving in Computer Science and Engineering</span>
+    </h2>
+</doc-anchor-target>
+<p>문 제 (Problem) <span class="math">\rightarrow</span> 해 (Solution)</p>
 <ul>
-<li><p>A <strong>max tree</strong> is a tree in which the key value in each node is no smaller than the key values in its children (if any).</p>
-</li>
-<li><p>A <strong>max heap</strong> is a complete binary tree that is also a max tree.</p>
-</li>
-<li><p>A <strong>min tree</strong> is a tree in which the key value in each node is no larger than the key values in its children (if any).</p>
-</li>
-<li><p>A <strong>min heap</strong> is a complete binary tree that is also a min tree.</p>
-<img width="317" alt="image-20211002210141520" src="https://user-images.githubusercontent.com/46957634/135757696-5a2c9de3-b869-4488-a3fb-83304b40953c.png">
-</li>
+<li>Problem : 가상 현실, 문서작성, 홈뱅킹, 인터넷 신문, 문서 번역, 회로 설계, 유전자 분석, 무인 자동차, 온라인 게임, 비디오 편집, 자료 검색, 영화 제작, 음성 인식, 가상 수술, 건축 설계, 기상 예측, 주가 예측, 인공 지능, 대용량 과학 계산, …</li>
 </ul>
-</li>
-<li><p>Examples</p>
-</li>
-</ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>- max heaps</th>
-<th>- min heaps</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img width="275" alt="image-20211002210232492" src="https://user-images.githubusercontent.com/46957634/135757701-65cbc964-6eb3-4370-86a8-875147de7ca2.png"></td>
-<td><img width="275" alt="image-20211002210239396" src="https://user-images.githubusercontent.com/46957634/135757702-a67dc547-a6db-4e11-84c4-fb4b8c7bb3ac.png"></td>
-</tr>
-</tbody>
-</table>
-</div>
-<ul>
-<li><p>ADT MaxHeap</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<div class="codeblock-title">pseudocode</div>
-<pre class="language-none"><code v-pre class="language-none">Structure MaxHeap is
-  object: a complete binary tree of n&gt;=0 elements organized so that the value in each node is at least as large as those in its children
-
-  functions:
-  	for all heap MaxHeap, item Element, n, max_size integer MaxHeap 		
-  	Create(max_size) ::= create an empty heap that can hold a maximum of max_size elements. 
-  	Boolean HeapFull(heap, n) ::= 
-  		if (n == max_size) return TRUE
-  		else return FALSE 
-  	MaxHeap Insert(heap, item, n) ::= 
-  		if (!HeapFull(heap, n))
-  			insert an item into heap and return the resulting heap else return error.
-  	Boolean HeapEmpty(heap, n) ::= 
-  		if (n&lt;=0) return TRUE 
-  		else return FALSE
-  	MaxHeap Delete(heap, n) ::= 
-  		if (!HeapEmpty(heap, n)) 
-  			return one of the largest element in the heap and remove it from the heap else return error.</code></pre>
-</doc-codeblock></div>
-</li>
-</ul>
-<doc-anchor-target id="562-priority-queues">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#562-priority-queues">#</doc-anchor-trigger>
-        <span>5.6.2 Priority Queues</span>
-    </h3>
+<doc-anchor-target id="problem-solving-pipeline">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#problem-solving-pipeline">#</doc-anchor-trigger>
+        <span>Problem Solving Pipeline</span>
+    </h2>
+</doc-anchor-target>
+<img width="1159" alt="image" src="https://user-images.githubusercontent.com/46957634/182552136-d18c2b03-be70-4f5f-9420-0f648d0d06c9.png">
+<doc-anchor-target id="도강-문제">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#도강-문제">#</doc-anchor-trigger>
+        <span>도강 문제</span>
+    </h1>
+</doc-anchor-target>
+<p>한 어부(M)가 늑대(W), 염소(G), 양배추(C)를 강 한 쪽에서 다른 쪽으로 옮기려 한다. 어부가 배를 타고 강을 건널 때 어부 자신 외에 늑대, 염 소, 양배추 중 하나만 배에 가지고 갈 수가 있는데, 문제는 어부가 늑대 를 싣고 가는 동안, 염소가 양배추를 같은 쪽에 남겨두면 염소가 양배 추를 먹어버리게 되고, 양배추를 싣고 갈 때 늑대와 염소를 같은 쪽에 남겨둘 경우 늑대가 염소를 잡아 먹게 된다. 과연 어떻게 하면 어부가 가장 적은 회수로 강을 건너면서 세 가지를 모두 안전하게 옮길 수 있을까?</p>
+<doc-anchor-target id="문제-분석">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#문제-분석">#</doc-anchor-trigger>
+        <span>문제 분석</span>
+    </h2>
+</doc-anchor-target>
+<img width="651" alt="image" src="https://user-images.githubusercontent.com/46957634/182552313-db16e6f9-248f-44ad-a8c8-5e179a3c8df4.png">
+<img width="597" alt="image" src="https://user-images.githubusercontent.com/46957634/182552342-15834a37-c647-435a-b749-483a8421bc89.png">
+<doc-anchor-target id="해법-고안">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#해법-고안">#</doc-anchor-trigger>
+        <span>해법 고안</span>
+    </h2>
 </doc-anchor-target>
 <ul>
-<li>Heaps are frequently used to implement <strong>priority queues.</strong></li>
-<li>Unlike general queues, a priority queue deletes the element with the highest (or the lowest) priority (key).</li>
-<li>At any time, an element with arbitrary priority (key) can be inserted into a priority queue.</li>
+<li>Graph, search, and so on → Which data structures and algorithms?</li>
+<li>Cost, time, space, and so on → What complexities?</li>
 </ul>
-<doc-anchor-target id="implementing-priority-queues">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-priority-queues">#</doc-anchor-trigger>
-        <span>Implementing priority queues</span>
-    </h4>
+<p>[연습] 이 문제에 대한 알고리즘과 시간/공간 복잡도를 컴퓨터학의 용 어를 써서 기술한다면, ???</p>
+<ul>
+<li>무슨 말인지 전혀 모르겠으면 [43-080 자료구조]를 재수강한 후 이 과목을 들을 것!</li>
+</ul>
+<doc-anchor-target id="구현---programming-is-an-art">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#구현---programming-is-an-art">#</doc-anchor-trigger>
+        <span>구현 : ✓ Programming is an art!</span>
+    </h1>
 </doc-anchor-target>
 <ul>
-<li><p>A priority queue can be implemented in multiple ways.</p>
+<li><p>어떻게 하면 주어진 알고리즘을 가장 효과적으로 구현을 할 수 있을까?</p>
 </li>
-<li><p>Unordered array, unordered linked list</p>
+<li><p>어떻게 하면 C/C++를 사용하여 주어진 알고리즘을 가장 최적으로 구현할 수 있을까?</p>
 <ul>
-<li><p>Elements are maintained unsorted in an array (or a linked list).</p>
-</li>
-<li><p>When inserting, the element is inserted at the end of the list.  O(1)</p>
-</li>
-<li><p>When deleting, the largest (or smallest) element is searched and deleted from the list.  O(n)</p>
-</li>
+<li>원시 코드 레벨의 측면</li>
+<li>어셈블러 레벨의 측면</li>
+<li>시스템 레벨의 측면</li>
+<li>기타</li>
 </ul>
 </li>
-<li><p>Sorted array, sorted linked list</p>
+<li><p>✓ 과연 내가 <a href="http://acm.uva.es/problemset/%EC%97%90">http://acm.uva.es/problemset/에</a> 있는 문제들을 스스로 “문제 분석 <span class="math">\rightarrow</span> 해법 고안 <span class="math">\rightarrow</span> 구현” 과정을 통하여 효과적으로 해결할 수 있을까???</p>
 <ul>
-<li><p>Elements are maintained sorted (ascending or descending) in an array (or a linked list).</p>
-</li>
-<li><p>When inserting, the element is inserted in the right position so that the list remains sorted.  O(n)</p>
-</li>
-<li><p>When deleting, the element at the end (or front) of the list is deleted.  O(1)</p>
-</li>
+<li>Programming Challenges by S. Skiena and M. Revilla, Springer, 2003.</li>
 </ul>
 </li>
-<li><p>Heap</p>
+<li><p>어떻게 하면 좋은 구현 결과를 얻을 수 있는가?</p>
 <ul>
-<li><p>Elements are maintained in a heap structure.</p>
-</li>
-<li><p>When inserting, the heap is reorganized in order to maintain its characteristics.</p>
-</li>
-<li><p>When deleting, the heap is reorganized in order to maintain its characteristics.</p>
-</li>
-<li><p>Time complexity of insertion and deletion?</p>
-</li>
+<li>동일한 프로세서 상에서 더 빠르게</li>
+<li>적은 메모리만 사용하게</li>
+<li>안정적이게</li>
 </ul>
 </li>
+<li><p>구현 예
+<img width="896" alt="image" src="https://user-images.githubusercontent.com/46957634/182553344-f92d2acb-b036-4780-8611-0403be57c353.png">
+<img width="921" alt="image" src="https://user-images.githubusercontent.com/46957634/182553368-e6b16b42-2bf6-4648-9b8e-00343f1e49d0.png"></p>
+</li>
 </ul>
-<doc-anchor-target id="563-insertion-into-a-max-heap">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#563-insertion-into-a-max-heap">#</doc-anchor-trigger>
-        <span>5.6.3 Insertion into a Max Heap</span>
-    </h3>
+<p>19 0.265968초 4.862961초 3.4GHz Intel Core i7 CPU</p>
+<doc-anchor-target id="data-structure--algorithm--theory-of-computation">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#data-structure--algorithm--theory-of-computation">#</doc-anchor-trigger>
+        <span>Data Structure → Algorithm → Theory of Computation</span>
+    </h1>
 </doc-anchor-target>
 <ul>
-<li><p>First, we place the element in the new position (n+1th position) of the heap.</p>
-</li>
-<li><p>Then, we move along the path from the new node to the root. If the element of the current node is larger than the one of its parent, then exchange the nodes and continue.</p>
-</li>
+<li>어떻게 하면 주어진 복잡한 문제를 이진수 형태의 낮은 수준의 명령어만
+이해하는 ‘단순한’ 컴퓨터 상에서 효율적으로 해결할 수 있을까?</li>
 </ul>
-<img width="262" alt="image-20211002210612678" src="https://user-images.githubusercontent.com/46957634/135757704-8f5b5be4-7a4e-49b8-8523-1ddc541f6953.png">
+<ol>
+<li>[Data Structure] 주어진 추상적인 문제를 어떠한 자료 구조를 사용하여 컴
+퓨터의 구조에 최적화된 형태로 표현할 수 있을까?</li>
+<li>[Algorithm] 주어진 추상적인 문제를 어떠한 알고리즘을 사용하여 컴퓨터를
+사용하여 가장 효율적으로 해결할 수 있을까?</li>
+<li>[Complexity] 과연 컴퓨터가 주어진 문제를 효율적으로 해결할 수 있을까 ?</li>
+<li>[Computability] 과연 컴퓨터가 세상의 모든 문제를 해결할 수 있을까?</li>
+</ol>
 <ul>
-<li>For implementation, we will use the array representation of a binary tree.</li>
-</ul>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-c"><code v-pre class="language-c">#define MAX_ELEMENTS 200   
-/* maximum heap size + 1 */
-#define HEAP_FULL(n) (n == MAX_ELEMENTS – 1)
-#define HEAP_EMPTY(n) (!n)
-typedef struct {
-  int key;
-} element;
-element heap[MAX_ELEMENTS];
-int n = 0;</code></pre>
-</doc-codeblock></div>
-<ul>
-<li><p>In the following max heap, we will insert element 5.</p>
-<img width="337" alt="image-20211002210647498" src="https://user-images.githubusercontent.com/46957634/135757706-e99cb9ba-562a-4591-9eb7-0af387d10e4f.png">
-</li>
-<li><p>First, insert the element at the new position in the complete binary tree.</p>
-<img width="337" alt="image-20211002210656034" src="https://user-images.githubusercontent.com/46957634/135757707-95c8dee4-1bc5-41e4-b9c5-d19b4a52aa2c.png">
-</li>
-<li><p>From the new node, compare the key with its parent. Since 5 is less than or equal to 7, the node stays there. Insertion done.</p>
-<img width="337" alt="image-20211002210703239" src="https://user-images.githubusercontent.com/46957634/135757782-9cfa685e-688b-4687-96b1-45b416f6e13a.png">
-</li>
-<li><p>Now we will insert element 20.</p>
-</li>
-<li><p>First, insert the element in the new position in the complete binary tree.</p>
-<img width="337" alt="image-20211002210715296" src="https://user-images.githubusercontent.com/46957634/135757784-a970385c-ec6e-4ddd-a78e-def0ba7285e8.png">
-</li>
-<li><p>Next, we compare the key of the new node with its parent. Since 20 is larger than 7, we exchange position of the two nodes.</p>
-<img width="337" alt="image-20211002210723481" src="https://user-images.githubusercontent.com/46957634/135757785-deca0a9b-3ffa-49bf-9645-139fd5f65bfa.png">
-</li>
-<li><p>Continuing, we compare the new node with its parent. Since 20 is larger than 8, we exchange the two nodes.</p>
-<img width="337" alt="image-20211002210732548" src="https://user-images.githubusercontent.com/46957634/135757786-aa898414-296d-49c0-b337-2dd98937c37d.png">
-</li>
-<li><p>Continuing, we compare the new node with its parent. Since 20 is larger than 9, we exchange the two nodes.</p>
-<img width="337" alt="image-20211002210745617" src="https://user-images.githubusercontent.com/46957634/135757789-07bc48c8-f25f-424d-98c1-5930a7feb58f.png">
-</li>
-<li><p>Function insert_max_heap</p>
-</li>
-</ul>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-c"><code v-pre class="language-c">void insert_max_heap(element item, int *n) {
-  /* insert item into a max heap of current size *n */
-  int i;
-  if(HEAP_FULL(*n)) {
-    fprintf(stderr, &quot;The heap is full.\n&quot;);
-exit(1); }
-  i = ++(*n);
-  while((i != 1) &amp;&amp; (item.key &gt; heap[i/2].key)) {
-    heap[i] = heap[i/2];
-i /= 2; }
-  heap[i] = item;
-}</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="analysis-of-insert_max_heap">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#analysis-of-insert_max_heap">#</doc-anchor-trigger>
-        <span>Analysis of insert_max_heap</span>
-    </h4>
-</doc-anchor-target>
-<ul>
-<li>First, we check whether the heap is full.</li>
-<li>Then, we set i to the size of the new heap (n+1).</li>
-<li>Then, using the while loop, we determine the correct position of the new item in the heap.</li>
-<li>The while loop is iterated O(log2n) times.</li>
-<li>Time complexity of the function O(log2n).</li>
-</ul>
-<doc-anchor-target id="564-deletion-from-a-max-heap">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#564-deletion-from-a-max-heap">#</doc-anchor-trigger>
-        <span>5.6.4 Deletion from a Max Heap</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li><p>When we delete an element from a max heap, we always take it from the root of the heap.</p>
-</li>
-<li><p>If the heap had n elements, after deleting the element in the root,  the heap must become a complete binary tree with one less node, i.e., (n-1) elements.</p>
-</li>
-<li><p>We move the element at the nth position to the root. Then, we move down the heap, comparing the parent node with its children and exchanging outof-order nodes until the heap is re-established.</p>
-</li>
-</ul>
-<img width="353" alt="image-20211002210843304" src="https://user-images.githubusercontent.com/46957634/135757790-71213659-f271-48b3-b9c8-b21b89c6628e.png">
-<ul>
-<li><p>Suppose we have the following max heap, from which we are going to delete an element.</p>
-<img width="353" alt="image-20211002210904028" src="https://user-images.githubusercontent.com/46957634/135757824-b9e59e15-2505-4f27-b9b8-84c6e2b65101.png">
-</li>
-<li><p>When deleting, we always delete the element at the root.</p>
-<img width="353" alt="image-20211002210913301" src="https://user-images.githubusercontent.com/46957634/135757826-91d72062-c5fb-4a59-a044-30e6e11494bf.png">
-</li>
-<li><p>After deleting the root, we move the nth element to the root.</p>
-<img width="353" alt="image-20211002210923376" src="https://user-images.githubusercontent.com/46957634/135757829-96507ee1-1b4e-4f6a-9cc7-3c096cd567d5.png">
-</li>
-<li><p>We now need to reorganize the heap.</p>
-</li>
-<li><p>Compare the new element with the larger element of its children.</p>
-<ul>
-<li>If the new element is smaller than the child, exchange the two elements.</li>
-</ul>
-</li>
-<li><p>Here, since 8 is smaller than 15, exchange the new element with its left child.</p>
-<img width="353" alt="image-20211002210941755" src="https://user-images.githubusercontent.com/46957634/135757830-3f563d79-b872-4d3e-8ce9-94c2fdfe53a2.png">
-</li>
-<li><p>Continuing, we compare the new element with the larger element of its children.</p>
-</li>
-<li><p>Since 8 is smaller than 9, we exchange the two elements.</p>
-<img width="353" alt="image-20211002211005929" src="https://user-images.githubusercontent.com/46957634/135757831-b87dd805-288c-4cb0-805e-7a2c5ca981ff.png">
-</li>
-<li><p>Since 8 is larger than 7, we stop there.</p>
-</li>
-<li><p>The heap is re-established.</p>
-<img width="353" alt="image-20211002211018088" src="https://user-images.githubusercontent.com/46957634/135757832-c870dc3f-15bd-40e5-80b0-38953b68e4f3.png">
-</li>
-</ul>
-<doc-anchor-target id="ex038">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#ex038">#</doc-anchor-trigger>
-        <span>[ex038]</span>
-    </h4>
-</doc-anchor-target>
-<ul>
-<li>Function delete_max_heap</li>
-</ul>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-c"><code v-pre class="language-c">element delete_max_heap(int *n) {
-  /* delete element with the highest key from the heap */
-  int parent, child;
-  element item, temp;
-  if(HEAP_EMPTY(*n)) {
-    fprintf(stderr, &quot;The heap is empty&quot;);
-exit(1); }
-  /* save value of the element with the largest key */
-  item = heap[1];
-  /* use the last element in the heap to adjust heap */
-  temp = heap[(*n)--];
-  parent = 1;
-  child = 2;
-  
-  while(child &lt;= *n) {
-/* find the larger child of the current parent */
-if((child &lt; *n) &amp;&amp; (heap[child].key &lt; heap[child+1].key)) child++; if(temp.key &gt;= heap[child].key) break;
-/* move to the next lower level */
-heap[parent] = heap[child];
-parent = child;
-child *= 2;
-  }
-  heap[parent] = temp;
-  return item;
-}</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="analysis-of-delete_max_heap">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#analysis-of-delete_max_heap">#</doc-anchor-trigger>
-        <span>Analysis of delete_max_heap</span>
-    </h4>
-</doc-anchor-target>
-<ul>
-<li>The function delete_max_heap operates by moving down the heap, comparing and exchanging parent and child nodes until the heap characteristics is reestablished.</li>
-<li>Since the height of the heap with n elements is     while loop is iterated O(log2n) times.</li>
-<li>The time complexity of the function is O(log2n).</li>
-</ul>
-<doc-anchor-target id="565-summary">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#565-summary">#</doc-anchor-trigger>
-        <span>5.6.5. Summary</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li><p>Implementation of priority queues and their time complexity for insertion and deletion.</p>
-<ul>
-<li>n is the number of elements in the heap.</li>
-</ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Representation</th>
-<th>Insertion</th>
-<th>Deletion</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>unordered array</td>
-<td>O(1)</td>
-<td>O(n)</td>
-</tr>
-<tr>
-<td>unordered linked list</td>
-<td>O(1)</td>
-<td>O(n)</td>
-</tr>
-<tr>
-<td>sorted array</td>
-<td>O(n)</td>
-<td>O(1)</td>
-</tr>
-<tr>
-<td>sorted linked list</td>
-<td>O(n)</td>
-<td>O(1)</td>
-</tr>
-<tr>
-<td>max heap</td>
-<td>O(log2n)</td>
-<td>O(log2n)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</li>
-<li><p>Max heap is useful when both insertion and deletion operations frequently occur in a program (or a function).</p>
-</li>
+<li>✓ 이 과목에서는 [CSE3080 자료구조] 과목에 이어, 1번과 2번을 집중적으로 살펴보
+고, 3번 문제에 대하여 어느 정도 살펴볼 예정임.</li>
+<li>4번 문제는 [CSE3085 자동장치이론] 과목에서 다룸.</li>
 </ul>
 
-                                
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../../tags/alg/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>alg</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results />
                             </div>
@@ -562,20 +367,20 @@ child *= 2;
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../ds/5.trees/5.5.-threaded-binary-trees/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">5.​5. Threaded Binary Trees</span>
+                                                <span class="block mt-1">수업 목표</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../ds/5.trees/5.7.-binary-search-trees/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/1.-intro--complexity/1.1---1.2/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
-                                                <span class="block mt-1">5.​7. Binary Search Trees</span>
+                                                <span class="block mt-1">Intro & Complexity</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         </a>
@@ -619,6 +424,6 @@ child *= 2;
 
     <div id="docs-overlay-target"></div>
 
-    <script>window.__DOCS__ = { "title": "5.6. Heaps", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false }</script>
+    <script>window.__DOCS__ = { "title": "Intro & Complexity", level: 3, icon: "file", hasPrism: false, hasMermaid: false, hasMath: true }</script>
 </body>
 </html>

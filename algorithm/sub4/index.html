@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.711096529962">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.712828703802">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 2.3.0">
+    <meta name="generator" content="Retype 2.4.0">
 
     <!-- Primary Meta Tags -->
     <title>DP</title>
@@ -32,14 +32,14 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.711096529962" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.712828703802" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.711096529962" data-turbo-eval="false" defer></script>
-    <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.711096529962" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.711096529962" defer></script>
-    <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
-    <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.712828703802" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.712828703802" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.712828703802" defer></script>
+    <link href="../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -303,7 +303,7 @@
 </li>
 <li><p>–  Ex: <em>P</em>(2, 3) = 11/16</p>
 </li>
-<li><p>–  Compute $$P(i,j) $$  <span class="math">0 \leq i,j \leq n</span> <span class="math">\forall n</span></p>
+<li><p>–  Compute $P(i,j) $  <span class="math">0 \leq i,j \leq n</span> <span class="math">\forall n</span></p>
 </li>
 </ul>
 <doc-anchor-target id="1-worse-a-divide-and-conquer-approach">
@@ -497,7 +497,7 @@
 </li>
 <li><p>Problem</p>
 <ul>
-<li>Determine the minimum number of elementary multiplications, needed to multiply <em>n</em> matrices where $$ A_i \in R^{d_ \times d_i}$$</li>
+<li>Determine the minimum number of elementary multiplications, needed to multiply <em>n</em> matrices where $ A_i \in R^{d_ \times d_i}$</li>
 </ul>
 </li>
 <li><p>Examples</p>
@@ -1308,7 +1308,7 @@ void main(void)
 </li>
 <li><p>Definitions</p>
 <ul>
-<li>Given a sequence <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> another sequence <span class="math">Z = &lt;z1, z2, ..., zk &gt;</span> is a subsequence of X if there exists a strictly increasing sequence$$ &lt;i1, i2, ..., ik &gt; $$of indices of X such that <span class="math">\forall j = 1, 2, ..., k</span>, we have <span class="math">x_{ij} = z_j</span>.
+<li>Given a sequence <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> another sequence <span class="math">Z = &lt;z1, z2, ..., zk &gt;</span> is a subsequence of X if there exists a strictly increasing sequence$ &lt;i1, i2, ..., ik &gt; $of indices of X such that <span class="math">\forall j = 1, 2, ..., k</span>, we have <span class="math">x_{ij} = z_j</span>.
 <ul>
 <li>A subsequence of a given sequence is just the given sequence with some elements (possibly none) left out.</li>
 <li>Ex:<span class="math">X=&lt;A,B,C,B,D,A,B&gt;, Z=&lt;B,C,D,B&gt;(&lt;2,3,5,7&gt;)</span></li>
@@ -1345,15 +1345,15 @@ void main(void)
 </li>
 <li><p>Optimal substructure of an LCS</p>
 <ul>
-<li><p>Let <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> and $$Y = &lt;y1, y2, ..., yn &gt; $$be sequences, and let <span class="math">Z = &lt;z1, z2, ..., zk &gt;</span> be any LCS of <span class="math">X</span> and <span class="math">Y</span>.</p>
+<li><p>Let <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> and $Y = &lt;y1, y2, ..., yn &gt; $be sequences, and let <span class="math">Z = &lt;z1, z2, ..., zk &gt;</span> be any LCS of <span class="math">X</span> and <span class="math">Y</span>.</p>
 <ol>
 <li><p>If <span class="math">x_m = y_n</span>,</p>
 <p>then <span class="math">z_k = x_m = y_n</span>,</p>
 <p>and <span class="math">Z_{k-1}</span> is an LCS of <span class="math">X_{m-1}</span> and <span class="math">Y_{n-1}</span>.</p>
 </li>
 <li><p>If <span class="math">x_m \neq y_n</span>,</p>
-<p>then an LCS of <span class="math">X</span> and <span class="math">Y</span> is either an LCS of $$X
-_$$ and <span class="math">Y</span></p>
+<p>then an LCS of <span class="math">X</span> and <span class="math">Y</span> is either an LCS of $X
+_$ and <span class="math">Y</span></p>
 <p>or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.</p>
 </li>
 </ol>
