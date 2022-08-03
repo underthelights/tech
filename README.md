@@ -10,7 +10,7 @@ My primary research goal is to develop an <a href="https://hai.stanford.edu/">Hu
 
 Currently, I'm working as a <a href="https://connectoconnect.notion.site/CONNECTOCONNECT-1680e2899b6b49b79cdd7b7d226a1511">research & operating officer </a> at <a href="http://oconnect.kr/">OCONNECT</a>, based on <a href="https://www.unist.ac.kr/">UNIST</a> Startup. We create new products that anyone can relate to, but have easily passed, and solve the inconvenience of the underprivileged. we've developing OneStep, which is easy to plug in everywhere, everytime, anyhow.
 
-![](static/profile.svg)
+![](static/profile.png)
 
 ---
 

@@ -108,14 +108,14 @@ Algorithm Design & Analysis
 ### A Formal Definition of Sorting
 
 - A **partial order** on a set S is a relation R such that for each a, b, and c in S:
-  - $$aRa$$ is true (R is reflexive).
-  - $$aRb$$ and $$bRc$$ imply $$aRc$$ (R is transitive)
-  - $$aRb$$ and $$bRa$$ imply $$a = b$$ (R is antisymmetric)
-- A Linear Order or Total Older on a set $$S$$ is a partial order R on S such that for every pair of elements a, b, either aRb or bRa.
+  - $aRa$ is true (R is reflexive).
+  - $aRb$ and $bRc$ imply $aRc$ (R is transitive)
+  - $aRb$ and $bRa$ imply $a = b$ (R is antisymmetric)
+- A Linear Order or Total Older on a set $S$ is a partial order R on S such that for every pair of elements a, b, either aRb or bRa.
 - The sorting problem
-  - Given a sequence of $$n$$ elements $$a_1, a_2, ..., a_n$$ drawn from a set having a linear order $$\preceq $$
-  - find a permutation $$\Pi = (\pi_1, \pi_2, ..., \pi_n)$$ of $$(1,2,...,n)$$ that will map the sequence into a nondecreasing sequence $a_{\pi_1}, a_{\pi_2},...,a_{\pi_n}$ such that $a_{\pi_1} \preceq a_{\pi_i+1}$ for $1 \leq i < n $
-- Ex: $ \leq$ on $\mathbb{Z}$$, $ $\subseteq $ on sets 
+  - Given a sequence of $n$ elements $a_1, a_2, ..., a_n$ drawn from a set having a linear order $\preceq $
+  - find a permutation $\Pi = (\pi_1, \pi_2, ..., \pi_n)$ of $(1,2,...,n)$ that will map the sequence into a nondecreasing sequence $a_{\pi_1}, a_{\pi_2},...,a_{\pi_n}$ such that $a_{\pi_1} \preceq a_{\pi_i+1}$ for $1 \leq i < n $
+- Ex: $ \leq$ on $\mathbb{Z}$, $ $\subseteq $ on sets 
 - Sorting on data with partial order?
 - ref. [이산수학 내용](https://blog.naver.com/1net1/220735043638)
 
@@ -206,9 +206,9 @@ void merge(item_type *A, int left, int middle, int right){
 | Divide     | Conquer         | Combine |
 | $O(1)$     | $2T(\frac n 2)$ | $O(n)$  |
 
-- *n*개의 원소를 *k*개와 *l*개로 나누어 진행한다고 가정하면 ($$n=k+l$$),
-  - $$T(n) = T(k) + T(l) + cn (k \approx l)$$
-  - $$n = 2^m$$ 이 아닌 일반적인 경우에도 같은 시간 복잡도를 가짐을 증명할 수 있음.
+- *n*개의 원소를 *k*개와 *l*개로 나누어 진행한다고 가정하면 ($n=k+l$),
+  - $T(n) = T(k) + T(l) + cn (k \approx l)$
+  - $n = 2^m$ 이 아닌 일반적인 경우에도 같은 시간 복잡도를 가짐을 증명할 수 있음.
 
 ### Solving Recurrence Equations
 
@@ -890,7 +890,7 @@ https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms
 
 - **Problem**
 
-  - Find both the maximum and the minimum elements of a set containing n elements (assume $$n = 2m$$ for some integer $$m$$).
+  - Find both the maximum and the minimum elements of a set containing n elements (assume $n = 2m$ for some integer $m$).
 
 - [Aho 2.6]
 
@@ -928,7 +928,7 @@ https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms
 
 ### 2. Multiplication of Two n-bit Numbers
 
-- The traditional method requires $$O(n^2)$$ bit operations.
+- The traditional method requires $O(n^2)$ bit operations.
 
 - A divide-and-conquer approach
 
@@ -972,7 +972,7 @@ https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms
 
 - **Solution 2:** 
 
-  - Build a min-heap, and then extract the smallest element repeatedly $$k$$ times.
+  - Build a min-heap, and then extract the smallest element repeatedly $k$ times.
 
     $C = c \cdot n + d \cdot k \cdot log n$
 
@@ -1190,7 +1190,7 @@ and take the minimum → *O*(*n*2) - time
   - [Fact 1] (Why?)  
 
     - if there $\exists q \in Q , r \in R$ for which $d(q,r)<\delta$ 
-    - then each of $q,r$ lies within a distance $\delta $of$ L$
+    - then each of $q,r$ lies within a distance $\delta$ of$ L$
 
   - [Fact 2] 
 

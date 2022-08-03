@@ -13,6 +13,89 @@ Algorithm Design & Analysis
 
 <!--more-->
 
+# [주제 0] Computational Thinking
+
+## Definition of computational thinking
+
+The thought processes involved in (i) formulating a problem and (ii) expressing its solutions in such a way that a computer --human or machine- can effectively carry out. 
+
+1. Problem formulation (abstraction) 
+2. Solution expression (automation) 
+3. Solution execution & evaluation (analyses)
+
+## Characteristics of computational thinking
+
+- Formulating problems in a way that enables us to use a computer and other tools to help solve them
+- Logically organizing and analyzing data → Data structure
+- Representing data though abstractions such as models and simulations → Data Structure
+- Automating solutions through algorithmic thinking (a series of ordered steps) → Algorithm
+- Identifying, analyzing, and implementing possible solutions with the goal of achieving the most efficient and effective combination of steps and resources → time and space complexity
+- Generalizing and transferring the problem solving process to a wide variety of problems
+
+## Problem Solving in Computer Science and Engineering 
+문 제 (Problem) $\rightarrow$ 해 (Solution) 
+
+- Problem : 가상 현실, 문서작성, 홈뱅킹, 인터넷 신문, 문서 번역, 회로 설계, 유전자 분석, 무인 자동차, 온라인 게임, 비디오 편집, 자료 검색, 영화 제작, 음성 인식, 가상 수술, 건축 설계, 기상 예측, 주가 예측, 인공 지능, 대용량 과학 계산, … 
+
+## Problem Solving Pipeline 
+<img width="1159" alt="image" src="https://user-images.githubusercontent.com/46957634/182552136-d18c2b03-be70-4f5f-9420-0f648d0d06c9.png">
+
+
+# 도강 문제
+
+한 어부(M)가 늑대(W), 염소(G), 양배추(C)를 강 한 쪽에서 다른 쪽으로 옮기려 한다. 어부가 배를 타고 강을 건널 때 어부 자신 외에 늑대, 염 소, 양배추 중 하나만 배에 가지고 갈 수가 있는데, 문제는 어부가 늑대 를 싣고 가는 동안, 염소가 양배추를 같은 쪽에 남겨두면 염소가 양배 추를 먹어버리게 되고, 양배추를 싣고 갈 때 늑대와 염소를 같은 쪽에 남겨둘 경우 늑대가 염소를 잡아 먹게 된다. 과연 어떻게 하면 어부가 가장 적은 회수로 강을 건너면서 세 가지를 모두 안전하게 옮길 수 있을까?
+
+## 문제 분석
+<img width="651" alt="image" src="https://user-images.githubusercontent.com/46957634/182552313-db16e6f9-248f-44ad-a8c8-5e179a3c8df4.png">
+<img width="597" alt="image" src="https://user-images.githubusercontent.com/46957634/182552342-15834a37-c647-435a-b749-483a8421bc89.png">
+
+## 해법 고안
+
+- Graph, search, and so on → Which data structures and algorithms?
+- Cost, time, space, and so on → What complexities?
+
+[연습] 이 문제에 대한 알고리즘과 시간/공간 복잡도를 컴퓨터학의 용 어를 써서 기술한다면, ??? 
+- 무슨 말인지 전혀 모르겠으면 [43-080 자료구조]를 재수강한 후 이 과목을 들을 것!
+
+# 구현 : ✓ Programming is an art!
+
+- 어떻게 하면 주어진 알고리즘을 가장 효과적으로 구현을 할 수 있을까?
+- 어떻게 하면 C/C++를 사용하여 주어진 알고리즘을 가장 최적으로 구현할 수 있을까?
+  - 원시 코드 레벨의 측면
+  - 어셈블러 레벨의 측면
+  - 시스템 레벨의 측면
+  - 기타 
+
+- ✓ 과연 내가 [http://acm.uva.es/problemset/에](http://acm.uva.es/problemset/%EC%97%90) 있는 문제들을 스스로 “문제 분석 $\rightarrow$ 해법 고안 $\rightarrow$ 구현” 과정을 통하여 효과적으로 해결할 수 있을까??? 
+  - Programming Challenges by S. Skiena and M. Revilla, Springer, 2003.
+
+- 어떻게 하면 좋은 구현 결과를 얻을 수 있는가?
+  - 동일한 프로세서 상에서 더 빠르게
+  - 적은 메모리만 사용하게
+  - 안정적이게
+
+- 구현 예 
+<img width="896" alt="image" src="https://user-images.githubusercontent.com/46957634/182553344-f92d2acb-b036-4780-8611-0403be57c353.png">
+<img width="921" alt="image" src="https://user-images.githubusercontent.com/46957634/182553368-e6b16b42-2bf6-4648-9b8e-00343f1e49d0.png">
+
+
+19 0.265968초 4.862961초 3.4GHz Intel Core i7 CPU 
+
+
+# Data Structure → Algorithm → Theory of Computation
+
+- 어떻게 하면 주어진 복잡한 문제를 이진수 형태의 낮은 수준의 명령어만
+이해하는 ‘단순한’ 컴퓨터 상에서 효율적으로 해결할 수 있을까?
+1. [Data Structure] 주어진 추상적인 문제를 어떠한 자료 구조를 사용하여 컴
+퓨터의 구조에 최적화된 형태로 표현할 수 있을까?
+2. [Algorithm] 주어진 추상적인 문제를 어떠한 알고리즘을 사용하여 컴퓨터를
+사용하여 가장 효율적으로 해결할 수 있을까?
+3. [Complexity] 과연 컴퓨터가 주어진 문제를 효율적으로 해결할 수 있을까 ?
+4. [Computability] 과연 컴퓨터가 세상의 모든 문제를 해결할 수 있을까?
+- ✓ 이 과목에서는 [CSE3080 자료구조] 과목에 이어, 1번과 2번을 집중적으로 살펴보
+고, 3번 문제에 대하여 어느 정도 살펴볼 예정임.
+- 4번 문제는 [CSE3085 자동장치이론] 과목에서 다룸.
+
 
 # [주제 1] Introduction to Algorithms and Complexity
 
@@ -25,26 +108,26 @@ Algorithm Design & Analysis
   2. [Algorithm] 주어진 추상적인 문제를 어떠한 **알고리즘을** 사용하여 컴퓨터를 사용하여 가장 효율적으로 해결할 수 있을까
   3. [Complexity] 과연 컴퓨터가 주어진 문제를 **효율적으로** 해결할 수 있을까 ?
   4. [Computability] 과연 컴퓨터가 세상의 **모든 문제를 해결**할 수 있을까?
-     - Data Structure & Algorithm $\rightarrow$ 1, 2, 3
-     - Automata Theory $\rightarrow$ 4
+
+- Data Structure & Algorithm $\rightarrow$ 1, 2, 3
+- Automata Theory $\rightarrow$ 4
 
 ## 2. Def. of Algorithm
 
 ### Definition of Algorithm
 
 - from [Horowitz 1.2]
-
 - An **algorithm** is a **finite set of instructions that**, if followed, accomplishes a particular task. In addition, all algorithms must satisfy the following criteria:
-
-  1)  **Input**. Zero or more quantities from the outside. 외부로부터 0개 이상의 수량이 입력으로서 들어온다.
-
-  2)  **Output**. At least one quantity is produced. 하나 이상의 결과값이 수행된다.
-
-  3)  **Definiteness**. Each instruction is clear and unambiguous. 각 지침은 모두 명확하며, 애매하게 쓰여 있지 않다.
-
-  4)  **Finiteness**. If we trace out the instructions of an algorithm, then for all cases, the algorithm terminates after a finite number of steps. 제한된 수의 단계 후 종료된다.
-
-  5)  **Effectiveness**. Every instruction must be basic enough to be carried out, in principle, by a person using only pencil and paper. 손으로 풀 수 있을 만큼 효과적이어야 한다.
+  1)  **Input**. Zero or more quantities from the outside. 
+  외부로부터 0개 이상의 수량이 입력으로서 들어온다.
+  2)  **Output**. At least one quantity is produced. 
+  하나 이상의 결과값이 수행된다.
+  3)  **Definiteness**. Each instruction is clear and unambiguous. 
+  각 지침은 모두 명확하며, 애매하게 쓰여 있지 않다.
+  4)  **Finiteness**. If we trace out the instructions of an algorithm, then for all cases, the algorithm terminates after a finite number of steps. 
+  제한된 수의 단계 후 종료된다.
+  5)  **Effectiveness**. Every instruction must be basic enough to be carried out, in principle, by a person using only pencil and paper. 
+  손으로 풀 수 있을 만큼 효과적이어야 한다.
 
   - It is not enough that each operation be definite as in (3); 
   - it also must be feasible. 또한 실현 가능하여야 한다.
@@ -772,10 +855,10 @@ for (int i = 1; i < n; i++)  {
     - If m = n→n
   - How many subrectangles are there in an mxn array?
   - For the case of m = n,
-    - Design an $$O(n^6)$$ algorithm. 
-    - Design an $$O(n^5)$$ algorithm. 
-    - Design an $$O(n^4)$$ algorithm. 
-    - Design an $$O(n^3)$$ algorithm.
+    - Design an $O(n^6)$ algorithm. 
+    - Design an $O(n^5)$ algorithm. 
+    - Design an $O(n^4)$ algorithm. 
+    - Design an $O(n^3)$ algorithm.
 
 | 0    | -2   | -7   | 0    |
 | ---- | ---- | ---- | ---- |
@@ -785,15 +868,15 @@ for (int i = 1; i < n; i++)  {
 
 - How many subrectangles are there in an mxn array?
 
-  - for an $$m * n$$ rectangle, 
+  - for an $m * n$ rectangle, 
 
-    $$\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   1$$
+    $\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   1$
 
-    $$= (\sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   1)(\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} 1)$$
+    $= (\sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   1)(\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} 1)$
 
-    $$ = { \sum_{k=0}^{m-1}(m-k)}{\sum_{i=0}^{n-1}{(n-i)} }$$
+    $ = { \sum_{k=0}^{m-1}(m-k)}{\sum_{i=0}^{n-1}{(n-i)} }$
 
-    $$= \frac {m(m+1)} {2} \frac {n(n+1)} {2} = O(m^2 n^2) = O(n^4)$$ if $$m=n$$ 
+    $= \frac {m(m+1)} {2} \frac {n(n+1)} {2} = O(m^2 n^2) = O(n^4)$ if $m=n$ 
 
   - [1D case]
 
@@ -803,11 +886,14 @@ for (int i = 1; i < n; i++)  {
 
 - [가정] $n=m$ 
 
-  $$\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   (j-i+1)(l-k+1) = \sum_{i=0}^{n-1} \sum_{j=i}^{n-1} {(j-i+1)} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   {(l-k+1)} $$
+  $\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   (j-i+1)(l-k+1) = \sum_{i=0}^{n-1} \sum_{j=i}^{n-1} {(j-i+1)} \sum_{k=0}^{m-1} \sum_{l=k}^{m-1}   {(l-k+1)}$
 
-  let $$A$$ = $$\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} {(j-i+1)} $$
+  let $A =\sum_{i=0}^{n-1} \sum_{j=i}^{n-1} {(j-i+1)}$
 
-  $$A = 1*n + 2*(n-1) +3(n-2) + ... + n*1 = \sum_{i=1}^{n} {i(n-i+1)} = n \sum_{i=1}^n i - \sum_{i=1}^n i^2 + \sum_{i=1}^n i \frac{1}{6} n^3 $$ so $$O(\frac{1}{36} n^6 )$$
+  $A = 1*n + 2*(n-1) +3(n-2) + ... + n*1 
+  \\= \sum_{i=1}^{n} {i(n-i+1)} \\= n \sum_{i=1}^n i - \sum_{i=1}^n i^2 + \sum_{i=1}^n i \frac{1}{6} n^3$ 
+  
+  - so $O(\frac{1}{36} n^6 )$
 
 - Time Complexity : $O(n^6)$ 
 

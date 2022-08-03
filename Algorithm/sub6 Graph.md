@@ -42,7 +42,7 @@ Algorithm Design & Analysis
 - A *weighted graph* is a graph in which a number, called the *weight*, is assigned to each edge.
 
 $V = \{ 1, 2, 3, 4, 5, 6 \}$
-$ E = \{ (1, 2), (1, 5), (2, 3), (2, 5), (3, 4), (4, 5), (4, 6) \}$
+$E = \{ (1, 2), (1, 5), (2, 3), (2, 5), (3, 4), (4, 5), (4, 6) \}$
 
 From Wikipedia
 
@@ -317,7 +317,7 @@ while (Q is not empty){
 
   - Let $A^k [i][j]$ be the cost of the shortest path from *i* to *j*, using only those intermediate vertices with an index ≤ *k*.
 
-  - The goal is to compute $A^{n-1} [i][j]$ $ \forall i,j = 0,1,2,...,n-1$
+  - The goal is to compute $A^{n-1} [i][j]$ $\forall i,j = 0,1,2,...,n-1$
 
   - Optimal substructure for computing $A^k [i][j]$ from $A^{k-1} [i][j]$
 
@@ -332,8 +332,8 @@ while (Q is not empty){
 - The table computation
 
   - Initialization / Table traversal order 
-  - Example: *k* = 4 (*A**k*[*i*][*j*]*A**k*-1[*i*][*j*])
-  - $O(n^3)$time
+  - Example: $k = 4 (A_k[i][j] A_{k-1}[i][j])$
+  - $O(n^3)$ time
   - An in-place implementation is possible.
 
 - Path reconstruction
@@ -424,7 +424,7 @@ Generic-MST(G) {
 
 - Proof: 
   - Assume that there is an MST $T$ that does not contain e. 
-  - Adding $e$ to $T$ will produce a cycle, that crosses the cut once at e and crosses back at another edge $e' $. 
+  - Adding $e$ to $T$ will produce a cycle, that crosses the cut once at e and crosses back at another edge $e'$. 
   - Deleting e' we get a spanning tree $T∖{e'}∪{e}$ of strictly smaller weight than $T$. This contradicts the assumption that T was a MST.
 - By a similar argument, if more than one edge is of minimum weight across a cut, then each such edge is contained in some minimum spanning tree.
 
@@ -530,7 +530,7 @@ Generic-MST(G) {
 
 - Proof: 
   - Assume that there is an MST $T$ that does not contain e. 
-  - Adding $e$ to $T$ will produce a cycle, that crosses the cut once at e and crosses back at another edge $e' $. 
+  - Adding $e$ to $T$ will produce a cycle, that crosses the cut once at e and crosses back at another edge $e'$. 
   - Deleting e' we get a spanning tree $T∖{e'}∪{e}$ of strictly smaller weight than $T$. This contradicts the assumption that T was a MST.
 - By a similar argument, if more than one edge is of minimum weight across a cut, then each such edge is contained in some minimum spanning tree.
 
@@ -841,7 +841,7 @@ int main()
 
 #### Inductive Description of the Prim’s Algorithm
 
-- $ V=\{ v_0,v_1,v_2,...,v_{n-1} \} $ with $|V| = n$
+- $ V=\{ v_0,v_1,v_2,...,v_{n-1} \}$ with $|V| = n$
 - $T^k →T^{k+1}$
   - 매번 가장 비용이 낮은 fringe edge를 선택하여 $T^k$ 로 옮긴 후 그에 따른 처리를 함.
 
@@ -1020,13 +1020,13 @@ void GRAPHpfs(Graph G, int st[], double wt[]){
 - A greedy approach
   - Generate the shortest paths in non-decreasing order of lengths!
 
-1. $S^1=\{ v_0 \} $로 설정하고 시작.
+1. $S^1=\{ v_0 \}$로 설정하고 시작.
 2. ($i=k$일 때) $S^k$의 꼭지점들만 사용할 경우에 대한 $v_0$에서 $v$까지의 shortest path가 구해져 있음. ($v$는 $S^k$의 꼭지점)
 3. $S^k$상황에서 가장 짧은 path에 대한 꼭지점 $v$를 $S^k$로 옮긴 후 적절한 처리를 수행 → $S^{k+1}$
 4. ($i = k+1$일 때) $S^{k+1}$ 의 꼭지점들만 사용할 경우에 대한 $v_0$에서 $v$까지의 shortest path가 구해져 있음. ($v$는 $S^{k+1}$의 꼭지점)
    - 다시 2. 로 감
 
-5. Sn이 다 구해졌을 경우
+5. $S_n$ 이 다 구해졌을 경우
 
 #### From Prof. Kenji Ikeda's Home Page
 
@@ -1118,7 +1118,7 @@ void GRAPHpfs(Graph G, int st[], double wt[]){
 - Correctness of Dijkstra’s algorithm
 
   - Theorem
-    - Dijkstra algorithm, run on a weighted, directed graph $ G=(V,E)$ with nonnegative weight function $w : E \rightarrow R $ and source $s$, terminates with $v.d = \delta(s,v)$ $\forall $vertices $v \in V$
+    - Dijkstra algorithm, run on a weighted, directed graph $ G=(V,E)$ with nonnegative weight function $w : E \rightarrow R$ and source $s$, terminates with $v.d = \delta(s,v)$ $\forall$ vertices $v \in V$
   - Loop invariant
     - At the start of each iteration of the while loop of lines 4-8, $v.d = \delta(s,v)$ for each vertex $ v \in S$
   - A key in the proof

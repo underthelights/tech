@@ -63,13 +63,13 @@ Algorithm Design & Analysis
 
 - Suppose that each team has a 50% chance of winning any game.
 
-- Let $$P(i,j)$$ be the probability that if Dodgers needs *i* games to win, and
+- Let $P(i,j)$ be the probability that if Dodgers needs *i* games to win, and
 
   Yankees needs *j* games, Dodgers will eventually win the Series.
 
 - –  Ex: *P*(2, 3) = 11/16
 
-- –  Compute $$P(i,j) $$  $$ 0 \leq i,j \leq n $$ $$\forall n$$
+- –  Compute $P(i,j) $  $ 0 \leq i,j \leq n $ $\forall n$
 
 #### 1. [Worse] A Divide-and-Conquer Approach 
 
@@ -157,7 +157,7 @@ Algorithm Design & Analysis
 
 - Problem
 
-  - Determine the minimum number of elementary multiplications, needed to multiply *n* matrices where $$ A_i \in R^{d_{i-1} \times d_i}$$
+  - Determine the minimum number of elementary multiplications, needed to multiply *n* matrices where $ A_i \in R^{d_{i-1} \times d_i}$
 
 - Examples
 
@@ -174,7 +174,7 @@ Algorithm Design & Analysis
 
 - Definition
 
-  - $$M(i, j)$$ : the minimum number of multiplications needed to multiply $$A_i$$ through $$A_j (i \leq j )$$
+  - $M(i, j)$ : the minimum number of multiplications needed to multiply $A_i$ through $A_j (i \leq j )$
 
 - Optimal subtructure
 
@@ -246,9 +246,9 @@ Algorithm Design & Analysis
 | 8     |      |      |      |      |      |      |      | 0    |
 
 - Chained matrix multiplication problem
-  - $$O(n^3)$$ by Godbole (1973)
-  - $$O(n^2)$$ by Yao (1972)
-  - $$O(n log n)$$ by Hu and Shing (1982, 1984)
+  - $O(n^3)$ by Godbole (1973)
+  - $O(n^2)$ by Yao (1972)
+  - $O(n log n)$ by Hu and Shing (1982, 1984)
 
 - Printing optimal order
 
@@ -283,8 +283,8 @@ void order(int i, int j)
 
 ## 4. Principles of Dynamic Programming
 
-- $$C_{ij}$$ = the cost of the shortest path from $$(0,0)$$ to $$(i,j)$$
-  - Then $$C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}$$ 
+- $C_{ij}$ = the cost of the shortest path from $(0,0)$ to $(i,j)$
+  - Then $C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}$ 
 - Recursive formulation
 - Optimal substructure
 - Overlapping subproblems
@@ -314,7 +314,7 @@ void order(int i, int j)
 
 - If a problem can be solved by combining optimal solutions to non-overlapping sub-problems, 
 - the strategy is called "divide-and- conquer" instead. This is why merge sort and quick sort are not classified as dynamic programming problems.
-- $$C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}$$ 
+- $C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}$ 
 
 #### The Checkerboard Problem
 
@@ -441,18 +441,18 @@ void main(void)
 
 - **[T. Cormen et al.,** **Introduction to Algorithms** **(3\****rd** **ed.), The MIT Press, 2009. 16.3]** 
 - Definitions
-  - Given a sequence $$X = <x1, x2, ..., xm >$$ another sequence $$Z = <z1, z2, ..., zk >$$ is a subsequence of X if there exists a strictly increasing sequence$$ <i1, i2, ..., ik > $$of indices of X such that $$\forall j = 1, 2, ..., k$$, we have $$x_{ij} = z_j$$.
+  - Given a sequence $X = <x1, x2, ..., xm >$ another sequence $Z = <z1, z2, ..., zk >$ is a subsequence of X if there exists a strictly increasing sequence$ <i1, i2, ..., ik > $of indices of X such that $\forall j = 1, 2, ..., k$, we have $x_{ij} = z_j$.
     - A subsequence of a given sequence is just the given sequence with some elements (possibly none) left out.
-    - Ex:$$X=<A,B,C,B,D,A,B>, Z=<B,C,D,B>(<2,3,5,7>)$$
+    - Ex:$X=<A,B,C,B,D,A,B>, Z=<B,C,D,B>(<2,3,5,7>)$
   - Given two sequences X and Y, we say that a sequence Z is a common subsequence of X and Y if Z is a subsequence of both X and Y.
     - Ex: 
-    - $$X = <A, B, C, B, D, A, B>, Y = <B, D, C, A, B, A>, Z1 = <B, C, A>, Z2 = <B, C, B, A>, Z3 = <B, D, A, B>$$
-  - Given a sequence $$X = <x1, x2, ..., xm >, Xi = <x1, x2, ..., xi >$$ is the ith prefix of X, for $$i = 0, 1, ..., m$$.
+    - $X = <A, B, C, B, D, A, B>, Y = <B, D, C, A, B, A>, Z1 = <B, C, A>, Z2 = <B, C, B, A>, Z3 = <B, D, A, B>$
+  - Given a sequence $X = <x1, x2, ..., xm >, Xi = <x1, x2, ..., xi >$ is the ith prefix of X, for $i = 0, 1, ..., m$.
     - • Ex: 
-    - $$X = <A, B, C, B, D, A, B>, X4 = <A, B, C, B>, X0 = null sequence$$
+    - $X = <A, B, C, B, D, A, B>, X4 = <A, B, C, B>, X0 = null sequence$
 
 - Problem 
-  - Given two sequences $$X = <x1, x2, ..., xm >$$ and $$Y = <y1, y2, ..., yn >$$ 
+  - Given two sequences $X = <x1, x2, ..., xm >$ and $Y = <y1, y2, ..., yn >$ 
   - find a longest common subsequence of X and Y.
 
 
@@ -467,26 +467,26 @@ void main(void)
 
 - Optimal substructure of an LCS
 
-  - Let $$X = <x1, x2, ..., xm >$$ and $$Y = <y1, y2, ..., yn > $$be sequences, and let $$Z = <z1, z2, ..., zk >$$ be any LCS of $$X$$ and $$Y$$.
+  - Let $X = <x1, x2, ..., xm >$ and $Y = <y1, y2, ..., yn > $be sequences, and let $Z = <z1, z2, ..., zk >$ be any LCS of $X$ and $Y$.
 
-    1. If $$x_m = y_n$$, 
+    1. If $x_m = y_n$, 
 
-       then $$z_k = x_m = y_n$$, 
+       then $z_k = x_m = y_n$, 
 
-       and $$Z_{k-1}$$ is an LCS of $$X_{m-1}$$ and $$Y_{n-1}$$. 
+       and $Z_{k-1}$ is an LCS of $X_{m-1}$ and $Y_{n-1}$. 
 
-    2. If $$x_m \neq y_n$$, 
+    2. If $x_m \neq y_n$, 
 
-       then an LCS of $$X$$ and $$Y$$ is either an LCS of $$X
-       _{m-1}$$ and $$Y$$ 
+       then an LCS of $X$ and $Y$ is either an LCS of $X
+       _{m-1}$ and $Y$ 
 
-       or an LCS of $$X$$ and $$Y_{n-1}$$.
+       or an LCS of $X$ and $Y_{n-1}$.
 
-- Let $$c[i, j]$$ be the length of an LCS of the sequences $$X_i$$ and $$Y_j$$
+- Let $c[i, j]$ be the length of an LCS of the sequences $X_i$ and $Y_j$
 
-- Optimal substructure for computing $$c[i, j]$$
+- Optimal substructure for computing $c[i, j]$
 
-### $$O(mn)$$ Algorithm 
+### $O(mn)$ Algorithm 
 
 - Filling the table
 - Printing the LCS
@@ -705,7 +705,7 @@ int LIS(int *a, int N)
 - Naïve approach
   - There are 2n subsets of {1, 2, ..., n}! 
 - Dynamic programming approach
-  -  Let $$P(i,w)$$ be the maximized profit obtained when choosing items only from the first **i** items under the restriction that the total weight cannot exceed **w**.
+  -  Let $P(i,w)$ be the maximized profit obtained when choosing items only from the first **i** items under the restriction that the total weight cannot exceed **w**.
   -  If we let A* be an optimal subset of {1, 2, ..., n},
   -  Optimal substructure
 
@@ -759,7 +759,7 @@ int zero_one_knapsack(int *p, int *w, int n, int W)
 }
 ```
 
-$$O(nW)$$ Time
+$O(nW)$ Time
 
 ### 5. 0-1 Knapsack Example 1: n = 6, W = 10
 
@@ -799,7 +799,7 @@ $$O(nW)$$ Time
 
 Selected items: i = 2, 3, 4, 6 Obtained profit: 19
 
-- Is the time-complexity $$O(nW)$$ an efficient one? 
+- Is the time-complexity $O(nW)$ an efficient one? 
   - This is not a linear-time algorithm!
     - A problem is that W is not bounded with respect to n.
     - What if n = 20 and W = 20!?→O(n*n!)

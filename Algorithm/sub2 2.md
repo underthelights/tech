@@ -178,7 +178,7 @@ void PQdec(int k){
 int n = 0;
 ```
 
-- $$ref.$$ [Horowitz 5.6.2]
+- $ref.$ [Horowitz 5.6.2]
 
 - $C = log_2 n$
 
@@ -234,7 +234,7 @@ int n = 0;
 
 ### Another Heap Implementation (Min Heap)
 
-- $$ref.$$ [Sedgewick 9.3]
+- $ref.$ [Sedgewick 9.3]
 
 ```c++
 void PQinit(int);
@@ -298,7 +298,7 @@ fixDown(int a[], int k, int N){
 
 ### Heap Sort in C Implementation
 
-- $$ref.$$ [Horowitz 7.7] [Neapolitan 7.6]
+- $ref.$ [Horowitz 7.7] [Neapolitan 7.6]
 
 - | -         | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   |
   | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -387,7 +387,7 @@ void adjust(element list[], int root, int n){
 ```
 
 - Executed *d* times, where *d* is the depth of the tree with root *i*
-  - So $$O(d)$$ time
+  - So $O(d)$ time
 
 ### Cost of Make-Heap
 
@@ -443,7 +443,7 @@ $2^c \leq n < 2^{c+1} \rightarrow c \leq log_2 n < c+1$
     - Delete an element with the largest key. 
     - Delete an element with the smallest key.
 
-- $$ref.$$ [Horowitz 9.1]
+- $ref.$ [Horowitz 9.1]
 
 ---
 

@@ -69,7 +69,7 @@ Algorithm Design & Analysis
   - Decoding of an encoded file is trivial.
 
 - Problem
-  - Given a file *F* to be encoded with a character set $$V = \{v_1, v_2, ..., v_n \}$$  , find an optimal prefix binary code with a corresponding binary tree *T* that minimizes the cost function where *freq*(*v**i*) is the number of times *v**i* occurs in *F*, and *depth*(*v**i*) is the depth *v**i* of in *T*.
+  - Given a file *F* to be encoded with a character set $V = \{v_1, v_2, ..., v_n \}$, find an optimal prefix binary code with a corresponding binary tree *T* that minimizes the cost function where *freq*(*v**i*) is the number of times *v**i* occurs in *F*, and *depth*(*v**i*) is the depth *v**i* of in *T*.
   - A Greedy approach successfully finds an optimal code.
 
 ### 3) Huffman’s Algorithm 
@@ -132,7 +132,7 @@ Algorithm Design & Analysis
   /* w points to the optimal tree. */
   ```
 
-  → $$O (nlogn)$$ time
+  → $O (nlogn)$ time
 
 #### 3. Correctness of the Huffman’s Algorithm
 
@@ -170,7 +170,7 @@ Algorithm Design & Analysis
 
 - Greedy algorithm
 
-  → $$O(n log n + n) = O(n log n)$$ time
+  → $O(n log n + n) = O(n log n)$ time
 
 ### 5) Scheduling: Minimizing Total Time in the System 
 
@@ -435,7 +435,7 @@ Algorithm Design & Analysis
 - Connected component labeling in image analysis
 
 - Example
-  $$U=\{a,b,c,d,e\}$$
+  $U=\{a,b,c,d,e\}$
 
   -  For (each *x* in U) 
      - Makeset(*x*); → {*a*}, {*b*}, {*c*}, {*d*}, {*e*} 
@@ -560,7 +560,7 @@ Algorithm Design & Analysis
 
 - Method
 
-  - $$d_{max}$$ : the maximum of the deadlines for *n* jobs.
+  - $d_{max}$ : the maximum of the deadlines for *n* jobs.
 
   - Add a job as late as possible to the schedule being built, but no later than its deadline.
 
@@ -568,7 +568,7 @@ Algorithm Design & Analysis
 
   - Sort the jobs in non-increasing order by profit.
 
-  - Initialize $$d_{max}+1$$ disjoint sets, containing the integers $$0, 1, 2, ..., d_{max}$$
+  - Initialize $d_{max}+1$ disjoint sets, containing the integers $0, 1, 2, ..., d_{max}$
 
   - For each job in the sorted order,
 
@@ -578,8 +578,8 @@ Algorithm Design & Analysis
 
 - Time complexity
 
-  - $$O(n log m)$$ for the disjoint set manipulation, where *m* is the minimum of $$n$$ and $$d_{max}$$
-  - $$O(nlogn$$) for sorting the profits.
+  - $O(n log m)$ for the disjoint set manipulation, where *m* is the minimum of $n$ and $d_{max}$
+  - $O(nlogn$) for sorting the profits.
 
 - Example
 
