@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.712918481460">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.4.0">
+
+    <!-- Primary Meta Tags -->
+    <title>1.4. MSS</title>
+    <meta name="title" content="1.4. MSS">
+    <meta name="description" content="최대 부분 수열의 합 Maximum Subsequence Sum" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/algorithm/1.-complexity/1.4/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/algorithm/1.-complexity/1.4/">
+    <meta property="og:title" content="1.4. MSS">
+    <meta property="og:description" content="최대 부분 수열의 합 Maximum Subsequence Sum">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/122639250-de6aa380-d133-11eb-9a3a-b43a8519b070.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/algorithm/1.-complexity/1.4/">
+    <meta property="twitter:title" content="1.4. MSS">
+    <meta property="twitter:description" content="최대 부분 수열의 합 Maximum Subsequence Sum">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/122639250-de6aa380-d133-11eb-9a3a-b43a8519b070.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../../favicon.ico" rel="icon" />
+    <link href="../../../resources/css/retype.css?v=2.4.0.712918481460" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.712918481460" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.712918481460" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.712918481460" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.4.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="14-mss" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#14-mss">#</doc-anchor-trigger>
+        <span>1.4. MSS</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../../categories/alg/">alg</a></div>
+</div>
+
+<blockquote>
+<p>최대 부분 수열의 합 Maximum Subsequence Sum</p>
+</blockquote>
+<doc-anchor-target id="maximum-subsequence-sum-mss-problem" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#maximum-subsequence-sum-mss-problem">#</doc-anchor-trigger>
+        <span>Maximum Subsequence Sum (MSS) Problem</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p><span class="math">Ref.</span> <strong>[M. Weiss,</strong> <strong>Data Structure and Algorithm Analysis in C (2nd ed.), Pearson, 1997. 2.4.3]</strong></p>
+<ul>
+<li>Given <span class="math">N</span> (possiblly negative) <span class="math">A_0, A_1, ..., A_{N-1} \in \mathbb{Z}</span></li>
+<li>find the maximum value of <span class="math">\sum_{k=i}^{j} {A_k }</span> for <span class="math">0 \leq i \leq j \leq N-1</span></li>
+<li>for convenience, the max subseuqence sum is 0 if all the integers &#x27;re &lt;0</li>
+</ul>
+</li>
+<li><p>Example</p>
+<ul>
+<li><p>(-2, 11, -4, 13, -5, -2).  →  MSS = 20</p>
+<img width="395" alt="스크린샷 2021-06-13 오후 4 00 54" src="https://user-images.githubusercontent.com/46957634/121798325-9abdf880-cc60-11eb-915f-e6c439a2810c.png">
+</li>
+</ul>
+</li>
+<li><p>Maximum Subarray Problem</p>
+</li>
+<li><p>Maximum Positive Sum Subarray Problem</p>
+</li>
+<li><p>Max. Sum Subsequence versus Max. Subsequence Sum</p>
+</li>
+</ul>
+<doc-anchor-target id="alg-of-maximum-subsequence-sum">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#alg-of-maximum-subsequence-sum">#</doc-anchor-trigger>
+        <span>Alg of Maximum Subsequence Sum</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>길이 $n$인 정수의 수열 <span class="math">a_0, a_1, ..., a_{n-1}</span> 이 입력으로 주어져 있다.</p>
+</li>
+<li><p>여기서 부분 수열 [i, j]라는 것은 <span class="math">a_i, a_{i+1}, a_{i+2}..., , a_{j}</span> 를 말한다.</p>
+</li>
+<li><p>본 문제는 주어진 수열의 부분 수열의 합,즉 <span class="math">\sum_{i \leq k \leq j} {a_k}</span> 의 최대값을 구하는 문제이다. (이때 주어진 수열의 정수가 모두 음수이면 최대 부분 수열의 합은 0 이라고 간주한다)</p>
+<ul>
+<li>예를 들어 다음과 같은 수열이 주어졌을 때,
+<span class="math">+ 31, −41, +59, +26, −53, +58, +97, −93, −23, +84</span>
+최대 부분 수열은 $[2,6]$이며 수열의 합은 <span class="math">187</span> 이 된다.</li>
+</ul>
+</li>
+<li><p>이 문제는 최대 부분 수열의 합을 구하는 것이지만, 앞으로 소개할 알고리즘을 조금만 수정하면 최대 부분 수열도 쉽게 구할 수 있다.</p>
+<blockquote>
+<p>Algorithm1 : 모든 경우의 수 찾기 - <span class="math">O(N^3)</span>
+Algorithm2 : Sum구할 때 중복 조금 피하기 - <span class="math">O(N^2)</span>
+Algorithm3 : Divide n Conquer - <span class="math">O(N log N)</span>
+Algorithm4 : Dynamic Programming - <span class="math">O(N)</span></p>
+</blockquote>
+<ul>
+<li><img src="https://user-images.githubusercontent.com/46957634/122639250-de6aa380-d133-11eb-9a3a-b43a8519b070.png" alt="image" /></li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-1">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-1">#</doc-anchor-trigger>
+        <span>MSS Algorithm 1</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>Strategy
+<ul>
+<li><p>Enumerate all possibilities one at a time.</p>
+</li>
+<li><p>No efficiency is considered, resulting in a lot of unnecessary computation!</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Maxsum = 0
+for (i=0; i &lt; n; i++){
+    for (j=i; j &lt; n; j++){
+        Thissum = sum(A[i:j])
+      	Maxsum = max(Thissum, Maxsum)
+    }
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>모든 경우의 수를 하나하나 모두 따져보는 방법.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubsequenceSum(const int A[], int N){
+int ThisSum, MaxSum, i, j, k;
+  //i = 리스트 왼쪽 끝 인덱스, j = 리스트 오른쪽 끝 인덱스, ThisSum = 고려 대상 부분 리스트 합, MaxSum = 문제 최종결론
+MaxSum = 0;
+for (i = 0; i &lt; N; i++)
+    for (j = i; j &lt; N; j++)
+    {
+        ThisSum = 0;
+        for (k = i; k &lt;= j; k++)
+            ThisSum += A[k];
+        if (ThisSum &gt; MaxSum)
+            MaxSum = ThisSum;
+    }
+return MaxSum;
+}
+</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Is this for-loop OK for you?</p>
+</li>
+<li><p>Time Complexity : <span class="math">O(N^3)</span></p>
+<ul>
+<li>𝑖와 관련된 반복문은 𝑛n번, 𝑗와 관련된 반복문은 최대 𝑛번, Thissum을 구할 때 최대 𝑛개의 요소를 계산해야 하기에</li>
+<li><span class="math">\sum_{i=0}^{N-1} \sum_{j=i}^{N-1} \sum_{k=i}^{j} 1 = \frac{N^3 + 3N^2 + 2N}{6}</span></li>
+<li><span class="math">\sum_{j=i}^{N-1}\ (j-i+1) = \frac{(N-i+1)(N-i)}{2}</span></li>
+<li><span class="math">\sum_{k=i}^{j} 1 = j-i+1</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-2">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-2">#</doc-anchor-trigger>
+        <span>MSS Algorithm 2</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>Strategy
+<ul>
+<li><p>Get rid of the inefficiency in the innermost for-loop. Algorithm 1보다 중복을 줄이는 방법</p>
+</li>
+<li>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">Maxsum = 0
+for (i=0; i &lt; n; i++){
+      for (j=i; j &lt; n; j++){
+          Thissum = sum(A[i:j])
+        	Maxsum = max(Thissum, Maxsum)
+        }
+    }</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>Notice that <span class="math">\sum_{k=i}^{j } {A_k} = A_j + \sum_{k=i}^{j-1} {A_k}</span></p>
+</li>
+<li>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubsequenceSum(const int A[], int N)
+{
+  int ThisSum, MaxSum, i, j;
+  MaxSum = 0;
+for (i = 0; i &lt; N; i++){
+  ThisSum = 0;
+  for (j = i; j &lt; N; j++){
+      ThisSum += A[j];
+    if (ThisSum &gt; MaxSum)
+      MaxSum = ThisSum;
+  }
+}return MaxSum;</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+<p>}</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none"></code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>time complexity : <span class="math">O(N^2)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-3">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-3">#</doc-anchor-trigger>
+        <span>MSS Algorithm 3</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>Strategy</p>
+<ul>
+<li><p>Use the Divide-and-Conquer strategy.</p>
+<ul>
+<li>원 문제를 작은 문제로 나눠 풀고, 그 결과를 합쳐 문제를 해결하는 알고리즘</li>
+</ul>
+</li>
+<li><p>The maximum subsequence sum can be in one of three places.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubSum(const int A[], int Left, int Right){
+int MaxLeftSum, MaxRightSum;
+int MaxLeftBorderSum, MaxRightBorderSum;
+int LeftBorderSum, RightBorderSum;
+int Center, i;
+  //종료조건
+if (Left == Right){
+    if (A[Left] &gt; 0)
+				return A[Left];
+    else
+        return 0;
+}
+//divide n conquer 
+Center = (Left + Right) / 2;
+//왼쪽, 오른쪽, 중간
+MaxLeftSum = MaxSubSum(A, Left, Center);
+MaxRightSum = MaxSubSum(A, Center + 1, Right);
+MaxLeftBorderSum = 0;
+LeftBorderSum = 0;
+
+//1. left ending 끝으로 하는 mss
+for (i = Center; i &gt;= Left; i--){
+    LeftBorderSum += A[i];
+    if (LeftBorderSum &gt; MaxLeftBorderSum)
+        MaxLeftBorderSum = LeftBorderSum;
+}
+MaxRightBorderSum = 0;
+RightBorderSum = 0;
+//2. right ending 시작으로 하는 mss
+for (i = Center; i &lt;= Right; i++){
+    RightBorderSum += A[i];
+    if (RightBorderSum &gt; MaxRightBorderSum)
+        MaxRightBorderSum = RightBorderSum;
+}
+return Max3(MaxLeftSum, MaxRightSum, MaxLeftBorderSum + MaxRightBorderSum);
+}
+int MaxSubsequenceSum(const int A[], int N) { 
+	return MaxSubSum(A, 0, N - 1); 
+}
+</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+</li>
+<li><p>cost : <span class="math">T(n) = 2T(n/2) + cn</span>, <span class="math">T(1) = d</span></p>
+</li>
+<li><p>why <span class="math">O(N log N)</span> ?</p>
+<ul>
+<li><span class="math">T(n) = 2T(\frac n 2) + cn</span>, <span class="math">T(1) = d</span>
+$ = 2 [ 2T(\frac n {2^2}) + c \frac n 2 ] + cn$
+<span class="math">= 2^2 T [ \frac n {2^2}] + 2cn</span>
+<span class="math">= 2^3 T [ \frac n {2^3}] + 3cn =...</span>
+<span class="math">= 2^i T [ \frac n {2^i}] + icn</span>
+<span class="math">= 2^{log_2 n} T(1) + log_2 n \cdot cn</span>
+<span class="math">=nT(1) + log_2 n \cdot cn</span>
+<span class="math">= O(n) + O(n log_2 n) = O(n log_2 n)</span></li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mss-algorithm-4-kadanes-algorithm">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mss-algorithm-4-kadanes-algorithm">#</doc-anchor-trigger>
+        <span>MSS Algorithm 4; Kadane’s algorithm</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>Strategy
+<ul>
+<li><p>Use the Dynamic Programming strategy.</p>
+</li>
+<li><p>subsequence sum&lt;0인 경우, 논리적으로 최대값이 될 수 없음에 착안한 전략</p>
+</li>
+<li><p>만약에 sum이 음수라도 무방하고 1개 이상의 원소로 구 성된 Subsequence (subarray)를 구하는 문제라면?</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int MaxSubsequenceSum(const int A[], int N){
+    int ThisSum, MaxSum, i;
+
+    ThisSum = 0; MaxSum = 0;
+    for(i = 0; i &lt; N; i++){
+        ThisSum += A[i];
+        if(ThisSum &gt; MaxSum)
+            MaxSum = ThisSum;
+        else if(ThisSum &lt; 0)
+            ThisSum = 0;
+    }
+    return MaxSum;
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Time Complexity : <span class="math">O(n)</span></p>
+<ul>
+<li>for i, iteration n times, and <span class="math">O(1)</span> for 1 calculation</li>
+</ul>
+</li>
+<li><p>C Implementation</p>
+<ul>
+<li>Maximum sum rectangle in a 2D matrix (DP-27) by GeeksforGeeks</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int kadane(int *arr, int *start, int *finish, int n)
+{
+    int sum = 0, maxSum = INT_MIN;
+
+    *finish = -1;
+    int local_start = 0;
+    for (int i = 0; i &lt; n; ++i)
+    {
+        sum += arr[i];
+        if (sum &lt; 0)
+        {
+            sum = 0;
+            local_start = i + 1;
+        }
+        else if (sum &gt; maxSum)
+        {
+            maxSum = sum;
+            *start = local_start;
+            *finish = i;
+        }
+    }
+    if (*finish != -1)
+        return maxSum; 
+    // at least one non-negative number.
+    
+    // When all numbers in the array are negative
+    maxSum = arr[0];
+    *start = *finish = 0;
+    for (int i = 1; i &lt; n; i++)
+    {
+        if (arr[i] &gt; maxSum)
+        {
+            maxSum = arr[i];
+            *start = *finish = i;
+        }
+    }
+    // Empty subsequence를 허용하면 0을 리턴 (원래 문제)
+    // Empty subsequence를 허용하지 않으면 음수 중 가장 큰 원소를 리턴
+    return maxSum;
+}
+</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="so-why-do-we-bother-with-the-time-complexity">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#so-why-do-we-bother-with-the-time-complexity">#</doc-anchor-trigger>
+        <span>So, why do we bother with the time complexity?</span>
+    </h5>
+</doc-anchor-target>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../../tags/alg/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>alg</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/1.-complexity/1.3/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">1.​3. Order of Algorithms</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/1.-complexity/1.5/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">1.​5. Maximum Sum Subrectangle in 2​D Array</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "1.4. MSS", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>
