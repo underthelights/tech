@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.712994009815">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.4.0">
+
+    <!-- Primary Meta Tags -->
+    <title>1.3. Order of Algorithms</title>
+    <meta name="title" content="1.3. Order of Algorithms">
+    <meta name="description" content="for given two functions f(n) and g(n)," />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/algorithm/1)/1.3/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/algorithm/1)/1.3/">
+    <meta property="og:title" content="1.3. Order of Algorithms">
+    <meta property="og:description" content="for given two functions f(n) and g(n),">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/algorithm/1)/1.3/">
+    <meta property="twitter:title" content="1.3. Order of Algorithms">
+    <meta property="twitter:description" content="for given two functions f(n) and g(n),">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../../favicon.ico" rel="icon" />
+    <link href="../../../resources/css/retype.css?v=2.4.0.712994009815" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.712994009815" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.712994009815" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.712994009815" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.4.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="-big--notation" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-big--notation">#</doc-anchor-trigger>
+        <span><span class="math">O</span> (Big <span class="math">O</span> Notation)</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../../categories/alg/">alg</a></div>
+</div>
+
+<ul>
+<li><p>for given two functions <span class="math">f(n)</span> and <span class="math">g(n)</span> ,</p>
+<blockquote>
+<p><span class="math">g(n) = O(f(n))</span> <span class="math">\iff \exists c \in \mathbb{R}, N \in \mathbb{N}\quad</span></p>
+</blockquote>
+<ul>
+<li><span class="math">s.t. \quad g(n)\leq c\cdot f(n)</span> <span class="math">\forall n \geq  N</span></li>
+</ul>
+</li>
+<li><p>then we say that : <span class="math">g(n)</span> is big O of <span class="math">f(n)</span></p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = x + 1;
+for (i = 1; i &lt;= n; i++)
+	y = y + 2;
+for (i = n; i &gt;=1; i--)
+	for (j = n; j &gt;= 1; j--)
+		z = z + 1;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>정답 : <span class="math">g(n) = c_0 + c_1 n + c_2 n^2</span></p>
+</li>
+<li><p>예 : <span class="math">g(n) = 5 + 6 + 7n^2 \leq 8n^2 \quad \forall n \geq 8</span></p>
+<ul>
+<li><span class="math">g(n) = O(n^2)</span></li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="notes-for-big-o">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#notes-for-big-o">#</doc-anchor-trigger>
+        <span>Notes for big O</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>[Note 1] The big O puts an <strong>asymptotic</strong> upper bound on a function.</p>
+<ul>
+<li><p>Asymptotic analysis (from Wikipedia)</p>
+<blockquote>
+<p>If <span class="math">f(n) = n^2 + 3n</span>, then as n becomes very large, the term <span class="math">3n</span> becomes insignificant compared to <span class="math">n^2</span>. The function <span class="math">f(n)</span> is said to be &quot;asymptotically equivalent to <span class="math">n^2</span>, as <span class="math">n → ∞</span>&quot;. This is often written symbolically as <span class="math">f(n) ~ n^2</span>, which is read as &quot;<span class="math">f(n)</span> is asymptotic to <span class="math">n^2</span>&quot;.</p>
+</blockquote>
+</li>
+<li><p>계산 비용이 <span class="math">0.01n^2</span> 과 <span class="math">100n</span> 알고리즘 중 어떤 것이 더 효율적인가?</p>
+</li>
+<li><p>(Tight) upper bound</p>
+<ul>
+<li><span class="math">37log n + 0.1n = O(n)</span></li>
+<li><span class="math">n2 + 10n = O(n^2)</span></li>
+<li>$4(log n)^2 + nlog n + 100n = O(nlog n) $</li>
+<li><span class="math">n^2 + 10n = O(n^200)</span> ???</li>
+</ul>
+</li>
+<li><p>Growth Rates of Some Common Complexity Functions</p>
+<ul>
+<li><img width="269" alt="스크린샷 2021-06-13 오후 3 16 51" src="https://user-images.githubusercontent.com/46957634/121797301-68110180-cc5a-11eb-9164-4e52de117e24.png">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[Note 2] Given a cost function g(n), how do you find the proper complexity function <span class="math">f(n)</span> such that <span class="math">g(n) = O(f(n))</span>?</p>
+<ul>
+<li>Suppress lower-order terms and constant factors!</li>
+<li>Example:
+<ul>
+<li><p><span class="math">10^3 + 10^3n + 10^-3 n^2 = O(n^2)</span></p>
+<ul>
+<li>then <span class="math">lim_{n \to \infty} \frac{n^2}{n} = \infty</span></li>
+</ul>
+</li>
+<li><p><span class="math">5nlog_3 n + 3(log_2 n)^2 + n + 6n^2 = O(n^2)</span></p>
+<ul>
+<li>then <span class="math">lim_{n \to \infty} \frac{n}{log_en} = lim _{n \to \infty} = \infty</span></li>
+</ul>
+</li>
+<li><p><span class="math">3(log_2 n)^2+ 0.1n = O(?)</span></p>
+</li>
+<li><p><span class="math">2^{n+5} = O(2^n)</span> ??</p>
+</li>
+<li><p><span class="math">2^{5n} = O(2^n)</span> ??</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="comparing-orders-of-growth">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#comparing-orders-of-growth">#</doc-anchor-trigger>
+        <span>Comparing Orders of Growth</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>How do you compare orders of growth of two functions?
+<ul>
+<li><p>One possible way is to compute the limit of the ratio of two functions in question.</p>
+</li>
+<li><p><span class="math">x = lim_{n \to \infty } \frac{f_1(n)}{f_2(n)}</span></p>
+<ul>
+<li>if <span class="math">x=0</span>, <span class="math">f_1</span> has a smaller order of growth than <span class="math">f_2</span></li>
+<li>if <span class="math">x=c</span>, <span class="math">f_1</span> has a same order of growth than <span class="math">f_2</span></li>
+<li>if <span class="math">x=\infty</span>, <span class="math">f_1</span> has a larer order of growth than <span class="math">f_2</span></li>
+</ul>
+</li>
+<li><p>Ex.1: <span class="math">log_2 n</span>  vs <span class="math">\sqrt{n}</span></p>
+<ul>
+<li>$lim_{n \to \infty} \frac{\sqrt(n)} = lim_{n \to \infty} \frac{(log_2 n)&#x27;}{(\sqrt(n))&#x27;} = lim_{n \to \infty} \frac{(log_2 e)\frac{1}}{\sqrt\frac{1}{2\sqrt(n)}} = $</li>
+</ul>
+</li>
+<li><p>Ex.2: <span class="math">n!</span> vs <span class="math">2^n</span></p>
+<ul>
+<li><span class="math">lim_{n \to \infty} \frac{ n!}{2^n} = lim_{n \to \infty} \frac{\sqrt{2 \pi n} (\frac {n}{e})^n}{2^n}=lim_{n \to \infty }\sqrt{2 \pi n} \frac{({n})^n}{2^n e^n}</span></li>
+<li>stirling&#x27;s formula : <span class="math">n! \approx \sqrt{2 \pi n} (\frac {n}{e})^n</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="-big-omega-notation">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-big-omega-notation">#</doc-anchor-trigger>
+        <span><span class="math">\Omega</span> (Big Omega Notation)</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>for two given functions  <span class="math">f(n)</span>  , <span class="math">g(n)</span></p>
+<blockquote>
+<p><span class="math">g(n) = \Omega(f(n))</span>  <span class="math">\iff</span> <span class="math">\exists  c \in \mathbb{R}</span> and <span class="math">N \in \mathbb{Z^+ \cup {0}}</span></p>
+</blockquote>
+</li>
+<li><p>s.t. <span class="math">g(n) \geq cf(n)</span> <span class="math">\forall n \geq N</span></p>
+</li>
+<li><p>We say that <span class="math">g(n)</span> is <span class="math">\omega</span> of <span class="math">f(n)</span> .</p>
+</li>
+<li><p>The <span class="math">\Omega</span> puts an asymptotic lower bound on a function.</p>
+</li>
+<li><p>Ex:</p>
+<ul>
+<li><span class="math">37logn+0.1n=\Omega(n)</span></li>
+<li><span class="math">n^2 + 10n = \Omega(n^2)</span></li>
+<li><span class="math">4(logn)^2 +nlogn+100n=\Omega(nlogn)</span></li>
+<li><span class="math">n^{200} +10n=\Omega(n^2)</span>...</li>
+<li><img width="116" alt="스크린샷 2021-06-13 오후 3 20 53" src="https://user-images.githubusercontent.com/46957634/121797403-f7b6b000-cc5a-11eb-9fed-5823b8e67001.png">
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="-big-theta-notation">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-big-theta-notation">#</doc-anchor-trigger>
+        <span><span class="math">\Theta</span> (Big Theta Notation)</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>for two given functions  <span class="math">f(n)</span>  , <span class="math">g(n)</span></p>
+<blockquote>
+<p><span class="math">g(n) = \Theta(f(n))</span>  $\iff $ $g(n) = O(f(n)) $ and <span class="math">g(n) = \Omega (f(n))</span></p>
+</blockquote>
+</li>
+<li><p>that is,</p>
+<blockquote>
+<p>$g(n) = \Theta (f(n)) $ <span class="math">\iff</span> <span class="math">\exists  c,d \in \mathbb{R}</span> and <span class="math">N \in \mathbb{Z^+ \cup {0}}</span> s.t. <span class="math">g(n) \geq cf(n)</span> $ \forall n \geq N$</p>
+</blockquote>
+</li>
+<li><p>We say that <span class="math">g(n)</span> is order of <span class="math">f(n)</span>.</p>
+</li>
+<li><p>The <span class="math">\Theta</span> puts an asymptotic bound on a function.</p>
+</li>
+<li><p>Ex:</p>
+<ul>
+<li><span class="math">37logn+0.1n=\Theta(n)</span></li>
+<li><span class="math">n^2 + 10n = \Theta(n^2)</span></li>
+<li><span class="math">4(logn)^2 +nlogn+100n=\Theta(nlogn)</span></li>
+</ul>
+</li>
+<li><p><span class="math">\Theta(1)&lt;\Theta(log n)&lt;\Theta(n)&lt;\Theta(n log n)&lt;\Theta(n^2)&lt;\Theta(n^3)&lt;\Theta(n^j)&lt;\Theta(n^k)&lt;\Theta(a^n)&lt;\Theta(b^n)&lt;\Theta(n!)</span></p>
+<ul>
+<li>for $ k&gt;j&gt;3$ and <span class="math">b&gt;a&gt;1</span></li>
+<li><span class="math">O(1)</span> or <span class="math">O(c)</span> : constant
+<ul>
+<li>$g(n) = 0.000001 \cdot n $</li>
+<li><span class="math">g(n) = 1000000</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><span class="math">Ref.</span> Neapolitan Ex. (pp.42) 19, 24, 26, 28]</p>
+</li>
+</ul>
+<doc-anchor-target id="big-o-omega-and-order">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#big-o-omega-and-order">#</doc-anchor-trigger>
+        <span>Big O, Omega, and Order</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><img width="498" alt="스크린샷 2021-06-13 오후 3 23 48" src="https://user-images.githubusercontent.com/46957634/121797483-5f6cfb00-cc5b-11eb-9e3d-4e12939a7723.png">
+</li>
+<li><p><span class="math">Ref.</span> [ Neapolitan Chapter 1.]</p>
+</li>
+<li><p>Execution Times for Algorithms with the Given Time Complexities</p>
+</li>
+</ul>
+<img width="522" alt="스크린샷 2021-06-13 오후 3 24 46" src="https://user-images.githubusercontent.com/46957634/121797495-83c8d780-cc5b-11eb-8b4c-eb530732d32e.png">
+<img width="411" alt="스크린샷 2021-06-13 오후 3 25 25" src="https://user-images.githubusercontent.com/46957634/121797525-abb83b00-cc5b-11eb-9c00-50193f7b4e3c.png">
+<doc-anchor-target id="worst-case-versus-average-case-time-complexity">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#worst-case-versus-average-case-time-complexity">#</doc-anchor-trigger>
+        <span>Worst-Case versus Average-Case Time Complexity</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>Expected value (from Wikipedia)</p>
+<ul>
+<li><p>let <span class="math">X</span> be a random variable with a finite number of finite outcomes <span class="math">x_1, x_2, ..., x_k</span> occuring with probabilities <span class="math">p_1, p_2, ... p_k</span> respectively.</p>
+</li>
+<li><p>the Expectation of X is defined as : <span class="math">E(X) = \sum_{i=1}^{k }{x_i p_i} = x_1p_1+ x_2 p_2 + ... + x_k p_k</span></p>
+</li>
+<li><p>since the sum of all probabilities <span class="math">p_i</span> is 1 (<span class="math">\sum_{i=1}^{k} {p_i}=1</span>) , the expected value is the weighted sum of the <span class="math">x_i</span> values, with the <span class="math">p_i</span> values being the weights</p>
+</li>
+</ul>
+</li>
+<li><p>Worst-case complexity</p>
+<ul>
+<li><span class="math">T_W (n) = max \{ c(I)| I \in S_n \}</span></li>
+</ul>
+</li>
+<li><p>Average-case complexity</p>
+<ul>
+<li>$T_A (n) = \sum_{I \in S_n} p(I) c(I) $</li>
+</ul>
+</li>
+<li><p>Problem</p>
+<ul>
+<li>Find the index of a given value <span class="math">a</span> in a givven array <span class="math">(a_0, a_1, ...,a _{n-1})</span>. if <span class="math">a</span> doesn&#x27;t exist in the array return <span class="math">-1</span></li>
+</ul>
+</li>
+<li><p>Cost for a linear search algorithm</p>
+<ul>
+<li><p>let <span class="math">P_i</span> be the probability such that <span class="math">a= a_i</span></p>
+</li>
+<li><p>then the average cost is :</p>
+<p><span class="math">g(n) = 1 \cdot P_0 + 2 \cdot P_1 + 3 \cdot P_2 + ...+ n \cdot P_{n-1} + n (1 - \sum_{k=0}^{n-1} P_k)</span></p>
+<p><span class="math">= \sum_{k=0}^{n-1} (k+1)P_k + n (1 - \sum_{k=0}^{n-1} P_k)</span></p>
+<ul>
+<li><p>Ex.1. <span class="math">n = 10^9</span>, <span class="math">P_0 + P_1 + ...+ P_{10^3} = 1</span> so <span class="math">g(n) = O(1)</span></p>
+</li>
+<li><p>Ex.2. <span class="math">n = 10^9</span>, <span class="math">P_0 + P_1 + ...+ P_{\frac n {100} }= 1</span> so <span class="math">g(n) = O(n)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>참고: Quick sort 알고리즘 →</p>
+<ul>
+<li>Worst-case <span class="math">O(n^2)</span>,</li>
+<li>Average-Case <span class="math">O(n log n)</span></li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="reviews">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#reviews">#</doc-anchor-trigger>
+        <span>Reviews</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="summation">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#summation">#</doc-anchor-trigger>
+        <span>Summation</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Sums of powers</p>
+<ul>
+<li><span class="math">\sum_{i=1}^{n} i = \frac {n(n+1)} {2}</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^2 = \frac {n(n+1)(2n+1)} {6}</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^3 = (\frac {n(n+1)} {2})^2</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^4 = \frac {n(n+1)(2n+1)(3n^2+3n-1)} {30}</span></li>
+<li><span class="math">\sum_{i=1}^{n} i^s = \frac {(n+1)^{s+1}} {s+1} + \sum_{k=1}^{s} \frac {B_k} {s-k+1} {s \choose k} (n+1)^{s-k+1}</span>
+<ul>
+<li><span class="math">B_k</span> is the <span class="math">k^{th}</span> Bernoulli Number.</li>
+</ul>
+</li>
+<li><span class="math">\sum_{i=1}^{n} i^{-s} = \prod_{p prime} \frac {1} {1 - p^{-s}} = \zeta(s)</span>
+<ul>
+<li><span class="math">\zeta_k</span> is the Riemann zeta function</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Growth rates</p>
+<ul>
+<li><p><span class="math">\sum_{i=1}^{n} i^c \in \Theta(n^{c+1})</span> for real <span class="math">c</span> greater than <span class="math">-1</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} \frac 1 i \in \Theta(log n)</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} c^i \in \Theta( n \cdot log(n)^{c+1})</span> for real <span class="math">c</span> greater than <span class="math">1</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} log(i)^c \in \Theta(n \cdot log(n)^{c})</span> for nonnegative real <span class="math">c</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} log(i)^c \cdot i^d \in \Theta(n^{d+1} \cdot log(n)^{c})</span> for nonnegative real <span class="math">c, d</span></p>
+</li>
+<li><p><span class="math">\sum_{i=1}^{n} log(i)^c \cdot i^d \cdot b^i \in \Theta(n^{d} \cdot log(n)^{c} \cdot b^n)</span> for nonnegative real <span class="math">b&gt;1, c, d</span></p>
+</li>
+</ul>
+</li>
+<li><p><strong>Read</strong> <em><a href="http://en.wikipedia.org/wiki/Summation">Summation</a></em>,
+<em><a href="http://en.wikipedia.org/wiki/List_of_mathematical_series.">Mathematical Series</a></em></p>
+</li>
+</ul>
+<doc-anchor-target id="run-time-analysis">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#run-time-analysis">#</doc-anchor-trigger>
+        <span>Run Time Analysis</span>
+    </h2>
+</doc-anchor-target>
+<p>What is the worst-case time complexity of each loop?</p>
+<ul>
+<li><p>(1) Matrix Addition</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 0; i &lt; N; i++) 
+  for (j = 0; j &lt; N; j++)
+    a[i][j] = b[i][j] + c[i][j];</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>(2)</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = 0;
+for (i = 1; i &lt;= N; i++)
+  for (j = 1; j &lt;= i; j++) 
+    x += i + j;</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>(3)</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 1; i &lt;= N; i++)
+  if (i % 2 == 0) a[i] = 1;
+	else a[i] = -1;
+
+for (i = 1; i &lt;= N; i++)
+	for (j = 1; j &lt;= N; j++) 
+    a[i][j] = i + j;</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>(4)</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 1; i &lt;= N; i++) {
+  if (i % 2) {
+		for (j = 1; j &lt;= N; j++)
+      a[i][j] = i + j;
+  }else {
+    for (j = 1; j &lt;= N; j++) { 
+    	a[i][j] = 0; 
+	    for (k = 1; k &lt;= N; k++)
+        a[i][j] += k;
+    }
+  } 
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>(5)</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = 0;
+for (i = 1; i &lt;= N; i++)
+  for (j = 1; j &lt;= i; j++) 
+    //What if this is i*i?
+    for (k = 1; k &lt;= j; k++)
+      x += i + j + k;</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>(6) <span class="math">\rightarrow</span> <span class="math">O(N^4)</span></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = 0;
+for (i = 1; i&lt;=N;i++)
+  for (j = 1; j &lt;= i*i; j++) 
+    if (j % i == 0)
+      for (k = 1; k &lt;= j; k++) 
+        x++;</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+<p>What is the worst-case time complexity of each loop?</p>
+<ul>
+<li><p>(1)</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// n = 2^k for some positive 
+// integer k
+for (i = 1; i &lt; N; i++) {  
+  j = n;  
+  while (j &gt;= 1) {  
+    // some O(1) computation   
+    j = j/2;   
+  }
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>(2)</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// n = 2^k for some positive
+// integer k
+i = n;
+while (i &gt;= 1){
+    j = i;
+    while (j &lt;= n){ 
+      // some O(1) computation    
+      j = 2*j;   
+      }i = i/2; 
+    }</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>(3) Could this be faster?</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// float x[n][n+1];
+for (i = 0; i &lt;= n-2; i++)
+  for (j = i+1; j &lt;= n-1; j++) 
+    for (k = i; k &lt;= n; k++)
+      x[j][k] = x[j][k] – x[i][k]*x[j][i]/x[i][i];</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>(4) Magic square : Could this be faster?</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// n: odd integer
+for (i = 0; i &lt; n; i++)    
+  for (j = 0; j &lt; n; j++)      
+    s[i][j] = 0;   
+s[0][(n-1)/2] = 1;   
+j = (n-1)/2;
+for (key = 2; key &lt;= n*n; key++) { 
+  k = (i) ? (i-1) : (n-1);   
+  l = (j) ? (j-1) : (n-1); 
+  if (s[k][l]) i = (i+1)%n;
+  else {  
+    i = k; j = l;  
+  }
+  s[i][j] = key;
+}</code></pre>
+</doc-codeblock></div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><strong>15</strong></th>
+<th><strong>8</strong></th>
+<th><strong>1</strong></th>
+<th><strong>24</strong></th>
+<th><strong>17</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td>14</td>
+<td>7</td>
+<td>5</td>
+<td>23</td>
+</tr>
+<tr>
+<td>22</td>
+<td>20</td>
+<td>13</td>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>21</td>
+<td>19</td>
+<td>12</td>
+<td>10</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2</td>
+<td>25</td>
+<td>18</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><p>(5) <span class="math">O(\log n)</span></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">// compute x^n (n &gt;= 0) 
+m = n; 
+power = 1; 
+z = x; 
+while (m &gt; 0) {	
+    while (!(m%2)) {   
+        m /= 2;     
+        z *= z;  
+    }m--;
+    power *=z; 
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>time complexity. :  <span class="math">c_0 + c_1 n + c_2 n^2 = O(n^2)</span></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">x = x + 1;
+for (i = 1; i &lt;= n; i++) 
+  y = y + 2;
+  for (i = n; i &gt;=1; i--) 
+    for (j = n; j &gt;= 1; j--)    
+      z = z + 1;</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>time complexity. :  <span class="math">c( ⌊{log_2 n}⌋+1) \cdot n^2 = O(n^2)</span></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">c = 0; // n &gt; 0
+for (i = 1; i &lt;= n; i++) 
+  for (j = 1; j &lt;= n; j++)    
+    for (k = 1; k &lt;= n; k = k*2)      
+      c += 2;</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>time complexity. :  <span class="math">??= O( \sqrt n)</span></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">i = 1; j = 1; m = 0; // n &gt; 0
+while (j &lt;= n) {  
+  i++; 
+  j = j + i; 
+  m = m + 2;
+}</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../../tags/alg/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>alg</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/1)/1.1---1.2/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">1.​1 - 1.​2 Solve with Alg</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/1)/1.4/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">1.​4. MSS</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "1.3. Order of Algorithms", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>
