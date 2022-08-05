@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.712930998054">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>DP</title>
+    <meta name="title" content="DP">
+    <meta name="description" content="Algorithm Design & Analysis[Sub4] Dynamic Programming" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/algorithm/4)/sub4/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/algorithm/4)/sub4/">
+    <meta property="og:title" content="DP">
+    <meta property="og:description" content="Algorithm Design & Analysis[Sub4] Dynamic Programming">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/algorithm/4)/sub4/">
+    <meta property="twitter:title" content="DP">
+    <meta property="twitter:description" content="Algorithm Design & Analysis[Sub4] Dynamic Programming">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../../favicon.ico" rel="icon" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.712930998054" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.712930998054" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.712930998054" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.712930998054" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="dp" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dp">#</doc-anchor-trigger>
+        <span>DP</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../../categories/alg/">alg</a></div>
+</div>
+
+<p>Algorithm Design &amp; Analysis<br />
+<strong>[Sub4] Dynamic Programming</strong></p>
+<!--more-->
+<doc-anchor-target id="주제-4-dynamic-programming" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#주제-4-dynamic-programming">#</doc-anchor-trigger>
+        <span>[주제 4] Dynamic Programming</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="0-algorithm-design-techniques">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#0-algorithm-design-techniques">#</doc-anchor-trigger>
+        <span>0. Algorithm Design Techniques</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Divide-and-Conquer Method</li>
+<li><strong>Dynamic Programming Method</strong></li>
+<li>Greedy Method</li>
+<li>Backtracking Method</li>
+<li>Local Search Method</li>
+<li>Branch-and-Bound Method</li>
+<li>Etc.</li>
+</ul>
+<doc-anchor-target id="1-dynamic-programming-overview">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-dynamic-programming-overview">#</doc-anchor-trigger>
+        <span>1. Dynamic Programming: Overview</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>From Wikipedia</p>
+<p>Dynamic programming is both a</p>
+<ul>
+<li>mathematical optimization method and</li>
+<li>a computer programming method.</li>
+</ul>
+</li>
+<li><p>A complicated problem is broken down into simpler sub-problems in a recursive manner.</p>
+</li>
+<li><p>Overlapping subproblems: A problem is broken down into subproblems which are reused several times or a recursive algorithm for the problem solves the same subproblem over and over rather than always generating new subproblems.</p>
+</li>
+<li><p>Optimal substructure: A solution to a given optimization problem can be constructed efficiently from optimal solutions of its subproblems.</p>
+</li>
+<li><p>When applicable, the method takes far less time than other methods that don&#x27;t take advantage of the subproblem overlap like the divide- and-conquer technique.</p>
+</li>
+</ul>
+<doc-anchor-target id="two-approaches-for-recursive-formulation">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#two-approaches-for-recursive-formulation">#</doc-anchor-trigger>
+        <span>Two Approaches for Recursive Formulation</span>
+    </h4>
+</doc-anchor-target>
+<doc-anchor-target id="1-top-down-approach">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-top-down-approach">#</doc-anchor-trigger>
+        <span>1. Top Down Approach</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><span class="math">T(i,j) = T(i-1,j) + T(i, j-1) + C \cdot (2i + j)</span> for <span class="math">i,j \geq 1</span></li>
+<li><span class="math">T(i,0) = T(0,j) = 1</span> for <span class="math">i,j \geq 0</span></li>
+<li>Easily becomes exponential!</li>
+</ul>
+<doc-anchor-target id="2-bottom-up-approach">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-bottom-up-approach">#</doc-anchor-trigger>
+        <span>2. Bottom Up Approach</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li><span class="math">T(i,j) = T(i-1,j) + T(i, j-1) + C \cdot (2i + j)</span> for <span class="math">i,j \geq 1</span></li>
+<li><span class="math">T(i,0) = T(0,j) = 1</span> for <span class="math">i,j \geq 0</span></li>
+<li>Often much more efficient!</li>
+</ul>
+<doc-anchor-target id="ex1-world-series-odds">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ex1-world-series-odds">#</doc-anchor-trigger>
+        <span>[ex1] World Series Odds</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Problem</p>
+</li>
+<li><p>Dodgers and Yankees are playing the World Series in which either team needs to win <em>n</em> games first.</p>
+</li>
+<li><p>Suppose that each team has a 50% chance of winning any game.</p>
+</li>
+<li><p>Let <span class="math">P(i,j)</span> be the probability that if Dodgers needs <em>i</em> games to win, and</p>
+<p>Yankees needs <em>j</em> games, Dodgers will eventually win the Series.</p>
+</li>
+<li><p>–  Ex: <em>P</em>(2, 3) = 11/16</p>
+</li>
+<li><p>–  Compute $P(i,j) $  <span class="math">0 \leq i,j \leq n</span> <span class="math">\forall n</span></p>
+</li>
+</ul>
+<doc-anchor-target id="1-worse-a-divide-and-conquer-approach">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-worse-a-divide-and-conquer-approach">#</doc-anchor-trigger>
+        <span>1. [Worse] A Divide-and-Conquer Approach</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Recursive formulation</li>
+<li>If we solve this recurrence relation in the divide-and-conquer way,</li>
+<li>Let <em>T</em>(<em>n</em>) be the maximum time taken by a call to <em>P</em>(<em>i</em>,<em>j</em>),where <em>i</em>+<em>j</em> =<em>n</em>. Then we can prove that <em>T</em>(<em>n</em>) is exponential!</li>
+<li>What is the problem of this approach?</li>
+</ul>
+<doc-anchor-target id="2-better-a-dynamic-programming-approach">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-better-a-dynamic-programming-approach">#</doc-anchor-trigger>
+        <span>2. [Better] A Dynamic Programming Approach</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Instead of computing the same repeatedly, fill in a table as suggested below:</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>4</th>
+<th>1</th>
+<th>15/16</th>
+<th>13/16</th>
+<th>21/32</th>
+<th>1/2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>7/8</td>
+<td>11/16</td>
+<td>1/2</td>
+<td>11/32</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>3/4</td>
+<td>1/2</td>
+<td>5/16</td>
+<td>3/16</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1/2</td>
+<td>1/4</td>
+<td>1/8</td>
+<td>1/16</td>
+</tr>
+<tr>
+<td>0</td>
+<td></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><em>j  i</em></td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Time Complexity
+<ul>
+<li>For input size (m, n), computing P(m, n) takes O(mn)-time.</li>
+<li>By far better than the Divide-and-Conquer approach.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="3-dynamic-programming">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#3-dynamic-programming">#</doc-anchor-trigger>
+        <span>3. Dynamic Programming</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>When the divide-and-conquer approach produces an exponential algorithm where the same sub-problems are solved iteratively,</p>
+<ol>
+<li><p>Take the recursive relation from the divide-and-conquer algorithm, and</p>
+</li>
+<li><p>replace the recursive calls with table lookups by recording a value in a table entry instead of returning it.</p>
+</li>
+</ol>
+<p>Top-down → Bottom-up</p>
+</li>
+<li><p>Three elements to consider in designing a dynamic programming algorithm</p>
+<ul>
+<li>Recursive relation
+<ul>
+<li>Optimal substructure</li>
+</ul>
+</li>
+<li>Table setup</li>
+<li>Table fill order</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="application-of-dp">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#application-of-dp">#</doc-anchor-trigger>
+        <span>Application of DP</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="the-manhattan-tourist-problem">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-manhattan-tourist-problem">#</doc-anchor-trigger>
+        <span>The Manhattan Tourist Problem</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Courtesy of [Jones &amp; Pevzner 6.3]</p>
+</li>
+<li><p>Problem:</p>
+<ul>
+<li>Given two street corners in the borough of Manhattan in New York City, find the path between them with the maximum number of attractions, that is, a path of maximum overall weight.</li>
+<li>Assume that a tourist may move either to east or to south only.</li>
+</ul>
+</li>
+<li><p>A brute force approach</p>
+<ul>
+<li>Search among all paths in the grid for the longest path!</li>
+</ul>
+</li>
+<li><p>A greedy approach</p>
+<ul>
+<li>다음 강의 주제</li>
+</ul>
+</li>
+<li><p>A formal description of this problem</p>
+</li>
+<li><p>Given a weighted graph (grid) G of size (n, m) with two distinguished vertices, a source (0, 0) and a sink (n, m), find a longest path between them in its weighted graph.</p>
+</li>
+</ul>
+<p><strong>(0, 0)</strong></p>
+<ul>
+<li><p>An example grid of size (4, 4)</p>
+</li>
+<li><p>A possible selection determined by a greedy approach</p>
+</li>
+<li><p>Basic idea</p>
+<ul>
+<li>How can you use the solutions of smaller problems to build a solution of a problem?</li>
+<li>A given optimization problem can be constructed efficiently from optimal solutions of its subproblems. →optimal substructure</li>
+</ul>
+</li>
+<li><p>Optimal substructure</p>
+<ol>
+<li>𝒊,𝒋≥𝟏</li>
+<li>𝒊 = 𝟎,𝒋 = 𝟏,𝟐,...,𝒏</li>
+<li>𝒋 = 𝟎,𝒊 = 𝟏,𝟐,..,𝒎</li>
+<li>𝒊=𝒋=𝟎</li>
+</ol>
+</li>
+<li><p>Table setup and fill</p>
+</li>
+<li><p>Given a (n, m) grid, what is the time complexity T(n, m)?</p>
+</li>
+<li><p>So far, we have found the cost of the longest path from source to each vertex in the grid.</p>
+</li>
+<li><p>Then, how can you print out the actual optimal path from source to sink?</p>
+</li>
+</ul>
+<doc-anchor-target id="chained-matrix-multiplication">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#chained-matrix-multiplication">#</doc-anchor-trigger>
+        <span>Chained Matrix Multiplication</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>[Neapolitan 3.4]</p>
+</li>
+<li><p>In general, to multiply an <em>a</em> x <em>b</em> matrix with a <em>b</em> x <em>c</em> matrix using the standard method, it is necessary to do <em>abc</em> elementary multiplications.</p>
+</li>
+<li><p>Problem</p>
+<ul>
+<li>Determine the minimum number of elementary multiplications, needed to multiply <em>n</em> matrices where $ A_i \in R^{d_ \times d_i}$</li>
+</ul>
+</li>
+<li><p>Examples</p>
+<ul>
+<li><p>A1: 20 x 2, A2: 2 x 30</p>
+</li>
+<li><p>A1(A2(A3A4)) : 30x12x8 + 2x30x8 + 20x2x8  = 3,680 multiplications</p>
+</li>
+<li><p>(A1A2)(A3A4) : = 8,880 multiplications</p>
+</li>
+<li><p>A1((A2A3)A4) : = 1,232 multiplications</p>
+</li>
+<li><p>((A1A2)A3)A4 := 10,320 multiplications</p>
+</li>
+<li><p>(A1(A2A3 ))A4 := 3,120 multiplications</p>
+</li>
+<li><p>The order of multiplication is very important!</p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="dynamic-programming-approach">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dynamic-programming-approach">#</doc-anchor-trigger>
+        <span>Dynamic programming approach</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Definition</p>
+<ul>
+<li><span class="math">M(i, j)</span> : the minimum number of multiplications needed to multiply <span class="math">A_i</span> through <span class="math">A_j (i \leq j )</span></li>
+</ul>
+</li>
+<li><p>Optimal subtructure</p>
+</li>
+<li><p>Example: <em>M</em>(2, 7)</p>
+</li>
+<li><p>d1 x d4 d4 x d7</p>
+</li>
+<li><p>M(2,4) + M(5,7) + d1 x d4 x d7</p>
+</li>
+<li><p>M(2,2) + M(3,7) + d1 xd2 xd7 M(2,3) + M(4,7) + d1 xd3 xd7 M(2,4) + M(5,7) + d1 xd4 xd7 M(2,5) + M(6,7) + d1 xd5 xd7 M(2,6) + M(7,7) + d1 xd6 xd7</p>
+</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><em>j i</em></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><em>j i</em></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>Table fill order</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">for (i = 1; i &lt;= n; i++)
+    M[i][i] = 0;
+for (g = 1; g &lt;= n - 1; g++)
+    for (i = 1; i &lt;= n - g; i++)
+    {
+        j = i + g;
+        M[i][j] = BIG_NUM;
+        for (k = i; k &lt;= j - 1; k++)
+            if ((tmp = M[i][k] + M[k + 1][j] + d[i - 1] * d[k] * d[j]) &lt; M[i][j]){
+                M[i][j] = tmp;
+                P[i][j] = k;
+            }
+    }</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Time complexity</p>
+</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><em>j i</em></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>Chained matrix multiplication problem</p>
+<ul>
+<li><span class="math">O(n^3)</span> by Godbole (1973)</li>
+<li><span class="math">O(n^2)</span> by Yao (1972)</li>
+<li><span class="math">O(n log n)</span> by Hu and Shing (1982, 1984)</li>
+</ul>
+</li>
+<li><p>Printing optimal order</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">void order(int i, int j)
+{
+    int k;
+    if (i == j)
+        printf(“A_ % d”, i);
+    else
+    {
+        k = P[i][j];
+        printf(“(“);
+               order(i, k); order(k + 1, j); printf(“)”);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>→ <em>O</em>(<em>n</em>) time</p>
+<p>9-1</p>
+<p>2020.10.27 화요일</p>
+<hr />
+<doc-anchor-target id="4-principles-of-dynamic-programming">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#4-principles-of-dynamic-programming">#</doc-anchor-trigger>
+        <span>4. Principles of Dynamic Programming</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><span class="math">C_{ij}</span> = the cost of the shortest path from <span class="math">(0,0)</span> to <span class="math">(i,j)</span>
+<ul>
+<li>Then <span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></li>
+</ul>
+</li>
+<li>Recursive formulation</li>
+<li>Optimal substructure</li>
+<li>Overlapping subproblems</li>
+<li>Bottom-up approach</li>
+</ul>
+<doc-anchor-target id="optimal-substructure">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#optimal-substructure">#</doc-anchor-trigger>
+        <span>Optimal Substructure</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>From Wikipedia</li>
+<li>Dynamic programming algorithms are often used for     optimization.</li>
+<li>A problem is said to have optimal substructure
+<ul>
+<li>if a solution to a given optimization problem can be constructed efficiently from optimal solutions of its subproblems.</li>
+</ul>
+</li>
+<li>Consequently, the first step towards devising a dynamic programming solution is to check whether the problem exhibits such optimal substructure.
+<ul>
+<li>Such optimal substructures are usually described by means of recursion.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="overlapping-subproblems">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#overlapping-subproblems">#</doc-anchor-trigger>
+        <span>Overlapping Subproblems</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>From Wikipedia</p>
+</li>
+<li><p>To solve a problem, we often need to solve different     parts of the problem (subproblems), then combine the solutions of the     subproblems to reach an overall solution.</p>
+</li>
+<li><p>A problem is said to have overlapping subproblems if</p>
+<ul>
+<li>the problem can be broken down into subproblems which are reused several times or</li>
+<li>a recursive algorithm for the problem solves the same subproblem over and over rather than always generating new subproblems.</li>
+</ul>
+</li>
+<li><p>The dynamic programming approach seeks to solve each     subproblem only once, thus reducing the number of computations:</p>
+<ul>
+<li>(i) once the solution to a given subproblem has been computed, it is stored or &quot;memoized&quot;:</li>
+<li>(ii) the next time the same solution is needed, it is simply looked up.</li>
+</ul>
+</li>
+<li><p>This approach is especially useful when the number of repeating subproblems grows exponentially as a function of the size of the input.</p>
+</li>
+<li><p>If a problem can be solved by combining optimal solutions to non-overlapping sub-problems,</p>
+</li>
+<li><p>the strategy is called &quot;divide-and- conquer&quot; instead. This is why merge sort and quick sort are not classified as dynamic programming problems.</p>
+</li>
+<li><p><span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></p>
+</li>
+</ul>
+<doc-anchor-target id="the-checkerboard-problem">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-checkerboard-problem">#</doc-anchor-trigger>
+        <span>The Checkerboard Problem</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Courtesy of Wikipedia</li>
+<li>Restrictions</li>
+<li>– A checker can start at any square on the first row (<em>i</em> = 1).</li>
+<li>– It can move only diagonally left forward, diagonally right forward, or straight forward.</li>
+<li>– It must pay the cost <em>c</em>[i] when visiting the (<em>i</em>, <em>j</em>)-position.</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><strong>i*<em>j*</em></strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+<th><strong>5</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>7</strong></td>
+<td><strong>3</strong></td>
+<td><strong>5</strong></td>
+<td><strong>6</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>2</strong></td>
+<td><strong>6</strong></td>
+<td><strong>7</strong></td>
+<td><strong>0</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>3</strong></td>
+<td><strong>5</strong></td>
+<td><strong>7</strong></td>
+<td><strong>8</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>7</strong></td>
+<td><strong>6</strong></td>
+<td><strong>1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>6</strong></td>
+<td><strong>7</strong></td>
+<td><strong>4</strong></td>
+<td><strong>7</strong></td>
+<td><strong>8</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><strong>i*<em>j*</em></strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+<th><strong>5</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>7</strong></td>
+<td><strong>3</strong></td>
+<td><strong>5</strong></td>
+<td><strong>6</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>2</strong></td>
+<td><strong>6</strong></td>
+<td><strong>7</strong></td>
+<td><strong>0</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>3</strong></td>
+<td><strong>5</strong></td>
+<td><strong>7</strong></td>
+<td><strong>8</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>7</strong></td>
+<td><strong>6</strong></td>
+<td><strong>1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>6</strong></td>
+<td><strong>7</strong></td>
+<td><strong>4</strong></td>
+<td><strong>7</strong></td>
+<td><strong>8</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Cost table c [i] [j]</p>
+<ul>
+<li><p>Problem</p>
+<ul>
+<li>Given a checkerboard with <em>n</em>x<em>n</em> squares, and a cost function <em>c</em>[i] find the minimum-cost path from the first row to the last row.</li>
+</ul>
+</li>
+<li><p>Optimal substructure</p>
+</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><strong>i*<em>j*</em></strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+<th><strong>5</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>7</strong></td>
+<td><strong>3</strong></td>
+<td><strong>5</strong></td>
+<td><strong>6</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>5</strong></td>
+<td><strong>9</strong></td>
+<td><strong>10</strong></td>
+<td><strong>1</strong></td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>8</strong></td>
+<td><strong>10</strong></td>
+<td><strong>8</strong></td>
+<td><strong>9</strong></td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>15</strong></td>
+<td><strong>14</strong></td>
+<td><strong>9</strong></td>
+<td><strong>4</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>20</strong></td>
+<td><strong>16</strong></td>
+<td><strong>8</strong></td>
+<td><strong>11</strong></td>
+<td><strong>12</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th><strong>i*<em>j*</em></strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+<th><strong>5</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>-1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>0</strong></td>
+<td><strong>-1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>-1</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>0</strong></td>
+<td><strong>-1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>-1</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Q table q P table p[i] [j]</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">#include &lt;stdio.h&gt; #define N 5
+#define INFTY 100000
+int c[N + 1][N + 2] = {-1, -1, -1, -1, -1, -1, -1, -1, 7, 3, 5, 6, 1, -1, -1, 2, 6, 7, 0, 2, -1, -1, 3, 5, 7, 8, 2, -1, -1, 7, 6, 1, 1, 4, -1, -1, 6, 7, 4, 7, 8, -1};
+int p[N + 1][N + 2], q[N + 1][N + 2];
+int min3(int a, int b, int c)
+{
+    ...
+}
+void ComputeCBCosts(int n)
+{
+    int i, j, min;
+    for (i = 1; i &lt;= n; i++)
+        q[1][i] = c[1][i];
+    for (i = 1; i &lt;= n; i++)
+    {
+        q[i][0] = INFTY;
+        q[i][n + 1] = INFTY;
+    }
+    for (i = 2; i &lt;= n; i++)
+    {
+        for (j = 1; j &lt;= n; j++)
+        {
+            min = min3(q[i - 1][j - 1], q[i - 1][j],
+                       q[i - 1][j + 1]);
+            q[i][j] = min + c[i][j];
+            if (min == q[i - 1][j - 1])
+                p[i][j] = -1;
+            else if (min == q[i - 1][j])
+                p[i][j] = 0;
+            else
+                p[i][j] = 1;
+        }
+    }
+}
+void PrintShortestPath(int n, int imin)
+{
+    printf(&quot; (%d, %d) &lt;-&quot;, n, imin);
+    if (n == 2)
+        printf(&quot; (%d, %d)\n&quot;, 1, imin + p[n][imin]);
+    else
+        PrintShortestPath(n - 1, imin + p[n][imin]);
+}
+void ComputeCBShortestPath(int n)
+{
+    int i, imin, min;
+    ComputeCBCosts(n);
+    imin = 1;
+    min = q[n][1];
+    for (i = 2; i &lt;= n; i++)
+    {
+        if (q[n][i] &lt; min)
+        {
+            imin = i;
+            min = q[n][i];
+        }
+    }
+    printf(&quot;*** The cost of the shortest path is %d.\n&quot;, q[n][imin]);
+    PrintShortestPath(n, imin);
+}
+void main(void)
+{
+    int n;
+    n = N;
+    ComputeCBShortestPath(n);
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="5-응용1-longest-common-subsequence-lcs">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#5-응용1-longest-common-subsequence-lcs">#</doc-anchor-trigger>
+        <span>5. [응용1] Longest Common Subsequence (LCS)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p><strong>[T. Cormen et al.,</strong> <strong>Introduction to Algorithms</strong> **(3**<strong>rd</strong> <strong>ed.), The MIT Press, 2009. 16.3]</strong></p>
+</li>
+<li><p>Definitions</p>
+<ul>
+<li>Given a sequence <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> another sequence <span class="math">Z = &lt;z1, z2, ..., zk &gt;</span> is a subsequence of X if there exists a strictly increasing sequence$ &lt;i1, i2, ..., ik &gt; $of indices of X such that <span class="math">\forall j = 1, 2, ..., k</span>, we have <span class="math">x_{ij} = z_j</span>.
+<ul>
+<li>A subsequence of a given sequence is just the given sequence with some elements (possibly none) left out.</li>
+<li>Ex:<span class="math">X=&lt;A,B,C,B,D,A,B&gt;, Z=&lt;B,C,D,B&gt;(&lt;2,3,5,7&gt;)</span></li>
+</ul>
+</li>
+<li>Given two sequences X and Y, we say that a sequence Z is a common subsequence of X and Y if Z is a subsequence of both X and Y.
+<ul>
+<li>Ex:</li>
+<li><span class="math">X = &lt;A, B, C, B, D, A, B&gt;, Y = &lt;B, D, C, A, B, A&gt;, Z1 = &lt;B, C, A&gt;, Z2 = &lt;B, C, B, A&gt;, Z3 = &lt;B, D, A, B&gt;</span></li>
+</ul>
+</li>
+<li>Given a sequence <span class="math">X = &lt;x1, x2, ..., xm &gt;, Xi = &lt;x1, x2, ..., xi &gt;</span> is the ith prefix of X, for <span class="math">i = 0, 1, ..., m</span>.
+<ul>
+<li>• Ex:</li>
+<li><span class="math">X = &lt;A, B, C, B, D, A, B&gt;, X4 = &lt;A, B, C, B&gt;, X0 = null sequence</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Problem</p>
+<ul>
+<li>Given two sequences <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> and <span class="math">Y = &lt;y1, y2, ..., yn &gt;</span></li>
+<li>find a longest common subsequence of X and Y.</li>
+</ul>
+</li>
+<li><p>Naïve approach</p>
+<ul>
+<li><p>Enumerate all subsequences of X and check each subsequence to see if it is also a subsequence of Y, keeping track of the longest subsequence found.</p>
+<p>→ Exponential algorithm!</p>
+</li>
+<li><p>The LCS problem can be solved efficiently using dynamic programming.</p>
+</li>
+</ul>
+</li>
+<li><p>Optimal substructure of an LCS</p>
+<ul>
+<li><p>Let <span class="math">X = &lt;x1, x2, ..., xm &gt;</span> and $Y = &lt;y1, y2, ..., yn &gt; $be sequences, and let <span class="math">Z = &lt;z1, z2, ..., zk &gt;</span> be any LCS of <span class="math">X</span> and <span class="math">Y</span>.</p>
+<ol>
+<li><p>If <span class="math">x_m = y_n</span>,</p>
+<p>then <span class="math">z_k = x_m = y_n</span>,</p>
+<p>and <span class="math">Z_{k-1}</span> is an LCS of <span class="math">X_{m-1}</span> and <span class="math">Y_{n-1}</span>.</p>
+</li>
+<li><p>If <span class="math">x_m \neq y_n</span>,</p>
+<p>then an LCS of <span class="math">X</span> and <span class="math">Y</span> is either an LCS of $X
+_$ and <span class="math">Y</span></p>
+<p>or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Let <span class="math">c[i, j]</span> be the length of an LCS of the sequences <span class="math">X_i</span> and <span class="math">Y_j</span></p>
+</li>
+<li><p>Optimal substructure for computing <span class="math">c[i, j]</span></p>
+</li>
+</ul>
+<doc-anchor-target id="-algorithm">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#-algorithm">#</doc-anchor-trigger>
+        <span><span class="math">O(mn)</span> Algorithm</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Filling the table</li>
+<li>Printing the LCS</li>
+</ul>
+<doc-anchor-target id="c-implementation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#c-implementation">#</doc-anchor-trigger>
+        <span>C Implementation</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>Courtesy of <a href="http://www.bioalgorithms.info/downloads/code/">http://www.bioalgorithms.info/downloads/code/</a></li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">/** Copyright (C) 2005 Neil Jones. **/
+#include &lt;stdio.h&gt;
+char *LCS(char *a, char *b);
+#define NEITHER 0
+#define UP 1
+#define LEFT 2
+#define UP_AND_LEFT 3
+int main(int argc, char *argv[])
+{
+    printf(&quot;%s\n&quot;, LCS(argv[1], argv[2]));
+}
+
+char *LCS(char *a, char *b)
+{
+    int n = strlen(a);
+    int m = strlen(b);
+    int **S;
+    int **R;
+    int ii;
+    int jj;
+    int pos;
+    char *lcs;
+
+    S = (int **)malloc((n + 1) * sizeof(int *));
+    R = (int **)malloc((n + 1) * sizeof(int *));
+    for (ii = 0; ii &lt;= n; ++ii)
+    {
+        S[ii] = (int *)malloc((m + 1) * sizeof(int));
+        R[ii] = (int *)malloc((m + 1) * sizeof(int));
+    }
+    for (ii = 0; ii &lt;= n; ++ii)
+    {
+        S[ii][0] = 0;
+        R[ii][0] = UP;
+    }
+    for (jj = 0; jj &lt;= m; ++jj)
+    {
+        S[0][jj] = 0;
+        R[0][jj] = LEFT;
+    }
+    for (ii = 1; ii &lt;= n; ++ii)
+    {
+        for (jj = 1; jj &lt;= m; ++jj)
+        {
+            if (a[ii - 1] == b[jj - 1])
+            {
+                S[ii][jj] = S[ii - 1][jj - 1] + 1;
+                R[ii][jj] = UP_AND_LEFT;
+            }
+            else
+            {
+
+                S[ii][jj] = S[ii - 1][jj - 1] + 0;
+                R[ii][jj] = NEITHER;
+            }
+            if (S[ii - 1][jj] &gt;= S[ii][jj])
+            {
+                S[ii][jj] = S[ii - 1][jj];
+                R[ii][jj] = UP;
+            }
+
+            if (S[ii][jj - 1] &gt;= S[ii][jj])
+            {
+                S[ii][jj] = S[ii][jj - 1];
+                R[ii][jj] = LEFT;
+            }
+        }
+    }
+
+    ii = n;
+    jj = m;
+    pos = S[ii][jj];
+    lcs = (char *)malloc((pos + 1) * sizeof(char));
+    lcs[pos--] = (char)NULL;
+
+    while (ii &gt; 0 || jj &gt; 0)
+    {
+        if (R[ii][jj] == UP_AND_LEFT)
+        {
+
+            ii--;
+            jj--;
+
+            lcs[pos--] = a[ii];
+        }
+        else if (R[ii][jj] == UP)
+        {
+            ii--;
+        }
+        else if (R[ii][jj] == LEFT)
+        {
+
+            jj--;
+        }
+    }
+    for (ii = 0; ii &lt;= n; ++ii)
+    {
+        free(S[ii]);
+        free(R[ii]);
+    }
+
+    free(S);
+    free(R);
+    return lcs;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="6-응용2-the-gapped-alignment-problem">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#6-응용2-the-gapped-alignment-problem">#</doc-anchor-trigger>
+        <span>6. [응용2] The Gapped Alignment Problem</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Problem</p>
+<ul>
+<li>Given two sequences, find a gapped alignment that maximize the score!</li>
+<li>Compare two sequences if they are similar (related).</li>
+<li>Gapped alignment
+<ul>
+<li>Example: A = <strong>ATCGGATCT</strong>, B = <strong>ACGGACT</strong> 5 * 2 +1*(-1) + 4*(-2) = 1 6 * 2 + 1*(-1) + 2*(-2) = 7</li>
+<li>A possible alignment scoring scheme
+<ul>
+<li>Ex: match score = 2, mismatch penalty = -1, gap penalty = -2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Optimal substructure</p>
+</li>
+</ul>
+<doc-anchor-target id="7-응용3-longest-increasing-subsequence-lis">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#7-응용3-longest-increasing-subsequence-lis">#</doc-anchor-trigger>
+        <span>7. [응용3] Longest Increasing Subsequence (LIS)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Example</p>
+</li>
+<li><p>(10, 22, 9, 33, 21, 50, 41, 60, 80)→(10, 22, 33, 50, 60, 80)</p>
+</li>
+<li><p>(0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15)→(0, 2, 6, 9, 11, 15)</p>
+<p>(0, 4, 6, 9, 11, 15) ...</p>
+</li>
+<li><p>Algorithm</p>
+</li>
+<li><p>Optimal substructure</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int LIS(int *a, int N)
+{
+
+    int *best, *prev, i, j, max = 0;
+
+    best = (int *)malloc(sizeof(int) * N);
+    prev = (int *)malloc(sizeof(int) * N);
+    for (i = 0; i &lt; N; i++)
+        best[i] = 1, prev[i] = i;
+
+    for (i = 1; i &lt; N; i++)
+        for (j = 0; j &lt; i; j++)
+            if (a[i] &gt; a[j] &amp;&amp; best[i] &lt; best[j] + 1)
+                best[i] = best[j] + 1, prev[i] = j;
+    for (i = 0; i &lt; N; i++)
+        if (max &lt; best[i])
+            max = best[i];
+
+    // Print the LIS using prev[] here. free( best ); free( prev );
+    return max;
+}
+</code></pre>
+</doc-codeblock></div>
+<p>[CSE3081(2반)] 알고리즘 설계와 분석</p>
+<p>2020학년도 2학기 강의자료</p>
+<p>(2020.11.03 화요일)</p>
+<doc-anchor-target id="minimal-triangulation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#minimal-triangulation">#</doc-anchor-trigger>
+        <span>Minimal Triangulation</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p><strong>[A. Aho, J. Hopcroft, and J. Ullman,</strong> <strong>Data Structures and Algorithms</strong>**, Addison-Wesley, 1983. 10.2]**</p>
+</li>
+<li><p>Problem</p>
+<ul>
+<li>Given a set of n vertices for convex polygon, find a triangulation such that no two chords cross each other, and the total length of the chords selected is a minimum.</li>
+</ul>
+</li>
+<li><p>Counting all possible selections of chords in an inefficient way results in an exponential algorithm.</p>
+</li>
+</ul>
+<doc-anchor-target id="8-응용4-the-0-1-knapsack-problem">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#8-응용4-the-0-1-knapsack-problem">#</doc-anchor-trigger>
+        <span>8. [응용4] The 0-1 Knapsack Problem</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Problem</li>
+<li>Example</li>
+<li>An intuitive interpretation
+<ul>
+<li>There are n items in a store.</li>
+<li>The i th item weighs wi kilograms and is worth pi wons, where wi and pi are positive integers.</li>
+<li>A thief has a knapsack that can carry at most W kilograms, where W is a positive integer.</li>
+<li>What items should the thief take to maximize his “profit”?</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="0-a-0-1-knapsack-problem-in-real-life">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#0-a-0-1-knapsack-problem-in-real-life">#</doc-anchor-trigger>
+        <span>0. A 0-1 Knapsack Problem in Real Life</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><a href="http://standardwisdom.com/softwarejournal/2010/03/bang-for-the-buck-knapsacks-in-real-life/">ref</a></li>
+<li>Problem
+<ul>
+<li>You have a marketing budget of 5 million dollars.</li>
+<li>You have the following marketing options and their paybacks in new potential customers:</li>
+</ul>
+</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Option</th>
+<th>Cost (dollars)</th>
+<th>Expected reach (people)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Super bowl</td>
+<td>3M</td>
+<td>80M</td>
+</tr>
+<tr>
+<td>Radio ad campaign for 40 metro areas</td>
+<td>800K</td>
+<td>20M</td>
+</tr>
+<tr>
+<td>TV non peak hour campaign</td>
+<td>500K</td>
+<td>22M</td>
+</tr>
+<tr>
+<td>City top paper network</td>
+<td>2M</td>
+<td>75M</td>
+</tr>
+<tr>
+<td>Viral marketing campaign</td>
+<td>50K</td>
+<td>4M</td>
+</tr>
+<tr>
+<td>Web advertising</td>
+<td>600K</td>
+<td>10M</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Which marketing campaigns would you choose to maximize the total expected reach under the condition that, for each of these marketing campaigns, you either select it or you don’t?</li>
+</ul>
+<doc-anchor-target id="1-how-to-solve-the-0-1-knapsack-problem">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-how-to-solve-the-0-1-knapsack-problem">#</doc-anchor-trigger>
+        <span>1. How to Solve the 0-1 Knapsack Problem</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Naïve approach</p>
+<ul>
+<li>There are 2n subsets of {1, 2, ..., n}!</li>
+</ul>
+</li>
+<li><p>Dynamic programming approach</p>
+<ul>
+<li>Let <span class="math">P(i,w)</span> be the maximized profit obtained when choosing items only from the first <strong>i</strong> items under the restriction that the total weight cannot exceed <strong>w</strong>.</li>
+<li>If we let A* be an optimal subset of {1, 2, ..., n},</li>
+<li>Optimal substructure</li>
+</ul>
+</li>
+<li><p>Example</p>
+</li>
+</ul>
+<p>w</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="3-how-to-reconstruct-the-solution">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#3-how-to-reconstruct-the-solution">#</doc-anchor-trigger>
+        <span>3. How to Reconstruct the Solution</span>
+    </h3>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="4-implementation-and-time-complexity">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#4-implementation-and-time-complexity">#</doc-anchor-trigger>
+        <span>4. Implementation and Time Complexity</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int zero_one_knapsack(int *p, int *w, int n, int W)
+{
+    int i, ww, tmp;
+    for (ww = 0; ww &lt;= W; ww++) P[0][ww] = 0;
+    for (i = 1; i &lt;= n; i++)
+    {
+        P[i][0] = 0;
+        for (ww = 1; ww &lt;= W; ww++)
+        {
+            if (w[i] &lt;= ww)
+            {
+                if ((tmp = p[i] + P[i - 1][ww - w[i]]) &gt; P[i - 1][ww])
+                    P[i][ww] = tmp;
+                else
+                    P[i][ww] = P[i - 1][ww];
+            }
+            else P[i][ww] = P[i - 1][ww];
+        }
+    }
+    return P[n][W];
+}</code></pre>
+</doc-codeblock></div>
+<p><span class="math">O(nW)</span> Time</p>
+<doc-anchor-target id="5-0-1-knapsack-example-1-n--6-w--10">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#5-0-1-knapsack-example-1-n--6-w--10">#</doc-anchor-trigger>
+        <span>5. 0-1 Knapsack Example 1: n = 6, W = 10</span>
+    </h3>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pi</td>
+<td>6</td>
+<td>4</td>
+<td>5</td>
+<td>3</td>
+<td>9</td>
+<td>7</td>
+</tr>
+<tr>
+<td>wi</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>P</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>6</td>
+<td>6</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>11</td>
+<td>15</td>
+<td>15</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>12</td>
+<td>13</td>
+<td>14</td>
+<td>15</td>
+<td>18</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>12</td>
+<td>13</td>
+<td>14</td>
+<td>16</td>
+<td>18</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td>7</td>
+<td>8</td>
+<td>10</td>
+<td>12</td>
+<td>14</td>
+<td>15</td>
+<td>16</td>
+<td>19</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Q</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>?</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+</tr>
+<tr>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Selected items: i = 2, 3, 4, 6 Obtained profit: 19</p>
+<ul>
+<li>Is the time-complexity <span class="math">O(nW)</span> an efficient one?
+<ul>
+<li>This is not a linear-time algorithm!
+<ul>
+<li>A problem is that W is not bounded with respect to n.</li>
+<li>What if n = 20 and W = 20!?→O(n*n!)</li>
+<li>When W is extremely large in comparison with n, this algorithm is worse than the brute-force algorithm that simply considers all subsets.</li>
+</ul>
+</li>
+<li>This algorithm can be improved so that the worst-case number of entries computed is O(2n).</li>
+<li>No one has ever found an algorithm for the 0-1 Knapsack problem whose worst-case time complexity is better than exponential, yet no one has proven that such an algorithm is not possible!</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="6-a-variation-of-the-0-1-knapsack-problem">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#6-a-variation-of-the-0-1-knapsack-problem">#</doc-anchor-trigger>
+        <span>6. A Variation of the 0-1 Knapsack Problem</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Problem</p>
+<ul>
+<li>Decision Problem</li>
+</ul>
+</li>
+<li><p>Example
+<span class="math">{ 1, 2, 7, 14, 49, 98, 343, 686, 2409, 2793, 16808, 17206, 117705, 117993 }, L = 138457</span></p>
+<p>→ <span class="math">{1, 2, 7, 98, 343, 686, 2409, 17206, 117705}</span></p>
+</li>
+<li><p>fill (i, j)</p>
+</li>
+</ul>
+<doc-anchor-target id="a-divide-and-conquer-approach">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#a-divide-and-conquer-approach">#</doc-anchor-trigger>
+        <span>A Divide-and-Conquer Approach</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>Let fill(i,j) return TRUE <span class="math">\iff</span> <span class="math">\exists</span> subset of the first <em>i</em> items that has total length <em>j</em>.</p>
+</li>
+<li><p>When <em>fill</em>(<em>i</em>, <em>j</em>) returns TRUE,
+1 If the <em>i</em>th item is used, <em>fill</em>(<em>i</em> - 1, <em>j</em> - <em>l**i</em>) must return TRUE. 2 If the <em>i</em>th item is not used, <em>fill</em>(<em>i</em> - 1, <em>j</em>) must return TRUE.</p>
+<p>- To solve fill(int n, int L),</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int fill(int i, int j) { // l[i]: global variable if (i == 0) 
+  {
+    if(j == 0) return TRUE;
+    else return FALSE;
+  }
+
+if (fill(i-1, j)) 
+  return TRUE;
+else if (l[i] &lt;= j)
+  return fill(i-1, j-l[i]);
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="a-dynamic-programming-approach">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#a-dynamic-programming-approach">#</doc-anchor-trigger>
+        <span>A Dynamic Programming Approach</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>The optimal substructure : <span class="math">O(nL)</span> time implementation</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp"> F[0][0] = TRUE;
+ for (ll = 1; ll &lt;= L; ll++) 
+   F[0][ll] =FALSE; 
+for (i = 1; i &lt;= n; i++) {
+  for (ll = 0; ll &lt;= L; ll++) { 
+    F[i][ll] = F[i-1][ll];
+    if (ll – l[i] &gt;= 0)
+      F[i][ll] = F[i][ll] || F[i-1][ll-l[i]]; 
+  }
+}
+return (F[n][L]);</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Example
+<ul>
+<li><em>L</em> = 15, (<em>l</em>1,<em>l</em>2,<em>l</em>3,<em>l</em>4,<em>l</em>5,<em>l</em>6,<em>l</em>7)= (1, 2, 2, 4, 5, 2, 4)</li>
+</ul>
+</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>1</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>3</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>4</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>6</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>7</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+</tbody>
+</table>
+</div>
+<doc-anchor-target id="subset-sum">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#subset-sum">#</doc-anchor-trigger>
+        <span>Subset Sum</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>Problem</li>
+<li>Example</li>
+<li>Application
+<ul>
+<li>There are 𝑛 jobs, each of which takes 𝑤𝑖 time. Now we have a CPU with 𝑊 free cycles, and want to choose the set of jobs that minimizes the number of idle cycles.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="relation-to-the-0-1-knapsack-problem">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#relation-to-the-0-1-knapsack-problem">#</doc-anchor-trigger>
+        <span>Relation to the 0-1 Knapsack problem</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li><p>참고</p>
+</li>
+<li><p>If it is possible to solve the 0-1 knapsack problem in polynomial time, the subset sum problem can be solved in polynomial time too.</p>
+</li>
+<li><p>Somebody has already proven that the subset sum problem is very hard.</p>
+</li>
+<li><p>In other words, the subset sum problem is <strong>NP</strong>-complete. Hence, the 0-1 knapsack problem is also a very hard problem. In other words, the 0-1 knapsack problem is also <strong>NP</strong>-complete.</p>
+</li>
+</ul>
+<p>[주제 5] Greedy Methods</p>
+<p>Algorithm Design Techniques</p>
+<ul>
+<li>Divide-and-Conquer Method</li>
+<li>Dynamic Programming Method</li>
+<li>Greedy Method</li>
+<li>Backtracking Method</li>
+<li>Local Search Method</li>
+<li>Branch-and-Bound Method</li>
+<li>Etc.</li>
+</ul>
+<doc-anchor-target id="the-fractional-knapsack-problem">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-fractional-knapsack-problem">#</doc-anchor-trigger>
+        <span>The Fractional Knapsack Problem</span>
+    </h4>
+</doc-anchor-target>
+<ul>
+<li>Problem</li>
+<li>A greedy approach
+<ol>
+<li>Sort the items in nonincreasing order by profits per unit weight  						.</li>
+<li>Choose the items, possibly partially, one by one until the knapsack is full.</li>
+</ol>
+</li>
+<li>Example: {<em>w</em>1, <em>w</em>2, <em>w</em>3} = {5, 10, 20}, {<em>p</em>1, <em>p</em>2, <em>p</em>3} = {50, 60, 140}, <em>W</em> = 30
+<ul>
+<li>Choose all of the 1st item: (5, 50)</li>
+<li>Choose all of the 3rd item: (20, 140)</li>
+<li>Choose half of the 2nd item: (10/2, 60/2)</li>
+</ul>
+</li>
+<li>Implementation 1
+<ul>
+<li>Sort the items → <em>O</em>(<em>n</em> log <em>n</em>)</li>
+<li>Repeat the choice → <em>O</em>(<em>n</em>)</li>
+</ul>
+</li>
+<li>Implementation 2
+<ul>
+<li>Put the items in a heap→<em>O</em>(<em>n</em>)</li>
+<li>Repeat the choice → <em>O</em>(<em>k</em> log <em>n</em>)</li>
+</ul>
+</li>
+<li><em>O</em>(<em>n</em> + <em>n</em> log <em>n</em>) = <em>O</em>(<em>n</em> log <em>n</em>) <em>O</em>(<em>n</em> + <em>k</em> log <em>n</em>) = ?</li>
+</ul>
+<p><span class="math">\rightarrow</span> Could be faster if only a small number of items are necessary to fill the knapsack.</p>
+<ul>
+<li>The greedy method always find an optimal solution to the fractional Knapsack problem!Correctness</li>
+<li>Does the greedy approach always find an optimal solution to the 0- 1 Knapsack problem?</li>
+</ul>
+<doc-anchor-target id="0-1-knapsack-example-2-n--6-w--10">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#0-1-knapsack-example-2-n--6-w--10">#</doc-anchor-trigger>
+        <span>0-1 Knapsack Example 2: n = 6, W = 10</span>
+    </h5>
+</doc-anchor-target>
+<ul>
+<li>0-1 knapsack (dynamic programming)</li>
+<li>Fractional knapsack (greedy)</li>
+<li>Selected items: i = 3, 4 Obtained profit: 15</li>
+<li>Time Complexity: O(nW)</li>
+</ul>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pi</td>
+<td>4</td>
+<td>5</td>
+<td>12</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>wi</td>
+<td>4</td>
+<td>2</td>
+<td>9</td>
+<td>1</td>
+<td>6</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>4</th>
+<th>2</th>
+<th>6</th>
+<th>3</th>
+<th>1</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pi</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>12</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>wi</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>9</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr>
+<td>pi/wi</td>
+<td>3.000</td>
+<td>2.500</td>
+<td>1.500</td>
+<td>1.333</td>
+<td>1.000</td>
+<td>0.667</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Selected items: i = 4, 2, 6, 3(5)</li>
+<li>Obtained profit: 17.67</li>
+<li>Time Complexity: O(n log n)</li>
+</ul>
+<doc-anchor-target id="0-1-knapsack-greedy-1">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#0-1-knapsack-greedy-1">#</doc-anchor-trigger>
+        <span>0-1 knapsack (greedy 1)</span>
+    </h5>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>4</th>
+<th>2</th>
+<th>6</th>
+<th>3</th>
+<th>1</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pi</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>12</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>wi</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>9</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr>
+<td>pi/wi</td>
+<td>3.000</td>
+<td>2.500</td>
+<td>1.500</td>
+<td>1.333</td>
+<td>1.000</td>
+<td>0.667</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Selected items: i = 4, 2, 6</li>
+<li>Obtained profit: 11</li>
+<li>Time Complexity: O(n log n)</li>
+</ul>
+<doc-anchor-target id="0-1-knapsack-greedy-2">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#0-1-knapsack-greedy-2">#</doc-anchor-trigger>
+        <span>0-1 knapsack (greedy 2)</span>
+    </h5>
+</doc-anchor-target>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th></th>
+<th>4</th>
+<th>2</th>
+<th>6</th>
+<th>3</th>
+<th>1</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pi</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>12</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>wi</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>9</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr>
+<td>pi/wi</td>
+<td>3.000</td>
+<td>2.500</td>
+<td>1.500</td>
+<td>1.333</td>
+<td>1.000</td>
+<td>0.667</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Selected items: i = 3</li>
+<li>Obtained profit: 12</li>
+<li>Time Complexity: O(n log n)</li>
+</ul>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../../tags/alg/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>alg</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/4)/3.--copy-2/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">Dn​C & Sorting</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/5)/sub5/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">Greedy Method</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "DP", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.709808118852">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.712931982536">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -22,22 +22,24 @@
     <meta property="og:url" content="/tech/sp/9-thread-level-parallelism-5317603d436b4970a7ec1f8fb62cc6c8/">
     <meta property="og:title" content="9. Thread-Level Parallelism">
     <meta property="og:description" content="Parallel Computing Hardware">
+    <meta property="og:image" content="/tech/sp/9/untitled.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="/tech/sp/9-thread-level-parallelism-5317603d436b4970a7ec1f8fb62cc6c8/">
     <meta property="twitter:title" content="9. Thread-Level Parallelism">
     <meta property="twitter:description" content="Parallel Computing Hardware">
+    <meta property="twitter:image" content="/tech/sp/9/untitled.png">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.709808118852" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.3.0.712931982536" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.709808118852" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.712931982536" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.709808118852" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.709808118852" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.712931982536" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.712931982536" defer></script>
     <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -292,7 +294,7 @@ thread끼리 공유하는 자료구조 : parallel하게 완전히 실행되기�
     </h1>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled.png" alt="6.38." />
+    <img src="../9/untitled.png" alt="6.38." />
     <figcaption class="caption">6.38.</figcaption>
 </figure>
 </p>
@@ -509,7 +511,7 @@ void *sum_mutex(void *vargp)
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled201.png" alt="Untitled" />
+    <img src="9/untitled201.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -569,7 +571,7 @@ void *sum_array(void *vargp)
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled202.png" alt="Untitled" />
+    <img src="9/untitled202.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -622,7 +624,7 @@ void *sum_local(void *vargp)
 <li>Significantly faster than <code v-pre>psum-array</code></li>
 </ul>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled203.png" alt="Untitled" />
+    <img src="9/untitled203.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -690,7 +692,7 @@ void *sum_local(void *vargp)
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled204.png" alt="Untitled" />
+    <img src="9/untitled204.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -709,7 +711,7 @@ void *sum_local(void *vargp)
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled205.png" alt="Untitled" />
+    <img src="9/untitled205.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -734,12 +736,12 @@ void *sum_local(void *vargp)
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled206.png" alt="Untitled" />
+    <img src="9/untitled206.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled207.png" alt="Untitled" />
+    <img src="9/untitled207.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -766,17 +768,17 @@ void *sum_local(void *vargp)
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled208.png" alt="Untitled" />
+    <img src="9/untitled208.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled209.png" alt="Untitled" />
+    <img src="9/untitled209.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2010.png" alt="Untitled" />
+    <img src="9/untitled2010.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -795,12 +797,12 @@ void *sum_local(void *vargp)
     </h1>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2011.png" alt="Untitled" />
+    <img src="9/untitled2011.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2012.png" alt="Untitled" />
+    <img src="9/untitled2012.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -845,12 +847,12 @@ void *sum_local(void *vargp)
     </h1>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2013.png" alt="Untitled" />
+    <img src="9/untitled2013.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2014.png" alt="Untitled" />
+    <img src="9/untitled2014.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -889,12 +891,12 @@ void *sum_local(void *vargp)
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2015.png" alt="Untitled" />
+    <img src="9/untitled2015.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="920thread-level20parallelism205317603d436b4970a7ec1f8fb62cc6c8/untitled2016.png" alt="Untitled" />
+    <img src="9/untitled2016.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
