@@ -41,41 +41,22 @@ draft: false
 
 # 예상 진도 (2020학년도 2학기)
 
-W1: 9/1, 9/3 Introduction to Design and Analysis of Algorithm 
+- W1: 9/1, 9/3 Introduction to Design and Analysis of Algorithm 
+- W2: 9/8, 9/10 Priority Queues and Applications (Review) 
+- W3: 9/15, 9/17 Practice of Complexity Analysis through Example Problems 
+- W4: 9/22, 9/24 Divide-and-Conquer Techniques
+- W5: 9/29, 10/1추석 Divide-and-Conquer Techniques and Sorting
+- W6: 10/6, 10/8 Dynamic Programming Techniques
+- W7: 10/13, 10/15 Dynamic Programming and Applications
+- W8: 10/19 ~ 10/23 정확한 시험 시간은 추후 공지 예정 MIDTERM
+- W9: 10/27, 10/29 Greedy Techniques
+- W10: 11/3, 11/5 Greedy Techniques and Scheduling Algorithms
+- W11: 11/10, 11/12 Introduction to Graph Data Structures
+- W12: 11/17, 11/19 Graph Algorithms and Applications I
+- W13: 11/24, 11/26 Graph Algorithms and Applications II
+- W14: 12/1, 12/3 Introduction to NP-Completeness
+- W15: 12/8, 12/10 Intractable Problems and Approximation Algorithms 또는 진도 보충
 
-W2: 9/8, 9/10 Priority Queues and Applications (Review) 
-
-W3: 9/15, 9/17 Practice of Complexity Analysis through Example Problems 
-
-W4: 9/22, 9/24 Divide-and-Conquer Techniques
-
-W5: 9/29, 10/1추석 Divide-and-Conquer Techniques and Sorting
-
-W6: 10/6, 10/8 Dynamic Programming Techniques
-
-W7: 10/13, 10/15 Dynamic Programming and Applications
-
-W8: 10/19 ~ 10/23 정확한 시험 시간은 추후 공지 예정 MIDTERM
-
-W9: 10/27, 10/29 Greedy Techniques
-
-W10: 11/3, 11/5 Greedy Techniques and Scheduling Algorithms
-
-W11: 11/10, 11/12 Introduction to Graph Data Structures
-
-W12: 11/17, 11/19 Graph Algorithms and Applications I
-
-W13: 11/24, 11/26 Graph Algorithms and Applications II
-
-W14: 12/1, 12/3 Introduction to NP-Completeness
-
-W15: 12/8, 12/10 Intractable Problems and Approximation Algorithms 또는 진도 보충
-
-W16: 12/14
-
-12/18 정확한 시험 시간은 추후 공지 예정 FINAL
-
-강의 순서는 수업의 효율 제고를 위하여 적절히 변경할 예정임.
 
 # 교재 및 참고 도서
 
@@ -116,8 +97,7 @@ W16: 12/14
 
 [주제 8] More on Priority Queues and Hashing
 
-9
 
-10 [주제 1] Introduction to Algorithms and Complexity
-      
+# 목표
 
+<img width="630" alt="image" src="https://user-images.githubusercontent.com/46957634/183236547-17b150fd-fed3-4b48-a105-2086c73a68d4.png">
