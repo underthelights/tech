@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.713082756900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714464396631">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>6. Concurrent Prog.</title>
     <meta name="title" content="6. Concurrent Prog.">
-    <meta name="description" content="Property: CSAPP 6? 전공책: No 종합: No 필기: No" />
+    <meta name="description" content="Property: CSAPP 6" />
 
     <!-- Canonical -->
     <link rel="canonical" href="/tech/sp/6-concurrent-prog-(x)-45b279fd4a47407e94aca845a1e99f0d/" />
@@ -21,24 +21,24 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="/tech/sp/6-concurrent-prog-(x)-45b279fd4a47407e94aca845a1e99f0d/">
     <meta property="og:title" content="6. Concurrent Prog.">
-    <meta property="og:description" content="Property: CSAPP 6? 전공책: No 종합: No 필기: No">
+    <meta property="og:description" content="Property: CSAPP 6">
     <meta property="og:image" content="/tech/sp/6-img/untitled.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="/tech/sp/6-concurrent-prog-(x)-45b279fd4a47407e94aca845a1e99f0d/">
     <meta property="twitter:title" content="6. Concurrent Prog.">
-    <meta property="twitter:description" content="Property: CSAPP 6? 전공책: No 종합: No 필기: No">
+    <meta property="twitter:description" content="Property: CSAPP 6">
     <meta property="twitter:image" content="/tech/sp/6-img/untitled.png">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.4.0.713082756900" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.714464396631" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.713082756900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714464396631" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.713082756900" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714464396631" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -204,10 +204,7 @@
         <span>6. Concurrent Prog.</span>
     </h1>
 </doc-anchor-target>
-<p>Property: CSAPP 6?
-전공책: No
-종합: No
-필기: No</p>
+<p>Property: CSAPP 6</p>
 <ul>
 <li><p><strong>Thread</strong></p>
 <ul>
@@ -217,23 +214,37 @@
 <li><p><strong>Process vs Thread</strong></p>
 <ul>
 <li><p>Similarity</p>
-<p>has its own logical control flow</p>
-<p>can run concurrently with others (also on different core)</p>
-<p>context switched?</p>
+</li>
+<li><p>has its own logical control flow</p>
+</li>
+<li><p>can run concurrently with others (also on different core)</p>
+</li>
+<li><p>context switched?</p>
 </li>
 <li><p>Differences</p>
 <ol>
-<li>Process
+<li><p>Process</p>
 <ol>
-<li>process privacy - on each process, physically isolated된 상태로 OS설계시 만들어진다. → process마다 addr space가 달라서 data를 share하기 어렵다 :</li>
-<li>via IPC (message passing shared memory) Mechanism - FIFO, shared memory, semaphore</li>
+<li>process privacy
+<ul>
+<li>on each process, physically isolated된 상태로 OS설계시 만들어진다.</li>
+<li>→ process마다 addr space가 달라서 data를 share하기 어렵다 :</li>
+</ul>
+</li>
+<li>via IPC Mechanism
+<ul>
+<li>(message passing shared memory) Mechanism</li>
+<li>FIFO, shared memory, semaphore</li>
+</ul>
+</li>
 </ol>
 </li>
-<li>Thread
+<li><p>Thread</p>
 <ol>
 <li>1 process내 많은 execution flow가 존재한다.</li>
-<li>Heap, Data, Code가 공유된다 → thread끼리 easy to share data
+<li>Heap, Data, Code가 공유된다
 <ul>
+<li>→ thread끼리 easy to share data</li>
 <li>Local stack은 제외</li>
 </ul>
 </li>
@@ -244,35 +255,38 @@
 </li>
 </ul>
 </li>
-<li><p><strong>Race, Deadlock, Livelock, Starvation, Fairness : Def &amp; contents</strong></p>
-<p>(사고 접근) 화장실이 하나 있는데 대기자 5명 / 허니버터칩 등 대란</p>
+</ul>
+<p><strong>Race, Deadlock, Livelock, Starvation, Fairness : Def &amp; contents</strong></p>
+<ul>
+<li><p>(사고 접근) 화장실이 하나 있는데 대기자 5명 / 허니버터칩 등 대란</p>
 <ol>
-<li><strong>Race</strong>
+<li><p><strong>Race</strong></p>
 <ol>
 <li>(def) outcome depends on arbitrary scheduling decisions elsewhere in the system</li>
 <li>(비유) 무한 경쟁</li>
 </ol>
 </li>
-<li><strong>Deadlock</strong>
+<li><p><strong>Deadlock</strong></p>
 <ol>
 <li>(def) improper rsrc alloc prevents forward progress</li>
 <li>(비유) 교차로 무한대기 - 누구도 지나가지 못하고 state에서 횡행하며 무한대기</li>
 <li>(sol) order 설정 (OS범위)</li>
 </ol>
 </li>
-<li><strong>Livelock</strong>
+<li><p><strong>Livelock</strong></p>
 <ol>
 <li>(def) shared memory내 오직 한 Process만 접근 가능
 → lock을 잡기 위해 매번 시도한다.</li>
 <li>(결과) 잡지도 못하는데도 불구하고 지속해서 시도하기에 inefficient CPU Usage</li>
 </ol>
 </li>
-<li><strong>Starvation</strong>
+<li><p><strong>Starvation</strong></p>
 <ol>
 <li>(def) 한 번도 lock 잡을 Chance를 갖지 못하는 Process 발생</li>
+<li>(비유) Process 하나는 잡지 못해 굶어 죽게됨</li>
 </ol>
 </li>
-<li><strong>Fairness</strong>
+<li><p><strong>Fairness</strong></p>
 <ol>
 <li>(def) 공정히 compete했음에도 한 process가 독식하며 필요한 clock cycle만큼 획득하지 못하는 현상</li>
 <li>(비유) 교차로 무한대기</li>
@@ -280,61 +294,82 @@
 </li>
 </ol>
 </li>
-<li><p>[2021기출-12] <strong>Process based concurrency vs Event-based concurrency vs thread-base concurrency</strong></p>
-<ul>
-<li>
+</ul>
+<p>[2021기출-12] <strong>Process based concurrency vs Event-based concurrency vs thread-base concurrency</strong></p>
 <ol>
-<li><strong>Process-based :</strong> server가 client 개수만큼 multiple process</li>
-<li>single process : if loop에 따라 file descriptor 본 후 event가 있는 경우 handling</li>
-</ol>
+<li><p><strong>Process-based :</strong> server가 client 개수만큼 multiple process</p>
 <ul>
-<li><strong>kernel automatically interleaves : multiple logical flows</strong></li>
-<li><code v-pre>**Listenfd</code>에 각 Connection 요청 마다 parent process를 accept하고 client에 <code v-pre>fork()</code>를 띄워 <code v-pre>connfd</code>와 client를 연결시켜 각 client마다 자신만의 address space를 가질 수 있도록 한다.  → Process Privacy : 각 client의 space는 독립적인 고립된 공간이다.**</li>
-<li><strong>Pros</strong>
+<li><p>single process : if loop에 따라 file descriptor 본 후 event가 있는 경우 handling</p>
+</li>
+<li><p><strong>kernel automatically interleaves : multiple logical flows</strong></p>
+</li>
+<li><p><code v-pre>**Listenfd</code>에 각 Connection 요청 마다 parent process를 accept하고 client에 <code v-pre>fork()</code>를 띄워 <code v-pre>connfd</code>와 client를 연결시켜 각 client마다 자신만의 address space를 가질 수 있도록 한다.</p>
+</li>
+<li><p>→ Process Privacy : 각 client의 space는 독립적인 고립된 공간이다.**</p>
+</li>
+<li><p><strong>Pros</strong></p>
 <ul>
 <li>Handle multiple connections concurrently</li>
 <li>clean sharing model : file table</li>
-<li>simple, straightforward → isolated address space :execution flow 변화 고려 필요 X</li>
+<li>simple, straightforward
+<ul>
+<li>→ isolated address space :execution flow 변화 고려 필요 X</li>
 </ul>
 </li>
-<li><strong>Cons</strong>
+</ul>
+</li>
+<li><p><strong>Cons</strong></p>
 <ul>
 <li>additional overhead for process control - server: client개수만큼 process fork 진행
 <ul>
-<li>110개의 client가 들어오면 110개의 Fork가 진행된다.</li>
+<li>110개의 client가 들어오면 110개의 Fork 진행.</li>
 </ul>
 </li>
 <li>Nontrivial to share data between processes : Hard to share rsrcs
-(pros : avoid unintended sharing)
 <ul>
-<li>Isolated -&gt;→ process마다 addr space가 달라서 data를 share하기 어렵다 :</li>
-<li>via IPC (interprocess communication message passing shared memory) Mechanism - FIFO, shared memory, semaphore → data share가능해짐</li>
+<li>(pros : avoid unintended sharing)과 상충되는 내용
+<ul>
+<li>의도하지 않은 Sharing Avoidance = Process 간 Resource 공유 Nontrivial</li>
+</ul>
+</li>
+<li>Isolated
+<ul>
+<li>→ process마다 addr space가 달라서 data를 share하기 어렵다 :</li>
+<li>Solution via IPC Mechanism
+<ul>
+<li>(interprocess communication message passing shared memory)</li>
+<li>FIFO, shared memory, semaphore → data share가능해짐</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Issues :
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Issues :</p>
 <ul>
-<li>listening server process : must reap zombie chiled - prevent memory leak</li>
+<li>listening server process
+<ul>
+<li>must reap zombie child - to prevent memory leak</li>
+</ul>
+</li>
 <li>close its copy of <code v-pre>connfd</code></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<ol start="2">
-<li><strong>Event-Based</strong> : process 1개</li>
-</ol>
+<li><p><strong>Event-Based</strong> : process 1개</p>
 <ul>
-<li>programmer에 의해 mulitple logical flow 수동</li>
-<li>server daemon이 listenfd의 Connection request가 client로부터 오는지 보고 그에 맞춰 connfd 생성 → client-server channel 생성 후 응답</li>
-<li><strong>각 client들이 fd를 따로 두어, process의 조건에 따라 각자 처리한다.</strong>
+<li><p>programmer에 의해 mulitple logical flow (manually)</p>
+</li>
+<li><p>server daemon이 listenfd의 Connection request가 client로부터 오는지 보고 그에 맞춰 connfd 생성 → client-server channel 생성 후 응답</p>
+</li>
+<li><p><strong>각 client들이 fd를 따로 두어, process의 조건에 따라 각자 처리한다.</strong></p>
 <ul>
-<li><code v-pre>**connfd</code> - Descriptor에 pending input의 유무를 확인한 후 : <code v-pre>epoll</code>, <code v-pre>select</code>**
+<li><code v-pre>**connfd</code> - Descriptor에 pending input의 유무를 확인한 후 : <code v-pre>epoll</code>, <code v-pre>select</code>
 <ul>
 <li>ask kernel to suspend the process, returning control to applicatoin after 1개 이상의 IO Event 발생시</li>
-</ul>
-</li>
 <li><code v-pre>**listenfd</code> 있다면 event 처리: <code v-pre>accept</code>통해 Connection + new connfd 배열에 추가**
 <ul>
 <li>없다면 skip한다.</li>
@@ -347,7 +382,9 @@
 <li>IO Multiplexing : client 1, 2,3에 fd 따로 → Process if loop에 따라 각자 처리함</li>
 </ul>
 </li>
-<li><strong>Pros</strong>
+</ul>
+</li>
+<li><p><strong>Pros</strong></p>
 <ul>
 <li>One logical control flow and address space.</li>
 <li>Can single-step with a debugger.
@@ -364,7 +401,7 @@
 </li>
 </ul>
 </li>
-<li>Cons
+<li><p>Cons</p>
 <ul>
 <li>Significantly <strong>more complex</strong> to code than process- or thread-based designs.</li>
 <li>Hard to provide <strong>fine-grained concurrency</strong> → developer 알아서
@@ -381,35 +418,47 @@
 </li>
 </ul>
 </li>
+</ol>
+<ul>
 <li>
 <ol start="3">
 <li><strong>Thread-Based</strong> : process 1개 → lightweight concurrent programming</li>
 </ol>
 <ul>
-<li>kernel automatically interleaves : multiple logical flows</li>
-<li>kernel에 의해 mulitple logical flow 자동</li>
-<li><strong>each flows share : same address space</strong></li>
-<li>process based + event based / mid overhead</li>
-<li>issues
+<li><p>kernel automatically interleaves : multiple logical flows</p>
+</li>
+<li><p>kernel에 의해 mulitple logical flow 자동</p>
+</li>
+<li><p><strong>each flows share : same address space</strong></p>
+</li>
+<li><p>process based + event based / mid overhead</p>
+</li>
+<li><p>issues</p>
 <ul>
 <li><strong>run ‘detached’ to avoid memory leak</strong>
 <ul>
 <li>joinable thread - can be reaped, killed by other thread
-→ reap to free memory rsrc</li>
+<ul>
+<li>→ reap to free memory rsrc</li>
+</ul>
+</li>
 <li>detached thread - can’t be reaped, killed by others
-→ rsrcs automatically reaped on termination</li>
+<ul>
+<li>→ rsrcs automatically reaped on termination</li>
 </ul>
 </li>
 <li>all fn called by thread must be <strong>thread-safe</strong></li>
 </ul>
 </li>
-<li>Pros
+</ul>
+</li>
+<li><p>Pros</p>
 <ul>
 <li><strong>Easy to share</strong> data structs between threads</li>
 <li>efficient than process : not so much control voer scheduling policies</li>
 </ul>
 </li>
-<li>Cons
+<li><p>Cons</p>
 <ul>
 <li>careful to avoid unintended sharing → subtle, hard-to-reproduce error
 <ul>
@@ -426,9 +475,7 @@
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p><strong>Thread : stack variable에서 다른 thread가 visible한 이유</strong></p>
+<li><p><strong><code v-pre>Thread</code> : stack variable에서 다른 thread가 visible한 이유</strong></p>
 <ul>
 <li>개념 : Thread는 다른 stack invisible</li>
 <li>실제 : trick을 통해 reference 가능
@@ -441,17 +488,19 @@
 <li><p><strong>Thread view</strong></p>
 <ol>
 <li><p>Traditional view</p>
-<ol>
-<li><p>[Process] = [Process context] + [code, data, stack]</p>
-<p><img src="../6-img/untitled.png" alt="Untitled" /></p>
-</li>
-</ol>
+<ul>
+<li>[Process] = [Process context] + [code, data, stack]</li>
+<li><img src="../6-img/untitled.png" alt="Untitled" /></li>
+</ul>
 </li>
 <li><p>Alternative view</p>
 <ol>
 <li><p>[Thread] + [code, data, kernel context]</p>
-<p>[Thread] = [stack] + [thread context]</p>
-<p><img src="6-img/untitled201.png" alt="Untitled" /></p>
+<ul>
+<li>[Thread] = [stack] + [thread context]</li>
+<li>![Untitled](6-img/Untitled 1.png)</li>
+<li><img src="6-img/untitled201.png" alt="Untitled" /></li>
+</ul>
 </li>
 <li><p>each thread has</p>
 <ol>
@@ -472,10 +521,14 @@
 </li>
 </ul>
 </li>
-<li><p><strong>[2021] Iterative server (6-concurrent programming)</strong></p>
-<p>[2021기출] iterative servers process one request at a time. in this iterative server, while a client exchanges messages with the server, the second client is blocking. however, the second client was still able to send a message even though the server didn&#x27;t accept the connection request. where and how is the message sent by the second client managed?</p>
-<p>Second client는 connection을 server에 요청했으나 First Client에 의해 blocking된 상태이다. 그러나 message를 보낼 수는 있기 때문에 해당 server process가 돌고 있는 OS의 TCP Manager내 write()함수를 수행할 수 있다. 이는 읽을 수 없고 buffering만 되어 있는 상태이다.</p>
-<p>실제로 수행되기 위해서는 first client가 close하여 client2와의 새로운 connection이 형성되면 해당 message를 read하고 write한다.</p>
+</ul>
+<p><strong>[2021] Iterative server (6-concurrent programming)</strong></p>
+<ul>
+<li>[2021기출] iterative servers process one request at a time. in this iterative server, while a client exchanges messages with the server, the second client is blocking. however, the second client was still able to send a message even though the server didn&#x27;t accept the connection request. where and how is the message sent by the second client managed?
+<ul>
+<li>Second client는 connection을 server에 요청했으나 First Client에 의해 blocking된 상태이다. 그러나 message를 보낼 수는 있기 때문에 해당 server process가 돌고 있는 OS의 TCP Manager내 <code v-pre>write()</code>함수를 수행할 수 있다. 이는 읽을 수 없고 buffering만 되어 있는 상태이다.</li>
+<li>실제로 수행되기 위해서는 first client가 close하여 client2와의 새로운 connection이 형성되면 해당 message를 read하고 write한다.</li>
+</ul>
 </li>
 </ul>
 
