@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714464396631">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714464872086">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -34,11 +34,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.4.0.714464396631" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.714464872086" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714464396631" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714464872086" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714464396631" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714464872086" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -205,21 +205,28 @@
     </h1>
 </doc-anchor-target>
 <p>Property: CSAPP 6</p>
-<ul>
-<li><p><strong>Thread</strong></p>
+<doc-anchor-target id="thread">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread">#</doc-anchor-trigger>
+        <span><strong>Thread</strong></span>
+    </h2>
+</doc-anchor-target>
 <ul>
 <li>stack not shared, process~~ 보다 더 명확하게 state할 것</li>
 </ul>
-</li>
-<li><p><strong>Process vs Thread</strong></p>
+<doc-anchor-target id="process-vs-thread">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#process-vs-thread">#</doc-anchor-trigger>
+        <span><strong>Process vs Thread</strong></span>
+    </h3>
+</doc-anchor-target>
 <ul>
 <li><p>Similarity</p>
-</li>
-<li><p>has its own logical control flow</p>
-</li>
-<li><p>can run concurrently with others (also on different core)</p>
-</li>
-<li><p>context switched?</p>
+<ul>
+<li>has its own logical control flow</li>
+<li>can run concurrently with others (also on different core)</li>
+<li>context switched?</li>
+</ul>
 </li>
 <li><p>Differences</p>
 <ol>
@@ -254,11 +261,15 @@
 </ol>
 </li>
 </ul>
-</li>
-</ul>
-<p><strong>Race, Deadlock, Livelock, Starvation, Fairness : Def &amp; contents</strong></p>
+<doc-anchor-target id="race-deadlock-livelock-starvation-fairness--def--contents">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#race-deadlock-livelock-starvation-fairness--def--contents">#</doc-anchor-trigger>
+        <span><strong>Race, Deadlock, Livelock, Starvation, Fairness : Def &amp; contents</strong></span>
+    </h2>
+</doc-anchor-target>
 <ul>
-<li><p>(사고 접근) 화장실이 하나 있는데 대기자 5명 / 허니버터칩 등 대란</p>
+<li>(사고 접근) 화장실이 하나 있는데 대기자 5명 / 허니버터칩 등 대란</li>
+</ul>
 <ol>
 <li><p><strong>Race</strong></p>
 <ol>
@@ -293,11 +304,18 @@
 </ol>
 </li>
 </ol>
-</li>
-</ul>
-<p>[2021기출-12] <strong>Process based concurrency vs Event-based concurrency vs thread-base concurrency</strong></p>
-<ol>
-<li><p><strong>Process-based :</strong> server가 client 개수만큼 multiple process</p>
+<doc-anchor-target id="process-based-concurrency-vs-event-based-concurrency-vs-thread-base-concurrency-2021기출-12">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#process-based-concurrency-vs-event-based-concurrency-vs-thread-base-concurrency-2021기출-12">#</doc-anchor-trigger>
+        <span><strong>Process based concurrency vs Event-based concurrency vs thread-base concurrency</strong> [2021기출-12]</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="1--process-based--server가-client-개수만큼-multiple-process">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1--process-based--server가-client-개수만큼-multiple-process">#</doc-anchor-trigger>
+        <span>1.  <strong>Process-based :</strong> server가 client 개수만큼 multiple process</span>
+    </h3>
+</doc-anchor-target>
 <ul>
 <li><p>single process : if loop에 따라 file descriptor 본 후 event가 있는 경우 handling</p>
 </li>
@@ -358,8 +376,12 @@
 </ul>
 </li>
 </ul>
-</li>
-<li><p><strong>Event-Based</strong> : process 1개</p>
+<doc-anchor-target id="2-event-based--process-1개">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-event-based--process-1개">#</doc-anchor-trigger>
+        <span>2. <strong>Event-Based</strong> : process 1개</span>
+    </h3>
+</doc-anchor-target>
 <ul>
 <li><p>programmer에 의해 mulitple logical flow (manually)</p>
 </li>
@@ -417,13 +439,12 @@
 </ul>
 </li>
 </ul>
-</li>
-</ol>
-<ul>
-<li>
-<ol start="3">
-<li><strong>Thread-Based</strong> : process 1개 → lightweight concurrent programming</li>
-</ol>
+<doc-anchor-target id="3-thread-based--process-1개--lightweight-concurrent-programming">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#3-thread-based--process-1개--lightweight-concurrent-programming">#</doc-anchor-trigger>
+        <span>3. <strong>Thread-Based</strong> : process 1개 → lightweight concurrent programming</span>
+    </h3>
+</doc-anchor-target>
 <ul>
 <li><p>kernel automatically interleaves : multiple logical flows</p>
 </li>
@@ -474,8 +495,18 @@
 </ul>
 </li>
 </ul>
-</li>
-<li><p><strong><code v-pre>Thread</code> : stack variable에서 다른 thread가 visible한 이유</strong></p>
+<doc-anchor-target id="thread-view">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-view">#</doc-anchor-trigger>
+        <span><strong>Thread view</strong></span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="thread--stack-variable에서-다른-thread가-visible한-이유">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread--stack-variable에서-다른-thread가-visible한-이유">#</doc-anchor-trigger>
+        <span><strong><code v-pre>Thread</code> : stack variable에서 다른 thread가 visible한 이유</strong></span>
+    </h3>
+</doc-anchor-target>
 <ul>
 <li>개념 : Thread는 다른 stack invisible</li>
 <li>실제 : trick을 통해 reference 가능
@@ -484,16 +515,22 @@
 </ul>
 </li>
 </ul>
-</li>
-<li><p><strong>Thread view</strong></p>
-<ol>
-<li><p>Traditional view</p>
+<doc-anchor-target id="1-traditional-view">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-traditional-view">#</doc-anchor-trigger>
+        <span>1. Traditional view</span>
+    </h3>
+</doc-anchor-target>
 <ul>
 <li>[Process] = [Process context] + [code, data, stack]</li>
 <li><img src="../6-img/untitled.png" alt="Untitled" /></li>
 </ul>
-</li>
-<li><p>Alternative view</p>
+<doc-anchor-target id="2-alternative-view">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-alternative-view">#</doc-anchor-trigger>
+        <span>2. Alternative view</span>
+    </h3>
+</doc-anchor-target>
 <ol>
 <li><p>[Thread] + [code, data, kernel context]</p>
 <ul>
@@ -510,15 +547,11 @@
 </ol>
 </li>
 </ol>
-</li>
-</ol>
 <ul>
 <li>Concurrent execution
 <ul>
 <li>single-core : simulate parallelism by time slicing</li>
 <li>multi-core : true parallelism</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
