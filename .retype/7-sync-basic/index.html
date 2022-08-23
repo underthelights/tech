@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714381736190">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>[SP] 7. Synchronization: Basics</title>
+    <meta name="title" content="[SP] 7. Synchronization: Basics">
+    <meta name="description" content="Question: Which variables in a threaded C program are shared?" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/7-sync-basic/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/7-sync-basic/">
+    <meta property="og:title" content="[SP] 7. Synchronization: Basics">
+    <meta property="og:description" content="Question: Which variables in a threaded C program are shared?">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/183250241-86e269af-31d1-4fdf-9ec0-5bb9d44878f3.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/7-sync-basic/">
+    <meta property="twitter:title" content="[SP] 7. Synchronization: Basics">
+    <meta property="twitter:description" content="Question: Which variables in a threaded C program are shared?">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/183250241-86e269af-31d1-4fdf-9ec0-5bb9d44878f3.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../favicon.ico" rel="icon" />
+    <link href="../resources/css/retype.css?v=2.3.0.714381736190" rel="stylesheet" />
+
+    <script type="text/javascript" src="../resources/js/config.js?v=2.3.0.714381736190" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.3.0.714381736190" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.3.0.714381736190" defer></script>
+    <link href="../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="7-synchronization-basics" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#7-synchronization-basics">#</doc-anchor-trigger>
+        <span>7. Synchronization: Basics</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../categories/system-programming/">system-programming</a></div>
+</div>
+
+<doc-anchor-target id="shared-variables-in-threaded-c-programs">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#shared-variables-in-threaded-c-programs">#</doc-anchor-trigger>
+        <span>Shared Variables in Threaded C Programs</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><strong>Question: Which variables in a threaded C program are shared?</strong>
+<ul>
+<li>The answer is not as simple as “global variables are shared” and “stack variables are private”</li>
+</ul>
+</li>
+<li>Def: A variable x is shared $\iff$multiple threads reference some instance of x. 다수의 thread가 변수의 일부 instance를 참조할 때</li>
+<li>Requires answers to the following questions:
+<ul>
+<li>What is the memory model for threads? Thread를 위한 하부 메모리 모델?</li>
+<li>How are instances of variables mapped to memory? 이는 어떻게 mapping되는가?</li>
+<li>How many threads might reference each of these instances?  얼마나 많은 thread가 이 변스들을 참조하는가?</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="threads-memory-model">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#threads-memory-model">#</doc-anchor-trigger>
+        <span>Threads Memory Model</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Conceptual model:
+<ul>
+<li>Multiple threads run within the context of a single process</li>
+<li>Each thread has its own separate thread context
+<ul>
+<li>자신만의 별도의 thread context : Thread ID, stack, stack pointer, PC, condition codes, and GP registers</li>
+</ul>
+</li>
+<li>All threads share the remaining process context
+<ul>
+<li>전체 사용자 virtual address space : Code, data, heap, and shared library segments of the process virtual address space</li>
+</ul>
+</li>
+<li>Open files and installed handlers</li>
+</ul>
+</li>
+<li>Operationally, this model is not strictly enforced:
+<ul>
+<li>Register values are truly separate and protected, but...
+<ul>
+<li>하나의 thread가 다른 thread register를 읽거나 쓰는 것은 불가능하나 모든 thread는 shared vm내 모든 위치에 접근 가능</li>
+</ul>
+</li>
+<li>Any thread can read and write the stack of any other thread</li>
+</ul>
+</li>
+</ul>
+<p><strong>The mismatch between the conceptual and operation model is a source of confusion and errors</strong>  </p>
+<doc-anchor-target id="example-program-to-illustrate-sharing">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-program-to-illustrate-sharing">#</doc-anchor-trigger>
+        <span>Example Program to Illustrate Sharing</span>
+    </h2>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">//sharing.c  
+
+char **ptr; /* global var */
+int main()
+{
+    long i;
+    pthread_t tid;
+    char *msgs[2] = {&quot;Hello from foo&quot;, &quot;Hello from bar&quot;};
+    ptr = msgs;
+    for (i = 0; i &lt; 2; i++)
+        Pthread_create(&amp;tid, NULL, thread, (void *)i);
+    Pthread_exit(NULL);
+}
+
+void *thread(void *vargp)
+{
+    long myid = (long)vargp;
+    static int cnt = 0;
+    printf(&quot;[%ld]: %s (cnt=%d)\n&quot;, myid, ptr[myid], ++cnt);
+    //Peer threads reference main thread’s stack indirectly through global ptr variable
+    return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>2개의 peer thread 생성하는 1개의 main thread
+<ul>
+<li>main thread : 각 peer thread에 고유의 id 전달</li>
+<li>id를 이용해 thread routine이 호출된 message와 함께 개인화된 message print</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="mapping-variable-instances-to-memory">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mapping-variable-instances-to-memory">#</doc-anchor-trigger>
+        <span>Mapping Variable Instances to Memory</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Global variables</p>
+<ul>
+<li>Def: Variable declared outside of a function 함수 밖에서 선언된 모든 변수</li>
+<li><strong>Virtual memory contains exactly one instance of any global variable</strong>
+rumtime VM의 r/w영역 - thread에 의해 참조될 수 있는 각 전역 변수에서 정확히 하나의 instance 참조 (Instance : ptr)</li>
+</ul>
+</li>
+<li><p>Local variables</p>
+<ul>
+<li>Def: Variable declared inside function without static attribute</li>
+<li><strong>Each thread stack contains one instance of each local variable</strong></li>
+</ul>
+<p>자신만의 local var instance를 가짐 - 다수의 thread가 thread routine을 동일하게 가질 때에도 동일
+- ex. tid  - 1 instance → main thread stack에 들어감 (tid.m)
+- ex. myid - 2 instance → peer thread 0, 1에 들어감 (myid.p0 , myid.p1)</p>
+</li>
+<li><p>Local static variables</p>
+<ul>
+<li>Def: Variable declared inside function with the static attribute</li>
+<li><strong>Virtual memory contains exactly one instance of any local static variable.</strong></li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">//sharing.c  
+
+char **ptr; /* global var */
+//Global var: 1 instance (ptr [data])
+
+int main()
+{
+    long i;
+    pthread_t tid;
+    char *msgs[2] = {&quot;Hello from foo&quot;, &quot;Hello from bar&quot;};
+		//Local vars: 1 instance (i.m, msgs.m) 
+
+    ptr = msgs;
+    for (i = 0; i &lt; 2; i++)
+        Pthread_create(&amp;tid, NULL, thread, (void *)i);
+    Pthread_exit(NULL);
+}
+
+void *thread(void *vargp)
+{
+    long myid = (long)vargp;
+		//Local var: 2 instances ( myid.p0 [peer thread 0’s stack], 
+		//myid.p1 [peer thread 1’s stack] )
+    static int cnt = 0;
+    printf(&quot;[%ld]: %s (cnt=%d)\n&quot;, myid, ptr[myid], ++cnt);
+    //Peer threads reference main thread’s stack indirectly 
+		//through global ptr variable
+    return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="shared-variable-analysis">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#shared-variable-analysis">#</doc-anchor-trigger>
+        <span>Shared Variable Analysis</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>자신으 ㅣinstance 중 하나가 하나 이상의 thread에 의해 reference 되는 경우에만 공유되어 있음</p>
+<ul>
+<li>ex. cnt : shared (<span class="math">\because</span>  단 1개의 runtime instance를 가지고 있으며, peer thread 모두에 의해서 참조되고 있기 때문에)</li>
+</ul>
+</li>
+<li><p>Which variables are shared?</p>
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Variable Instance</th>
+<th>Referenced by Main Thread</th>
+<th>Referenced by peer thread 0</th>
+<th>Referenced by peer thread 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ptr</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>cnt</td>
+<td></td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>i.m</td>
+<td>yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>msgs.m</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>myid.p0</td>
+<td></td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>myid.p1</td>
+<td></td>
+<td></td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><p>Answer: A variable x is shared iff multiple threads reference at least one instance of x.</p>
+<ul>
+<li>Thus: ptr, cnt, and msgs are shared</li>
+<li>i and myid are not shared</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="synchronizing-threads">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#synchronizing-threads">#</doc-anchor-trigger>
+        <span>Synchronizing Threads</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>Shared variables are handy... (편리하다)</li>
+<li>...but introduce the possibility of nasty synchronization errors.</li>
+</ul>
+<doc-anchor-target id="badcntc--improper-synchronization">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#badcntc--improper-synchronization">#</doc-anchor-trigger>
+        <span><code v-pre>badcnt.c</code> : Improper Synchronization</span>
+    </h2>
+</doc-anchor-target>
+<p>counter variable increment code 예제 → cnt should equal 20, 000.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* Global shared variable */ 
+volatile long cnt = 0; /* Counter */
+int main(int argc, char **argv)
+{
+    long niters;
+    pthread_t tid1, tid2;
+    niters = atoi(argv[1]);
+    Pthread_create(&amp;tid1, NULL, thread, &amp;niters);
+    Pthread_create(&amp;tid2, NULL, thread, &amp;niters);
+    Pthread_join(tid1, NULL);
+    Pthread_join(tid2, NULL); /* Check result */
+    if (cnt != (2 * niters))
+        printf(&quot;BOOM! cnt=%ld\n&quot;, cnt);
+    else
+        printf(&quot;OK cnt=%ld\n&quot;, cnt);
+    exit(0);
+}
+
+/* Thread routine */ 
+void *thread(void *vargp)
+{
+    long i, niters = *((long *)vargp);
+    for (i = 0; i &lt; niters; i++)
+        cnt++;
+    return NULL;
+}
+</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">linux &gt;./badcnt 10000 
+OK 
+cnt = 20000 
+linux &gt;./ badcnt 10000 
+BOOM !cnt = 13051 
+linux &gt; </code></pre>
+</doc-codeblock></div>
+<ul>
+<li>What went wrong ?
+<ul>
+<li>두 thread가 하나의 variable을 increment한다고 할 때
+2 thread가 20,000 이 나와야지 이상적인 결과이다.</li>
+<li>실제 pthread programming을 통해 각각 계산해보면 20,000이 나오지 않음.
+<ul>
+<li>= cnt<ins>가 atomic하지 않는다
+= cnt</ins> 실행 도중 다른 thread로 실행이 넘어가 atomic하지 않기 때문에 interleaving된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>counter를 niters번 증가시키기에 최종 값이 2*niters라고 생각하지만 잘못된 값이 나온다</li>
+</ul>
+<doc-anchor-target id="assembly-code-for-counter-loop">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#assembly-code-for-counter-loop">#</doc-anchor-trigger>
+        <span>Assembly Code for Counter Loop</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>C code for counter loop in thread i</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">for (i = 0; i &lt; niters; i++) 
+	cnt++; </code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Asm code for thread i</p>
+<p>|    movq (%rdi), %rcx
+testq %rcx,%rcx
+jle .L2
+movl $0, %eax  | Hi : Head  |
+| --- | --- |
+| .L3:
+‘movq cnt(%rip),%rdx
+addq $1, %rdx
+movq %rdx, cnt(%rip)  | Li :Loadcnt
+Ui : Update cnt
+Si : Store cnt  |
+|    addq $1, %rax
+cmpq %rcx, %rax
+jne .L3
+.L2:  | Ti : Tail |</p>
+<ul>
+<li><span class="math">H_i</span> : loop 앞에 위치한 Instruction block</li>
+<li><span class="math">L_i</span> : 공유변수 Cnt를 %Rdx에 load하는 Instruction (rdx_i : thread i 내의 register rdx)</li>
+<li><span class="math">U_i</span> : %rdx를 갱신하는 instruction</li>
+<li><span class="math">S_i</span> : renewed %rdx 값을 다시 공유 변수 cnt로 저장하는 Instruction</li>
+<li><span class="math">T_i</span> : loop 끝에 위치한 Instruction block</li>
+</ul>
+</li>
+<li><p>load update store : 세 가지 instruction</p>
+</li>
+<li><p>어떻게 interleaving되느냐에 따라 값이 다르다.</p>
+</li>
+</ul>
+<doc-anchor-target id="concurrent-execution">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#concurrent-execution">#</doc-anchor-trigger>
+        <span>Concurrent Execution</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li>일반적으로 OS가 thread를 위해 정확한 순서를 선택하게 될 지의 여부를 예측할 수 있는 방법은 없다.</li>
+<li><strong>Key idea: In general, any sequentially consistent interleaving is possible, but some give an unexpected result!</strong>
+<ul>
+<li><p><span class="math">l_i</span> denotes that thread i executes instruction I</p>
+</li>
+<li><p>%rdx_i is the content of %rdx in thread i’s context</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/183250241-86e269af-31d1-4fdf-9ec0-5bb9d44878f3.png" alt="Untitled" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250227-8c67ee9b-5c03-44ec-adbd-edffbd309ad8.png" alt="Untitled 1" />
+    <figcaption class="caption">Untitled 1</figcaption>
+</figure>
+</p>
+<ul>
+<li>Incorrect ordering : two threads increment the counter, but the result is 1 instead of 2
+<ul>
+<li>thread 1이 cnt를 2단계에서 Load한 후에 thread 1이 자신의 갱신된 값을 6단계에서 저장하기 전 thread 2가 cnt를 5단계에서 load하기 때문에 일어난다.</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250229-c2800d55-a2e1-47c5-ab4c-89edd80aba07.png" alt="Untitled 2" />
+    <figcaption class="caption">Untitled 2</figcaption>
+</figure>
+</p>
+<ul>
+<li>How bout this ordering?
+<ul>
+<li>We can analyze the behavior using a progress graph</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250231-ba6f7faf-a92c-4b9c-90a1-440bf271bb95.png" alt="Untitled 3" />
+    <figcaption class="caption">Untitled 3</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="progress-graphs">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#progress-graphs">#</doc-anchor-trigger>
+        <span>Progress Graphs</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>instruction 순서를 process graph를 통해 명확히 할 수 있다.</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250232-9f4b4d3c-b5dd-4130-a5b2-7474c752d9c7.png" alt="Untitled 4" />
+    <figcaption class="caption">Untitled 4</figcaption>
+</figure>
+</p>
+<ul>
+<li>A progress graph depicts the discrete execution state space of concurrent threads.
+<ul>
+<li>하나의 상태에서 다른 상태로의 전환으로 Modeling</li>
+</ul>
+</li>
+<li>Each axis corresponds to the sequential order of instructions in a thread.
+<ul>
+<li>thread k의 진행에 대응된다</li>
+</ul>
+</li>
+<li>Each point corresponds to a possible execution state (Inst1, Inst2).
+<ul>
+<li>thread k가 I_k를 완료한 상태</li>
+<li>그래프의 원점 : Initial state, thread 모두가 한 개의 Instruction도 완료하지 못한 상태</li>
+<li>E.g., (L1, S2) denotes state where thread 1 has completed L1 and thread 2 has completed S2. (L1, S2) Thread 1  14</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="trajectories-in-progress-graphs">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#trajectories-in-progress-graphs">#</doc-anchor-trigger>
+        <span>Trajectories in Progress Graphs</span>
+    </h3>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250233-e1d64b76-6b64-4c39-a56a-220e6c4964a4.png" alt="Untitled 5" />
+    <figcaption class="caption">Untitled 5</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>A trajectory is a sequence of legal state transitions that describes one possible concurrent execution of the threads.</p>
+</li>
+<li><p>Example: H1, L1, U1, H2, L2, S1, T1, U2, S2, T2</p>
+</li>
+<li><p>어떤 순서로 진행되느냐에 따라 그 궤적이 달라진다.
+(어떻게 interleaving되느냐에 따라)</p>
+<ul>
+<li>우 상향으로 interleaving됨.</li>
+<li>trajectory 실행하는 thread</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="critical-sections-and-unsafe-regions">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#critical-sections-and-unsafe-regions">#</doc-anchor-trigger>
+        <span>Critical Sections and Unsafe Regions</span>
+    </h3>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250234-cfb6638e-d41e-4c46-a138-5eeb2bee09f5.png" alt="Untitled 6" />
+    <figcaption class="caption">Untitled 6</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>Critical section : L, U, S instruction에 의해 형성 (thread i에 대해 shared var의 내용 조작)</p>
+<ul>
+<li>다른 Thread의 Critical section과 중첩되면 안됨</li>
+</ul>
+</li>
+<li><p>L, U, and S form a critical section with respect to the shared variable cnt</p>
+</li>
+<li><p>Instructions in critical sections (wrt some shared variable) should not be interleaved</p>
+</li>
+<li><p>Sets of states where such interleaving occurs form unsafe regions</p>
+<ul>
+<li>같이 interleaving되면 안되는 구간 “critical section”
+<ul>
+<li>한 thread 실행 중 다른 thread가 껴드면 안됨</li>
+<li>unsafe region</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250236-e0999d84-0163-4464-a044-d0bf86676a5d.png" alt="Untitled 7" />
+    <figcaption class="caption">Untitled 7</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>unsafe zone 은 둘레의 state에 접해 있지만 이들을 포함하지는 않는다.</p>
+</li>
+<li><p>Def: A trajectory is safe iff it does not enter any unsafe region</p>
+</li>
+<li><p>Claim: A trajectory is correct (wrt cnt) <span class="math">\iff</span> it is safe</p>
+<ul>
+<li>unsafe region acccess를 막을 수 있는 방법 : synchronization</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="enforcing-mutual-exclusion">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#enforcing-mutual-exclusion">#</doc-anchor-trigger>
+        <span>Enforcing Mutual Exclusion</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Question: How can we guarantee a safe trajectory?</p>
+</li>
+<li><p>Answer: We must synchronize the execution of the threads so that they can never have an unsafe trajectory.</p>
+<ul>
+<li>i.e., need to guarantee mutually exclusive access for each critical section.</li>
+</ul>
+</li>
+<li><p>def : 각각의 thread가 자신의 critical section내의 Instruction을 실행하는 동안에는 exclusively shared variable을 접근하도록 보장하기를 원하는 현상</p>
+</li>
+<li><p>synchronize 됐다 = 상호 배타적으로 access를 guarantee해준다.</p>
+<ul>
+<li>: 여러 process가 경쟁해서 들어가면 하나만 들어갈 수 있도록 설계함</li>
+</ul>
+</li>
+<li><p>모든 safe trajectory는 shared counter를 정확히 갱신한다.</p>
+<ul>
+<li>thread program의 정확한 실행과 전역 data를 공유하는 동시성 프로그램에 대해서도 어떻게든 동기화하여 안전 궤적을 가지도록 해야 한다.</li>
+</ul>
+</li>
+<li><p>Classic solution:</p>
+<ul>
+<li>Semaphores (Edsger Dijkstra) : 비음수 정수 값을 값는 전역 변수로 P, V연산으로만 조작 가능</li>
+</ul>
+</li>
+<li><p>Other approaches (out of our scope)</p>
+<ul>
+<li>Mutex and condition variables (Pthreads)</li>
+<li>Monitors (Java)</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="semaphore">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#semaphore">#</doc-anchor-trigger>
+        <span>Semaphore</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p><strong>non-negative global integer synchronization variable. : int s; (&gt;=0)</strong></p>
+</li>
+<li><p>Manipulated by P and V operations.
+semaphore variable을 바꿀 수 있는 방법 p, s 를 통해 manipulate</p>
+<ul>
+<li>manipulate : int var를 증가, 감소시킴 (+복잡)</li>
+</ul>
+</li>
+<li><p>Binary semaphore vs Counting semaphore</p>
+<ul>
+<li>initialize as 1 (binary) 5, 10</li>
+<li>semaphore의 초기 value는 critical session에 들어갈 수 있는 thread 개수</li>
+<li>critical session에는 딱 하나 thread 밖에 못 들어감</li>
+<li>Counting semaphore는 그 값을 5로 초기화해두었다면 5개 cricial session에 들어갈 수있음</li>
+</ul>
+</li>
+<li><p>critical session에 들어가고 나서 : P를 통해 들어갈지 안들어갈지 보고,</p>
+<ul>
+<li>내가 들어갔다는 이야기 = Semaphore val = 1이고 critical session에서 작업하고 나올 때 누군가가 내가 아직 critical session에서 있을 때 들어오려고 하면 P에서 blocked (semaphore val = 0) -&gt; blocked, suspended</li>
+<li>내가 나올 때 unlock → V fn 호출한다.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="ps">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ps">#</doc-anchor-trigger>
+        <span>P(s)</span>
+    </h3>
+</doc-anchor-target>
+<p>s라는 variable이 0인지 아닌지 봄</p>
+<ol>
+<li><span class="math">**s \neq 0</span> : 0이 아니면 → 1을 빼고 나서 끝난다**
+<ul>
+<li>If s is nonzero, then decrement s by 1 and return immediately.
+<ul>
+<li>Test and decrement operations occur <strong>atomically</strong> (indivisibly)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="math">s=0</span> : <strong>본인이 suspend된다</strong>
+<ul>
+<li><p>If s is zero, then suspend thread until s becomes nonzero
+and the thread is restarted by a V operation.</p>
+<ul>
+<li><p>내가 이 var보고나서 이 함수 안에서 여러 thread중 누군가가 decrement했다는 것
+→ 나는 그 값이 0보다 큰 값이 될 때까지 기다릴 것이다 (suspend, sleep)</p>
+<p>until 0보다 큰 값이 될 때 : var x를 0보다 크게 만든 다음 깨워줄 때까지 기다림 (signal 받을 때까지)</p>
+</li>
+</ul>
+</li>
+<li><p>After restarting, the P operation decrements s and returns control to the caller.</p>
+<p>→ 깨어나게 되면, s라는 variable을 decrement하고 진행됨</p>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>(binary semaphore기억하고 설명) Semaphore가 1로 initialize -&gt; 두 thread가 P/V</p>
+<ul>
+<li>critical session을 앞 뒤로 쌓아서 lock을 가져다 lock을 얻으면 들어가고 얻지 못하면 기다림</li>
+</ul>
+<p>나올 땐 lock을 풀어주는 구조</p>
+<ul>
+<li>이 P라는 것은 semaphore value를 가져다 확인하고, 그 값이 0이 아니라면 decrement</li>
+<li>최초로 1로 되있을 때 들어간다고 하면 decrement하여 0으로 만들고, 그리고 critical session으로 들어감</li>
+<li>만약에 들어가려 했는데 semaphore 값을 봤는데 0이다</li>
+</ul>
+<p>→ blocked 된 상태로 남아있고 그 semaphore에 나는 wait하고 있다며 매달려 있음</p>
+<ul>
+<li>Process state transition diagram에서 보면 run 상태에서 block상태로</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>정리
+<ol>
+<li>semaphore s 를 Decrement한다</li>
+<li><span class="math">s \neq 0</span> - 그 값이 0보다 크면 decrement,</li>
+<li>$s=0$이면 sleep하고 누군가가 깨워줄 때까지 suspend된다.
+= CPU Cycle을 소모하지 않는다.
+→ 즉 0보다 크거나 같은 값을 계속 체크하지 않고 suspended되어 있다가 signal오면 깨어나는 형태</li>
+</ol>
+</li>
+</ol>
+<doc-anchor-target id="vs">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#vs">#</doc-anchor-trigger>
+        <span>V(s):</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>V의 정의 : 기다리고 있는 thread들이 재시작되는 순서를 정의하지 않는다.</p>
+<ul>
+<li>요구하는 유일한 사항은 V가 정확히 한 개의 waiting thread를 restart → 여러 개의 thread가 하나의 Semaphore를 가지고 있을 때 어떤 것이 V의 결과로 재시작되는지는 예측 불가능</li>
+</ul>
+</li>
+<li><p>Increment s by 1 : s라는 variable을 increment해줌 → 그리고 나서 만일 s variable을 기다리고 있던 suspend thread가 있다면 그 중 한명을 깨워주고 → 그 thread가 decrement할수 있게 해줌</p>
+</li>
+<li><p>Increment operation occurs atomically :
+atomic하게 increment시키고 누군가가 s라는 variable을 decrement하지 못해서 pending되어있는 경우 (suspended된 경우), 여러 thread중 누군가 하나를 wake시켜서 decrement할 수 있게끔 한다.</p>
+</li>
+<li><p>정리하면,</p>
+<ul>
+<li><p>S를 increment하고, 이 semaphore value에 기다리고 있던 blocked 된 thread를 깨워줌</p>
+</li>
+<li><p>semaphorevalue s 를 increment</p>
+<p>→ 이 semaphore value의 기다리고 있떤 blocked된 thread를 깨워 줌</p>
+<p>→ 여러 thread가 다같이 깨어남 : thundering herd</p>
+<ul>
+<li>block되어 기다리던 thread를 깨워 줌
+→ 깨어나 ready 상태로 가 scheduler에 의해 행사되어 critical session으로 들어감</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>‘Atomically’</strong></p>
+<ul>
+<li>P,V는 atomically 수행된다 : indivisibly - 쪼개질 수 없는 함수이다.
+= p라는 함수는 실행이 되거나, 안 되거나 둘 중 하나이다.</li>
+<li>variable이 뭔지 test하고 이 variable을 어떤 값으로 setting해줌 (decrement)</li>
+<li>v또한 Atomically increment해주기 때문에 변수를 하나 증가해줌</li>
+</ul>
+</li>
+<li><p>If there are any threads blocked in a P operation waiting for s to become non- zero, then restart exactly one of those threads, which then completes its P operation by decrementing s.</p>
+</li>
+</ul>
+<p>test와 감소 연산은 semaphore s가 0이 아니면 s의 감소가 중단 없이 일어난다는 의미에서 개별적으로 일어남. V에서도 증가연산 개별적. - Semaphore를 중단 없이 load, 증가, 저장하기 때문</p>
+<ul>
+<li><strong>Semaphore invariant: (s &gt;= 0)</strong></li>
+</ul>
+<hr />
+<ul>
+<li><p>(질문) lock을 잡는다는 것이 cpu 제어권을 가진다는 것과 동치 표현인가?</p>
+<p>single cpu에서는 cpu 제어권을 갖는다는 것과 lock</p>
+<p>Lock잡은 다음 그 누구도 cpu 제어권을 가질 수 없다.</p>
+</li>
+<li><p>(질문) t1은 새로운 경쟁에 참여하지 않는가?</p>
+<p>t1은 새로운 경쟁에 참여하지 않는다. 이미 lock을 풀고 남았기 때문에, critical session으로 다시 들어가지 않는다. 화장실 쓰다 나왔는데, 다시 들어가지 않지 않겠느냐</p>
+<p>key를 누구한테 줄거야 : 나 나왔으니까 일어나-&gt; 둘이 일어나서 둘중 하나 성공</p>
+<p>둘중 하나 성공 :ready상태로 둘 다 보내놓고 경쟁하는 상황</p>
+<p>누가 먼저 running할지 모르겠지만 ready한 상태: 하나가 lock잡으면 들어감.</p>
+<p>나는 들어갔다 나왔기 때문에 다시 안들어감</p>
+<ul>
+<li>단, 만일 loop로 짰다고 하면 다시 경쟁에 참여할 것</li>
+</ul>
+<p>lock을 풀고 나왔는데 나도 다시 경쟁할 수 있음</p>
+</li>
+<li><p>(질문) interleaving한다는 개념</p>
+<ul>
+<li>critical session 이라고 이야기할 수 있는 cnt++</li>
+<li>여러 thread가 cnt++를 부르게 되면</li>
+</ul>
+<p>cnt는 load-update-store 명령어로 구성되어 있다.</p>
+<p>Thread 1번이 load update store 수행하고 순차적으로 t2, t3가 수행함</p>
+<ul>
+<li>
+<blockquote>
+<p>interleaving이 일어나지 않음</p>
+</blockquote>
+</li>
+</ul>
+<p>Interleaving이란 : load하기 전에 다른 thread가 load하여 겹치게 되는 경우</p>
+</li>
+<li><p>(질문) t2, t3를 다 깨워주나요?</p>
+<ul>
+<li>pthread : 다 깨워주고, 그 중 한 thread만 lock을 잡아 줌.</li>
+<li>lock을 가져다 새 떼들이 한꺼번에 모이는 problem이라고 이야기함.</li>
+</ul>
+<p>여러 thread 100개가 sleep할 때 동시에 wake해주면 성능이 떨어져서 단계적으로 깨워주기도 함.</p>
+</li>
+<li><p>(질문) 순서 부여 방식으로는 해결이 안되는가?</p>
+<p>순서 부여하기 위해 semaphore를 사용함- 순서 부여 방식이 자동적으로 생기는 것임</p>
+<ul>
+<li>암묵적으로 먼저 들어간애 있으면 자동적으로 그 다음 thread에 대한 순서가 만들어짐</li>
+<li>형평성 있게 경쟁 다 같이 하게 해놓고, 순서가 자동으로 결정 -&gt; ordering이 만들어짐</li>
+<li>
+<blockquote>
+<p>순서가 있다보니 중간 interleaving되는 경우가 안 나옴.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>(질문) lock을 활용해 오직 하나의 thread만 running될 수 있는 상태면</p>
+<p>context switch는 발생하지 않는가요?</p>
+<p>결과적으론 lock을 들고 있는 thread만 실행될텐데 context switch로 인해</p>
+<p>무의미한 overhead가 발생하지 않나 싶어 질문드립니다.</p>
+<p>overhead : tradeoff</p>
+<p>장점 : 화장실 들어갔다가 나올 때 언제 나올지 모르기 때문에 sleep</p>
+<ul>
+<li>뒤에서 기다리는 thread: sleep -&gt; CPU Cycle 소모 x</li>
+</ul>
+<p>cpu 사용 : energy cost - battery 많이 먹음</p>
+<p>그래서 일부러 sleep을 시키는것</p>
+<ul>
+<li>sleep한다음 깨어나려면 overhead : (잠깐 자다가 깨어나면 더 힘들지 않나)</li>
+<li>깨어날 때 context switch일어나는데 block-&gt;ready-&gt;running 상태 과정에서 overhead가 있긴 함</li>
+<li>가정) 화장실 갔는데 2,3명 기다리고 있음</li>
+</ul>
+<p>먼저 들어간 사람이 금방 들어갔다 나올거면 금방 나올거니까 기다리는게 나음</p>
+<p>한참 걸릴거 같으면 기다리는 thread들이 자고 있는게 효율적</p>
+<ul>
+<li>semaphore이 에너지 효율 관점에서는 좋음.</li>
+</ul>
+<p>task의 길이가 무척 짧은 경우에는 sleep으로 가지 않는 mutex lock이 효과적일 수 있음.</p>
+<ul>
+<li>
+<blockquote>
+<p>critical session 크기에 따라 항상 semaphore 쓰는게 좋다곤 할 수 없다.</p>
+</blockquote>
+</li>
+</ul>
+<p>critical session 적당한 크기면 효과적이나, 너무 작을 경우 정말 언제 나올 것인지 polling하면 더 effective할 수 있음</p>
+</li>
+<li><p>(질문) thread들이 충분히 많을 경우 운이 없다면 영원히 lock을 받지 못하는 thread가 생길 수 있는가?</p>
+<ul>
+<li>맞습니다 (starvation문제 : 경쟁을 계속 시키다보니까)</li>
+<li>OS program 자체도 thread</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250237-58a703d1-2b89-4b78-be89-527c47b89a31.png" alt="Untitled 8" />
+    <figcaption class="caption">Untitled 8</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>가정</p>
+<ul>
+<li>critical session에서 t1, t2, t3 경쟁하는 상황에서 thread 하나밖에 들어갈 수 없으므로 lock을 잡아 들어가야 한다. 물론 누가 들어갈지는 모른다 - 3개 중 하나가 lock을 잡게 될 것이다.</li>
+</ul>
+</li>
+<li><p>ex1. Thread1번이 lock을 잡았다면</p>
+<ul>
+<li>critical session에 t1들어가고
+<ul>
+<li>t1은 자기 혼자 독점해서 cnt++같은 load update store같은 것을 혼자 수행함을 보장해줌</li>
+</ul>
+</li>
+<li>t2, t3 는 lock을 잡으려고 p(s) 모두다 blocked된, suspend된 상태 = 자고 있는 상태
+→ thread 2번과 3번은 sleep된 상태</li>
+<li>이후 t1이 나오게 되면 -&gt; unlock (Lock을 풀어준다 : lock s)</li>
+</ul>
+</li>
+<li><p>현재 Thread 2,3번 모두 sleep된 상태 → 2,3중 하나 : 한 녀석을 깨워준다</p>
+<ul>
+<li>방법 :모두다 깨워서 경쟁을 다시 시키거나, (s:-&gt;t2-&gt;t3)</li>
+</ul>
+<p>running 상태 → blocked 상태 → ready상태</p>
+<ul>
+<li>t2, t3가 들어가 있었는데 ready상태로 들어가서 줄 서서 기다린다.
+<ul>
+<li>자기 순서 들어가게 되면 running상태가 되어 깨워 줘서 이 상태로 갈 수 있게 하는 것을 V(s)가 수행해준다. → 그렇게 함으로써 기다리던 녀석 중 하나가 깨어나면 다시 시도해서 complete한다. decrement하게 되면 T2가 들어가게 된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="c-semaphore-operations">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#c-semaphore-operations">#</doc-anchor-trigger>
+        <span>C Semaphore Operations</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Pthreads functions:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#include &lt;semaphore.h&gt; 
+int sem_init(sem_t *s, 0, unsigned int val);} /* s = val */ 
+int sem_wait(sem_t *s); /* P(s) */ 
+int sem_post(sem_t *s); /* V(s) */</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>semaphore integer variable에 1로 초기화</li>
+<li>binary semaphore : cricital session에 1</li>
+<li>atomic 한 operation =  그 명령을 수행하는 한 줄짜리 machine code가 있는가?
+<ul>
+<li>lock primitive :하나씩 제공해줌</li>
+<li>user level에서 사용할 수 있게 pthread에선 sem_wait</li>
+<li>→ 그래서 쪼갤 수 없는 것이다.</li>
+</ul>
+</li>
+</ul>
+<p>sem wait : test and set</p>
+<ul>
+<li>variable s를 test하고 0보다 크고 작은지 확인, 0보다 크면 decrement (test → set)</li>
+<li>이를 하나의 명령어로 만들어놈 / 그 명령어가 cpu architecture마다 다름</li>
+<li>load, store, add 등 : 쪼갤 수 없는 instruction
+<ul>
+<li>Compare, swap : cpu designer 들이 lock primitive</li>
+</ul>
+</li>
+<li>→ pthread에서는 sem_wait 등으로 정의</li>
+</ul>
+</li>
+<li><p>CS : APP wrapper functions :</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#include &quot;csapp.h” 
+void P(sem_t *s); /* Wrapper function for sem_wait */ 
+void V(sem_t *s); /* Wrapper function for sem_post */  20</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+<doc-anchor-target id="badcntc--improper-synchronization-1">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#badcntc--improper-synchronization-1">#</doc-anchor-trigger>
+        <span><code v-pre>badcnt.c</code> : improper synchronization</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>badcnt.c</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* Global shared variable */ 
+volatile long cnt = 0; /* Counter */ 
+
+int main(int argc, char *argv)
+{
+    long niters;
+    pthread_t tid1, tid2;
+    niters = atoi(argv[1]);
+    Pthread_create(&amp;tid1, NULL, thread, &amp;niters);
+    Pthread_create(&amp;tid2, NULL, thread, &amp;niters);
+    Pthread_join(tid1, NULL);
+    Pthread_join(tid2, NULL);
+    / Check result / if (cnt != (2 * niters)) printf(&quot;BOOM! cnt=%ld\n&quot;, cnt);
+    else printf(&quot;OK cnt=%ld\n&quot;, cnt);
+}
+exit(0);
+/* Thread routine */ 
+void *thread(void *vargp)
+{
+    long i, niters = *((long *)vargp);
+    for (i = 0; i &lt; niters; i++)
+        cnt++;
+    return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<p>How can we fix this using semaphores ?</p>
+<doc-anchor-target id="using-semaphores-for-mutual-exclusion">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-semaphores-for-mutual-exclusion">#</doc-anchor-trigger>
+        <span>Using Semaphores for Mutual Exclusion</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><strong>Basic idea:</strong>
+<ul>
+<li>Associate a unique semaphore mutex, initially 1, with each shared variable (or related set of shared variables).</li>
+<li>Surround corresponding critical sections with P(mutex) and V(mutex) operations.</li>
+</ul>
+</li>
+<li>Terminology:
+<ul>
+<li><strong>Binary semaphore</strong>: semaphore whose value is always 0 or 1</li>
+<li><strong>Mutex</strong>: binary semaphore used for mutual exclusion
+<ul>
+<li>P operation: “locking” the mutex</li>
+<li>V operation: “unlocking” or “releasing” the mutex</li>
+<li>“Holding” a mutex: locked and not yet unlocked.</li>
+</ul>
+</li>
+<li><strong>Counting semaphore</strong>: used as a counter for set of available resources.  rsrc 집합에 대한 counter로 이용된 semaphore</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="goodcntc-proper-synchronization">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#goodcntc-proper-synchronization">#</doc-anchor-trigger>
+        <span><code v-pre>goodcnt.c</code>: Proper Synchronization</span>
+    </h3>
+</doc-anchor-target>
+<p>하나만 들어갈 수 있도록</p>
+<ol>
+<li>volatile로 선언</li>
+</ol>
+<ul>
+<li><p>cacheing되지 않도록, memory에 직접 쓸 수 있도록</p>
+</li>
+<li><p>sem_t : unsigned integer</p>
+</li>
+<li><p>c code를 단순히 변환해주는 것만이 아닌</p>
+<ul>
+<li>optimization이 들어가서, code 최적화를 통해 code를 빠르게 하나</li>
+<li>correctness에서 문제가 생길수도 있음</li>
+</ul>
+</li>
+<li><p>Define and initialize a mutex for the shared variable cnt:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">volatile long cnt = 0; /* Counter **/ 
+sem_t mutex; /** Semaphore that protects cnt **/ 
+
+Sem_init(&amp;mutex, 0, 1); /** mutex = 1 */ </code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Volatile 선언 → memory 변수 cnt
+<ul>
+<li>cnt 접근할 때 memory r/w 보장해줌</li>
+</ul>
+</li>
+<li>volatile 선언 안하게 되면 →
+<ul>
+<li>어떤 compiler는 code opt 중 every step memory r/w하는 것이 아닌 Register 값으로 Code optimization해줄 수 가 있음</li>
+<li>correctness에 문제 생길 수 있음 : unexpected 문제를 막기 위해</li>
+</ul>
+</li>
+<li>volatile 같은 것도 선언하여 항상 memomry에서 읽고 쓸 수 있게.
+항상 결과값을 memory에 저장해두고 진행하는 것이 volatile의 역할</li>
+</ul>
+</li>
+<li><p>Surround critical section with P and V:</p>
+<ul>
+<li>thread routine에서 P, V연산으로 shared variable cnt를 둘러싸 renew 보호</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">for (i = 0; i &lt; niters; i++) { 
+	P(&amp;mutex); 
+	cnt++; 
+	V(&amp;mutex); 
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">linux&gt; ./goodcnt 10000 
+OK cnt=20000 
+linux&gt; ./goodcnt 10000 
+OK cnt=20000 
+linux&gt; </code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>Warning: It’s orders of magnitude slower than badcnt.c.</p>
+<ul>
+<li>직렬화되어 있음 : 하나만 들어가고, badcnt 는 마구잡이로 critical session에 들어감</li>
+<li>→ 무작위적으로 들어가고 지금은 순서를 정해 들어감</li>
+<li>lock을 건다 =  순서대로 들어간다, 순서가 부여</li>
+<li>동시에 실행할 수 있으면 빠름 - 동시에 실행하되 critical session 부분은 순서에 따라 들어가야 함
+<ul>
+<li>= 직렬화 됨 -&gt; 느림</li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+<li><p>ques</p>
+<p>(질문) cnt가 다른 thread에 의해 수정됨을 막기 위해 p(&amp;mutex)로 다른 thread를 sleep시키고</p>
+<p>cnt++수행 후 깨워주는 것이라고 이해했는데 맞나요?</p>
+<ul>
+<li>
+<blockquote>
+<p>맞다. 막아주고 lock을 가지고 들어갔기 때문에 다른 thread는 들어오지 못함.</p>
+</blockquote>
+</li>
+</ul>
+<p>(질문) semaphore 방식을 이용해도 cnt변수는 volatile로 선언해야만 하나요?</p>
+<ul>
+<li>
+<blockquote>
+<p>cnt++했는데 cache에 있을 수 있으니까 cacheing방지용으로 volatile 선언</p>
+</blockquote>
+</li>
+</ul>
+<p>(질문) semaphore 변수도 여러 thread가 접근가능한데, 여기서 문제 생기지 않는 이유는</p>
+<p>P, V 함수들이 atomic하기 때문인가?</p>
+<ul>
+<li>맞다. 한 thread가 decrement increment하는 일 자체가 atomic하기 때문에 맞다.</li>
+</ul>
+<p>(질문) thread 여러 개를 깨울 때 이 순서가 암묵적으로 정해져 있나? 완전 랜덤인가?</p>
+<p>다 깨워놓고 그 중 경쟁에서 이긴 thread가 그 다음순서가 됨</p>
+<p>(질문) 코드상 volatile로 선언안하면 memory가 아니라 반드시 cache에서 가져와서 문제가 되는것인가?</p>
+<ul>
+<li>맞다. volatile로 안 선언하면 memory가 아니라 cache에서 가져와서 문제생김</li>
+</ul>
+<p>(질문) semaphore t가 volatile로 선언되는가?</p>
+<ul>
+<li>체크해보겠다.</li>
+</ul>
+<p>(질문) for loop내 p가 block되고 나면 cnt++지나서 v까지 도달할 수 있나?</p>
+<p>v에서 이 thread를 깨워줘야 하는데, v까지 도달할 수 없지 않는가?</p>
+<ul>
+<li>p부터 resume해서 진행됨</li>
+<li>P, V에 의해 만들어진 forbidden region : multiple thread가 포함된 critical section의 Instruction을 항상 실행할 수 없게 해 준다 = semaphore 연산은 critcal section으로 mutual exclusive approach를 보장해준다.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="why-mutexes-work">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#why-mutexes-work">#</doc-anchor-trigger>
+        <span>Why Mutexes Work</span>
+    </h3>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250239-383ffa6b-39f3-4cd1-9f60-307498a454da.png" alt="Untitled 9" />
+    <figcaption class="caption">Untitled 9</figcaption>
+</figure>
+</p>
+<p>s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지</p>
+<p>P, V의 조합이 forbidden region이라 불리는 state set을 생성한다 : s&lt;0</p>
+<ul>
+<li>semaphore invariant으로 인해 <strong>forbidden region state를 포함하는 궤적이 존재하지 않음</strong> + forbidden region이 <strong>완전히 unsafe region을 감싸므로</strong> 모든 가능한 궤적들은 위험 영역의 모든 부분을 지날 수 없다.
+<ul>
+<li><strong>→ 모든 trajectory는 safe + Runtime instruction order와 무관하게 정확하게 Counter 증가</strong></li>
+</ul>
+</li>
+<li>Provide mutually exclusive access to shared variable by surrounding critical section with P and V operations on semaphore s (initially set to 1)</li>
+<li>Semaphore invariant creates a <strong>forbidden region</strong> that encloses unsafe region and that cannot be entered by any trajectory.
+<ul>
+<li>forbidden region으로도 들어가지 않는다.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="summary">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#summary">#</doc-anchor-trigger>
+        <span>Summary</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>Programmers need a clear model of how variables are shared by threads.</li>
+<li>Variables shared by multiple threads must be protected to ensure mutually exclusive access.</li>
+<li>Semaphores are a fundamental mechanism for enforcing mutual exclusion.</li>
+</ul>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../tags/cs/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>cs</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../tags/os/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>os</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../tags/system-programming/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>system-programming</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../6-sp-concurrent/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">[SP] 6. Concurrent Programming</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../8-sync-adv/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">[SP] 8. Synchronization: Advanced</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "[SP] 7. Synchronization: Basics", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>

@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714381736190">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>[SP] 8. Synchronization: Advanced</title>
+    <meta name="title" content="[SP] 8. Synchronization: Advanced">
+    <meta name="description" content="non-negative global integer synchronization variable. : int s; (>=0)" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/8-sync-adv/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/8-sync-adv/">
+    <meta property="og:title" content="[SP] 8. Synchronization: Advanced">
+    <meta property="og:description" content="non-negative global integer synchronization variable. : int s; (>=0)">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/183250324-b7a1912d-22cb-4c90-b27a-6628d41e893c.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/8-sync-adv/">
+    <meta property="twitter:title" content="[SP] 8. Synchronization: Advanced">
+    <meta property="twitter:description" content="non-negative global integer synchronization variable. : int s; (>=0)">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/183250324-b7a1912d-22cb-4c90-b27a-6628d41e893c.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../favicon.ico" rel="icon" />
+    <link href="../resources/css/retype.css?v=2.3.0.714381736190" rel="stylesheet" />
+
+    <script type="text/javascript" src="../resources/js/config.js?v=2.3.0.714381736190" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.3.0.714381736190" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.3.0.714381736190" defer></script>
+    <link href="../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="8-synchronization-advanced" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#8-synchronization-advanced">#</doc-anchor-trigger>
+        <span>8. Synchronization: Advanced</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../categories/system-programming/">system-programming</a></div>
+</div>
+
+<doc-anchor-target id="review">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#review">#</doc-anchor-trigger>
+        <span>Review</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="semaphore">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#semaphore">#</doc-anchor-trigger>
+        <span>Semaphore</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p><strong>non-negative global integer synchronization variable. : int s; (&gt;=0)</strong></p>
+</li>
+<li><p>Manipulated by P and V operations.
+semaphore variable을 바꿀 수 있는 방법 p, s 를 통해 manipulate</p>
+<ul>
+<li>manipulate : int var를 증가, 감소시킴 (+복잡)</li>
+</ul>
+</li>
+<li><p>Binary semaphore vs Counting semaphore</p>
+<ul>
+<li>initialize as 1 (binary) 5, 10</li>
+<li>semaphore의 초기 value는 critical session에 들어갈 수 있는 thread 개수</li>
+<li>critical session에는 딱 하나 thread 밖에 못 들어감</li>
+<li>Counting semaphore는 그 값을 5로 초기화해두었다면 5개 cricial session에 들어갈 수있음</li>
+</ul>
+</li>
+<li><p>critical session에 들어가고 나서 : P를 통해 들어갈지 안들어갈지 보고,</p>
+<ul>
+<li>내가 들어갔다는 이야기 = Semaphore val = 1이고 critical session에서 작업하고 나올 때 누군가가 내가 아직 critical session에서 있을 때 들어오려고 하면 P에서 blocked (semaphore val = 0) -&gt; blocked, suspended</li>
+<li>내가 나올 때 unlock → V fn 호출한다.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="ps">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ps">#</doc-anchor-trigger>
+        <span>P(s)</span>
+    </h3>
+</doc-anchor-target>
+<p>s라는 variable이 0인지 아닌지 봄</p>
+<ol>
+<li><span class="math">**s \neq 0</span> : 0이 아니면 → 1을 빼고 나서 끝난다**
+<ul>
+<li>If s is nonzero, then decrement s by 1 and return immediately.
+<ul>
+<li>Test and decrement operations occur <strong>atomically</strong> (indivisibly)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="math">s=0</span> : <strong>본인이 suspend된다</strong>
+<ul>
+<li><p>If s is zero, then suspend thread until s becomes nonzero
+and the thread is restarted by a V operation.</p>
+<ul>
+<li><p>내가 이 var보고나서 이 함수 안에서 여러 thread중 누군가가 decrement했다는 것
+→ 나는 그 값이 0보다 큰 값이 될 때까지 기다릴 것이다 (suspend, sleep)</p>
+<p>until 0보다 큰 값이 될 때 : var x를 0보다 크게 만든 다음 깨워줄 때까지 기다림 (signal 받을 때까지)</p>
+</li>
+</ul>
+</li>
+<li><p>After restarting, the P operation decrements s and returns control to the caller.</p>
+<p>→ 깨어나게 되면, s라는 variable을 decrement하고 진행됨</p>
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>(binary semaphore기억하고 설명) Semaphore가 1로 initialize -&gt; 두 thread가 P/V</p>
+<ul>
+<li>critical session을 앞 뒤로 쌓아서 lock을 가져다 lock을 얻으면 들어가고 얻지 못하면 기다림</li>
+</ul>
+<p>나올 땐 lock을 풀어주는 구조</p>
+<ul>
+<li>이 P라는 것은 semaphore value를 가져다 확인하고, 그 값이 0이 아니라면 decrement</li>
+<li>최초로 1로 되있을 때 들어간다고 하면 decrement하여 0으로 만들고, 그리고 critical session으로 들어감</li>
+<li>만약에 들어가려 했는데 semaphore 값을 봤는데 0이다</li>
+</ul>
+<p>→ blocked 된 상태로 남아있고 그 semaphore에 나는 wait하고 있다며 매달려 있음</p>
+<ul>
+<li>Process state transition diagram에서 보면 run 상태에서 block상태로</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>정리
+<ol>
+<li>semaphore s 를 Decrement한다</li>
+<li><span class="math">s \neq 0</span> - 그 값이 0보다 크면 decrement,</li>
+<li>$s=0$이면 sleep하고 누군가가 깨워줄 때까지 suspend된다.
+= CPU Cycle을 소모하지 않는다.
+→ 즉 0보다 크거나 같은 값을 계속 체크하지 않고 suspended되어 있다가 signal오면 깨어나는 형태</li>
+</ol>
+</li>
+</ol>
+<doc-anchor-target id="vs">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#vs">#</doc-anchor-trigger>
+        <span>V(s):</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>V의 정의 : 기다리고 있는 thread들이 재시작되는 순서를 정의하지 않는다.</p>
+<ul>
+<li>요구하는 유일한 사항은 V가 정확히 한 개의 waiting thread를 restart → 여러 개의 thread가 하나의 Semaphore를 가지고 있을 때 어떤 것이 V의 결과로 재시작되는지는 예측 불가능</li>
+</ul>
+</li>
+<li><p>Increment s by 1 : s라는 variable을 increment해줌 → 그리고 나서 만일 s variable을 기다리고 있던 suspend thread가 있다면 그 중 한명을 깨워주고 → 그 thread가 decrement할수 있게 해줌</p>
+</li>
+<li><p>Increment operation occurs atomically :
+atomic하게 increment시키고 누군가가 s라는 variable을 decrement하지 못해서 pending되어있는 경우 (suspended된 경우), 여러 thread중 누군가 하나를 wake시켜서 decrement할 수 있게끔 한다.</p>
+</li>
+<li><p>정리하면,</p>
+<ul>
+<li><p>S를 increment하고, 이 semaphore value에 기다리고 있던 blocked 된 thread를 깨워줌</p>
+</li>
+<li><p>semaphorevalue s 를 increment</p>
+<p>→ 이 semaphore value의 기다리고 있떤 blocked된 thread를 깨워 줌</p>
+<p>→ 여러 thread가 다같이 깨어남 : thundering herd</p>
+<ul>
+<li>block되어 기다리던 thread를 깨워 줌
+→ 깨어나 ready 상태로 가 scheduler에 의해 행사되어 critical session으로 들어감</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>‘Atomically’</strong></p>
+<ul>
+<li>P,V는 atomically 수행된다 : indivisibly - 쪼개질 수 없는 함수이다.
+= p라는 함수는 실행이 되거나, 안 되거나 둘 중 하나이다.</li>
+<li>variable이 뭔지 test하고 이 variable을 어떤 값으로 setting해줌 (decrement)</li>
+<li>v또한 Atomically increment해주기 때문에 변수를 하나 증가해줌</li>
+</ul>
+</li>
+<li><p>If there are any threads blocked in a P operation waiting for s to become non- zero, then restart exactly one of those threads, which then completes its P operation by decrementing s.</p>
+</li>
+</ul>
+<p>test와 감소 연산은 semaphore s가 0이 아니면 s의 감소가 중단 없이 일어난다는 의미에서 개별적으로 일어남. V에서도 증가연산 개별적. - Semaphore를 중단 없이 load, 증가, 저장하기 때문</p>
+<ul>
+<li><strong>Semaphore invariant: (s &gt;= 0)</strong></li>
+</ul>
+<doc-anchor-target id="using-semaphores-to-protect-shared-resources-via-mutual-exclusion">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-semaphores-to-protect-shared-resources-via-mutual-exclusion">#</doc-anchor-trigger>
+        <span>Using semaphores to protect shared resources via mutual exclusion</span>
+    </h2>
+</doc-anchor-target>
+<p>여러 thread가 해당 코드를 구동한다고 생각했을 때</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">mutex = 1 
+
+P(mutex) 
+cnt++ // Critical Session
+V(mutex)</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Mutex 값은 초기에 1 → 0으로 바꾸어 주고
+thread 1번 : block → waiting(blocked, suspended 상태)</li>
+<li>critical session에서 나와 mutex 에서 thread 2번이 기다리고 있고 이를 깨워준다.</li>
+<li>다시한번 mutex를 잡으려고 한다 →  잡혀 critical session으로 들어간다</li>
+<li>Basic idea:
+<ul>
+<li>Associate a unique semaphore mutex, initially 1, with each shared variable (or related set of shared variables)</li>
+<li>Surround each access to the shared variable(s) with P(mutex) and V(mutex) operations</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="using-semaphores-to-coordinate-access-to-shared-resources">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-semaphores-to-coordinate-access-to-shared-resources">#</doc-anchor-trigger>
+        <span>Using Semaphores to Coordinate Access to Shared Resources</span>
+    </h1>
+</doc-anchor-target>
+<p>shared resources = data structure coordinate tech : semaphore</p>
+<ul>
+<li>Basic idea: Thread uses a semaphore operation to notify another thread that some condition has become true
+<ul>
+<li>Use counting semaphores to keep track of resource state and to notify other threads</li>
+<li>Use mutex to protect access to resource</li>
+</ul>
+</li>
+<li>Two classic examples:
+<ul>
+<li>The Producer-Consumer Problem</li>
+<li>The Readers-Writers Problem</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="producer-consumer-problem">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#producer-consumer-problem">#</doc-anchor-trigger>
+        <span>Producer-Consumer Problem</span>
+    </h1>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250324-b7a1912d-22cb-4c90-b27a-6628d41e893c.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ol>
+<li>producer-consumer problem :</li>
+</ol>
+<ul>
+<li><p>생산자와 소비자 (여러 명의 생산자) (여러 명의 소비자) - front와 rear가 만나면 empty buffer</p>
+</li>
+<li><p>classical한, 상당히 잘 사용되는 concurrency example.</p>
+</li>
+<li><p>생산자 : 무언가 item을 생산하고 있음 (Insert)</p>
+<ul>
+<li>item store @ Shared buffer (multiple slot)</li>
+<li>생산자는 slot에다가 앞에서부터 하나씩 차곡차곡 쌓는다.</li>
+</ul>
+<p>내가 어디까지 쌓았는지 확인하기 위해 circulared buffer : front/rear</p>
+<ul>
+<li>front는 아직 소비하지 않았기 때문에 맨 처음</li>
+</ul>
+</li>
+<li><p>소비자. 무언가 item을 소비하고 있음 (Remove)</p>
+<ul>
+<li>remove하게 되면 front 뒤로 이동</li>
+</ul>
+</li>
+</ul>
+<p>(상황 가정) 3명의 consumer가 있고 buffer가 empty되어 있다고 하자.</p>
+<ul>
+<li><p>소비자는 살 수 있는 item이 있는가?</p>
+<p>-&gt; empty buffer이기 때문에 없다.</p>
+<ul>
+<li>소비자는 item이 없으면 sleep하면 된다 (blocked되면 된다)</li>
+</ul>
+</li>
+<li><p>생산자 입장에서는 소비자가 소비 못하는 바람에 buffer가 없어 더 생산 불가능</p>
+<p>-&gt; 생산자는 그 때 sleep을 한다.</p>
+</li>
+</ul>
+<p>이런 특성을 가진 구조 semaphore :</p>
+<ul>
+<li>내가 cs에 들어갈 수 있을 때</li>
+</ul>
+<doc-anchor-target id="concepts">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#concepts">#</doc-anchor-trigger>
+        <span>Concepts</span>
+    </h2>
+</doc-anchor-target>
+<p>big data system에서 backend에서 개발할 수 있는 중요한 technique</p>
+<ul>
+<li>Common synchronization pattern:
+<ul>
+<li>Producer waits for empty slot, inserts item in buffer, and notifies consumer
+<ul>
+<li>producer는 empty slot을 block된 상태로 기다림 (buffer 에 item insert위해서)</li>
+<li>producer는 buffer에 item을 넣고, semaphore 기다리는 consumer가 있다면 알려줌</li>
+<li>empty slot이 있다 → 생산자는 생산하면 되고</li>
+</ul>
+</li>
+<li>Consumer waits for item, removes it from buffer, and notifies producer
+<ul>
+<li>consumer : item 있는지 보고 있으면 buffer에서 remove하고 producer에게 알려서 새로 생산해도 된다고 하여 produce</li>
+<li>item이 buffer에 있다면 -&gt; 소비하면 되고</li>
+<li>item이 없다면 -&gt; producer가 produce할때까지 sleep</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>semaphore의 또 다른 용도 : mutual exclusion 제공 + shared resource로의 접근 scheduling</p>
+<ul>
+<li>thread : semaphore 연산을 이용하여 program state의 조건이 true가 됐음을 다른 Thread에 알림</li>
+<li>Examples
+<ul>
+<li>Multimedia processing:
+<ul>
+<li>Producer creates MPEG video frames, consumer renders them
+<ul>
+<li>coding algorithm에 따라 나오는 data</li>
+<li>Consumer thread가 렌더링</li>
+<li>분배 : mpeg frame 생성 / consumer 렌더링 (분배)</li>
+</ul>
+</li>
+<li>buffer :개별 Frame에서 data와 관련한 encoding, decoding 시간 차이로 발생한 video stream noise 제거 → producer에 slot 저장소 제공, consumer에게 encoded frame 저장소 제공</li>
+</ul>
+</li>
+<li>Event-driven graphical user interfaces
+<ul>
+<li>Producer detects mouse clicks, mouse movements, and keyboard hits and inserts corresponding events in buffer 5 Shared buffer</li>
+<li>Consumer retrieves events from buffer and paints the display</li>
+<li></li>
+<li>마우스, 키보드 클릭 등 event를 받아 event buffer에 마구 집어넣는 producer
+-&gt; 화면에다 display해줌</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="producer-consumer-on-an-n-element-buffer">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#producer-consumer-on-an-n-element-buffer">#</doc-anchor-trigger>
+        <span>Producer-Consumer on an n-element Buffer</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>item을 추가하고 제거하는 것이 shared variable의 renew와 관련되어 있으므로 buffer에 접근할 때 mutex 보장 + buffer로의 접근 scheduling</p>
+<ul>
+<li>if full buffer → producer 는 slot available 할 때까지 대기</li>
+<li>if empty buffer → consumer 는 item available 할 때까지 대기</li>
+</ul>
+</li>
+<li><p>Requires a mutex and two counting semaphores (slot/item):</p>
+<ul>
+<li>mutex: enforces mutually exclusive access to the the buffer
+<ul>
+<li>mutex : binary semaphore :0, 1
+<ul>
+<li>mutually exclusive 오로지 하나 thread만 들어가도록</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>slot, items : counting semaphore
+<ul>
+<li>초기화 값에 따라 그만큼 들어갈 수 있음.</li>
+</ul>
+</li>
+<li>slots: counts the available slots in the buffer
+<ul>
+<li>slot : n개의 buffer라고 할 때
+<ul>
+<li>ex. n=8이라고 하면 slot semaphore는 8로 초기화되어 8개까지는 동시에 CS에 들어가서 produce할 수 있다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>items: counts the available items in the buffer
+<ul>
+<li><p>item : buffer 안 item의 개수</p>
+<ul>
+<li><p>처음에는 empty였으니까 0으로 initialize</p>
+</li>
+<li><p>sbuf라는 shared buffer</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Implemented using a shared buffer package called <span class="math">S_{BUF}</span>.</p>
+<ul>
+<li>limited buffer 조작</li>
+<li>mutex semaphore : mutex buffer approach 제공</li>
+<li>semaphore slot, item : counting semaphore - empty slot의 수, available item 수 확인</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="sbuf-package">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#sbuf-package">#</doc-anchor-trigger>
+        <span><code v-pre>sbuf</code> Package</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="declarations">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#declarations">#</doc-anchor-trigger>
+        <span>Declarations</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#include &quot;csapp.h” 
+typedef struct
+{
+    int *buf;
+    int n;
+    int front;
+    int rear;
+    sem_t mutex;
+    sem_t slots;
+    sem_t items;
+} sbuf_t; /* Buffer array */ /* Maximum number of slots */ /* buf[(front+1)%n] is first item */ /* buf[rear%n] is last item */ /* Protects accesses to buf */ /* Counts available slots */ /* Counts available items */
+void sbuf_init(sbuf_t *sp, int n);
+void sbuf_deinit(sbuf_t *sp);
+void sbuf_insert(sbuf_t *sp, int item);
+int sbuf_remove(sbuf_t *sp);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="implementation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementation">#</doc-anchor-trigger>
+        <span>Implementation</span>
+    </h3>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* Create an empty, bounded, shared FIFO buffer with n slots */
+void sbuf_init(sbuf_t *sp, int n)
+{
+    sp-&gt;buf = Calloc(n, sizeof(int));
+    sp-&gt;n = n;/* Buffer holds max of n items */
+    sp-&gt;front = sp-&gt;rear = 0;/* Empty buffer iff front == rear */ 
+    Sem_init(&amp;sp-&gt;mutex, 0, 1);/* Binary semaphore for locking */
+    Sem_init(&amp;sp-&gt;slots, 0, n);/* Initially, buf has n empty slots */ 
+    Sem_init(&amp;sp-&gt;items, 0, 0);/* Initially, buf has 0 items */                                                                                                                                                                       /* Clean up buffer sp */    
+}
+
+// Clean up buffer sup
+void sbuf_deinit(sbuf_t * sp) { 
+		Free(sp-&gt;buf); 
+}   </code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p><code v-pre>sbuf_init</code></p>
+<ul>
+<li>buffer를 위한 Heap memory 할당</li>
+<li>Front - rear가 empty heap을 가리키도록 설정</li>
+<li>초기값을 semaphore에 할당</li>
+<li>세 함수로 호출하기 전 한 번 호출</li>
+<li>0으로 초기화 = 0개만큼 들어간다는 이야기는 incorrect
+<ul>
+<li>Item은 있으면 thread에 넣는다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code v-pre>sbuf_deinit</code></p>
+<ul>
+<li>사용 마친 후 buffer space 반환</li>
+</ul>
+</li>
+<li><p>! (Semaphore 초기값) <span class="math">\neq</span> (critical session에 들어가는 thread의 개수)</p>
+</li>
+<li><p>binary semaphore : 1개 thread만</p>
+</li>
+<li><p>counting semaphore : Buffer에 있는 element 개수만큼 생산할수 있기 때문에</p>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* Insert item onto the rear of shared buffer sp */
+void sbuf_insert(sbuf_t *sp, int item)
+{
+    P(&amp;sp-&gt;slots);  /* Wait for available slot */
+    P(&amp;sp-&gt;mutex);  /* Lock the buffer */
+    sp-&gt;buf[(++sp-&gt;rear) % (sp-&gt;n)] = item; /* Insert the item */
+    V(&amp;sp-&gt;mutex); /* Unlock the buffer */ 
+    V(&amp;sp-&gt;items); /* Announce available item */
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Insert할 때 (thread들어갈 때) slot의 개수를 본다</li>
+<li><code v-pre>sbuf_insert</code>
+<ul>
+<li>available slot을 기다리고, Mutex lock</li>
+<li>Item insertion 후에 Mutex unlock한 후 new itemd이 available함을 알림</li>
+</ul>
+</li>
+<li>ex. N=8
+<ul>
+<li><p>→ decrement : n=7</p>
+<ul>
+<li>언제 block되냐 : 값이 0이 되어있을 때</li>
+</ul>
+</li>
+<li><p>8개가 다 들어가 있다 = slot 이 없다</p>
+</li>
+<li><p>Insert 여러가지 thread가 떠서 insert를 하고 있기 때문에, 그 안에는 slot이 0이 될 때까지 mutex로 잡아 둠 = item을 잡아둘 때 rear ptr를 여러 thread가 움직이면 안됨</p>
+</li>
+<li><p>producer도 하나씩 순차적으로 수행해야 함,</p>
+<ul>
+<li>직렬화를 위해 mutex lock을 가지고 하나만 실행할 수 있도록.</li>
+</ul>
+</li>
+<li><p>item이 생산되었으니 increment → 1 또는 2, 3, 4</p>
+</li>
+<li><p>consumer: consume하기 전에 item에 해당하는 semaphore value를 봄</p>
+<ul>
+<li>0이 아니면 decrement하여 들어감</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* Remove and return the first item from buffer sp */
+ int sbuf_remove(sbuf_t *sp)
+{
+    int item;
+    P(&amp;sp-&gt;items);/* Wait for available item */
+    P(&amp;sp-&gt;mutex);/* Lock the buffer */
+    item = sp-&gt;buf[(++sp-&gt;front) % (sp-&gt;n)]; /* Remove the item */
+    V(&amp;sp-&gt;mutex);/* Unlock the buffer */ 
+    V(&amp;sp-&gt;slots);/* Announce available slot */
+}
+return item; </code></pre>
+</doc-codeblock></div>
+<p>Writer (producer) - reader (consumer)</p>
+<p>P(slot) / P(mutex) / CS / V(mutex) / V(item) → item을 통해 reader(consumer)중 p(item)</p>
+<ul>
+<li><code v-pre>sbuf_remove</code>
+<ul>
+<li>item 기다린 후 mutex lock</li>
+<li>item : buffer front에서 remove</li>
+<li>mutex unlock후 available slot임을 알림</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250312-a3e83419-91fb-4b91-88ef-9d3df821125d.png" alt="Untitled 1" />
+    <figcaption class="caption">Untitled 1</figcaption>
+</figure>
+</p>
+<ul>
+<li>remove
+<ul>
+<li><p>item을 가지고 들어가고, 나올 때는 slot을 봄</p>
+</li>
+<li><p>item이 0이 아니면 consume은 여러개가 같이 할 수 있음</p>
+</li>
+<li><p>front에서 item을 하나 씩 빼내면 ptr을 옮기고 직렬화가 됨</p>
+<p>→ mutex semaphore를 잡아 한 녀석 한 번에 처리할 수 있도록</p>
+<p>→ item을 뺐으니 slot이 생산</p>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="readers-writers-problem">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#readers-writers-problem">#</doc-anchor-trigger>
+        <span>Readers-Writers Problem</span>
+    </h1>
+</doc-anchor-target>
+<Readers- Writers Problem>
+<ul>
+<li>database = record 관리 : index를 tree로 관리
+<ul>
+<li>자료구조를 update할수도 reference할수도 있음</li>
+<li>database안에서는 이 문제를 해결하기 위한 solution으로 semaphore / mutex</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="concepts-1">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#concepts-1">#</doc-anchor-trigger>
+        <span>Concepts</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Generalization of the mutual exclusion problem</li>
+<li>concurrent thread의 set : shared object에 approach
+<ul>
+<li>ex. main memory data structure, disk database</li>
+</ul>
+</li>
+<li>Problem statement:
+<ul>
+<li>Reader threads only read the object / Writer threads modify the object
+<ul>
+<li>Writers must have exclusive access to the object - but reader는 이 object를 무수히 다른 reader과 공유해야 할 수 있음</li>
+</ul>
+</li>
+<li>Unlimited number of readers can access the object</li>
+<li>어떤 object가 있는데 이 object가 read/write 가능함
+<ul>
+<li>누군가 read하고 있으면 해당 object를 write하면 안 되고 기다림
+<ul>
+<li>“누군가가 읽고 있다” - 쓰려는 애들은 기다려야 하지만 읽고자 하는 obj는 읽게 해줌</li>
+<li>“누군가가 쓰고 있다”</li>
+</ul>
+</li>
+<li>누군가 write하고 있으면 read는 대기중</li>
+<li>누군가 read : 다른 read가능 (누군가가 수정하고 있는 상태가 아니기 때문에)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Occurs frequently in real systems, e.g.,
+<ul>
+<li>Online airline reservation system
+<ul>
+<li>고객 : 좌석 할당 시스템을 동시에 조사 가능</li>
+<li>예약 : Database에 배타적 접근</li>
+</ul>
+</li>
+<li>Multithreaded caching Web proxy
+<ul>
+<li>무제한 Thread : 기존 page를 공유 page cache에서 가져올 수 있음</li>
+<li>cache에 새 페이지를 쓰는 모든 Thread에 배타적 접근</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="variants-of-readers-writers">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#variants-of-readers-writers">#</doc-anchor-trigger>
+        <span>Variants of Readers-Writers</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>First readers-writers problem (favors readers)</p>
+<ul>
+<li>No reader should be kept waiting unless a writer has already been granted permission to use the object
+어떠한 reader도 writer가 이미 이 객체르 이용하도록 허가하지 않았으면 계속 기다려서는 안된다</li>
+<li>A reader that arrives after a waiting writer gets priority over the writer
+reader는 단지 writer가 기다리고 있다고 해서 기다려서는 안 된다.</li>
+</ul>
+<p><strong>Favor for reader</strong></p>
+<ul>
+<li><p>어떤 object가 있다고 할 때 R1이 읽고 있다고 가정하자</p>
+<p>→ W1이 오면, W1는 wait하여야 한다 : 누군가가 read하고 있기 때문에</p>
+<p>→ R2가 오면 : R2는 wait없이 읽어도 된다. (Read에 favor)</p>
+</li>
+<li><p>w1을 bypass하고 r2가 읽을 수 있도록 하고, r3…가 와도 읽을 수 있도록 한다.</p>
+<p>→ write가 먼저 왔음에도 불구하고 현재 read를 하고 있으면 동일한 object에 대한 read는 계속 가능케 해 준다.</p>
+<ul>
+<li>w1 : starvation (Ri는 계속해서 read 가능하고, 그 중 절대 들어가지 못함)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Second readers-writers problem (favors writers)</p>
+<ul>
+<li>Once a writer is ready to write, it performs its write as soon as possible
+writer를 쓸 준비가 되었다면 가능한 한 빨리 write작업 수행할 것 요구</li>
+<li>A reader that arrives after a writer must wait, even if the writer is also waiting
+비록 writer가 기다리고 있을지라도 기다려야 함.</li>
+</ul>
+<p><strong>Favor for Writer</strong></p>
+<ul>
+<li><p>Write가 왔다 = write를 빠르게 처리해야 하기 때문에 뒤에 있는 녀석들을 처리하지 않는다</p>
+<p>→ writer가 끝난 다음에 reader를 처리한다 (최대한 빠르게 writer를 처리한다)</p>
+<p>→ write에게 favor준다 하더라도 reader가 들어가서 안나오면 starvation</p>
+</li>
+<li><p>Or, writer가 들어가서 나오지 않으면 reader는 starvation</p>
+</li>
+<li><p>사실 누구에게나 starvation이 발생하고 해결할 수 있는 solution이 아님</p>
+</li>
+</ul>
+</li>
+<li><p>Starvation (where a thread waits indefinitely) is possible in both cases</p>
+<ul>
+<li>영원히 정지하고 진행하지 못하게 되는 thread</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="solution-to-first-readers-writers-problem">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#solution-to-first-readers-writers-problem">#</doc-anchor-trigger>
+        <span>Solution to First Readers-Writers Problem</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>starvation에 대한 solution을 제공하지 않음</p>
+</li>
+<li><p>reader가 어느정도 이상이 되면 막는 coding : reader가 무한대로 들어오면 안 됨</p>
+<ul>
+<li>Starvation을 막기 위한 코드는 어떻게 구현하여야 하는가</li>
+<li>→ 일정 threshold 까지 들어가게 되면 writer가 한 번 정도 들어가도록 수정</li>
+</ul>
+</li>
+<li><p><code v-pre>**w semaphore</code> : shared obj 접근하는 critical section으로의 접근 제어**</p>
+</li>
+<li><p><code v-pre>**mutex semaphore</code> : shared readcnt var로의 접근 보호**</p>
+<ul>
+<li>현재 critical section에 있는 reader수 count</li>
+</ul>
+</li>
+<li><p><code v-pre>**writer</code> : w mutex critical section에 들어갈 때마다 lock, 떠나면 unlock**</p>
+<ul>
+<li>→ critical section에 최대 하나의 Writer만 존재하도록 보장</li>
+</ul>
+</li>
+<li><p><strong>critical section에 처음으로 들어가는 reader만 w lock, critical section을 가장 마지막으로 떠나는 reader만이 이를 unlock하여 풀어준다 :</strong> 한 개의 reader가 W mutex를 가지고 있는 한 무수한 Reader가 critical section에 아무 방해 없이 들어갈 수 있음을 의미</p>
+<ul>
+<li>w가 1인 것은 : Reader, writer 둘 중 하나만 들어가야 함
+대신 reader가 들어가면 여러개가 들어갈 수 있음</li>
+<li>if condition이 없으면 Reader 들어가거나 writer들어가거나
+→ 약간 extension하면 reader에게 favor
+→ reader가 계속 들어갈 수 있어서, 조건문을 통해 read가 한 번 들어가 있다고 하면 그제서야 semaphore가지고 들어가고 Readcnt가 1보다 크게 되면 semaphore를 하지 않음</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">int readcnt;    /* Initially = 0 */
+sem_t mutex, w; /* Initially = 1 */
+void reader(void)
+{
+    while (1)
+    {
+        P(&amp;mutex);
+        readcnt++;
+        if (readcnt == 1) /* First in */
+            P(&amp;w);
+        V(&amp;mutex); /* Critical section */ /* Reading happens */
+        P(&amp;mutex);
+        readcnt--;
+        if (readcnt == 0) /* Last out */
+            V(&amp;w);
+        V(&amp;mutex);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void writer(void)
+{
+    while (1)
+    {
+        P(&amp;w); /* Critical section */ /* Writing happens */
+        V(&amp;w);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>(질문) packet loss 발생 시 문제?</p>
+<p>-&gt; 문제 안됨</p>
+<ul>
+<li>socket 통신 : socket열어서 send receive information
+API 밑단 TCP IP Kernel에서 보정해줌</li>
+<li>packet loss 가 생기더라도 tcp쓴다고 하면 kernel의 tcp ip stack에서 protocol이 다 보정함
+-&gt; 잃어버리게 되면 다시 data 달라고 하여 줌</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="prethread">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#prethread">#</doc-anchor-trigger>
+        <span>Prethread</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="putting-it-all-together-prethreaded-concurrent-server">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#putting-it-all-together-prethreaded-concurrent-server">#</doc-anchor-trigger>
+        <span>Putting It All Together: Prethreaded Concurrent Server</span>
+    </h3>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250315-13a3f9e6-847a-4996-b479-593c0c3690a8.png" alt="Untitled 2" />
+    <figcaption class="caption">Untitled 2</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>server : main thread - multiple work thread</p>
+<ul>
+<li>main thread : 반복해서 client accept request → 연결 식별자를 buffer에 저장</li>
+<li>work thread : 반복해서 remove descriptors, client service 이후 descriptor 기다림</li>
+</ul>
+</li>
+<li><p><strong>Thread pooling : thread를 만들어 놓고, 필요한 thread만 wake하여 사용하는 방식</strong></p>
+<ul>
+<li>Thread를 미리 만들어 놓고 안 쓰는 thread는 sleep</li>
+<li>지금까지는 connfd나오면 thread spawn한 다음 해당 thread가 connfd와 client끼리 connect하여 channel 로 echoing - 여기서는 Pool of worker thread</li>
+</ul>
+</li>
+<li><p>Shared buffer : master thread가 accept할 때마다 connect descriptor</p>
+<ul>
+<li>master thread가 accept할 때마다 connected descriptor를 하나 씩 채워줌 (P=S model)</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="prethreaded-concurrent-server-configuration">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#prethreaded-concurrent-server-configuration">#</doc-anchor-trigger>
+        <span>Prethreaded Concurrent Server Configuration</span>
+    </h3>
+</doc-anchor-target>
+<p>Prethreaded concurrent echo server : sbuf로 구현</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">//echoservert_pre.c  
+sbuf_t sbuf; 
+/* Shared buffer of connected descriptors */
+
+int main(int argc, char **argv)
+{
+    int i, listenfd, connfd;
+    socklen_t clientlen;
+    struct sockaddr_storage clientaddr;
+    pthread_t tid;
+    listenfd = Open_listenfd(argv[1]);
+    sbuf_init(&amp;sbuf, SBUFSIZE);
+
+    for (i = 0; i &lt; NTHREADS; i++) /* Create worker threads */
+        Pthread_create(&amp;tid, NULL, thread, NULL);
+
+    while (1)
+    {
+        clientlen = sizeof(struct sockaddr_storage);
+        connfd = Accept(listenfd, (SA *)&amp;clientaddr, &amp;clientlen);
+        sbuf_insert(&amp;sbuf, connfd); /* Insert connfd in buffer */
+    }
+}
+//*tuning parameter
+// Concurrency degree - work load, application에 따라 다름
+
+// 너무 작게 -&gt; 일할 thread가 없음 : memory에 있는 자료구조 소비
+// Lockdb, Level db : buffering 한 다음 flush / - flush할
+
+// worker thread를 만들어 놓고, connfd만 return하고
+// sbuf package를 통해 insertion하여 buffer에 집어넣음</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void *thread(void vargp)
+{
+    Pthread_detach(pthread_self());
+    while (1)
+    {
+        int connfd = sbuf_remove(&amp;sbuf);
+        / Remove connfd from buf / echo_cnt(connfd);
+        / Service client * / Close(connfd);
+    }
+}
+echoservert_pre.c  16</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>thread란 함수는 뒤에서 main thread가 joinable할 필요 없으면 Pthread_Detach</li>
+<li>자기는 joinable하고 While에 들어가 Buffer produce에서 Connfd를 하나씩 뺀다</li>
+<li>worker thread 하나씩 빼고 connfd를 주되, buffer에다 집어넣었으니까 하나씩 빼내어감</li>
+<li>sbuf remove, sbuf insert : 앞의 함수를 사용하면 됨</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">// echo_cnt.c  
+
+static int byte_cnt; /* Byte counter */
+static sem_t mutex;  /* and the mutex that protects it */
+static void init_echo_cnt(void)
+{
+    Sem_init(&amp;mutex, 0, 1);
+    byte_cnt = 0;
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Sem_init(&amp;mutex, 0, 1);
+<ul>
+<li>mutex 초기화 하고 byte count - 총 echoing한 byte count 보내는 코드</li>
+<li>여러 thread가 echoing했으니까 내가 echo할 때마다 몇 byte echoing했는지 shared variable로 global하게 잡아서 byte count에 increment</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void echo_cnt(int connfd)
+{
+    int n;
+    char buf[MAXLINE];
+    rio_t rio;
+    static pthread_once_t once = PTHREAD_ONCE_INIT; // static global
+    Pthread_once(&amp;once, init_echo_cnt); //thread 여러개 뜨더라도 초기화 1회
+    Rio_readinitb(&amp;rio, connfd); //connfd에서 buffer을 받아옴
+    while ((n = Rio_readlineb(&amp;rio, buf, MAXLINE)) != 0)
+		//bytecount : 여러 개 동시 Update하면 안 되니까 Mutex lock 잡아 둠
+    {
+        P(&amp;mutex);
+        byte_cnt += n;
+        printf(&quot;thread %d received %d (%d total) bytes on fd %d\n&quot;, (int)pthread_self(), n, byte_cnt, connfd);
+        V(&amp;mutex);
+        Rio_writen(connfd, buf, n);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="crucial-concept-thread-safety">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#crucial-concept-thread-safety">#</doc-anchor-trigger>
+        <span>Crucial concept: Thread Safety</span>
+    </h1>
+</doc-anchor-target>
+<p>thread safe하다의 의미가 무엇인지 개념적으로 배워보자.</p>
+<ul>
+<li><p>모든 함수가 safe하지도 unsafe하지도 않다.</p>
+</li>
+<li><p>Functions called from a thread must be <strong>thread-safe</strong></p>
+<p><strong>: A function is thread-safe</strong>  thread에서 호출된 함수가 thread safe하다
+****<span class="math">\iff</span>
+<strong>it will always produce correct results when called repeatedly from multiple concurrent threads</strong> 여러 thread가 concurrently 호출하고, 각 thread들이 excution flow에 따라 항상 correct한 결과가 나온다.</p>
+</li>
+<li><p>correct한 것이란: 추상적 개념으로 thread safe :
+내가 expect한 결과대로 나오면 safe한데
+expected 결과로 나오지 않는다면 unsafe</p>
+<ul>
+<li>expected : thread-safe : Thread가 그 함수를 호출했을 때 thread-safe하다.</li>
+</ul>
+</li>
+<li><p>Classes of thread-unsafe functions:</p>
+<ul>
+<li>Class 1: Functions that do not protect shared variables
+→lock variable</li>
+<li>Class 2: Functions that keep state across multiple invocations
+→ rand var</li>
+<li>Class 3: Functions that return a pointer to a static variable
+→ thread safe하게 바꾸는 기술 알려줄 것 : lock n copy</li>
+<li>Class 4: Functions that call thread-unsafe functions</li>
+</ul>
+</li>
+<li><p>대부분 여러 system call은 thread safe하게 구현되어 있으니 thread unsafe한 함수가 이렇게 존재한다.</p>
+<ul>
+<li>thread safe하게 바꾼 것이 rand_r, ctime_r이라던지 thread safe하게 만들었다.</li>
+</ul>
+</li>
+<li><p>그러나 unix programming하면은 thread-unsafe한 함수를 쓴다.</p>
+<ul>
+<li>옛날 multiprocessing하려고 할 때 single processor, serialized된 상태였다.</li>
+<li>옛날의 함수를 지금 사용하려고 하니까 오류</li>
+</ul>
+</li>
+<li><p>요즘과 같은 multi processor 시대에서는 thread unsafe하네 라는 문제들이 왕왕 생기게 되어 thread safe된 함수를 쓰라고 되어 있다.</p>
+</li>
+<li><p>system call을 변환한 것들이 있는데 개발자로서 ctime과 비슷한 함수를 만들었다고 하면 thread safe한지, thread unsafe한지 확인</p>
+<ul>
+<li>thread unsafe하면 multi threading할 때 문제가 생길 수 있음을 인지하기 시작했으므로</li>
+</ul>
+</li>
+</ul>
+<p>ex. 격투기에 쓰이는 여러 가지 기술처럼 프로그래밍도 처음부터 짜는 것이 아닌, 자신만의 기술을 가지고 있어야 함 - 간헐적으로 발생하여 debug하기가 굉장히 어렵다.</p>
+<ul>
+<li>Thread-Safe하지 않는 function의 특징 네가지(case를 이해하면 쓰기 어렵지 않음)
+<ul>
+<li>기억해야 하는 이유 : 정보처리기사 자격증에서 외워 쓰는 것이 아니라, 실제 프로그래밍할 때 이런 규칙들이 있다 보니 신경써야 한다. 개발자가 할 부분이고, 그럼에도 실수하기 때문이다. bug free한 프로그램</li>
+</ul>
+</li>
+</ul>
+<p>(질문) 내가 한 번 호출하면 1이고 100이고 200이고. seed값이 변하지 않으면 정해진 sequence에 대하여 random : seed값이 바뀌지 않으면 항상 같은 결과값이 나온다. rnadom한 pattern이 동일하게 나옴을 보장할 수 없다. → seed를 누군가가 바꿀수도 있는데 이를 못 바꾸게 해 달라는 것.
+동일하게 생성되어야 하는데 그렇지 않은 경우</p>
+<doc-anchor-target id="thread-unsafe-functions-class-1">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-unsafe-functions-class-1">#</doc-anchor-trigger>
+        <span>Thread-Unsafe Functions (Class 1)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Failing to protect shared variables</p>
+<ul>
+<li>Fix: Use P and V semaphore operations</li>
+<li>Example: goodcnt.c</li>
+<li>Issue: Synchronization operations will slow down code</li>
+</ul>
+</li>
+<li><p>goodcnt : shared var이 있는데 count하는 var이고 초기화가 0으로 되어 있고 0으로 된 이 thread var을 increment</p>
+<ul>
+<li>한 번씩 increment했으니까 2가 되어야 함 (expected, thread safe)</li>
+<li>count increment하는 함수가 thread safe하지 않다 (thread unsafe)
+<ul>
+<li>binary semaphore하여 mutex lock을 걸어 앞 뒤를 보호했다.</li>
+<li>thread safe한 함수를 만들게 되면, 여러 thread가 increment할 때 cnt++하는 과정이</li>
+</ul>
+</li>
+<li>세 가지 instruction으로 구성되어 있는데 중간에 interleaving되는 경우가 나오지 않아 thread safe하여 항상 2가 나온다.
+<ul>
+<li>mutex lock 사용: thread safe</li>
+<li>mutex lock 비사용: thread unsafe</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="thread-unsafe-functions-class-2">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-unsafe-functions-class-2">#</doc-anchor-trigger>
+        <span>Thread-Unsafe Functions (Class 2)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Relying on persistent state across multiple function invocations</p>
+</li>
+<li><p>Example: Random number generator that relies on static state</p>
+<ul>
+<li>
+<dl>
+<dt>ex. Pseudo random integer generator</dt>
+<dd>매번 random함수를 호출하는데 state를 계속 keep해야 한다.</dd>
+</dl>
+</li>
+<li>Global var을 적게 사용하고 Call by ref로 들어가면 다른 thread에 unavailable
+<ul>
+<li>→ 없애는 방법을 서라. global variable을 최대한 피해라.</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">static unsigned int next = 1; 
+/* rand: return pseudo-random integer on 0..32767 */
+int rand(void)
+{
+    next = next1103515245 + 12345;
+    return (unsigned int)(next / 65536) % 32768;
+} /* srand: set seed for rand() */
+void srand(unsigned int seed) 
+{ 
+		next = seed; 
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>next를 static하게 공유하게 해 놓는다. → deterministic하게 시작한 처음의 seed가 1이니까 순서대로 나온다. (매 invocation마다 state를 keep하는 형태로 구현)</li>
+<li>seed를 바꾸는 srand함수
+<ul>
+<li>문제가 되는 이유: 임의의 번호 1 3 5 7 9 생산한다고 가정</li>
+<li>seed가 1부터 시작, 2씩 더하여 리턴하는 함수 srand</li>
+<li>내가 state를 가지고 있으니 다음, 다음 다음, 넘어간다. thread가 중간에 들어가 next를 갑자기 3에서 3000으로 바꾸어 버리면 Rand를 다시 시행한다 하더라도 그 sequence를 다시 생성할 수 없다.</li>
+<li>correct하지 않다. / thread safe하지 않다.</li>
+</ul>
+</li>
+<li>왜 이렇게 프로그램을 짰는가? 모든 것을 thread safe하게 만들면 되는게 아닌가? 의문</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="thread-safe-random-number-generator">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-safe-random-number-generator">#</doc-anchor-trigger>
+        <span>Thread-Safe Random Number Generator</span>
+    </h2>
+</doc-anchor-target>
+<p>Rand에서는 parameter로 void로 넘어갔지만</p>
+<ul>
+<li><p>nextp pointer : 내 seed와 공유되는 변수가 아닌 것</p>
+<ul>
+<li>Rand_r caller에서 선언한 local var의 ptr를 넘겨주기 때문에 자신 seed가지고 increment</li>
+</ul>
+<p>→ thread unsafe한 것을 safe하게 바꾸어 줄 수 있다.</p>
+<p>→ arg 의 일부로 state를 넘겨라</p>
+</li>
+<li><p>Pass state as part of argument / arg 의 일부로 state를 넘겨라</p>
+</li>
+<li><p>and, thereby, eliminate global state</p>
+<p>next는 thread들이 모두 호출할 수 있다.</p>
+<p>여러 thread들이 각자 공유하고 있기 때문에 생기는 문제</p>
+<p>→ global state가 발생하지 않도록 만드는 방법</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* rand_r - return pseudo-random integer on 0..32767 */
+int rand_r(int *nextp)
+{
+    *nextp = *nextp * 1103515245 + 12345;
+    return (unsigned int)(*nextp / 65536) % 32768;
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>Consequence:programmer using rand_r must maintain seed</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="thread-unsafe-functions-class-3">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-unsafe-functions-class-3">#</doc-anchor-trigger>
+        <span>Thread-Unsafe Functions (Class 3)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Returning a pointer to a static variable</li>
+<li>Fix 1. Rewrite function so caller passes address of variable to store result
+<ul>
+<li>Requires changes in caller and callee</li>
+</ul>
+</li>
+<li>Fix 2. Lock-and-copy
+lock을 잡고 copy해라
+<ul>
+<li>Requires simple changes in caller (and none in callee)</li>
+<li>However, caller must free memory.</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* lock-and-copy version */ 
+char *ctime_ts(const time_t *timep, char *privatep)
+{
+    char *sharedp;
+    P(&amp;mutex);
+    sharedp = ctime(timep);
+    strcpy(privatep, sharedp);
+    V(&amp;mutex);
+    return privatep;
+}</code></pre>
+</doc-codeblock></div>
+<p>lock and copy</p>
+<ul>
+<li><p><code v-pre>ctime :</code> 현재의 시간을 가져다 return해주는 function (from time_t struct)</p>
+<ul>
+<li><p>global variable로 되어 있는데 이를 읽어 오는 것 (by system call)</p>
+</li>
+<li><p>ctime을 수행하고 읽어오는 사이에 우연치 않게 interrupt 걸려 switch된다면</p>
+<p>→ 내가 호출한 시점이 아닌 다음 시점에 ctime으로 내용이 바뀔 수 있다.
+나는 모르고 interrupted 된 시간으로 return받을 수 있다.</p>
+</li>
+</ul>
+</li>
+<li><p>(ctime 자체가 기지고 있는 문제) 시간이 흘르며 s1→e1 도중 s2→e2에서 time이 들어간다.</p>
+<ul>
+<li>함수 자체가 문제 있음 → lock : breakable하지 않게, atomic하게 잡아 중간에 누군가가 interleaving하여 들어오지 않게 함.</li>
+<li>lock을 잡고 return되면 copy하여 줌 : lock을 잡았기 때문에 이를 풀어야지 들어갈 수 있음</li>
+</ul>
+</li>
+<li><p><strong>private으로 받되, caller의 ptr로 받는다면 자기 것으로 받는다</strong></p>
+</li>
+<li><p><strong>ptr를 받은 후 strcpy하는데 caller의 변수 stack에 있는 var의 address를 넘겨주니까
+이를 dereference하며 lock and copy를 수행함</strong></p>
+<ul>
+<li>fix1 : ctime을 다 뜯어 고칠수 있다</li>
+<li>fix2 : ctime을 그대로 쓰되 mutex lock : ctime_ts를 부르는 caller가 있으니가, 해당 caller는 call by reference를 그대로 받을 수 있다.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="thread-unsafe-functions-class-4">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-unsafe-functions-class-4">#</doc-anchor-trigger>
+        <span>Thread-Unsafe Functions (Class 4)</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Calling thread-unsafe functions
+<ul>
+<li>Calling one thread-unsafe function makes the entire function that calls it thread-unsafe</li>
+<li>Fix: Modify the function so it calls only thread-safe functions</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="reentrant-functions">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#reentrant-functions">#</doc-anchor-trigger>
+        <span>Reentrant Functions</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Def: A function is <strong>reentrant</strong>
+<span class="math">\iff</span> it accesses no shared variables when called by multiple threads.</li>
+</ul>
+<p>지금 봤던 것은 : function들은 unsafe하냐, safe하냐로 나누어짐</p>
+<ul>
+<li>thread safe 중 어떤 것들은 reentrant :
+<ul>
+<li>thread가 호출했을 때 shared variable을 Thread가 같이 접근하지만 safe하지 않을 때 safe하게 만들기: 피해나가는 방법.</li>
+<li>그 shared variable이 없는 것</li>
+</ul>
+</li>
+</ul>
+<p>&lt;책에서 없는 내용&gt;</p>
+<ul>
+<li>safe, not reentrant, safe, reentrant</li>
+<li>unsafe를 safe하게는 만들어주는 능력은 필요하다.
+<ul>
+<li>(unsafe, reentrant)는 큰 의미는 없다.</li>
+</ul>
+</li>
+<li>Important subset of thread-safe functions
+<ul>
+<li>Require no synchronization operations</li>
+<li>Only way to make a Class 2 function thread-safe is to make it reetnrant (e.g., <code v-pre>rand_r</code> )</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250316-0f134bb2-ca01-4228-ad38-1abd3d737315.png" alt="Untitled 3" />
+    <figcaption class="caption">Untitled 3</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="thread-safe-library-functions">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#thread-safe-library-functions">#</doc-anchor-trigger>
+        <span>Thread-Safe Library Functions</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>All functions in the Standard C Library (at the back of your K&amp;R text) are thread-safe</p>
+<ul>
+<li>Examples: malloc, free, printf, scanf
+<ul>
+<li>printf는 thread-safe하긴 하다 (여러 thread 동시접근시) / but not async-signal-safe
+→ NOT reentrant</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Most Unix system calls are thread-safe, with a few exceptions:</p>
+<p><img src="https://user-images.githubusercontent.com/46957634/183250318-a34be27e-3842-4309-adc7-6ab9e81439e3.png" alt="Untitled 4" /></p>
+</li>
+</ul>
+<doc-anchor-target id="one-worry-races">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#one-worry-races">#</doc-anchor-trigger>
+        <span>One worry: Races</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>A <strong>race</strong> occurs when correctness of the program depends on one thread reaching point x before another thread reaches point y</li>
+</ul>
+<p>thread라는 fn 실행하여 call by reference로 해서 들어와서, I는 main thread의 local variable -&gt; 주소값을 넘김</p>
+<p>→ 새로 생성된 thread는 그 주소값을 myid라는 local variable을 stack에 copy하고 print해줌</p>
+<ul>
+<li>If) n=2→ iteration은 2번돈다.</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">// race.c 
+/* A threaded program with a race */
+int main()
+{
+    pthread_t tid[N];
+    int i; //N threads are sharing i
+    for (i = 0; i &lt; N; i++)
+        Pthread_create(&amp;tid[i], NULL, thread, &amp;i);
+    for (i = 0; i &lt; N; i++)
+        Pthread_join(tid[i], NULL);
+    exit(0);
+}
+/* Thread routine */ 
+
+void *thread(void *vargp)
+{
+    int myid = *((int *)vargp);
+    printf(&quot;Hello from thread %d\n&quot;, myid);
+    return NULL;
+}
+</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="race-illustration">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#race-illustration">#</doc-anchor-trigger>
+        <span>Race Illustration</span>
+    </h2>
+</doc-anchor-target>
+<p>I라는 것을 dereference하여 print하려고 프로그램을 작성했는데 myid가 1이 나올수도 있다</p>
+<p>→ myid가 0인줄 알고 실행했는데 i=1로 증가시키면 그 주소값을 보고 있기 때문에 0이 아닌 1이 print된다</p>
+<ul>
+<li><strong>이런 상황이 존재하면 thread간 race가 있다.</strong></li>
+</ul>
+<p>잘못된 상황이 발생하면</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">for (i = 0; i &lt; N; i++)
+    Pthread_create(&amp;tid[i], NULL, thread, &amp;i);</code></pre>
+</doc-codeblock></div>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250319-99d76e09-01ff-4944-848a-6dad42c01f18.png" alt="Untitled 5" />
+    <figcaption class="caption">Untitled 5</figcaption>
+</figure>
+</p>
+<ul>
+<li>between increment of <code v-pre>i</code> in main thread - dereference of <code v-pre>vargp</code> in peer thread
+<ul>
+<li>If dereference happens while i = 0, then OK</li>
+<li>Otherwise, peer thread gets wrong id value</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="could-this-race-really-occur">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#could-this-race-really-occur">#</doc-anchor-trigger>
+        <span>Could this race really occur?</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Race Test
+<ul>
+<li>If no race, then each thread would get different value of i</li>
+<li>Set of saved values would consist of one copy each of 0 through 99</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">int i;
+for (i = 0; i &lt; 100; i++){
+    Pthread_create(&amp;tid, NULL, thread, &amp;i);
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void *thread(void *vargp)
+{
+    Pthread_detach(pthread_self());
+    int i = *((int *)vargp);
+    save_value(i);
+    return NULL;
+}
+race.c</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="experimental-results">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#experimental-results">#</doc-anchor-trigger>
+        <span>Experimental Results</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250320-4b7005b0-6a29-4ad3-a113-80b38c61ec5a.png" alt="Untitled 6" />
+    <figcaption class="caption">Untitled 6</figcaption>
+</figure>
+</p>
+<p>thread for iteration하여 100번 실행 → ideally, 0~99번까지 원래는 한 번씩 찍히는 게 맞다.</p>
+<p>그러나 race가 있기 때문에</p>
+<ul>
+<li>single cpu laptop에서 구동시켰더니
+<ul>
+<li>1, 8, 16, 42가 두 번 찍힌다 = 한 번도 찍히지 않은 것들이 생긴다</li>
+</ul>
+</li>
+<li>cpu에 hyper threading까지 되어 virtual cpu 8개 까지 수행됨 (3)
+<ul>
+<li>안찍히는 게 너무 많다.</li>
+<li>single cpu에서 multi cpu server로 시켰더니 cpu 개수가 많이자게 되면,control</li>
+<li>multicore cpu.arcitecture을 설계하게 되면 나중에</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="race-elimination">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#race-elimination">#</doc-anchor-trigger>
+        <span>Race Elimination</span>
+    </h2>
+</doc-anchor-target>
+<p>Avoid unintended sharing of s tate</p>
+<ul>
+<li>원래는 main 함수에다가 heap variable을 잡아 두고 thread를 가져다 각각의 ptr를 넘겨준다</li>
+<li>각각에 대해서, heap variable을 보고 print하기 때문에 항상 한 번씩만 찍히게 된다.</li>
+<li>i를 가지고 넘기게 되면 iteration이 빨리 돌아올 수 있기 때문에</li>
+<li>heap var : 각 thread가 각자 들어가기 때문에 문제 해결 가능.</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">/* Threaded program without the race */ 
+int main()
+{
+    pthread_t tid[N];
+    int i, *ptr;
+    for (i = 0; i &lt; N; i++)
+    {
+        ptr = Malloc(sizeof(int));
+        ptr = i;
+        Pthread_create(&amp;tid[i], NULL, thread, ptr);
+    }
+    for (i = 0; i &lt; N; i++)
+        Pthread_join(tid[i], NULL);
+    exit(0);
+}
+
+/* Thread routine */ 
+void *thread(void *vargp)
+{
+    int myid = *((int *)vargp);
+    Free(vargp);
+    printf(&quot;Hello from thread %d\n&quot;, myid);
+    return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="another-worry-deadlock">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#another-worry-deadlock">#</doc-anchor-trigger>
+        <span>Another worry: Deadlock</span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>Def: A process is <strong>deadlocked</strong> <span class="math">\iff</span></p>
+<p>it is waiting for a condition that will never be true</p>
+<ul>
+<li>서로서로 기다리는 상태에서 전진하지 못하고 hanging하는 상태</li>
+</ul>
+</li>
+<li><p>Typical Scenario</p>
+<ul>
+<li>Processes 1 and 2 needs two resources (A and B) to proceed / thread 1, 2번이 있는데
+Process 1 acquires A, waits for B  / t1은 a라는 자원을 가진 후 b라는 자원을 가져야 진행할 수 있다.
+Process 2 acquires B, waits for A  / t2은 b라는 자원을 가진 후 a라는 자원을 가져야 진행할 수 있다. 공교롭게도 a,b를 각각 잡은 상태에서 t1은 b를 기다리고 t2는 a를 기다린다.</li>
+<li>Both will wait forever!
+<ul>
+<li>둘다 rsrc를 획득하려고 하는데 서로의 rsrc를 기다리고 있는 이런 상태라고 보면 된다.</li>
+<li>두 thread가 hanging하여 진행하지 못함.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="deadlocking-with-semaphores">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#deadlocking-with-semaphores">#</doc-anchor-trigger>
+        <span>Deadlocking With Semaphores</span>
+    </h2>
+</doc-anchor-target>
+<p>&lt;concurrent programming 기술 중 하나&gt;</p>
+<ul>
+<li>mutex한거 같은데 왜 hanging하고 있지 할 때 solution</li>
+<li>Deadlock 해결 → 같은 ordering을 주게 되면 deadlock을 해결할 수 있음
+<ul>
+<li>t1 : a -&gt; b / t2 : b -&gt; a 에서 a-&gt;b</li>
+<li>같은 순서로 획득할 수 있게 하면 deadlock을 회피할 수 있다</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">int main()
+{
+    pthread_t tid[2];
+    Sem_init(&amp;mutex[0], 0, 1); /* mutex[0] = 1 */
+    Sem_init(&amp;mutex[1], 0, 1); /* mutex[1] = 1 */
+    Pthread_create(&amp;tid[0], NULL, count, (void)0);
+    Pthread_create(&amp;tid[1], NULL, count, (void *)1);
+    Pthread_join(tid[0], NULL);
+    Pthread_join(tid[1], NULL);
+    printf(&quot;cnt=%d\n&quot;, cnt);
+    exit(0);
+}
+
+void *count(void *vargp)
+{
+    int i;
+    int id = (int)vargp;
+    for (i = 0; i &lt; NITERS; i++)
+    {
+        P(&amp;mutex[id]);
+        P(&amp;mutex[1 - id]);
+        cnt++;
+        V(&amp;mutex[id]);
+        V(&amp;mutex[1 - id]);
+    }
+    return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">Tid[0] : 
+P(s0);
+P(s1);
+cnt++;
+V(s0);
+V(s1);</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">Tid[1] :
+P(s1);
+P(s0);
+cnt++;
+V(s1);
+V(s0);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="deadlock-visualized-in-progress-graph">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#deadlock-visualized-in-progress-graph">#</doc-anchor-trigger>
+        <span>Deadlock Visualized in Progress Graph</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250322-2c6a2b50-971b-41e8-8e97-8d339ffbf73c.png" alt="Untitled 7" />
+    <figcaption class="caption">Untitled 7</figcaption>
+</figure>
+</p>
+<ul>
+<li>Locking introduces the potential for <strong>deadlock:</strong> waiting for a condition that will never be true</li>
+<li>Any trajectory that enters the <strong>deadlock region</strong> will eventually reach the <strong>deadlock state</strong>, waiting for either s0 or s1 to become nonzero
+<ul>
+<li>deadlock region : overlap되는 구간을 반드시 지나야 함</li>
+</ul>
+</li>
+<li>Other trajectories luck out and skirt the deadlock region</li>
+<li>Unfortunate fact: deadlock is often nondeterministic (race)</li>
+</ul>
+<doc-anchor-target id="avoiding-deadlock-acquire-shared-resources-in-same-order">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#avoiding-deadlock-acquire-shared-resources-in-same-order">#</doc-anchor-trigger>
+        <span>Avoiding Deadlock Acquire shared resources in same order</span>
+    </h2>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">int main()
+{
+    pthread_t tid[2];
+    Sem_init(&amp;mutex[0], 0, 1); /* mutex[0] = 1 */
+    Sem_init(&amp;mutex[1], 0, 1); /* mutex[1] = 1 */
+    Pthread_create(&amp;tid[0], NULL, count, (void *)0);
+    Pthread_create(&amp;tid[1], NULL, count, (void *)1);
+    Pthread_join(tid[0], NULL);
+    Pthread_join(tid[1], NULL);
+    printf(&quot;cnt=%d\n&quot;, cnt);
+    exit(0);
+}
+void *count(void *vargp)
+{
+    int i;
+    int id = (int)vargp;
+    for (i = 0; i &lt; NITERS; i++)
+    {
+        P(&amp;mutex[0]);
+        P(&amp;mutex[1]);
+        cnt++;
+        V(&amp;mutex[id]);
+        V(&amp;mutex[1 - id]);
+    }
+    return NULL;
+}</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">Tid[0] : 
+P(s0);
+P(s1);
+cnt++;
+V(s0);
+V(s1);</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">Tid[1] :
+P(s0);
+P(s1);
+cnt++;
+V(s1);
+V(s0);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="avoided-deadlock-in-progress-graph">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#avoided-deadlock-in-progress-graph">#</doc-anchor-trigger>
+        <span>Avoided Deadlock in Progress Graph</span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250323-9f34241d-2f7d-4939-a304-f0aa3f780060.png" alt="Untitled 8" />
+    <figcaption class="caption">Untitled 8</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>No way for trajectory to get stuck</p>
+</li>
+<li><p>Processes acquire locks in same order</p>
+</li>
+<li><p>Order in which locks released immaterial</p>
+</li>
+<li><p>순서를 바꾸어 수행하게 되면 → forbid region이 변화함</p>
+</li>
+<li><p>overlap되는 부분을 들어가지 않으면 됨.</p>
+</li>
+<li><p>(여담) 김영재 교수님석사 시절,</p>
+<ul>
+<li><p>thread가 여러개 돌아가는데 서로 msg 주고 받는 프로그램 → 정말 간헐적으로 생김</p>
+</li>
+<li><p>내가 짠 sw위에 benchmark를 돌리는데, 어떤 complexity로 돌리느냐에 따라서 정말 잘 돌아가거나 천번에 한번 안 돌아가거나 등 코드가 복잡해지다 보니 나도 모르게 실수하기도 한다 (deadlock 등)</p>
+<ul>
+<li>하다가 그냥 멈춘다 : 내가 benchmark 1시간 돌리다가</li>
+<li>죽지도 않고 그대로 멈춰 있어서 debug하기가 너무 힘들었다.</li>
+</ul>
+</li>
+<li><p>마구 달려들기 보단 thread safe-unsafe</p>
+<ul>
+<li>Race가 발생할 수 있으니까 조심해야 하고</li>
+<li>deadlock은 항상 회피해야 하는데 발생할 수 있으므로 차량용 급발진 등 example이 나온다.
+<ul>
+<li>요즘 자동차들도 sw로 구현 :sw bug가 언제든지 나타날수 있다</li>
+<li>critical software들은 정말 조심해서 test도 많이 하고 bug fix도 잘 해야한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>project 2 : Thread pooling을 해 보았다는 것 자체로도 자부심을 가져도 괜찮다</p>
+<p>그 개념을 알고있다는 것 자체로도 cs core에 도달해 있다.</p>
+<p>어렵긴 하다.</p>
+</li>
+</ul>
+</li>
+</ul>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../tags/cs/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>cs</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../tags/os/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>os</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../tags/system-programming/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>system-programming</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../7-sync-basic/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">[SP] 7. Synchronization: Basics</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../9-thread-lv-parallelism/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">[SP] 9. Thread-​Level Parallelism</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "[SP] 8. Synchronization: Advanced", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>

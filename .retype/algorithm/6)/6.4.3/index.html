@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714578505308">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>6.4.3. Shortest-Paths Problems</title>
+    <meta name="title" content="6.4.3. Shortest-Paths Problems">
+    <meta name="description" content="dijstra@datascience" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/algorithm/6)/6.4.3/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/algorithm/6)/6.4.3/">
+    <meta property="og:title" content="6.4.3. Shortest-Paths Problems">
+    <meta property="og:description" content="dijstra@datascience">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/algorithm/6)/6.4.3/">
+    <meta property="twitter:title" content="6.4.3. Shortest-Paths Problems">
+    <meta property="twitter:description" content="dijstra@datascience">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../../../favicon.ico" rel="icon" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.714578505308" rel="stylesheet" />
+
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714578505308" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714578505308" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.714578505308" defer></script>
+    <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../../../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../../../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../../../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../../../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="643-shortest-paths-problems" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#643-shortest-paths-problems">#</doc-anchor-trigger>
+        <span>6.4.3. Shortest-Paths Problems</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../../categories/alg/">alg</a></div>
+</div>
+
+<ul>
+<li><p><a href="https://datascience.lc/2019/10/26/shortest-path-dijkstra-algorithm/">dijstra@datascience</a></p>
+</li>
+<li><p>Single-source shortest-paths problem</p>
+<ul>
+<li>Dijkstra’s algorithm
+<ul>
+<li>Only nonnegative-weight edges are present.</li>
+</ul>
+</li>
+<li>Bellman-Ford algorithm
+<ul>
+<li>Negative-weight edges may be present, but there are no negative-weight cycles.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Single-destination shortest-paths problem</p>
+</li>
+<li><p>Singe-pair shortest-path problem</p>
+</li>
+<li><p>All-pairs shortest-paths problem</p>
+<ul>
+<li><strong>Floyd-Warshall algorithm</strong>
+<ul>
+<li>Negative-weight edges may be present, but there are no negative-weight cycles.</li>
+</ul>
+</li>
+<li>Johnson’s algorithm for sparse graphs
+<ul>
+<li>Negative-weight edges may be present, but there are no negative-weight cycles.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>The optimal-substructure property of shortest paths</strong></p>
+<ul>
+<li><strong>Subpaths of shortest paths are shortest paths!</strong></li>
+</ul>
+</li>
+</ul>
+<img width="281" alt="image" src="https://user-images.githubusercontent.com/46957634/183235850-9b891dad-17d3-47d8-b2c4-f408c8b8af9a.png">
+<doc-anchor-target id="single-source-shortest-path">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#single-source-shortest-path">#</doc-anchor-trigger>
+        <span>Single-Source Shortest Path</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Problem</p>
+<ul>
+<li>Given <strong>a weighted directed graph</strong> <span class="math">G = (V, E)</span> with a weighting function <span class="math">w(e) (w(e) ≥ 0</span> for the edges in <span class="math">G</span>), and a source vertex <span class="math">v_0</span>, find a shortest path from <span class="math">v_0</span> to each of the remaining vertices of <span class="math">G</span>.</li>
+</ul>
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/46957634/183235899-feab84fa-eed4-40b2-ab97-0e6c0e177b1e.png">
+</li>
+<li><p>Note</p>
+<ul>
+<li><p>The case of an undirected graph can be handled by simply replacing each undirected edge <span class="math">e = (u, v)</span> of length <span class="math">w(e)</span> by two directed edges <span class="math">(u, v)</span> and <span class="math">(v, u)</span>, each of the same length.</p>
+</li>
+<li><p>Only the case of a directed graph whose weights are positive (or nonnegative) is handled by the Dijkstra’s algorithm. For a graph that allows a negative weight, the Bellman-Ford algorithm is one to be used.</p>
+</li>
+<li><p>Before learning the single-source shortest path algorithm that builds some tree, recall how the breadth first search tries to build a BFS tree.</p>
+</li>
+<li><p>A breadth first search tree</p>
+</li>
+<li><p>A tree built by the Dijkstra’s algorithm</p>
+</li>
+</ul>
+<img width="624" alt="image" src="https://user-images.githubusercontent.com/46957634/183235913-048e8180-1d47-4f20-be51-49df590387d3.png">
+</li>
+</ul>
+<doc-anchor-target id="dijkstras-single-source-shortest-path-algorithm">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dijkstras-single-source-shortest-path-algorithm">#</doc-anchor-trigger>
+        <span>Dijkstra’s Single-Source Shortest Path Algorithm</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>A <strong>greedy</strong> approach
+<ul>
+<li><strong>Generate the shortest paths in non-decreasing order of lengths!</strong></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>$S^1={ v_0 }$로 설정하고 시작.</li>
+<li>($i=k$일 때) $S<sup>k$의 꼭지점들만 사용할 경우에 대한 $v_0$에서 $v$까지의 shortest path가 구해져 있음. ($v$는 $S</sup>k$의 꼭지점)</li>
+<li>$S<sup>k$상황에서 가장 짧은 path에 대한 꼭지점 $v$를 $S</sup>k$로 옮긴 후 적절한 처리를 수행 → <span class="math">S^{k+1}</span></li>
+<li>($i = k+1$일 때) <span class="math">S^{k+1}</span> 의 꼭지점들만 사용할 경우에 대한 $v_0$에서 $v$까지의 shortest path가 구해져 있음. ($v$는 $S^{k+1}$의 꼭지점)
+<ul>
+<li>다시 2. 로 감</li>
+</ul>
+</li>
+<li><span class="math">S_n</span> 이 다 구해졌을 경우</li>
+</ol>
+<img width="572" alt="image" src="https://user-images.githubusercontent.com/46957634/183235935-f390503c-9754-4560-8e44-35375730c1be.png">
+<doc-anchor-target id="from-prof-kenji-ikedas-home-page">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#from-prof-kenji-ikedas-home-page">#</doc-anchor-trigger>
+        <span>From Prof. Kenji Ikeda&#x27;s Home Page</span>
+    </h2>
+</doc-anchor-target>
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/46957634/183235938-2f748cf1-1304-4e79-ad80-e7690b882069.png">
+<doc-anchor-target id="dijkstras-algorithm">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dijkstras-algorithm">#</doc-anchor-trigger>
+        <span>Dijkstra’s Algorithm</span>
+    </h2>
+</doc-anchor-target>
+<blockquote>
+<p>(from Introduction to Algorithms by T. Cormen)</p>
+</blockquote>
+<ul>
+<li><p><strong>A directed graph with nonnegative weight <span class="math">G(V, E)</span> with <span class="math">w: E→ [0,∞)</span> and source <span class="math">s</span></strong></p>
+</li>
+<li><p><strong>Two components for each vertex <span class="math">v</span></strong></p>
+<ul>
+<li><p><code v-pre>v.d</code>: an upper bound on the weight of a shortest path from <span class="math">s</span> to <span class="math">v</span> (a shortest path estimate)</p>
+</li>
+<li><p><code v-pre>v.π</code>: the predecessor of v in the (current) shortest path</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-markdown"><code v-pre class="language-markdown">Initialize-Single-Source(G,s)
+  for each vertex v in G.V
+	  v.d = infinite
+	  v.pi = NIL
+  s.d = 0</code></pre>
+</doc-codeblock></div>
+<img width="312" alt="image" src="https://user-images.githubusercontent.com/46957634/183235970-9d735b21-6b13-40fc-8450-70d6d81dc218.png">
+</li>
+</ul>
+</li>
+<li><p>Relaxation</p>
+<ul>
+<li><p>The process of relaxing an edge <span class="math">(u, v)</span> consists of testing whether we can improve the shortest path to <span class="math">v</span> found so far by going through <span class="math">u</span> and, if so, updating <code v-pre>v.d</code> and <code v-pre>v.π</code>.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-markdown"><code v-pre class="language-markdown">Relax(u,v,w)
+if v.d &gt; u.d + w(u,v)
+	v.d = u.d + w(u,v)
+	v.pi = u</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>아직 shortest path를 찾지 못한 vertex v에 대해</li>
+<li>새롭게 선택된 vertex u에 adjacent한 vertex v에 대해</li>
+</ul>
+<img width="320" alt="image" src="https://user-images.githubusercontent.com/46957634/183235992-e15a85ec-46ba-4070-9fd3-615d1ea7ea32.png">
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="dijkstras-single-source-shortest-path-algorithm-1">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dijkstras-single-source-shortest-path-algorithm-1">#</doc-anchor-trigger>
+        <span>Dijkstra’s Single-Source Shortest Path Algorithm</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>Dijkstra’s algorithm</p>
+<ul>
+<li><p>Maintains a set <span class="math">S</span> of vertices whose final shortest-path weight from the source <span class="math">s</span> have already been determined.</p>
+<ol>
+<li>Select repeatedly the vertex <span class="math">u</span> in <span class="math">V-S</span> with the minimum shortest-path estimate</li>
+<li>adds <span class="math">u</span> to <span class="math">S</span></li>
+<li>relaxes all edges leaving <span class="math">u</span>.</li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-markdown"><code v-pre class="language-markdown">Dijkstra(G,w,s)
+1  Initialize-Single-Source(G,s)
+2  S = zero-set
+3  Q = G.V
+4  while Q != zero-set
+5    u= extract-min(Q)
+6    S= S U {u}
+7    for each vertex v in G.Adj[u]
+8      Relax(u,v,w)</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>When the algorithm adds a vertex <span class="math">u</span> to the set <span class="math">S</span>, <code v-pre>u.d</code> is the final shortest-path weight from <span class="math">s</span> to <span class="math">u</span>.</p>
+</li>
+</ul>
+<img width="292" alt="image" src="https://user-images.githubusercontent.com/46957634/183236038-a6f13b6d-bc59-4c0d-9d82-12775b5ea328.png">
+<ul>
+<li><p>계산과정 예</p>
+<img width="595" alt="image" src="https://user-images.githubusercontent.com/46957634/183236162-1ce56ca2-dede-474a-82a0-bd34210960ba.png">
+</li>
+</ul>
+</li>
+<li><p>Correctness of Dijkstra’s algorithm</p>
+<ul>
+<li>Theorem
+<ul>
+<li>Dijkstra algorithm, run on a weighted, directed graph $ G=(V,E)$ with nonnegative weight function <span class="math">w : E \rightarrow R</span> and source <span class="math">s</span>, terminates with <span class="math">v.d = \delta(s,v)</span> <span class="math">\forall</span> vertices <span class="math">v \in V</span></li>
+</ul>
+</li>
+<li><strong>Loop invariant</strong>
+<ul>
+<li>At the start of each iteration of the while loop of lines 4-8, <span class="math">v.d = \delta(s,v)</span> for each vertex <span class="math">v \in S</span></li>
+</ul>
+</li>
+<li><strong>A key in the proof</strong>
+<ul>
+<li><p>to show that for each vertex <span class="math">u \in V</span>, we have <span class="math">u.d = \delta(s,u)</span> at the time when <span class="math">u</span> is added to set <span class="math">S</span></p>
+</li>
+<li><p>Suppose for contradiction that <span class="math">u</span> be the first vertex for which <span class="math">u.d \neq \delta(s,u)</span> when it is added to set <span class="math">S</span></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-markdown"><code v-pre class="language-markdown">Dijkstra(G,w,s)
+1  Initialize-Single-Source(G,s)
+2  S = zero-set
+3  Q = G.V
+4  while Q != zero-set
+5    u= extract-min(Q)
+6    S= S U {u}
+7    for each vertex v in G.Adj[u]
+8      Relax(u,v,w)</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code v-pre>s ---&gt; x -&gt;y</code>가 shortest path이므로, $x$가 $S$에 <code v-pre>add</code> 되면서 <code v-pre>x-&gt;y</code>에 relaxation할 때, <code v-pre>y.d</code>에 $δ(s, y)$가 저장. 따라서 $u$가 $S$에 <code v-pre>add</code>가 될 때에도 <code v-pre>y.d</code> <span class="math">= δ(s, y)</span>.</p>
+<ul>
+<li><span class="math">y.d = \delta(s,y)</span>
+<ul>
+<li><span class="math">u.d \leq \delta(s,y) \leq u.d \rightarrow \delta(s,u) = u.d</span></li>
+</ul>
+</li>
+<li><span class="math">y.d = \delta(s,y) \leq \delta (s,u) \leq u.d</span></li>
+<li><span class="math">u.d \leq y.d</span></li>
+</ul>
+</blockquote>
+  <img width="261" alt="image" src="https://user-images.githubusercontent.com/46957634/183236225-90a4a564-570b-42f4-a889-971701c3e943.png">
+</li>
+</ul>
+<doc-anchor-target id="an--implementation--adjacency-matrix-사용">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#an--implementation--adjacency-matrix-사용">#</doc-anchor-trigger>
+        <span>An <span class="math">O(n^2)</span> Implementation : Adjacency Matrix 사용</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p><code v-pre>S</code>: the set of vertices, including <span class="math">v_0</span>, whose shortest paths have been found</p>
+</li>
+<li><p><code v-pre>distance[w]</code>: the length of the shortest path starting from <span class="math">v_0</span>, going through vertices only in <span class="math">S</span>, and ending in <span class="math">w</span> (<span class="math">w \notin S</span>)</p>
+</li>
+<li><p>Observations</p>
+<ul>
+<li><p><em>When the shortest paths are generated in nondecreasing order of length,</em></p>
+</li>
+<li><p>If the next shortest path is to vertex <span class="math">u</span>, then the path from <span class="math">v_0</span> to <span class="math">u</span> goes through only those vertices that are in <span class="math">S</span>.</p>
+</li>
+<li><p>Vertex <span class="math">u</span> is chosen so that it has the minimum distance <code v-pre>distance[u]</code> among all the vertices <span class="math">\notin S</span>.</p>
+</li>
+<li><p>Adding <span class="math">u</span> to <span class="math">S</span> may change the distance of shortest paths starting at <span class="math">v_0</span> going through vertices only in the new <span class="math">S</span>, and ending at a vertex <span class="math">w</span> that is not currently in the new <span class="math">S.</span></p>
+</li>
+<li><p><span class="math">distance[w]  = \min \{distance[w], distance[u] + length(&lt;u, w&gt;) \}</span></p>
+<img width="367" alt="image" src="https://user-images.githubusercontent.com/46957634/183236358-62215037-7703-4d5b-8753-47350d89f410.png">
+</li>
+</ul>
+</li>
+<li><p><span class="math">V = \{ v_0, v_1, ..., v_{n-1}\}</span> with <span class="math">|V| = n</span></p>
+</li>
+<li><p><code v-pre>distance[i]</code> : the length of the SP from vertex v to i</p>
+</li>
+<li><p><code v-pre>found[i]</code></p>
+<ul>
+<li><span class="math">FALSE</span> if the SP from vertex i has not been found,</li>
+<li><span class="math">TRUE</span> otherwise</li>
+</ul>
+</li>
+<li><p><code v-pre>cost[i][j]</code> : cost adjacency matrix</p>
+</li>
+<li><p>code in [Horowitz]</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">int choose(int distance[], int n, int found[])
+{
+    int i, min = INT_MAX,
+          minpos = -1;
+    for (i = 0; i &lt; n; i++) // O(n)
+        if (distance[i] &lt; min &amp;&amp; !found[i])
+        {
+            min = distance[i];
+            minpos = i;
+        }
+    return minpos;
+}
+void shortestpath(int v,
+                  int cost[][MAX_VERTICES],
+                  int distance[], int n, int found[])
+{
+    int i, u, w, tmp;
+    for (i = 0; i &lt; n; i++)
+    {
+        found[i] = FALSE;
+        distance[i] = cost[v][i];
+    }
+    found[v] = TRUE;
+    distance[v] = 0;
+    for (i = 0; i &lt; n - 2; i++)
+    { // O(n)
+        // find the next u to be added to S
+        u = choose(distance, n, found);
+        found[u] = TRUE; // add u to S for (w = 0; w &lt; n; w++)
+        if (!found[w])   // for w not in S
+        if ((tmp = distance[u] +
+    }
+}
+cost[u][w]) &lt; distance[w]) distance[w] = tmp;</code></pre>
+</doc-codeblock></div>
+</li>
+</ul>
+<doc-anchor-target id="an--implementation-adjacency-list-사용">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#an--implementation-adjacency-list-사용">#</doc-anchor-trigger>
+        <span>An <span class="math">O(e \log n)</span> Implementation: Adjacency List 사용</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>매 순간 $wt[w]$에는 항상 <span class="math">S_k</span> 의 꼭지점들만 사용할 경우에 대한 $v_s$에서 $w$까지의 shortest path의 길이가 저장되어 있음.</p>
+</li>
+<li><p><code v-pre>wt[]</code>는 앞의 프로그램에서의 <code v-pre>distance[]</code>에 해당</p>
+</li>
+<li><p><span class="math">n = |V|, e = |E|</span></p>
+<img width="234" alt="image" src="https://user-images.githubusercontent.com/46957634/183236457-7b2b6e4b-349f-432e-9cf2-2223b1053b7b.png">
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">typedef struct node \*link;
+struct node
+{
+    int v;
+    double wt;
+    link next;
+};
+struct graph
+{
+    int V;
+    int E;
+    link *adj;
+};
+typedef struct graph *Graph;</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">#define GRAPHpfs GRAPHspt
+#define P(wt[v] + t-&gt;wt) 
+void GRAPHpfs(Graph G, int s, int st[],​ double wt[]){
+
+  int v, w;
+  link t;
+  PQinit();
+  priority = wt;
+  for (v = 0; v &lt; G-&gt;V; v++){ //O(n)
+    st[v] = -1;
+    wt[v] = maxWT;
+    PQinsert(v);
+  }
+  wt[s] = 0.0;
+  PQdec(s); // log n
+  while (!PQempty())// 언제 끝날까?
+    if (wt[v = PQdelmin()] ! = maxWT) //어떤 경우인가?
+      for (t = G-&gt;adj[v]; t != NULL; t = t-&gt;next) //O(e log n)
+        if (P &lt; wt[w = t-&gt;v]){
+          wt[w] = P;          
+          PQdec(w); //log n
+        //다 끝난 후 각 꼭지점에 대한 sp를 어떻게 출력할까?
+          st[w] = v;  
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<img width="641" alt="image" src="https://user-images.githubusercontent.com/46957634/183236524-623dbabf-84f6-453b-a5d5-d294b8ad110a.png">
+</li>
+<li><p>MO ̈HRING et at., Partitioning Graphs to Speedup Dijkstra’s Algorithm, ACM Journal of Experimental Algorithmics, 2006.</p>
+<ul>
+<li><p>Standard Dijkstra’s Algorithm</p>
+<img width="233" alt="image" src="https://user-images.githubusercontent.com/46957634/183236080-9c1a16ec-c9e4-47a7-800a-85719924db9d.png">
+</li>
+<li><p>Acceleration Algorithm</p>
+<img width="236" alt="image" src="https://user-images.githubusercontent.com/46957634/183236082-a9f10ce0-78b8-42ea-87ef-d07732e756e8.png">
+</li>
+</ul>
+</li>
+</ul>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../../tags/alg/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>alg</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/6)/6.4.2/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">6.​4.​2. Kruskal’s Algorithm vs Prim’s Algorithm</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../biology-3-hyper-by-ryu/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">고급생명과학 정리</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "6.4.3. Shortest-Paths Problems", level: 3, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>

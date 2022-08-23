@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/tech">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714381736190">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 2.3.0">
+
+    <!-- Primary Meta Tags -->
+    <title>[SP] 10. Dynamic Memory Allocation: Basic Concepts</title>
+    <meta name="title" content="[SP] 10. Dynamic Memory Allocation: Basic Concepts">
+    <meta name="description" content="Dynamic Memory Allocation: Basic Concepts" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="/tech/10-sp-dynamic-memory-alloc/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/tech/10-sp-dynamic-memory-alloc/">
+    <meta property="og:title" content="[SP] 10. Dynamic Memory Allocation: Basic Concepts">
+    <meta property="og:description" content="Dynamic Memory Allocation: Basic Concepts">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/183250473-abfb5bc5-c765-4cbb-9b59-ddb76e217d36.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="/tech/10-sp-dynamic-memory-alloc/">
+    <meta property="twitter:title" content="[SP] 10. Dynamic Memory Allocation: Basic Concepts">
+    <meta property="twitter:description" content="Dynamic Memory Allocation: Basic Concepts">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/183250473-abfb5bc5-c765-4cbb-9b59-ddb76e217d36.png">
+
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../favicon.ico" rel="icon" />
+    <link href="../resources/css/retype.css?v=2.3.0.714381736190" rel="stylesheet" />
+
+    <script type="text/javascript" src="../resources/js/config.js?v=2.3.0.714381736190" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.3.0.714381736190" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.3.0.714381736190" defer></script>
+    <link href="../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../resources/js/katex.js?v=2.3.0" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between grow pr-6 md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-2xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../static/saintly-logo.svg">
+                                <img class="max-h-10 hidden dark:inline-block" src="../static/saintly-logo-dark.svg">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">S.KYUHWN</span>
+                        </a>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">Home</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+        
+                            <input class="w-full h-10 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 placeholder-gray-400 dark:placeholder-dark-400"
+                            style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search" />
+                        </div>
+        
+                        <!-- Mobile search button mock -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placehokder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button mock -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation"  style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter" />
+                </div>
+            
+                <div class="pl-6 mb-4 mt-1">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">Home</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/underthelights/">GitHub</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://drive.google.com/file/d/1lcEg4fXJvTQlCKW5mWai_ej8NZGg21yT/view">Resume</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://www.linkedin.com/in/kyuhwan-shim/">Linkedin</a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://underthelights.github.io">GitBlog</a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="grow min-w-0 px-6 md:px-16">
+                        <main class="relative pt-6 pb-16">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                
+                                <!-- Page content  -->
+<doc-anchor-target id="10-dynamic-memory-allocation-basic-concepts" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#10-dynamic-memory-allocation-basic-concepts">#</doc-anchor-trigger>
+        <span>10. Dynamic Memory Allocation: Basic Concepts</span>
+    </h1>
+</doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../categories/system-programming/">system-programming</a></div>
+</div>
+
+<p><strong>Dynamic Memory Allocation: Basic Concepts</strong></p>
+<doc-anchor-target id="basic-concepts">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#basic-concepts">#</doc-anchor-trigger>
+        <span><strong>Basic concepts</strong></span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="dynamic-memory-allocation">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dynamic-memory-allocation">#</doc-anchor-trigger>
+        <span><strong>Dynamic Memory Allocation</strong></span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250473-abfb5bc5-c765-4cbb-9b59-ddb76e217d36.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<ul>
+<li>heap이 어떻게 관리가 되고 있는지에 대한 고민은 해 본적 없는 것 같다.
+<ul>
+<li>영역 내 빈 공간을 관리하는게 malloc allocation이 해 주는 역할</li>
+<li>space manager라 해도 과언이 아님 : space 관리를 어떻게 해 줄것이냐</li>
+<li>brk ptr : 0부터 top에 해당하는 크기만큼 할당하고 이 안에서 가장 공간 효율성을 높이며, 성능을 그렇게 저하하지 않으면서 이 방식에 따라 할당함 -&gt; 더이상 할당 할 공간이 없으면 brk pt를 올려 줌</li>
+<li>→ sbrk라는 system call을 통해 ‘늘려줘’ 명령하여 library의 ptr 값이 늘어남 : 공간 관리</li>
+</ul>
+</li>
+<li>application에서도 malloc-free 등 지속하다가 더이상 할당할 부분이 없으면 sbrk를 통해 쭉 늘려줌
+<ul>
+<li>처음부터 왕창 늘려놓으면?</li>
+<li>물론 그래도 되지만, application 필요한 만큼만 할당해주면 되지 미리 줄 필요가 없다.</li>
+</ul>
+</li>
+</ul>
+<p>heap 관리자를 어떻게 만들 것이냐 : 주된 목표이자 하고자 하는 내용</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250444-969c7649-a330-4b8d-86c4-888e9b4311ca.png" alt="Untitled 1" />
+    <figcaption class="caption">Untitled 1</figcaption>
+</figure>
+</p>
+<ul>
+<li>Programmers use dynamic memory allocators (such as malloc) to acquire VM at run time.
+<ul>
+<li>For data structures whose size is only known at runtime.</li>
+</ul>
+</li>
+</ul>
+<p>Dynamic memory allocator</p>
+<ul>
+<li><p>process의 가상메모리 공간에 0부터 max에 해당하는 process의 가상메모리 공간</p>
+</li>
+<li><p>code, data 부분 제외하고 heap부터 시작</p>
+</li>
+<li><p>dynamic memmory allocator를 활용해 가상 메모리 공간 안 heap space memory를 run time시 할당하고 해제할 수 있다. Dynamic memory allocators manage an area of process virtual memory known as the heap.</p>
+</li>
+<li><p>Allocator입장에서 heap은 ‘collection of variable sized blocks’ : allcoated /  free</p>
+</li>
+<li><p>Types of allocators</p>
+<ul>
+<li>Exlicit allocator: application allocates and frees space
+<ul>
+<li>프로그래밍할 때 메모리 공간을 요청하고 free하는 행위</li>
+<li>language에서 malloc, free같은 함수를 통해 직접 해 줘야 함</li>
+<li>c++ new / delete를 사용해서 memroy 할당 및 해제</li>
+<li>E.g., malloc and free in C</li>
+</ul>
+</li>
+<li>Implicit allocator: application allocates, but does not free space
+<ul>
+<li>explicitly하지 않고 내부적으로</li>
+<li>language마다 다름</li>
+<li>garbage collector : 자동적으로 사용안되는 block 중 자동으로 free해줄 수 있음</li>
+<li>ex. JAVA, ML, LISP에서는 할당된것 중 사용 안되는 것들을 collect함</li>
+<li>→ c에서 사용하는 explicit allocator로 설명해보자</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="heap">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#heap">#</doc-anchor-trigger>
+        <span>‘Heap’</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><p>c language 같은 경우 standard c malloc library 할당하는 system library</p>
+</li>
+<li><p>runtime 시에 필요한 vm 값을 요청하기 위함 : dynamic memory allocator</p>
+<ul>
+<li>일반적으로 얼만큼 data가 필요한지 모르니, static하게 잡기보다도 runtime시에만 필요로 하는 자료구조 크기가 알려진 경우 dynamic memory allocator 사용하여 malloc</li>
+</ul>
+</li>
+<li><p>brk ptr = heap의 top</p>
+</li>
+<li><p>가상 메모리 공간 = process마다 각자 자신의 가상 메모리 공간을 가짐</p>
+<ul>
+<li>일부 영역 ‘heap’ - brk ptr  : heap 공간 크기를 결정할 수 있는 range를 가리킬 수 있음</li>
+</ul>
+</li>
+<li><p>0번지부터 brk : heap 의 크기</p>
+<ul>
+<li><p>Brk ptr로부터 증가 : sbrk라는 system call</p>
+</li>
+<li><p>내부적인 malloc같은 sbrk system call을 통해 brk ptr를 증가시킬 수 있음</p>
+</li>
+<li><p>어떤 특정한 시점에서는 변하지 않은 값으로 저장</p>
+<ul>
+<li>내가 사용할 수 있는 heap이라는 공간은 그 크기만큼 사용할 수 있다</li>
+</ul>
+</li>
+<li><p>이 공간을 가져다 사용 : brk ptr를 증가시켜줌으로서 heap의 공간이 더 커질 수 있음</p>
+<p>→ brk ptr가 가리킴</p>
+</li>
+</ul>
+</li>
+<li><p>Heap : 동일한 크기의 chunk로 이루어진 array이다.</p>
+<ul>
+<li>ex. malloc을 사용해 block 선언 / chunk 크기 3</li>
+<li>→ chunk 3개 가진 block을 할당하고, chunk 2, chunk 1 할당 / 나머지 공간은 free한 공간</li>
+</ul>
+<p>3 chunk - 2 chunk - 1 chunk block</p>
+</li>
+<li><p>memory alloc 관점엥서 보면 Allocate되어 있고 / free한 상태이고</p>
+<p>→ 이 메모리를 가져다 : 가변적 크기를 가진 이 block들의 allocate된 것들과 free된 것들의 집합.
+각각은 allocate 되어 있거나 free되어 있다.</p>
+</li>
+<li><p>vm 공간안에서 있는, 0부터 max값이라고 하면 code, data 부분을 제외하고 heap이라고 되어 있는 부분에 top에서 Brk가 가리키는 ptr</p>
+<p>→ 이 지금 말한 heap 부분이 지금 말한 부분에 해당함</p>
+<ul>
+<li>top heap brk ptr →  heap의 top에 해당하는 주소이다.</li>
+</ul>
+</li>
+<li><p>Will discuss simple explicit memory allocation today</p>
+</li>
+</ul>
+<hr />
+<ul>
+<li>explicit allocator</li>
+<li>implicit allocator</li>
+</ul>
+<doc-anchor-target id="the-malloc-package">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-malloc-package">#</doc-anchor-trigger>
+        <span><strong>The malloc Package</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>실험</p>
+<ul>
+<li><p>top of the heap를 setting해 놓고 그 공간 안에 더이상 빈 공간을 찾을수 없다고 하면 sbrk를 지속적으로 늘려 주면</p>
+<ul>
+<li>→ memory가 없다라고 실토함 : 현재 가용 가능한 memory를 tracking하다가 없으면 failuress</li>
+</ul>
+</li>
+<li><p>(until OS kernel이 최소로 필요로 하는 공간 (cspro 500MB))</p>
+<p>(실제 OS의 rsrc를 print했을 때 나오는 값보다 → process에게 그 이상은 주지 못한다)</p>
+</li>
+<li><p>sbrk도 요청해서 할당받고 하면 top of the heap을 가져다 brk ptr를 증가시키고 언젠가는 실패 : kernel안에서 sbrk system call handler가 threshold를 가지고 있음</p>
+</li>
+</ul>
+</li>
+<li><p>brk ptr : os kernel이 가짐</p>
+<ul>
+<li>top of the heap이 넘쳐나는 경우에는 내부적으로 sbrk라는 system call을 통해 증가</li>
+<li>→ 그 때 heap 공간에서 free하지만 원하는 공간이 continuous하길 원한다.</li>
+<li>공간이 없어서 error를 return 하는 경우가 있을 수 있다
+= 성공하지 못해 메모리를 할당할 수 없다.</li>
+</ul>
+</li>
+<li><p>동적으로 결정되는 크기 : program 실행 순서에 따라 결정되는 값</p>
+</li>
+<li><p>virtual memory의 시작 주소 return</p>
+</li>
+<li><p><code v-pre>void *malloc(size_t size)</code></p>
+<ul>
+<li><p>Successful: Returns a pointer to a memory block of at least size bytes aligned to an 8-byte (x86) or 16-byte (x86-64) boundary</p>
+<ul>
+<li>If size == 0, returns NULL</li>
+</ul>
+<ol>
+<li>Successful : boundary에 align되는 memory block allocate한 후 ptr return</li>
+</ol>
+<ul>
+<li>CPU 에 따라서 requested size보다 크거나 같은 사이즈
+<ul>
+<li>8 byte의 word 크기 : 1byte만큼 활용하면 - 7byte만큼 사용 x</li>
+<li>
+<blockquote>
+<p>internal fragment 등으로 활용가능</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Unsuccessful: returns NULL (0) and sets errno</p>
+<ul>
+<li>heap stage에서 할당할 부분이 없는 경우</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code v-pre>void free(void *p)</code></p>
+<ul>
+<li>Returns the block pointed at by p to pool of available memory
+<ul>
+<li>heap space, Heap 안 다양한 메모리에서 p라는 block을 return
+p라는 가상 메모리 ptr가 가리키는 memory</li>
+<li>ex. *p가 f 부분을 가리킨다 → ‘aa’부분을 free해준다.</li>
+</ul>
+</li>
+<li>p must come from a previous call to malloc or realloc</li>
+<li>나중에 free하게 됐을 때 이 free한 부분이 모종의 status 관리하는 tag에 의해 free</li>
+<li>free할 메모리의 크기는 내부적으로 알 수 있다 : meta정보를 읽고 word 2개 사이즈를 free하는구나</li>
+</ul>
+</li>
+<li><p>Other functions</p>
+<ul>
+<li><code v-pre>calloc</code>: Version of malloc that initializes allocated block to zero.
+<ul>
+<li>malloc은 heap 영역에 다음과 같이 할당하면 allocate되어 있지만 해당 공간은 초기화가 되어 있지 않음</li>
+<li>memory contents를 깨끗하게 지우고 싶다고 하면 해당 공간을 calloc이라는 함수를 사용하여 호출하면 malloc과 동일하게 할당하고, contents = 0으로 초기화한다 (initialize)</li>
+</ul>
+</li>
+<li><code v-pre>realloc</code>: Changes the size of a previously allocated block.
+<ul>
+<li>a가 3개 allocate -&gt; 4개로 늘려주는 역할</li>
+<li>ptr 값을 받아 가상 메모리 주소, 크기 -&gt; 그에 맞추어 size 조절</li>
+<li>sbrk로 heap 영역을 최대로 늘리고도 부족한 경우에 발생하는가?</li>
+</ul>
+</li>
+<li><code v-pre>sbrk</code>: Used internally by allocators to grow or shrink the heap  5
+<ul>
+<li>allocator 안에서 사용되는 system call</li>
+<li>brk ptr를 올리거나 내리는, heap을 조절해주기 위한 함수</li>
+</ul>
+</li>
+</ul>
+<p>malloc은 brk</p>
+</li>
+</ul>
+<doc-anchor-target id="malloc-example">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#malloc-example">#</doc-anchor-trigger>
+        <span><strong>malloc Example</strong></span>
+    </h2>
+</doc-anchor-target>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+void foo(int n)
+{
+    int i, p;
+    /* Allocate a block of n ints */ 
+		p = (int)malloc(n * sizeof(int));
+    if (p == NULL)
+    {
+        perror(&quot;malloc&quot;);
+        exit(0);
+    }
+    // Initialize allocated block / 
+		for (i = 0; i &lt; n; i++) 
+				p[i] = i;
+    // Return allocated block to the heap * / 
+		free(p);
+}</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>굳이 그렇게 할 필요 없다 : API만 프로그래머에게 전달해주면 되는 상황이다.</p>
+<ul>
+<li>사용자 입장에서 api 안에서 제공되는 함수 사용</li>
+<li>malloc의 class version을 만들겠다, pm hint를 주겠다</li>
+<li>인접하게 할당하는 등 mymalloc에서 그렇게 구현하면 됨</li>
+</ul>
+</li>
+<li><p>allocator</p>
+<ul>
+<li>word 크기 4byte 가정할 때 heap 관리자, heap 공간 중 free한 공간</li>
+<li>모종의 알고리즘을 통해 할당할 공간을 찾는다.</li>
+<li>n=3 -&gt; 3</li>
+<li>각각의 4byte만큼 떨어지며 0, 1, 2 ~~ 25’</li>
+<li>공간들은 free가 됨</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="assumptions-made-in-this-lecture">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#assumptions-made-in-this-lecture">#</doc-anchor-trigger>
+        <span><strong>Assumptions Made in This Lecture</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>(몇가지 가정 후 설명 진행)</p>
+<ul>
+<li><p>memory address : 가장 최소 단위 word (8byte or 16byte)</p>
+</li>
+<li><p>Heap : 연속된 가상 메모리 공간</p>
+</li>
+<li><p>실제 memory allocator 구현하는 입장에서 보면 생각할 게 많음</p>
+<ul>
+<li>두 칸을 가져다 free하는데, free후 p만 인자로 받음</li>
+<li>word를 어떻게 free할것이냐에 대한 내용은 논의하지 않음 (나중에 배울 예정)</li>
+<li>→ free를 할 때 p가 가진 memory 두 개 공간이 있는데 이를 free하면 됨</li>
+</ul>
+</li>
+<li><p>memory 크기는 딱 두개의 word로 되어 있다</p>
+</li>
+<li><p>malloc-DB</p>
+<ul>
+<li>memory 공간 할당자
+<ul>
+<li>어떤 요청에서 빈공간을 찾아 return해주면 된다</li>
+<li>빈 공간이 생기면 그들끼리 묶어두면 된다</li>
+</ul>
+</li>
+<li>DB : record 관리, file형태로 담아 놓고 필요한 record 찾고 수정하고 집어넣는 관점에서 볼 때 상당히 비슷한 부분이 많음.</li>
+<li>어떤 data의 영역을 관리하기 위한 system을 어떻게 build할 것이냐로 확장할 수 있음</li>
+</ul>
+</li>
+<li><p>Memory is word addressed.</p>
+</li>
+<li><p>Words are int-sized.</p>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250447-75bbb9be-cca8-44b2-a287-b01196d733cd.png" alt="Untitled 2" />
+    <figcaption class="caption">Untitled 2</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="allocation-example">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#allocation-example">#</doc-anchor-trigger>
+        <span><strong>Allocation Example</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>동적 memory allocator : gdc에서 효율적으로 잘 짜여 있음</p>
+<ul>
+<li>두 가지의 metric.
+<ol>
+<li>allocator이 잘 동작하느냐에 대한 correctness (malloc-free combination이 잘 동작하느냐)</li>
+<li>space effectivity에 대해서 실제 효율적이냐, 성능에서도 malloc 이 좋은가</li>
+</ol>
+</li>
+</ul>
+<p>가상 메모리 공간 continguous</p>
+<ul>
+<li><p>OS가 해줘야 하는 역할 / 프로그래머 입장에서는 Vm 공간 중 heap이라는 일부 공간을 contiguous하게 할당받아 그 공간들만 할당해주고 해제해주고</p>
+</li>
+<li><p>block storage</p>
+</li>
+<li><p>다음과 같은 heap이라는 공간이 있다. - chunk 크기로 된 연속적인 공간</p>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250448-66655276-aa04-4c77-b87a-47621ace7ad6.png" alt="Untitled 3" />
+    <figcaption class="caption">Untitled 3</figcaption>
+</figure>
+</p>
+<ul>
+<li><code v-pre>free(p2)</code> : p2가 가리키는 block 안 chunk 5개가 free된다.
+<ul>
+<li>Free할 때 ptr를 찾아가게 되면 정보가 있고 여기서부터 연속 5개는 하나의 block안에 포함됨을 알고 다섯개를 free시켜준다.</li>
+</ul>
+</li>
+<li><code v-pre>p4=malloc(2) :</code> 2개의 chunk를 할당하는데 어디다 할당할 것이냐?
+<ul>
+<li>→ 모종의 방법을 통해 다음과 같이 할당된다.</li>
+</ul>
+</li>
+</ul>
+<p>이런 식으로, block storage 관점에서 보더라도 상당히 비슷하다. 가상 메모리 공간에서 contiguous한 공간이고, 크기 공간들 중 빈 공간들을 관리하는 관리자라고 보면 됨</p>
+<doc-anchor-target id="constraints">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#constraints">#</doc-anchor-trigger>
+        <span><strong>Constraints</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Applications
+<ul>
+<li>Can issue arbitrary sequence of malloc and free requests</li>
+<li>free request must be to a malloc’d block</li>
+<li>malloc, free라는 동적 memory allocator fn
+<ul>
+<li>memory alloc/free req sequence를 보되, 이 sequence는 arbitrary. Issue라고 바라봐도 됨</li>
+</ul>
+</li>
+<li>이미 allocate된 block을 free해주는 것이 free이다.</li>
+</ul>
+</li>
+<li>Allocators
+<ul>
+<li>Can’t control number or size of allocated blocks
+이미 할당된 block들 : block 크기, 개수도 임의로 바꿀 수 없음</li>
+<li>Must respond immediately to malloc requests
+일단 malloc이라는 allocator같은 경우 요청에 대한 즉각 응답하여 할당
+<ul>
+<li>i.e., can’t reorder or buffer requests</li>
+</ul>
+</li>
+<li>Must allocate blocks from free memory
+<ul>
+<li>allocated된 부분에 allocate하면 안됨</li>
+<li>i.e., can only place allocated blocks in free memory
+allocate하게 되면 free한 memory에 할당</li>
+</ul>
+</li>
+<li>Must align blocks so they satisfy all alignment requirements
+<ul>
+<li>8-byte (x86) or 16-byte (x86-64) alignment on Linux boxes
+32bit machine -&gt; 8byte, 64bit -&gt; 16byte
+나머지는 unused 부분</li>
+</ul>
+</li>
+<li>Can manipulate and modify only free memory</li>
+<li>Can’t move the allocated blocks once they are malloc’d
+<ul>
+<li>i.e., compaction is not allowed</li>
+</ul>
+</li>
+<li>buffering하지 않기 때문에 순서를 바꾸지도 않음
+<ul>
+<li>6-5-4 순서 바꾸어 할당하겠다 하면 허용이 안됨</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="performance-goal-throughput">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-goal-throughput">#</doc-anchor-trigger>
+        <span><strong>Performance Goal: Throughput</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Given some sequence of malloc and free requests:
+어떤 program에서 malloc. &amp; free request</p>
+<ul>
+<li><span class="math">R_0, R_1, ..., R_k, ... , R_{n-1 }</span></li>
+</ul>
+</li>
+<li><p>Goals: maximize throughput and peak memory utilization</p>
+<ul>
+<li>These goals are often conflicting</li>
+</ul>
+</li>
+<li><p>Throughput:</p>
+<ul>
+<li>Number of completed requests per unit time</li>
+<li>throughput을 높인다
+= allocate요청했을 때 immediately respond 즉각 반응
+<ul>
+<li>→ allocate 5개를 빨리 찾고 해당 공간을 할당해주어야 함.</li>
+</ul>
+</li>
+<li>free하게 되면, 해당 ptr가 어디있는지 찾아 free시켜야됨
+<ul>
+<li>상위 개념에서 보면, allocator</li>
+</ul>
+</li>
+<li>Example:
+<ul>
+<li>5,000 malloc calls and 5,000 free calls in 10 seconds</li>
+<li>Throughput is 1,000 operations/second  10</li>
+</ul>
+</li>
+<li>어떤 allocator를 설계해서 5000개의 malloc과 free를 처리
+<ul>
+<li>→ 이를 처리할 수 있는 allocator
+1000개의 operation per second보다 낮아질수도 있음</li>
+</ul>
+</li>
+</ul>
+<p>→ 첫 목표 : throughput 높이는 것</p>
+<ul>
+<li>나중에 설계, 구현을 보면 알 수 있음
+<ul>
+<li>throughput이 1000보다 높을수도 낮을수도 있다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="performance-goal-peak-memory-utilization">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-goal-peak-memory-utilization">#</doc-anchor-trigger>
+        <span><strong>Performance Goal: Peak Memory Utilization</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>앞과 example은 똑같고, 다음과 같은 def를 이해해야 한다.</p>
+<ul>
+<li>Given some sequence of malloc and free requests:
+<ul>
+<li><span class="math">R_0, R_1, ..., R_k, ... , R_{n-1 }</span></li>
+</ul>
+</li>
+<li>Def: Aggregate payload Pk
+<ul>
+<li><code v-pre>malloc(p)</code> results in a block with a payload of p bytes</li>
+<li>After request <span class="math">R_k</span> has completed, the aggregate payload Pk is the sum of currently allocated payloads</li>
+<li>payload Pk
+<ul>
+<li>malloc Pk라고 할 때, 해당 p라는 것은 요청 memory에 block하나를 할당받는데 실제 요청한 data가 저장되는 data 크기</li>
+<li>Block : 10byte -&gt; 10byte</li>
+<li>8 byte alignment</li>
+<li>k번째까지 malloc을 성공했다 → Pk 현재 allocate</li>
+</ul>
+</li>
+<li>해당 값을 maxmize하여 해당 memory 최대한 사용할 수 있게, 빈 공간을 찾ㅇ아 꾸역꾸역 넣어야 함</li>
+</ul>
+</li>
+<li>Def: Current heap size Hk
+<ul>
+<li>hk : Hk까지 요청했을 때 당시 heap의 크기를 가져다 h_k</li>
+<li>heap 크기가 늘어날</li>
+<li>Assume Hk is monotonically nondecreasing</li>
+<li>i.e., heap only grows when allocator uses <code v-pre>sbrk</code></li>
+</ul>
+</li>
+<li>Def: Peak memory utilization after k+1 requests <span class="math">U_k = \frac{\max_{i\leq k}P_i}{H_k}</span></li>
+<li>Programmer는 vm 공간이 내가 가진 가상 memory더라도 실제 가지고 있는 memory 공간이 굉장히 크다고 판단하지만 실제 물리적으로 1GB밖에
+<ul>
+<li>내 물리적 공간이 아닌 다른 부분에. 그런 관점에서 최대한 활용해 utilization을 높이 -&gt;</li>
+<li>요청할 때마다 쉽게 할당해주는 공간 -&gt; 처리를 높임 한번에 응답할 때 응답 시간을 줄임.</li>
+</ul>
+</li>
+<li>utilization</li>
+</ul>
+<doc-anchor-target id="fragmentation">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#fragmentation">#</doc-anchor-trigger>
+        <span><strong>Fragmentation</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Poor memory utilization caused by fragmentation
+<ul>
+<li>internal fragmentation</li>
+<li>external fragmentation</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="internal-fragmentation-내부-단편화">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#internal-fragmentation-내부-단편화">#</doc-anchor-trigger>
+        <span><strong>Internal Fragmentation</strong> 내부 단편화</span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>For a given block, <strong>internal fragmentation</strong> occurs if payload is smaller than block size</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250450-ae1ab4eb-f4d8-4e6e-8e70-15ad5c5e364b.png" alt="Untitled 4" />
+    <figcaption class="caption">Untitled 4</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>Caused by</p>
+<ul>
+<li><p>Overhead of maintaining heap data structures</p>
+<p>heap을 관리하는 data structure의 overhead</p>
+</li>
+<li><p>Padding for alignment purposes</p>
+</li>
+<li><p>Explicit policy decisions</p>
+<ul>
+<li>큰 block을 return해야 하는 경우
+(e.g., to return a big block to satisfy a small request)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Depends only on the pattern of previous requests</p>
+<p>이전에 어떤 게 왔는지에 따라 왕왕 생김</p>
+<ul>
+<li>Thus, easy to measure</li>
+</ul>
+</li>
+<li><p>10byte + 나머지 6byte 앞과 뒤에 나뉘어 짐</p>
+<ul>
+<li>나머지 6byte는 사용되지 않음</li>
+</ul>
+</li>
+<li><p>구현에 따라 internal fragmentation을 상당히 줄일 수 있음</p>
+</li>
+</ul>
+<doc-anchor-target id="external-fragmentation">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#external-fragmentation">#</doc-anchor-trigger>
+        <span><strong>External Fragmentation</strong></span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250452-52eb106d-02f8-4445-a8d8-711eeeeb43da.png" alt="Untitled 5" />
+    <figcaption class="caption">Untitled 5</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>연속적으로 이어진 공간이 5개, 2개임 (free(p2))</p>
+</li>
+<li><p>Occurs when there is enough aggregate heap memory, but no single free block is large enough - external fragmentation 발생하면 할당하지 못하는 경우가 발생할 수 있음</p>
+</li>
+<li><p>Depends on the pattern of future requests
+미래에 어떤 요청을 하는지에 따라 생길수도 생기지 않을수도 있음</p>
+<ul>
+<li>Thus, difficult to measure</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="implementation-issues">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementation-issues">#</doc-anchor-trigger>
+        <span><strong>Implementation Issues</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>memory allocator를 어떻게 design하고 구현하느냐에 따라 여러가지 issue</p>
+<ul>
+<li><p>naive한 구현 시</p>
+<ul>
+<li>앞의 그림처럼 이런식으로 heap을 가져다 large array로 보고, 처음엔 p를 0으로 두어 구현됨</li>
+<li>오래된 p를 stack에 집어 넣고 (push(p)), oldptr = pop(p)</li>
+</ul>
+<p>→ 둘을 가져다 allocate상태로 만들어 주고 나머지 뒤는 free하게 만들어 줌.</p>
+<ul>
+<li>Ptr = malloc(2) : 이전에 있던 결국은 oldptr</li>
+<li>malloc할 때마다 앞으로 가는 쪽을 보면 무조건 free</li>
+<li>malloc (3)을 한다고 하면 2+3 부분을 가리키고 old ptr를 return</li>
+<li>fast: 뒤로 forwarding하면서 return하면 됨</li>
+</ul>
+</li>
+</ul>
+<p>→ 그러나, 이렇게 구현하면 memory ineffective</p>
+<ul>
+<li><p>allocate가 이렇게 되어있는 상태에서 free한다고 가정하자.</p>
+</li>
+<li><p>point ) 뒤로는 절대로 안 돌아간다.</p>
+<ul>
+<li>중간중간 fere하게 되면 빈 공간이 생기는데 다시 절대 reuse할 수 있는 구현이 아님. 말 그대로 naive implementation의 경우임</li>
+<li>feed forward하며 alloc을 효율적으로 할 수 있으나 memory utilization
+<ul>
+<li>→ throughput은 좋으나 peek는 성능이 좋지 않아짐.</li>
+</ul>
+</li>
+<li>그냥 구동만 하면 되는거 아니냐? 하지만, memroy가 굉장히 중요한 작은 embedded환경에서는 절대 허용되지 않는다.</li>
+<li>system 관점에서 보면 작은 memory를 어떻게 utilize해서 꾸겨 넣을 것인가에 좌우된다.</li>
+</ul>
+</li>
+<li><p>1byte, 2byte로 표현할 수 있는 것을 32byte</p>
+<p>→ memory utilization이 maximize되지 않는다.</p>
+</li>
+</ul>
+<p>malloc을 직접 구현하며 ptr를 exercise, memory allocator 개념을 이해할 수 있을 것</p>
+<ul>
+<li><p>How do we know how much memory to free given just a pointer?</p>
+<ol>
+<li>Pointer</li>
+</ol>
+<ul>
+<li>ptr로 가리키고 있는 memory object를 free시킨다고 할 때, 그 memory object 크기가 얼만큼 되는지 어떻게 아느냐?</li>
+<li>free(ptr) : ptr이. 가리키는 object가 있는데, 이 object가 32byte라 하면</li>
+</ul>
+<p>free시키는 시점에 obj가 32b라는 것을 어떻게 아느냐?</p>
+</li>
+<li><p>How do we keep track of the free blocks?</p>
+<ol start="2">
+<li>어떤 free한 공간이 있는지 track하기</li>
+</ol>
+<ul>
+<li>heap이라는 공간은 앞서 이야기한대로 쭉 vm에서 allocate-free된 형태로 남아있다.</li>
+<li>free한 space들을 tracking해야 하는데 이를 어떻게 해야 하느냐?</li>
+<li>block 크기들은 가변적</li>
+</ul>
+</li>
+<li><p>What do we do with the extra space when allocating a structure that is smaller than the free block it is placed in?</p>
+<ol start="3">
+<li>free block에 allocate하려고 하는데 자료구조가 내가 받은 free block보다 작아서 그 block을 다 사용하지 못한다고 하면 extra space는 어떻게 할 것이냐?</li>
+</ol>
+<p>Ex. Free block하나를 할당 받았고 그사이즈는 64byte이다.</p>
+<p>내가 쓰려고 하는 data 공간은 48byte이다. 그럼 나머지 부분은 어떻게 할 것이냐?</p>
+<ol start="3">
+<li>얼마만큼 free하면 되는지도 알고 있어야 함</li>
+</ol>
+<p>free한 공간보다 작을 때 padding을 붙이거나 다른 공간을 사용하거나</p>
+<ul>
+<li>어떤 것을 가져다 선택할 것인가</li>
+<li>allocate된 것을 pool로 어떻게 return할 것인가.</li>
+</ul>
+</li>
+<li><p>How do we pick a block to use for allocation -- many might fit?</p>
+<ol start="4">
+<li>allocation하려 하는데 free block이 여러개 있다. 그럼 어떤 block을 선택할 것이냐?</li>
+</ol>
+<ul>
+<li>모두 free block인데 어떤 block을 선택할 것이냐?</li>
+</ul>
+</li>
+<li><p>How do we reinsert freed block?</p>
+<ol start="5">
+<li>free block 어떻게 return할 것이냐?</li>
+</ol>
+</li>
+</ul>
+<doc-anchor-target id="knowing-how-much-to-free">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#knowing-how-much-to-free">#</doc-anchor-trigger>
+        <span><strong>Knowing How Much to Free</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>For issue 1</p>
+<ul>
+<li>block 맨 앞에다가 word size를 4byte라고 하자.
+4byte로 되어 있는 크기에 무엇을 집어넣을 것인지 : header field, header</li>
+<li>block의 크기를 가져다 적을 것이다.</li>
+<li>Standard method
+<ul>
+<li>Keep the length of a block in the word preceding the block.
+<ul>
+<li>This word is often called the header field or header</li>
+</ul>
+</li>
+<li>Requires an extra word for every allocated block p0 p0 = malloc(4) 5 free(p0)  16 block size payload</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250454-5bd01bb2-7bf0-4258-b9f1-59cc0fd281dd.png" alt="Untitled 6" />
+    <figcaption class="caption">Untitled 6</figcaption>
+</figure>
+</p>
+<p>block의 크기 만큼을 free시켜주면 됨</p>
+<p>p0가 가리키는 block의 크기가 5였음을</p>
+<p>P0가 가리키는 word를 읽어 봄으로써 사이즈를 읽어내 deallocate할 수 있다.</p>
+<doc-anchor-target id="keeping-track-of-free-blocks">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#keeping-track-of-free-blocks">#</doc-anchor-trigger>
+        <span><strong>Keeping Track of Free Blocks</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>For 2nd issue</p>
+<ul>
+<li>free block을 어떻게 track할 것인가.</li>
+<li><strong>Method 1: Implicit list using length—links all blocks</strong></li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250456-bf7bab08-b6de-4a73-973d-0b2d6a15700a.png" alt="Untitled 7" />
+    <figcaption class="caption">Untitled 7</figcaption>
+</figure>
+</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">- block의 크기를 가지고 free block을 track하는 방법
+- 모든 block들 : 5 free block / 4 alloc block / 6 free block / 2 alloc block
+- 맨 앞 word size 앞에 적혀진 size
+    - Ptr를 heap의 맨 시작부터 읽기 시작하면 첫 번째 block의 크기이기 때문에 p에서 5를 더해주면 그 다음 block의 첫 번째 앞을 보게 되고, 4를 더해주면 다음 block 맨앞, 2 더해주면 다음 block맨 앞
+    
+    → logically linking 가능 : ptr값이 있으면 다음 다음 block을 계속하여 traverse 가능
+    
+- 모든 block을 traverse해보면서 free var tracking 가능
+- 단점) method1 : 모든 block을 linking하기 때문에 실제 우리가 필요한 건 allocated block보다는 free bock이다. 심지어 allocated block까지 traverse해야 하는 단점.
+    - 직접 free한 block으로 가고 싶지만 못한다 (모든 block 앞의 크기 정보를 가지고 모든 block을 traverse하다보니 linking할수는 있지만 free block만을 traverse는 불가능)</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><strong>Method 2: Explicit list among the free blocks using pointers 5462</strong></li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250457-fdafbd20-6fb5-45ab-9a9f-260ced2f5d16.png" alt="Untitled 8" />
+    <figcaption class="caption">Untitled 8</figcaption>
+</figure>
+</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">- 앞의 것과는 다름 : free block을 track하기 위해 link로 만든 것을 활용해서 모든 block을 traverse하는 앞의 것 / 앞의 size 정보를 사용해 다음 block으로 갔다
+- 그 다음의 free block을 가리키는 word를 할당함. :주소 정보 다음 word에 그 다음 free word의 주소값을 가지고 있다.
+- 앞의 모든 block들을 free
+
+단점) extra로 그 다음 free block을 가리키는 만큼의 extra memory 비용을 지불해야 함
+
+- &gt; 공간 효율이 떨어짐</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><strong>Method 3: Segregated free list</strong>
+<ul>
+<li>Different free lists for different size classes</li>
+<li>suffistigated than 1, 2 method</li>
+<li>free block size가 다양한 block들
+<ul>
+<li>→ 그러면 free block들을 관리할 때, 같은 크기의 group으로 묶어 class로 만들자.</li>
+<li>내가 요청하는 block의 크기가 작다고 하면, class1에 해당하는 block 중 하나를 찾고 크기가 크다고 하면 3에 해당하는 block 중 탐색</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Method 4: Blocks sorted by size</strong>
+<ul>
+<li>Can use a balanced tree (e.g. Red-Black tree) with pointers within each free block, and the length used as a key  17</li>
+<li>모든 block size로 balanced tree를 만들되 각각을 free block을 맏늘도록 하고 요구되는 크기보다 크기에 딱 맞는, sorted order로 되어 있는 balanced tree를 찾아낸다</li>
+<li>→ complicated, intelligent</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="implicit-free-lists">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-free-lists">#</doc-anchor-trigger>
+        <span><strong>Implicit free lists</strong></span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li>크기가 가변적인 block : 어떤 block은 가변적이더라도 어떤 chunk에 alignment 되어 있음 : 8byte-16byte-24byte 등 multiples of 8byte
+<ul>
+<li>→ 5byte malloc(payload) + 3byte padding = 8byte mallc</li>
+</ul>
+</li>
+<li>header : payload의 크기</li>
+<li>LSB : allocated or deallocated bit (1 : allocated / 0 : free)</li>
+</ul>
+<p>For example, if a block is imposed a double word alignemnt, the block size is a multiple of 8 and the 3 low order bits of the block size are always zero.</p>
+<ul>
+<li>31 … 4 3 2 1 0 / 29bit를 가지고 size를 표현함</li>
+<li>맨 끝 2 - 1 - 0 : 0th bit에서는 allocate or deallocate indicator, 실제로 2-1th bit는 unused형태</li>
+<li>Heap이라는 것은 결국 block의 집합이다 : free block 3 / block 3</li>
+</ul>
+<doc-anchor-target id="method-1-implicit-list">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#method-1-implicit-list">#</doc-anchor-trigger>
+        <span><strong>Method 1: Implicit List</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>Implicit list</p>
+<ul>
+<li>두 가지 정보를 가지고 있어야 함.
+<ul>
+<li>(1) 각각의 block은 status 정보를 가지고 있어야 함 : free or allocated</li>
+<li>(2) traverse하기 위해서는 ptr를 가지고 ptr size만큼을 더해주어야 하기에 각각의 size 정보를 가지고 있어야 함 : size</li>
+</ul>
+</li>
+<li>(가정) 주어진 block에 대해 앞서 이야기한 대로, size 정보가 앞에 존재한다.
+status 정보도 필요해서 각각을 가져다가 8byte씩 할당했다고 가정하자. (Word size : 8byte)
+<ul>
+<li>두 가지를 저장하기 위해 16byte spatial cost 지불</li>
+</ul>
+</li>
+<li>size와 allocation status를 16byte가 아니라 8byte만큼 저장할 수 있지 않을까?</li>
+</ul>
+<p>→ 각각 8byte word로 저장한다고 하면,</p>
+<ul>
+<li><p>1 million block * 2 * 8 = 16MB / 1 million block * 8 = 8MB</p>
+<ul>
+<li>8MB만큼의 비용을 더 지불해야 함. : 16byte로 저장해야 하는걸 8byte로 지불하자</li>
+<li>Block들은 alignment되어 있는데, 어떤 system architecture이느냐에 따라서 8byte or 16byte alignment되어 있을 것이다.</li>
+</ul>
+</li>
+<li><p>8 byte alignment되어 있다면 : block size가 8-16-24-32-48-56-64-…의 형식</p>
+<ul>
+<li>8 byte를 2진법으로 표현한다고 하면, 8byte = 64bit 00..001000
+<ul>
+<li>16byte = 0…010000</li>
+<li>32byte = 0…011000</li>
+</ul>
+</li>
+<li>→ 최하단 세 bit들은 항상 0이다.</li>
+<li>→ 그러면 이 안에서, 맨 마지막 bit를 allocated. Free status를 구분하기 위해 flag로 사용해도 되지 않을까? 어차피 alignment되어 있기 때문에 사용하지 않으니까, 저 장소에 embedding하자</li>
+</ul>
+</li>
+<li><p>1 : allocated / 0 : free / 나머지 bit는 size로 쓰면 됨</p>
+</li>
+<li><p>8byte가 alignment되는 unit이고 malloc(5)라고 하면
+1byte : size / allocation status
+나머지 5byte : payload
+그리고 2byte : padding
+(Spatial cost를 다음과 같이 줄일 수 있다)</p>
+</li>
+<li><p>For each block we need both <strong>size</strong> and <strong>allocation status</strong></p>
+<ul>
+<li>Could store this information in two words: wasteful!</li>
+</ul>
+</li>
+<li><p>Standard trick</p>
+<ul>
+<li>If blocks are aligned, some low-order address bits are always 0</li>
+<li>Instead of storing an always-0 bit, use it as a allocated/free flag</li>
+<li>When reading size word, must mask out this bit</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250458-1f66e16b-2237-4a19-9d78-dffdc6a137d9.png" alt="Untitled 9" />
+    <figcaption class="caption">Untitled 9</figcaption>
+</figure>
+</p>
+<p>Format of allocated and free blocks</p>
+<doc-anchor-target id="detailed-implicit-free-list-example">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#detailed-implicit-free-list-example">#</doc-anchor-trigger>
+        <span><strong>Detailed Implicit Free List Example</strong></span>
+    </h2>
+</doc-anchor-target>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250459-e7370048-89c9-46ae-9576-c0a60e5f03b0.png" alt="Untitled 10" />
+    <figcaption class="caption">Untitled 10</figcaption>
+</figure>
+</p>
+<ul>
+<li><p>word size : 4byte인 경우에 대해 설명해보자.</p>
+<ul>
+<li>block 각각이 8/16/32/16byte, word size information / LSB : 0 free 1 allocated</li>
+<li>dotted :double word에 대해 align된 point</li>
+<li>payload는 2word니까 allocate되어 있지만 사용되지 않는 부분</li>
+</ul>
+</li>
+<li><p>advantage : simplicity</p>
+</li>
+<li><p>Disadvantage :</p>
+<ul>
+<li>any operation requires a search of the free list, such a placing allocated blocks</li>
+<li>Free block을 찾기 위해 traverse를 계속 해야 함. -&gt; free list를 찾아야 하는 time overhead</li>
+</ul>
+</li>
+</ul>
+<p>여러 free block이 있을 때 어떤걸 선택할 것이냐?</p>
+<doc-anchor-target id="implicit-list-finding-a-free-block">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-list-finding-a-free-block">#</doc-anchor-trigger>
+        <span><strong>Implicit List: Finding a Free Block</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>First fit:
+<ul>
+<li><p>Search list from beginning, choose first free block that fits:</p>
+<ul>
+<li>block 처음부터 scanning을 쭉 함</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">p = start;
+while ((p &lt; end) &amp;&amp; // not passed end
+			((*p &amp; 1) || // already 
+			allocated(*p &lt;= len)))  // too small 
+			p = p + (*p &amp; -2); // goto next block(word addressed)</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>allocate되어 있다고 하면 무조건 skip하는 세번째 condition</p>
+<ul>
+<li>word 크기가 4byte였다고 하면, 32bit 중 31bit (size) + 1bit(1 or 0)</li>
+<li>0을 가져다 만드려면 and operation을 할 때</li>
+<li>11…110으로 된 operation : 2’s complement하면 -2를 가지고 and를 취하게 되면, 결국 *p ptr 값이 무슨 값이든간에 lsb는 무조건 0이 됨
+<ul>
+<li>→ 그 만큼의 크기를 더해준다는 의미로 jump해줌</li>
+</ul>
+</li>
+</ul>
+<p>만일) 1이라는 값과 non allocate였으면 *p&lt;=len 확인</p>
+</li>
+</ul>
+</li>
+<li><p>Can take linear time in total number of blocks (allocated and free)
+항상 앞에서부터 시작해야 하기에 느림</p>
+</li>
+<li><p>In practice it can cause “splinters” at beginning of list</p>
+</li>
+<li><p>free block을 찾기 위해 쭉 들어가 있는데 들어와서 찾고 들어와서 찾고 …</p>
+<ul>
+<li>찾아서 내가 필요로 하는 크기보다 작은것을 요구했음에도 처음부터 또 들어가 찾아내고</li>
+</ul>
+</li>
+<li><p>→ 항상 내가 한 번 찾으면 처음부터 search하고, 처음에 검색하고 그다음부터 쭉</p>
+</li>
+<li><p>allocation하기 전 free 한 부분을 찾는 것이 시작</p>
+</li>
+</ul>
+</li>
+<li><strong>Next fit:</strong>
+<ul>
+<li>Like first fit, but search list starting where previous search finished
+<ul>
+<li>처음부터 찾는게 아니라, 다음 부터 찾음</li>
+</ul>
+</li>
+<li>Should often be faster than first fit: avoids re-scanning unhelpful blocks
+<ul>
+<li>next fit은 앞에서부터 찾을 필요가 없어 일반적으로 first fit보다 빠름 : rescanning할 필요는 없으니까 반드시 그렇진 않음 : 이전에 할당한 것으로부터 free space가 생기면 앞에서 찾는게 더 빠를 수도 있음</li>
+</ul>
+</li>
+<li>Some research suggests that fragmentation is worse</li>
+</ul>
+</li>
+<li><strong>Best fit:</strong>
+<ul>
+<li>Search the list, choose the <strong>best</strong> free block: fits, with fewest bytes left over</li>
+<li>Keeps fragments small—usually improves memory utilization
+<ul>
+<li>공간적 utilization의 최대화 : 내가 요구하는 memory를 가장 근접하게, allocate했을 때 free block이 사용되지 않는 internal fragmentation을 찾는 것 : best fit</li>
+<li>left over 되는 block이 작은 것들</li>
+</ul>
+</li>
+<li>Will typically run slower than first fit
+<ul>
+<li>최선의 선택을 위해 처음부터 끝까지 다 뒤져봄 -&gt; 느리다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="implicit-list-allocating-in-free-block">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-list-allocating-in-free-block">#</doc-anchor-trigger>
+        <span><strong>Implicit List: Allocating in Free Block</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>free block을 찾아 splitting</p>
+</li>
+<li><p>Addblock(p,4) 6개가 빈 공간이기 때문에 4만큼을 그 공간에 할당</p>
+<ul>
+<li>allocate : 4 / freed 2 (나누어 주어야 함)</li>
+</ul>
+</li>
+<li><p>Allocating in a free block: splitting</p>
+<ul>
+<li>Since allocated space might be smaller than free space, we might want to split the block</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void addblock(ptr p, int len)
+{
+    intnewsize = ((len + 1) &gt;&gt; 1) &lt;&lt; 1;// round up to even 
+    int oldsize = *p &amp; -2;// mask out low bit
+    *p = newsize | 1;// set new length
+    if (newsize &lt; oldsize)
+				*(p+newsize) = oldsize - newsize;  22   // set length in remaining 
+} // part of block </code></pre>
+</doc-codeblock></div>
+<ul>
+<li>예전에 있던 oldsize = 6</li>
+<li>맨 밑 low bit를 mask out해주고
+새로운 size에는 일단 allocate되어 있으니가 allocate 되어 있음을 표시해줌</li>
+<li>len = 4. Len =5를 집어 넣어보고 round up to even을 확인해봐라.
+<ul>
+<li>double word alignment되어 4 byte의 multiple인데 4, 8, 12  -&gt; even number를 곱해줘야 함</li>
+<li>Masking이라고 해서 맨 끝에 alignment를 맞추어 줌 (mask out low bit)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="implicit-list-freeing-a-block">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-list-freeing-a-block">#</doc-anchor-trigger>
+        <span><strong>Implicit List: Freeing a Block</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>allocate : 비교적 simple</p>
+<ul>
+<li><p>내가 만족하는 free한 block을 찾을 때 까지, 앞에서 끝까지 다 scan해서 최적의 여분을 가장 적은 frag을 남기는 free를 찾던, allocation 한 후 split하면 됨.</p>
+</li>
+<li><p>Simplest implementation:</p>
+<ul>
+<li>Need only clear the “allocated” flag</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void free_block(ptr p) { 
+		*p = *p &amp; -2 
+}</code></pre>
+</doc-codeblock></div>
+</li>
+<li><p>But can lead to “false fragmentation”</p>
+<ul>
+<li>free는 복잡합 : false fragmentation
+<ul>
+<li>4를 free시키고 싶으면 4 word를 return해야 함</li>
+<li>memory allocator 입장에서 free를 볼 때, 최대한 합쳐서 큰 chunk를 많이 만들어 놓는게 좋다</li>
+</ul>
+</li>
+<li>malloc안에서 sbrk를 호출하여 brk라는 top of the heap를 늘려 줌
+<ul>
+<li>→ heap</li>
+<li>Contiguous한 공간이 없어 false fragmentation :
+<ul>
+<li>공간이 있음에도 없다고 보고받아 sbrk를 통해 늘려주게 됨.</li>
+</ul>
+</li>
+<li>그렇지 말고 fragment들끼리 합칠 수 있으면 합쳐야 함 : correlasing</li>
+<li>: 메모리 공간 효율적으로 사고하기</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250460-474af02f-4cbf-4aa8-b7c3-8dfcb813922b.png" alt="Untitled 11" />
+    <figcaption class="caption">Untitled 11</figcaption>
+</figure>
+</p>
+<p>free(p)</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250461-73985b82-90d5-4c8c-a4b0-b7167b231d93.png" alt="Untitled 12" />
+    <figcaption class="caption">Untitled 12</figcaption>
+</figure>
+malloc(p) → OOPS!</p>
+<ul>
+<li>P부분을 free 시켰다고 하자 : allocate bit를 free로
+<ul>
+<li>→ 지금과 같이 4개 / 2개로 분리됨.</li>
+<li>→ 5개짜리를 allocate할 수 없음 : 연속 5 free block이 없기 때문에 (false fragmentation)</li>
+<li>연속적으로 이 2개가 쪼개져있다 보니 allocate할 수 없음</li>
+</ul>
+</li>
+<li>Oops! There is enough free space, but the allocator won’t be able to find it</li>
+</ul>
+<doc-anchor-target id="implicit-list-coalescing">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-list-coalescing">#</doc-anchor-trigger>
+        <span><strong>Implicit List: Coalescing</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>coalesce
+<ul>
+<li>free할 때 그 다음에 있는 녀석을 합쳐주는 것 Or 내가 free할 때 걔랑도 합쳐 줌</li>
+<li>pt가 가진 obj가 앞과 뒤를 보고, free인지 확인한 후 합칠지 안 합칠지 결정.</li>
+</ul>
+</li>
+<li>join한다
+<ul>
+<li>내가 free하고자 하는 block의 앞과 뒤를 보고 -&gt; free하다면 합쳐주는 것</li>
+</ul>
+</li>
+<li>Join <strong>(coalesce)</strong> with next/previous blocks, if they are free</li>
+<li>Coalescing with next block</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250462-038ace45-0f90-4a65-9d2c-a353b2720bca.png" alt="Untitled 13" />
+    <figcaption class="caption">Untitled 13</figcaption>
+</figure>
+<br />
+free(p)</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250463-2b9c4db5-75e5-4436-b830-59be22f8a8a5.png" alt="Untitled 14" />
+    <figcaption class="caption">Untitled 14</figcaption>
+</figure>
+<br />
+- free(p) : 가상 주소를 가지고 빈 공간으로 free list를 return하는 상황으로 고려</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-c"><code v-pre class="language-c">void free_block(ptr p)
+{
+    *p = *p &amp; -2; // clear allocated flag 
+    next = p + *p; // find next block 
+    if ((*next &amp; 1) == 0) // add to this block if 
+        *p = *p + *next;    // not allocated 
+
+    }</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>코드 설명 :
+<ul>
+<li>Word size 4인 block : free할 때</li>
+<li>4 &amp; -2 연산 : 00000010, 11111101 +1 -&gt;11111110
+<ul>
+<li>Even한 double word로 alignment하여 값을 뽑아오고</li>
+<li>그 다음 block이 현재 pointer p에서 값을 더한 것이 다음 block</li>
+<li>그 block에 and operation : 다음 block이 free라고 하면</li>
+</ul>
+</li>
+<li>→ 그 값은 4에다가 next에 해당하는 2를 더해 값을 update해줌</li>
+<li>→ 다음 block에 있는 현재 free하단 block이랑 합침.</li>
+</ul>
+</li>
+<li>But how do we coalesce with previous block?
+<ul>
+<li>이전 block은 어떻게 합칠 것인가? (이 슬라이드에서는 forward)</li>
+<li>이전 block이 free인지를 봐야하는데, 이전 block을 reference할 수 있는 방법이 없다 : 문제 발생</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="implicit-list-bidirectional-coalescing">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-list-bidirectional-coalescing">#</doc-anchor-trigger>
+        <span><strong>Implicit List: Bidirectional Coalescing</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>간단하지만 유명하다</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250465-b1734d8c-ee52-474a-92fb-783f9cb33fb1.png" alt="Untitled 15" />
+    <figcaption class="caption">Untitled 15</figcaption>
+</figure>
+<figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250466-0392ddfc-2cf6-4eec-8600-7c5e11e47e6e.png" alt="Untitled 16" />
+    <figcaption class="caption">Untitled 16</figcaption>
+</figure>
+</p>
+<ul>
+<li><p><strong>Boundary tags [Knuth73] - bidirectional coalescing : 앞, 뒤 모두를 합치는 방법</strong></p>
+<ul>
+<li>Replicate size/allocated word at “bottom” (end) of free blocks</li>
+<li>Allows us to traverse the “list” backwards, but requires extra space</li>
+<li>Important and general technique!</li>
+</ul>
+</li>
+<li><p>원래 : 그 다음으로 forward하며 traverse하는 방법은 현재 block의 크기 header를 알면 그 다음 block의 시작 주소를 알 수 있었음</p>
+<ul>
+<li>double word alignment를 해서 그 다음이 누군지 addressing할 수 있었음</li>
+</ul>
+</li>
+<li><p>header라는 block에 이 block의 크기라는 hint를 심어둔 것.</p>
+<ul>
+<li>이전 block size를 알 수 있는 방법이 있다면 이전 block을 찾아볼 수 있음</li>
+<li>→ header가 아니라 footer를 가져다 boundary tag 삽입</li>
+</ul>
+<p>: 각 block의 bottom에다 size에 해당하는 word만큼을 복제해보자</p>
+</li>
+<li><p>*p : p를 free한다고 하자</p>
+<ul>
+<li>forward :</li>
+<li>backward.: 이전의 word의 ptr 값을 보면, 이전 block의 크기를 알 수 있기 때문에 전의 시작 주소를 알 수 있음 -&gt; LSB 값을 보고 이전 block이 free인지 allocate인지 알 수 있음</li>
+</ul>
+</li>
+<li><p>단점 : extra space 필요</p>
+<ul>
+<li>사실 backward로 갈 수 있는 size에 대한 정보를 word 크기만큼 추가적으로 사용한 것 : 실제 data를 저장할 공간 payload를 backward traverse 가능한 meta info로 활용한 것이기에 실제 extra space heap space는 줄게 됨.</li>
+</ul>
+</li>
+</ul>
+<doc-anchor-target id="constant-time-coalescing-case">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#constant-time-coalescing-case">#</doc-anchor-trigger>
+        <span><strong>Constant Time Coalescing Case</strong></span>
+    </h2>
+</doc-anchor-target>
+<p>coalescing 하는 방법</p>
+<ul>
+<li>heap안에서 이전과 이후,</li>
+</ul>
+<p>각각으 ㅣ상황을 네가지로 분리</p>
+<ol>
+<li><p>이전 block과 다음 block이 allocate되어 있는 block</p>
+</li>
+<li><p>Alloc - free</p>
+</li>
+<li><p>Free - alloc</p>
+</li>
+<li><p>Free - free</p>
+</li>
+</ol>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250467-3e2bdbe9-c937-463b-a863-b7ec30143edc.png" alt="Untitled 17" />
+    <figcaption class="caption">Untitled 17</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="case-1">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#case-1">#</doc-anchor-trigger>
+        <span>Case 1</span>
+    </h3>
+</doc-anchor-target>
+<p>Alloc-alloc
+-&gt; coalescing자체가 발생하지 않음</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250468-b8224e5e-5eed-40a0-8831-99506d3527bf.png" alt="Untitled 18" />
+    <figcaption class="caption">Untitled 18</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="case-2">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#case-2">#</doc-anchor-trigger>
+        <span>Case 2</span>
+    </h3>
+</doc-anchor-target>
+<p>Allocate - free
+-&gt; n(1), m2(0)이므로 n+m2 (0) merge</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250470-7ecc8e68-37e2-4e86-a8d2-8e0a4bfc5a17.png" alt="Untitled 19" />
+    <figcaption class="caption">Untitled 19</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="case-3">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#case-3">#</doc-anchor-trigger>
+        <span>Case 3</span>
+    </h3>
+</doc-anchor-target>
+<p>case 2와 동일
+-&gt; Size 정보 update</p>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250471-e1f216ef-0567-4dc9-8a44-5b4fcd640aa1.png" alt="Untitled 20" />
+    <figcaption class="caption">Untitled 20</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="case-4">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#case-4">#</doc-anchor-trigger>
+        <span>Case 4</span>
+    </h3>
+</doc-anchor-target>
+<p>앞, 뒤 둘다 free 인 경우에 각각의 block size를 더해 n + m1 + m2 (0)</p>
+<ul>
+<li>이미 allocate 되어 있었다 하면 앞 뒤를 합쳐 first fragmentation 최고화, contiguous 하게 최대한 크게 만들어서 free list를 구축해 free block 발견</li>
+</ul>
+<p><figure class="content-center">
+    <img src="https://user-images.githubusercontent.com/46957634/183250472-4bda241a-68c6-4194-811a-764517217d1a.png" alt="Untitled 21" />
+    <figcaption class="caption">Untitled 21</figcaption>
+</figure>
+</p>
+<doc-anchor-target id="disadvantages-of-boundary-tags">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#disadvantages-of-boundary-tags">#</doc-anchor-trigger>
+        <span><strong>Disadvantages of Boundary Tags</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li><p>Internal fragmentation</p>
+<p>이전에는 bounday point가 없었다.</p>
+<p>extra로 padding을 payload로 사용할 수 있었는데 동일한 정보임에도 duplicate를 해야 함</p>
+<p>→ internal fragmentation 발생 확률 커짐</p>
+<p>만일 그래프같은 연산을 한다면 node, edge에서 node가 작은 크기의 memory alloc해준다고 하자</p>
+<p>→ 수 byte를 alloc하지만 앞 뒤 header footer를 둠으로서 상대적으로 payload 크기가 작아 extra overhead를 지불해야 함</p>
+</li>
+<li><p>Can it be optimized?</p>
+<ul>
+<li>Which blocks need the footer tag?</li>
+<li>What does that mean?</li>
+</ul>
+</li>
+<li><p>footer를 사용하 back traverse</p>
+</li>
+<li><p>free할 때 관심있는 것은 : 이전 block이 free일 때만 corelasing</p>
+<ul>
+<li>앞 block이 allocate인지 구분 :</li>
+</ul>
+</li>
+<li><p>Free(p) : boundary tag를 보고 나서 allocate/free 구분</p>
+<ul>
+<li>block 자체가 free였으면 바로 이전까지는 쉽게 갈 수 있음</li>
+<li>만일 allocate되어있다면 합칠 이유가 없음
+(allocate되어 있으면 footer 필요 없음 = 앞으로 갈 일이 없음)</li>
+</ul>
+</li>
+</ul>
+<p>→ trick : 이전에 있는게 free 아니라면 footer가 굳이 필요없다.</p>
+<ul>
+<li>현재 이전의 block이 free인지 아닌지 식별할 bit를 보고, 만일 이전의 block이 allocate되어 있다면 안에서 질책</li>
+<li>free block -&gt; footer / allocated -&gt; footer 굳이 필요 없음.</li>
+<li>free인지는 그 이전으로 돌아가야 함.</li>
+</ul>
+<doc-anchor-target id="summary-of-key-allocator-policies">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#summary-of-key-allocator-policies">#</doc-anchor-trigger>
+        <span><strong>Summary of Key Allocator Policies</strong></span>
+    </h1>
+</doc-anchor-target>
+<ul>
+<li><p>Placement policy:</p>
+<ul>
+<li>First-fit, next-fit, best-fit, etc.</li>
+<li>Trades off lower throughput for less fragmentation</li>
+<li>Interesting observation: segregated free lists (next lecture) approximate a best fit placement policy without having to search entire free list</li>
+</ul>
+</li>
+<li><p>Splitting policy:</p>
+<ul>
+<li>When do we go ahead and split free blocks?</li>
+<li>How much internal fragmentation are we willing to tolerate?</li>
+</ul>
+</li>
+<li><p>Coalescing policy:</p>
+<ul>
+<li>Immediate coalescing: coalesce each time free is called</li>
+<li>Deferred coalescing: try to improve performance of free by deferring coalescing until needed. Examples:
+<ul>
+<li>Coalesce as you scan the free list for malloc</li>
+<li>Coalesce when the amount of external fragmentation reaches some 32 threshold</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>여러개가 동시에 free한다고 하면 새로 써 주고 free</p>
+<p>필요하면 처믐부터 scan해가며 할 수도 있을 것</p>
+<doc-anchor-target id="implicit-lists-summary">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-lists-summary">#</doc-anchor-trigger>
+        <span><strong>Implicit Lists: Summary</strong></span>
+    </h2>
+</doc-anchor-target>
+<ul>
+<li>Implementation: very simple</li>
+<li>Allocate cost:
+<ul>
+<li>linear time worst case</li>
+</ul>
+</li>
+<li>Free cost:
+<ul>
+<li>constant time worst case</li>
+</ul>
+</li>
+<li>even with coalescing</li>
+<li>Memory usage:
+<ul>
+<li>will depend on placement policy</li>
+<li>First-fit, next-fit or best-fit</li>
+</ul>
+</li>
+<li>Not used in practice for malloc/free because of linear-time allocation
+<ul>
+<li>used in many special purpose applications</li>
+</ul>
+</li>
+<li>However, the concepts of splitting and boundary tag coalescing 33 are general to all allocators</li>
+</ul>
+
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../tags/cs/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>cs</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../tags/os/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>os</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../tags/system-programming/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>system-programming</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results />
+                            </div>
+                            <footer class="clear-both">
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../9-thread-lv-parallelism/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">[SP] 9. Thread-​Level Parallelism</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../6-sp-dynamic-memory-alloc-adv/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">[SP] 11. Dynamic Memory Allocation: Advanced Concepts</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2020 - 2022 KyuHwan Shim, All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script>window.__DOCS__ = { "title": "[SP] 10. Dynamic Memory Allocation: Basic Concepts", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: true }</script>
+</body>
+</html>
