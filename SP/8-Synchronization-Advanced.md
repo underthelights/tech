@@ -506,11 +506,9 @@ void echo_cnt(int connfd)
 thread safe하다의 의미가 무엇인지 개념적으로 배워보자.
 - 모든 함수가 safe하지도 unsafe하지도 않다.
 - Functions called from a thread must be **thread-safe**
-    
     **: A function is thread-safe**  thread에서 호출된 함수가 thread safe하다 
     ****$\iff$
     **it will always produce correct results when called repeatedly from multiple concurrent threads** 여러 thread가 concurrently 호출하고, 각 thread들이 excution flow에 따라 항상 correct한 결과가 나온다.
-    
 - correct한 것이란: 추상적 개념으로 thread safe : 
 내가 expect한 결과대로 나오면 safe한데
 expected 결과로 나오지 않는다면 unsafe
@@ -571,7 +569,8 @@ ex. 격투기에 쓰이는 여러 가지 기술처럼 프로그래밍도 처음�
     		next = seed; 
     }
     ```
-        - next를 static하게 공유하게 해 놓는다. → deterministic하게 시작한 처음의 seed가 1이니까 순서대로 나온다. (매 invocation마다 state를 keep하는 형태로 구현)
+    - next를 static하게 공유하게 해 놓는다. 
+        - → deterministic하게 시작한 처음의 seed가 1이니까 순서대로 나온다. (매 invocation마다 state를 keep하는 형태로 구현)
     - seed를 바꾸는 srand함수
         - 문제가 되는 이유: 임의의 번호 1 3 5 7 9 생산한다고 가정
         - seed가 1부터 시작, 2씩 더하여 리턴하는 함수 srand
@@ -579,23 +578,17 @@ ex. 격투기에 쓰이는 여러 가지 기술처럼 프로그래밍도 처음�
         - correct하지 않다. / thread safe하지 않다.
     - 왜 이렇게 프로그램을 짰는가? 모든 것을 thread safe하게 만들면 되는게 아닌가? 의문
 ## Thread-Safe Random Number Generator
-Rand에서는 parameter로 void로 넘어갔지만
+- Rand에서는 parameter로 void로 넘어갔지만
 - nextp pointer : 내 seed와 공유되는 변수가 아닌 것
     - Rand_r caller에서 선언한 local var의 ptr를 넘겨주기 때문에 자신 seed가지고 increment
-    → thread unsafe한 것을 safe하게 바꾸어 줄 수 있다.
-    → arg 의 일부로 state를 넘겨라
-    
+    - → thread unsafe한 것을 safe하게 바꾸어 줄 수 있다.
+    - → arg 의 일부로 state를 넘겨라
 - Pass state as part of argument / arg 의 일부로 state를 넘겨라
 - and, thereby, eliminate global state
+    - next는 thread들이 모두 호출할 수 있다.
+    - 여러 thread들이 각자 공유하고 있기 때문에 생기는 문제
+    - → global state가 발생하지 않도록 만드는 방법
     
-    next는 thread들이 모두 호출할 수 있다.
-    
-    여러 thread들이 각자 공유하고 있기 때문에 생기는 문제
-    
-    → global state가 발생하지 않도록 만드는 방법
-    
-
-
     ```c
     /* rand_r - return pseudo-random integer on 0..32767 */
     int rand_r(int *nextp)
@@ -629,16 +622,12 @@ char *ctime_ts(const time_t *timep, char *privatep)
     return privatep;
 }
 ```
-
-lock and copy
-
+- `lock and copy`
 - `ctime :` 현재의 시간을 가져다 return해주는 function (from time_t struct)
     - global variable로 되어 있는데 이를 읽어 오는 것 (by system call)
-    - ctime을 수행하고 읽어오는 사이에 우연치 않게 interrupt 걸려 switch된다면
-        
-        → 내가 호출한 시점이 아닌 다음 시점에 ctime으로 내용이 바뀔 수 있다.
+    - ctime을 수행하고 읽어오는 사이에 우연치 않게 interrupt 걸려 switch된다면        
+        - → 내가 호출한 시점이 아닌 다음 시점에 ctime으로 내용이 바뀔 수 있다.
         나는 모르고 interrupted 된 시간으로 return받을 수 있다.
-        
 - (ctime 자체가 기지고 있는 문제) 시간이 흘르며 s1→e1 도중 s2→e2에서 time이 들어간다.
     - 함수 자체가 문제 있음 → lock : breakable하지 않게, atomic하게 잡아 중간에 누군가가 interleaving하여 들어오지 않게 함.
     - lock을 잡고 return되면 copy하여 줌 : lock을 잡았기 때문에 이를 풀어야지 들어갈 수 있음
@@ -649,7 +638,6 @@ lock and copy
     - fix2 : ctime을 그대로 쓰되 mutex lock : ctime_ts를 부르는 caller가 있으니가, 해당 caller는 call by reference를 그대로 받을 수 있다.
 
 ## Thread-Unsafe Functions (Class 4)
-
 - Calling thread-unsafe functions
     - Calling one thread-unsafe function makes the entire function that calls it thread-unsafe
     - Fix: Modify the function so it calls only thread-safe functions
@@ -675,21 +663,19 @@ $\iff$ it accesses no shared variables when called by multiple threads.
 
 ## Thread-Safe Library Functions
 - All functions in the Standard C Library (at the back of your K&R text) are thread-safe
-    - Examples: malloc, free, printf, scanf
+    - Examples: `malloc, free, printf, scanf`
         - printf는 thread-safe하긴 하다 (여러 thread 동시접근시) / but not async-signal-safe
         → NOT reentrant
 - Most Unix system calls are thread-safe, with a few exceptions:
-    
     ![Untitled](8/Untitled_4.png)
     
 
 # One worry: Races
-
 - A **race** occurs when correctness of the program depends on one thread reaching point x before another thread reaches point y
-thread라는 fn 실행하여 call by reference로 해서 들어와서, I는 main thread의 local variable -> 주소값을 넘김
-→ 새로 생성된 thread는 그 주소값을 myid라는 local variable을 stack에 copy하고 print해줌
-
-- If) n=2→ iteration은 2번돈다.
+    - thread라는 fn 실행하여 call by reference로 해서 들어와서, I는 main thread의 local variable 
+    - -> 주소값을 넘김
+    - → 새로 생성된 thread는 그 주소값을 myid라는 local variable을 stack에 copy하고 print해줌
+- If) $n=2$ → iteration은 2번돈다.
 
 ```c
 // race.c 
@@ -716,18 +702,16 @@ void *thread(void *vargp)
 ```
 
 ## Race Illustration
-I라는 것을 dereference하여 print하려고 프로그램을 작성했는데 myid가 1이 나올수도 있다
-→ myid가 0인줄 알고 실행했는데 i=1로 증가시키면 그 주소값을 보고 있기 때문에 0이 아닌 1이 print된다
+- i라는 것을 dereference하여 print하려고 프로그램을 작성했는데 myid가 1이 나올수도 있다
+    - → myid가 0인줄 알고 실행했는데 i=1로 증가시키면 그 주소값을 보고 있기 때문에 0이 아닌 1이 print된다
 - **이런 상황이 존재하면 thread간 race가 있다.**
-잘못된 상황이 발생하면
-
+- 잘못된 상황이 발생하면
 ```c
 for (i = 0; i < N; i++)
     Pthread_create(&tid[i], NULL, thread, &i);
 ```
 
 ![Untitled](8/Untitled_5.png)
-
 - between increment of `i` in main thread - dereference of `vargp` in peer thread
     - If dereference happens while i = 0, then OK
     - Otherwise, peer thread gets wrong id value
@@ -934,10 +918,8 @@ V(s0);
 - No way for trajectory to get stuck
 - Processes acquire locks in same order
 - Order in which locks released immaterial
-
 - 순서를 바꾸어 수행하게 되면 → forbid region이 변화함
 - overlap되는 부분을 들어가지 않으면 됨.
-
 - (여담) 김영재 교수님석사 시절,
     - thread가 여러개 돌아가는데 서로 msg 주고 받는 프로그램 → 정말 간헐적으로 생김
     - 내가 짠 sw위에 benchmark를 돌리는데, 어떤 complexity로 돌리느냐에 따라서 정말 잘 돌아가거나 천번에 한번 안 돌아가거나 등 코드가 복잡해지다 보니 나도 모르게 실수하기도 한다 (deadlock 등)

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714578505308">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714581951576">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -34,12 +34,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.714578505308" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.3.0.714581951576" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714578505308" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714578505308" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.714578505308" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.714581951576" defer></script>
     <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -242,20 +242,20 @@
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>So far, we’ve used threads to deal with I/O delays §</p>
+<li><p>So far, we’ve used threads to deal with I/O delays </p>
 <p>(기존) single.multi,manicore 신경 안쓰고 풀었음</p>
 <ul>
 <li>지금까지 봤던 것 : CS에 여러가지가 들어갈 수 없으니까 한 thread가 들어가 있을 때 다른 thread가 들어가지 못하게 하여 sync문제 해결</li>
 <li>e.g., one thread per client to prevent one from delaying another -</li>
 </ul>
 </li>
-<li><p>Multi-core/Hyperthreaded CPUs offer another opportunity §</p>
+<li><p>Multi-core/Hyperthreaded CPUs offer another opportunity </p>
 <ul>
-<li>Spread work over threads executing in parallel §</li>
+<li>Spread work over threads executing in parallel </li>
 <li>Happens automatically, if many independent tasks
 independent task를 가지고 있어 실행하게 함
 <ul>
-<li>e.g., running many applications or serving many clients §</li>
+<li>e.g., running many applications or serving many clients </li>
 </ul>
 </li>
 <li>Can also write code to make one big task go faster
@@ -357,8 +357,8 @@ thread끼리 공유하는 자료구조 : parallel하게 완전히 실행되기�
 </li>
 <li><p>Partition values 1, ..., n-1 into t ranges</p>
 <ul>
-<li><span class="math">\frac n t</span> values in each range §</li>
-<li>Each of t threads processes 1 range §</li>
+<li><span class="math">\frac n t</span> values in each range </li>
+<li>Each of t threads processes 1 range </li>
 <li>For simplicity, assume n is a multiple of t</li>
 </ul>
 </li>
