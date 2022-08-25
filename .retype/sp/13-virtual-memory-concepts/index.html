@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714720187849">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -15,30 +14,29 @@
     <meta name="description" content="Untitled" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="/tech/sp/13-virtual-memory-concepts/" />
+    <link rel="canonical" href="https://tech/sp/13-virtual-memory-concepts/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/tech/sp/13-virtual-memory-concepts/">
+    <meta property="og:url" content="https://tech/sp/13-virtual-memory-concepts/">
     <meta property="og:title" content="13. Virtual Memory: Concepts">
     <meta property="og:description" content="Untitled">
-    <meta property="og:image" content="/tech/sp/13/untitled.png">
+    <meta property="og:image" content="https://tech/sp/13/untitled.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/tech/sp/13-virtual-memory-concepts/">
+    <meta property="twitter:url" content="https://tech/sp/13-virtual-memory-concepts/">
     <meta property="twitter:title" content="13. Virtual Memory: Concepts">
     <meta property="twitter:description" content="Untitled">
-    <meta property="twitter:image" content="/tech/sp/13/untitled.png">
+    <meta property="twitter:image" content="https://tech/sp/13/untitled.png">
 
-    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.714720187849" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
     <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -206,6 +204,11 @@
         <span>13. Virtual Memory: Concepts</span>
     </h1>
 </doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../categories/system-programming/">System Programming</a></div>
+</div>
+
 <doc-anchor-target id="address-spaces">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#address-spaces">#</doc-anchor-trigger>
@@ -723,7 +726,17 @@ Working set &gt; 내가 가진 main memory size
 <li>MMU checks these bits on each access</li>
 </ul>
 
-                                
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../tags/system-programming/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>system programming</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results />
                             </div>

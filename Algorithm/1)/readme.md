@@ -1,8 +1,8 @@
 ---
-title: "1. Intro & Complexity"
+# title: "1. Intro & Complexity"
 excerpt: "Algorithm"
 slug: "Algorithm"
-layout: post
+
 category: "CS", "Algorithm"
 lang: en
 tags: ["Algorithm", "SG"]

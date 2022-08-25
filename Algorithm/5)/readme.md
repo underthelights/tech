@@ -1,8 +1,8 @@
 ---
-title: "5. Greedy"
+# title: "5. Greedy"
 excerpt: "Algorithm"
 slug: "Algorithm"
-layout: post
+
 category: "CS", "Algorithm"
 lang: en
 tags: ["Algorithm", "SG"]

@@ -1,8 +1,8 @@
 ---
-title: "고급생명과학 정리"
+# title: "고급생명과학 정리"
 excerpt: "충남과학고등학교 류수정 선생님 고급생명과학 수업"
 slug: "biology-3-hyper-by-ryu"
-layout: post
+
 category: "biology"
 lang: en
 tags: ["biology", "cnsh"]
@@ -12,7 +12,7 @@ draft: false
 
 ### BIOLOGY_hyper
 
-고급생명과학 @ [Chungnam Science High School](cnsh.cnehs.kr)
+고급생명과학 @ [Chungnam Science High School](https://cnsh.cnehs.kr)
 Prof. Sujeong Ryu
 
 #### Contents

@@ -1,6 +1,6 @@
 ---
-layout: article
-title: [SP] 11. Dynamic Memory Allocation: Advanced Concepts
+# 
+# # title: [SP] 11. Dynamic Memory Allocation: Advanced Concepts
 tags: System Programming
 category: System Programming
 picture_frame: shadow
@@ -42,22 +42,16 @@ Youngjae Kim (PhD)
 - Still need boundary tags for coalescing
 - Luckily we track only free blocks, so we can use payload area
     - lucky하게도 free list만 관리 가능 → payload 영역 사용의 단점
-
 - Logically:
-    
     ![Untitled](11/Untitled_2.png)
-    
 - Physically: blocks can be in any order AB
-    
     ![Untitled](11/Untitled_3.png)
     
 
 ## Allocating From Explicit Free Lists
 
-Doubly linked list로 연결되어있다고 하자 :
-
-회색 해당한 만큼을 allocate → free list에 있을 필요 없으므로 split하고 남은 block과 연결해줌
-
+- Doubly linked list로 연결되어있다고 하자 :
+    - 회색 해당한 만큼을 allocate → free list에 있을 필요 없으므로 split하고 남은 block과 연결해줌
 - ptr update를 통해 앞에서부터/뒤에서부터 연결, splitting
 
 ![Untitled](11/Untitled_4.png)
@@ -74,19 +68,13 @@ Doubly linked list로 연결되어있다고 하자 :
     맨 앞에다 free block을 가져다 연결시켜줌
     - Pro: simple and constant time
     - Con: studies suggest fragmentation is worse than address ordered
-    
 - Address-ordered policy
     - Insert freed blocks so that free list blocks are always in address order:
         - `addr(prev) < addr(curr) < addr(next)`
     - Con: requires search
-    - Pro: studies suggest fragmentation is lower than LIFO
-    
-    2. Address ordered policy
-    
+    - Pro: studies suggest fragmentation is lower than LIFO    
     - insert되는 block들이 작은 주소부터 높은 주소 순으로 sorting
-    
-    → addr ordered 방법보다 fragmentation 경감
-    
+        - → addr ordered 방법보다 fragmentation 경감
     - 실제 allocation할 때 어떤 block을 allocation하느냐를 Allocation해야 하기 때문에, address에 따라 순서대로 search하며 선택해야 하는 문제가 있음
 
 ## Freeing With a LIFO Policy (Case 1)
@@ -133,10 +121,9 @@ Doubly linked list로 연결되어있다고 하자 :
 
 ## Explicit List Summary
 
-모든 block을 뒤지지 않아 좀 더 빠른 속도를 가지지만 좀 복잡함 : free state 관리 구현
+> 모든 block을 뒤지지 않아 좀 더 빠른 속도를 가지지만 좀 복잡함 : free state 관리 구현
 
 - block의 크기가 최소 5word 이상이어야 함
-
 - Comparison to implicit list:
     - Allocate is linear time in number of free blocks instead of all blocks
         - Much faster when most of the memory is full
@@ -148,15 +135,13 @@ Free block들을 ptr로 연결하여 ll로 관리함
     - Keep multiple linked lists of different size classes, or possibly for different types of objects
     - LIFO queue
     - 단점 : free block을 link했지만 각 block 크기 가변적
-        
-        → fragmentation이 작은 block을 찾으려면 best fit policy에 따라 처음부터 끝까지 뒤져봐야 함.
+        - → fragmentation이 작은 block을 찾으려면 best fit policy에 따라 처음부터 끝까지 뒤져봐야 함.
         
 
 # Segregated Free List
 
 - 어떻게 segregate : n개의 size class를 만들어 n개의 free block을 안에다 집합
-    
-    → 다른 크기의 size class에 따라서 각각 다른 free list 관리하는 기법
+    - → 다른 크기의 size class에 따라서 각각 다른 free list 관리하는 기법
     
 
 ## Segregated List (Seglist) Allocators
@@ -167,34 +152,23 @@ Free block들을 ptr로 연결하여 ll로 관리함
 - Often have separate classes for each small size
 - For larger sizes: One class for each two-power size
 - 이전 explicit free list : 하나의 단일 lifo queue
-    
-    → 지금 : 각각의 size을 가지는 list
-    
+    - → 지금 : 각각의 size을 가지는 list
 - 장점 : best fit - fragmentation 최소화할 수 있는 block을 찾았다면 여기서는 class 별 로 나누었기에 내게 맞는 class를 찾을 수 있는 기법
 
 ## Seglist Allocator
 
-malloc(n)
-
-새롭게 요청된 메모리로부터 n개의 byte block 할당.
-
+`malloc(n)`
+> 새롭게 요청된 메모리로부터 n개의 byte block 할당.
 ![Untitled](11/Untitled_15.png)
-
 - Given an array of free lists, each one for some size class
 - To allocate a block of size n:
     - Search appropriate free list for block of size m > n
     처음부터 찾는다 : m>n인 m의 크기를 가진 free list를 찾는다
         - ex. malloc(4)라고 하면 4를 수용하는 block을 가진 class를 찾음
-            
-            → block이 있는 경우는 block할당, 나머지 frag는 집어넣음
-            
+            - → block이 있는 경우는 block할당, 나머지 frag는 집어넣음
             - malloc(6)을 요청했다면 5-8 class에서 할당받는다.
-                
-                → 8 size block 중 나머지 2개는 1-2class로 이동한다.
-                
-            
-            (구현 별 문제 : 나머지 fragment를 어떻게 처리할 것인가. 앞에다 붙이는게 빠를수도 있다 (LIFO니까))
-            
+                - → 8 size block 중 나머지 2개는 1-2class로 이동한다.
+            - (구현 별 문제 : 나머지 fragment를 어떻게 처리할 것인가. 앞에다 붙이는게 빠를수도 있다 (LIFO니까))
         - m payload, n 실제 class의 size
         Payload를 고려하는 것에 따라 m>=n
     - If an appropriate block is found:
@@ -202,16 +176,13 @@ malloc(n)
     - If no block is found, try next larger class
     만일 block size가 없다면 더 큰 class로 이동
     - Repeat until block is found
-    
 - If no block is found:
     - Request additional heap memory from OS (using sbrk())
     - Allocate block of n bytes from this new memory
     - Place remainder as a single free block in largest size class.
-    
 - To free a block:
     - Coalesce and place on appropriate list
         - block의 free : 앞, 뒤를 보고 coalesce
-
 - Advantages of seglist allocators
     - **Higher throughput) malloc을 할 때 성능이 좋다**
         - log time for power-of-two size classes
@@ -221,8 +192,6 @@ malloc(n)
             - 앞에서부터 찾더라도 나보다도 큰 공간이지만 나중에 보니 fragmentation을 최소화할 수 있는 block이 있을 수도 있다.
         - Extreme case: Giving each block its own size class is equivalent to best-fit.
             - 모든 각각의 block마다 size class를 두고 나서 best fit 해당할수도 있으나 class를 너무 많이 뽑아야 함.
-        
-- 
 
 ## More Info on Allocators
 
@@ -235,17 +204,12 @@ malloc(n)
 
 ## Implicit Memory Management: Garbage Collection
 
-integer pointer
-
+> integer pointer
 - int type 128 byte (32 * 4byte) (heap에 할당)
 - stack에 할당 (local variable)
 - address space를 보면
-    
     ![Untitled](11/Untitled_16.png)
-    
-
-실제 사용하지 않는 공간임에도 불구하고 자리를 차지함
-
+> 실제 사용하지 않는 공간임에도 불구하고 자리를 차지함
 - garbage collection : 자동으로 heap에 할당된 storage들에 대한 reclamation
 - Garbage collection: automatic reclamation of heap-allocated storage—application never has to free
     
@@ -255,7 +219,6 @@ integer pointer
     		return; /** p block is now garbage */
     }
     ```
-    
 - Common in many dynamic languages:
     - Python, Ruby, Java, Perl, ML, Lisp, Mathematica
 - Variants (“conservative” garbage collectors) exist for C and C++
@@ -263,35 +226,24 @@ integer pointer
 
 ## Garbage Collection
 
-c에서의 garbage collection 구현의 어려움
-
+> c에서의 garbage collection 구현의 어려움
 - How does the memory manager know when memory can be freed?
 내가 할당한 memory allocation이 runtime시에 언제 free될 것이냐
     - In general we cannot know what is going to be used in the future since it depends on conditionals
     - But we can tell that certain blocks cannot be used if there are no pointers to them
     - = program이 어떻게 실행될지 execution order를 정확히 모르면 모른다.
     그러나 적어도, heap에 할당된 memory object를 point하는 ptr가 없다면 해당 allocated block은 사용되지 않는다.
-    
-    (point하는 ptr가 없으니까 나중에 garbage collect해도 되는구나)
-    
-
-- Must make certain assumptions about pointers
-    
-    
-    1. memory int type에 있는 변수 안의 값이 ptr 일수도 아닐수도 있다.
-    
-    - Memory manager can distinguish pointers from non-pointers
-    - ptr 는 다른 memory obj를 가리키는 address일수도, int일수도 있으나 이를 구분할 방법은 c에서는 없음.
-    - memory manager가 할 수 있다고 가정
-    
+    - (point하는 ptr가 없으니까 나중에 garbage collect해도 되는구나)
+- Must make certain assumptions about pointers    
+    1. memory int type에 있는 변수 안의 값이 ptr 일수도 아닐수도 있다.    
+        - Memory manager can distinguish pointers from non-pointers
+        - ptr 는 다른 memory obj를 가리키는 address일수도, int일수도 있으나 이를 구분할 방법은 c에서는 없음.
+        - memory manager가 할 수 있다고 가정
     2. 어떤 block이든간에 시작을 point함
-    
-    - All pointers point to the start of a block
-    
+        - All pointers point to the start of a block
     3. type casting같이 ptr 숨김을 못한다.
-    
-    - Cannot hide pointers
-    - (e.g., by coercing them to an int, and then back again)
+        - Cannot hide pointers
+        - (e.g., by coercing them to an int, and then back again)
 
 ## Classical GC Algorithms
 
@@ -309,28 +261,20 @@ c에서의 garbage collection 구현의 어려움
     - Jones and Lin, “Garbage Collection: Algorithms for Automatic Dynamic Memory”, John Wiley & Sons, 1996. Bryant and O’Hallaron, Computer Systems: A Programmer’s Perspective, Third Edition
 
 ## Memory as a Graph
-
-grapy로 표현 : heap memory object로 만든 direct graph
-
+> grapy로 표현 : heap memory object로 만든 direct graph
 - 어떤 ds를 만들었는데 heap 안에 있는 object를 stack밖에서 point하는 경우
     - root node는 heap 안에 있는 것을 가리키는 형상
 - direct graph :
     - 모종의 자료구조로 인해 binary tree를 heap 안에서 만들었다고 하면 Root로부터 시작하여 heap 안의 object를 point하는 direct graph
 - 어느 순간에 가게 되면 외부에서 가리키는 ptr이 없어지는 경우도 존재.
 - ex. heap에는 이미 할당되어 있지만 함수가 return되며 point하는 local var이 사라짐
-    
-    → not-reachable garbage 생성
-    
-    heap node는 이런식으로 tree로 표현되지만 실제로는 1dim array : 어떤 부분은 free하고 어떤 부분은 allocated, 어떤 부분은 reachable-not reachable
-    
+    - → not-reachable garbage 생성
+    - heap node는 이런식으로 tree로 표현되지만 실제로는 1dim array : 어떤 부분은 free하고 어떤 부분은 allocated, 어떤 부분은 reachable-not reachable
 - 식별할 수 있다면 reachable하지 않는 놈들을 free하면 됨 : mark and sweep algorithm
-
 - We view memory as a directed graph
     - Each block is a node in the graph /  Each pointer is an edge in the graph
     - Locations not in the heap that contain pointers into the heap are called root nodes (e.g. registers, locations on the stack, global variables)
-    
     ![Untitled](11/Untitled_17.png)
-    
     - A node (block) is reachable if there is a path from any root to that node.
     - Non-reachable nodes are garbage (cannot be needed by the application)
 
@@ -341,8 +285,6 @@ grapy로 표현 : heap memory object로 만든 direct graph
     - malloc을 지속한다 : 공간이 없을 때까지
         - 공간이 없다 = sbrk를 써서 계속 확장하더라도 malloc이 잘 안되는 경우 memory 공간이 없음
 - When out of space:
-    
-    
     - Use extra mark bit in the head of each block
         - Header에다가 extra bit를 가져가 mark한다
         - mark : 앞서 root에 해당하는 녀석을 인자로 돌려 reachable한 녀석들을 dfs하여 mark bit set
@@ -369,7 +311,6 @@ grapy로 표현 : heap memory object로 만든 direct graph
         - Read(), block b에서 i번째에 해당하는 값을 읽어 register에 집어넣음
     - `write(b,i,v)`: write v into location i of block b
         - write(b,i,v) : block b의 i번째에 v를 쓴다.
-        
 - Each block will have a header word
 앞에는 header word가 있다고 가정하고 collector를 구현하자.
     - addressed as b[-1], for a block b
@@ -403,41 +344,32 @@ mark(p[i]); // in the block return;
 ```
 
 - Sweep using lengths to find next block
-    
-    P (시작) end (breakpoint(
-    
-
-```c
-ptr sweep(ptr p, ptr end)
-{
-    while (p < end)
+    - P (시작) end (breakpoint)
+    ```c
+    ptr sweep(ptr p, ptr end)
     {
-        if markBitSet (p)
-            clearMarkBit();
-        else if (allocateBitSet(p))
-            free(p);
-        p += length(p);
+        while (p < end)
+        {
+            if markBitSet (p)
+                clearMarkBit();
+            else if (allocateBitSet(p))
+                free(p);
+            p += length(p);
+        }
     }
-}
-```
+    ```
 
 ## Conservative Mark & Sweep in C
-
-c 언어 상 p가 가리키는 것이 memory block 중 ptr block, int block일 수 있음
-
+> c 언어 상 p가 가리키는 것이 memory block 중 ptr block, int block일 수 있음
 - memory value type를 저장하지 않기에 우리는 구분 불가능했던 것
 - 구현 방법 : block에서 left/right해서 있는 값은 무조건 ptr라고 하고
     - balenced bt를 만들어 point하여 allocate block을 따라가 mark and sweep한다.
     - → conservative하게 정확하게 구분할 수는 없지만 어느정도 determine 한다라고 가정
-
-실제 가리키는게 not allocated이지만 allocated라고 가정해놓고 point
-
+> 실제 가리키는게 not allocated이지만 allocated라고 가정해놓고 point
 - A “conservative garbage collector” for C programs
     - `is_ptr()` determines if a word is a pointer by checking if it points to an allocated block of memory
     - But, in C pointers can point to the middle of a block
-        
         ![Untitled](11/Untitled_19.png)
-        
 - So how to find the beginning of the block?
     - Can use a balanced binary tree to keep track of all allocated blocks (key is start-of-block)
     - Balanced-tree pointers can be stored in header (use two additional words)
@@ -463,167 +395,153 @@ c 언어 상 p가 가리키는 것이 memory block 중 ptr block, int block일 �
 ## Dereferencing Bad Pointers
 
 - The classic scanf bug
-
-```c
-int val;
-...
-scanf(“%d”, val);
-```
+    ```c
+    int val;
+    ...
+    scanf(“%d”, val);
+    ```
 
 ## Reading Uninitialized Memory
 
 - Assuming that heap data is initialized to zero
-
-```c
-/* return y = Ax */
-int *matvec(int **A, int *x)
-{
-    int y = malloc(Nsizeof(int));
-    int i, j;
-    for (i = 0; i < N; i++)
-        for (j = 0; j < N; j++)
-            y[i] += A[i][j] * x[j];
-    return y;
-}
-```
+    ```c
+    /* return y = Ax */
+    int *matvec(int **A, int *x)
+    {
+        int y = malloc(Nsizeof(int));
+        int i, j;
+        for (i = 0; i < N; i++)
+            for (j = 0; j < N; j++)
+                y[i] += A[i][j] * x[j];
+        return y;
+    }
+    ```
 
 ## Overwriting Memory
 
 - Allocating the (possibly) wrong sized object
-
-```c
-int **p;
-p = malloc(Nsizeof(int));
-for (i = 0; i < N; i++)
-{
-    p[i] = malloc(Msizeof(int));
-}
-```
+    ```c
+    int **p;
+    p = malloc(Nsizeof(int));
+    for (i = 0; i < N; i++)
+    {
+        p[i] = malloc(Msizeof(int));
+    }
+    ```
 
 - Off-by-one error
-
-```c
-int **p;
-p = malloc(N * sizeof(int));
-for (i = 0; i <= N; i++)
-{
-    p[i] = malloc(Msizeof(int));
-}
-```
+    ```c
+    int **p;
+    p = malloc(N * sizeof(int));
+    for (i = 0; i <= N; i++)
+    {
+        p[i] = malloc(Msizeof(int));
+    }
+    ```
 
 - Not checking the max string size
-
-```c
-char s[8];
-int i;
-gets(s); /* reads “123456789” from stdin */
-```
+    ```c
+    char s[8];
+    int i;
+    gets(s); /* reads “123456789” from stdin */
+    ```
 
 - Basis for classic buffer overflow attacks
 - Misunderstanding pointer arithmetic
-
-```c
-int *search(int *p, int val)
-{
-    while (*p && *p != val)
-        p += sizeof(int);
-    return p;
-}
-```
+    ```c
+    int *search(int *p, int val)
+    {
+        while (*p && *p != val)
+            p += sizeof(int);
+        return p;
+    }
+    ```
 
 - Referencing a pointer instead of the object it points to
-
-```c
-int *BinheapDelete(int **binheap, int *size)
-{
-    int *packet;
-    packet = binheap[0];
-    binheap[0] = binheap[*size - 1];
-    *size--;
-    Heapify(binheap, *size, 0);
-    return (packet);
-}
-```
+    ```c
+    int *BinheapDelete(int **binheap, int *size)
+    {
+        int *packet;
+        packet = binheap[0];
+        binheap[0] = binheap[*size - 1];
+        *size--;
+        Heapify(binheap, *size, 0);
+        return (packet);
+    }
+    ``` 
 
 ## Referencing Nonexistent Variables
-
 - Forgetting that local variables disappear when a function returns
-
-```c
-int *foo () 
-{
-		int val;
-		return &val;
-}
-```
+    ```c
+    int *foo () 
+    {
+            int val;
+            return &val;
+    }
+    ```
 
 ## Freeing Blocks Multiple Times
 
 - Nasty!
+    ```c
+    x = malloc(N*sizeof(int));
+    // <manipulate x>
+    free(x);
 
-```c
-x = malloc(N*sizeof(int));
-// <manipulate x>
-free(x);
-
-y = malloc(M*sizeof(int));
-// <manipulate y>
-free(x);
-```
+    y = malloc(M*sizeof(int));
+    // <manipulate y>
+    free(x);
+    ```
 
 ## Referencing Freed Blocks
 
 - Evil!
+    ```c
+    x = malloc(Nsizeof(int));
+    // <manipulate x> 
+    free(x);
+    ... 
 
-```c
-x = malloc(Nsizeof(int));
-// <manipulate x> 
-free(x);
-... 
-
-y = malloc(Msizeof(int));
-for (i = 0; i < M; i++)
-    y[i] = x[i]++;
-```
+    y = malloc(Msizeof(int));
+    for (i = 0; i < M; i++)
+        y[i] = x[i]++;
+    ```
 
 ## Failing to Free Blocks (Memory Leaks)
 
 - Slow, long-term killer!
-
-```c
-foo()
-{
-    int x = malloc(Nsizeof(int));
-    ... return;
-}
-```
-
+    ```c
+    foo()
+    {
+        int x = malloc(Nsizeof(int));
+        ... return;
+    }
+    ```
 - Freeing only part of a data structure
+    ```c
+    struct list
+    {
+        int val;
+        struct list *next;
+    };
 
-```c
-struct list
-{
-    int val;
-    struct list *next;
-};
-
-foo()
-{
-    struct list *head = malloc(sizeof(struct list));
-    head->val = 0;
-    head->next = NULL;
-   // <create and manipulate the rest of the list>
-... free(head);
-    return;
-}
-```
+    foo()
+    {
+        struct list *head = malloc(sizeof(struct list));
+        head->val = 0;
+        head->next = NULL;
+    // <create and manipulate the rest of the list>
+    ... free(head);
+        return;
+    }
+    ```
 
 ## Dealing With Memory Bugs
 
-- Debugger:gdb
-    - Good for finding bad pointer dereferences § Hard to detect the other memory bugs
+- Debugger : gdb
+    - Good for finding bad pointer dereferences  Hard to detect the other memory bugs
 - Data structure consistency checker
-    - Runs silently, prints message only on error § Use as a probe to zero in on error
+    - Runs silently, prints message only on error  Use as a probe to zero in on error
 - Binary translator: valgrind
     - Powerful debugging and analysis technique
     - Rewrites text section of executable object file

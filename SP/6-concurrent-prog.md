@@ -1,6 +1,6 @@
 ---
-layout: article
-title: [SP] 6. Concurrent Programming
+
+# title: [SP] 6. Concurrent Programming
 tags: System Programming
 category: System Programming
 picture_frame: shadow

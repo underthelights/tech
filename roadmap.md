@@ -2,7 +2,7 @@
 icon: versions
 ---
 # Roadmap
-
+<!-- 
 The entire package release history of Retype is available on [NPM](https://www.npmjs.com/package/retypeapp) or [NuGet](https://nuget.org/packages/retypeapp).
 
 Need a new feature in Retype? Start a [discussion](https://github.com/retypeapp/retype/discussions) and let's chat. :speech_balloon:
@@ -171,4 +171,4 @@ Released: 2021-02-11
 
 - [x] Publish to NPM
 - [x] Publish to NuGet
-- [x] Initial `v1.0.0` release
+- [x] Initial `v1.0.0` release -->

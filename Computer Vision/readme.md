@@ -1,5 +1,5 @@
-## Computer Vision
-### CNN Architecture
+# Computer Vision
+## CNN Architecture
 
 
 

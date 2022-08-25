@@ -1,6 +1,6 @@
 ---
-layout: article
-title: [SP] 7. Synchronization: Basics
+
+# title: [SP] 7. Synchronization: Basics
 tags: System Programming
 category: System Programming
 picture_frame: shadow

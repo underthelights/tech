@@ -28,11 +28,11 @@ TBA
 
 ## Education
 
-#### B.S. @ [Sogang U.](https://github.com/underthelights/previous/blob/685e709c707b82165c4626a6e5f960835acd94a7/blog/sogang.ac.kr) 2019 ~ 2023
+#### B.S. @ [Sogang U.](https://sogang.ac.kr) 2019 ~ 2023
 
 - Major in Computer Science, Deep interest in Mathematics
 
-#### High School Diploma, @ [Chungnam Science High School](https://github.com/underthelights/previous/blob/685e709c707b82165c4626a6e5f960835acd94a7/blog/cnsh.cnehs.kr)
+#### High School Diploma, @ [Chungnam Science High School](https://cnsh.cnehs.kr)
 
 - 2016 - 2018
 - The Informatica, Informatics student research group
@@ -64,7 +64,7 @@ TBA
 
 ### Work Experience
 
-#### [OCONNECT](oconnect.kr) as Cheif Research Officer (2019.03 ~ Present)
+#### [OCONNECT](https://oconnect.kr) as Cheif Research Officer (2019.03 ~ Present)
 
 - UNIST UNISPART
 - with friends
@@ -74,13 +74,13 @@ TBA
 
 ## Contact
 
-[Facebook](fb.com/s.kyuhwn)
+[Facebook](https://fb.com/s.kyuhwn)
 
-[Instagram](instagram.com/s.kyuhwn)
+[Instagram](https://instagram.com/s.kyuhwn)
 
 [LinkedIn](https://www.linkedin.com/in/kyuhwan-shim/)
 
-[GitHub](github.com/underthelights)
+[GitHub](https://github.com/underthelights)
 
 [Google Scholar]()
 

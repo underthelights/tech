@@ -1,8 +1,8 @@
 ---
-title: "6. Graph"
+# title: "6. Graph"
 excerpt: "Algorithm"
 slug: "Algorithm"
-layout: post
+
 category: "CS", "Algorithm"
 lang: en
 tags: ["Algorithm", "SG"]

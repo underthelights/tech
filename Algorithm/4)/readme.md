@@ -1,8 +1,8 @@
 ---
-title: "4. DP"
+# title: "4. DP"
 excerpt: "Algorithm"
 slug: "Algorithm"
-layout: post
+
 category: "CS", "Algorithm"
 lang: en
 tags: ["Algorithm", "SG"]
