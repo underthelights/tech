@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714721180881">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714734610618">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -15,31 +14,30 @@
     <meta name="description" content="Parallel Computing Hardware" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="/tech/sp/9-thread-level-parallelism/" />
+    <link rel="canonical" href="https://tech/sp/9-thread-level-parallelism/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/tech/sp/9-thread-level-parallelism/">
+    <meta property="og:url" content="https://tech/sp/9-thread-level-parallelism/">
     <meta property="og:title" content="9. Thread-Level Parallelism">
     <meta property="og:description" content="Parallel Computing Hardware">
-    <meta property="og:image" content="/tech/sp/9/untitled.png">
+    <meta property="og:image" content="https://tech/sp/9/untitled.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/tech/sp/9-thread-level-parallelism/">
+    <meta property="twitter:url" content="https://tech/sp/9-thread-level-parallelism/">
     <meta property="twitter:title" content="9. Thread-Level Parallelism">
     <meta property="twitter:description" content="Parallel Computing Hardware">
-    <meta property="twitter:image" content="/tech/sp/9/untitled.png">
+    <meta property="twitter:image" content="https://tech/sp/9/untitled.png">
 
-    <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+    <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.4.0.714721180881" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.714734610618" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714721180881" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714721180881" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714721180881" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714734610618" defer></script>
     <link href="../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
@@ -207,6 +205,11 @@
         <span>9. Thread-Level Parallelism</span>
     </h1>
 </doc-anchor-target>
+<div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
+    <div>In&nbsp;</div>
+    <div><a href="../../categories/system-programming/">System Programming</a></div>
+</div>
+
 <doc-anchor-target id="today">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#today">#</doc-anchor-trigger>
@@ -242,20 +245,20 @@
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>So far, we’ve used threads to deal with I/O delays §</p>
-<p>(기존) single.multi,manicore 신경 안쓰고 풀었음</p>
+<li>So far, we’ve used threads to deal with I/O delays
 <ul>
+<li>(기존) single.multi,manicore 신경 안쓰고 풀었음</li>
 <li>지금까지 봤던 것 : CS에 여러가지가 들어갈 수 없으니까 한 thread가 들어가 있을 때 다른 thread가 들어가지 못하게 하여 sync문제 해결</li>
 <li>e.g., one thread per client to prevent one from delaying another -</li>
 </ul>
 </li>
-<li><p>Multi-core/Hyperthreaded CPUs offer another opportunity §</p>
+<li>Multi-core/Hyperthreaded CPUs offer another opportunity
 <ul>
-<li>Spread work over threads executing in parallel §</li>
+<li>Spread work over threads executing in parallel</li>
 <li>Happens automatically, if many independent tasks
 independent task를 가지고 있어 실행하게 함
 <ul>
-<li>e.g., running many applications or serving many clients §</li>
+<li>e.g., running many applications or serving many clients</li>
 </ul>
 </li>
 <li>Can also write code to make one big task go faster
@@ -266,24 +269,23 @@ thread끼리 공유하는 자료구조 : parallel하게 완전히 실행되기�
 </li>
 </ul>
 </li>
-<li><p>multicore</p>
+<li>multicore
 <ul>
 <li>single chip 안에 여러가지의 processor : cpu 여러 개</li>
 <li>hypertheading되건 안되건 cpu 여러개 환경 가정,</li>
 <li>thread실행하게 되면 물리적으로 각각 mapping되어 실행 가능</li>
 </ul>
 </li>
-<li><p>Hyperthreading cpu :</p>
+<li>Hyperthreading cpu :
 <ul>
-<li><p>하이퍼스레딩 가능하다고 하면 multicore 4인게 hyperthreaded되어 8개처럼 보인다</p>
+<li>하이퍼스레딩 가능하다고 하면 multicore 4인게 hyperthreaded되어 8개처럼 보인다</li>
+<li>CPU안에 instruction 처리하는 unit (control) : register 동일한 것들을 두개를 복제해 놓고 실제 계산하는 ALU FPU, 이런 것들을 공유하는 방식</li>
+<li>hyperthreading 안 되던 시절 : pc 1개, register set도 결국 여러 개 inst 공유하도록 되어있지 않아 불가능
+<ul>
+<li>→ load store, alu, fpu등 여러개가 있다 보니까 동시에 사용할 수 있게 해 줌으로서 pc 2개, register set 2개 있어 실제 function unit을 interleaving하며 동시에 사용할 수 있도록 함.</li>
+</ul>
 </li>
-<li><p>CPU안에 instruction 처리하는 unit (control) : register 동일한 것들을 두개를 복제해 놓고 실제 계산하는 ALU FPU, 이런 것들을 공유하는 방식</p>
-</li>
-<li><p>hyperthreading 안 되던 시절 : pc 1개, register set도 결국 여러 개 inst 공유하도록 되어있지 않아 불가능</p>
-<p>→ load store, alu, fpu등 여러개가 있다 보니까 동시에 사용할 수 있게 해 줌으로서 pc 2개, register set 2개 있어 실제 function unit을 interleaving하며 동시에 사용할 수 있도록 함.</p>
-</li>
-<li><p>물리적 cpu 8개인것과 완전히 같지는 않지만 유사한 기능</p>
-</li>
+<li>물리적 cpu 8개인것과 완전히 같지는 않지만 유사한 기능</li>
 </ul>
 </li>
 </ul>
@@ -298,7 +300,6 @@ thread끼리 공유하는 자료구조 : parallel하게 완전히 실행되기�
     <figcaption class="caption">6.38.</figcaption>
 </figure>
 </p>
-<p>6.38.</p>
 <ul>
 <li>cpu cache : processor 내 processor cache
 <ul>
@@ -350,26 +351,25 @@ thread끼리 공유하는 자료구조 : parallel하게 완전히 실행되기�
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Sum numbers 0, ..., n-1</p>
+<li>Sum numbers 0, ..., n-1
 <ul>
 <li>Should add up to ((n-1)*n)/2</li>
 </ul>
 </li>
-<li><p>Partition values 1, ..., n-1 into t ranges</p>
+<li>Partition values 1, ..., n-1 into t ranges
 <ul>
-<li><span class="math">\frac n t</span> values in each range §</li>
-<li>Each of t threads processes 1 range §</li>
+<li><span class="math">\frac n t</span> values in each range</li>
+<li>Each of t threads processes 1 range</li>
 <li>For simplicity, assume n is a multiple of t</li>
 </ul>
 </li>
-<li><p>Let’s consider different ways that multiple threads might work on their assigned ranges in parallel</p>
-</li>
-<li><p>0 ~ n-1까지의 합을 구하는 간단한 프로그램</p>
+<li>Let’s consider different ways that multiple threads might work on their assigned ranges in parallel</li>
+<li>0 ~ n-1까지의 합을 구하는 간단한 프로그램
 <ul>
 <li>→ 병렬적으로 계산한다고 하면 0 ,1, 2, … n-1</li>
 </ul>
 </li>
-<li><p>T라는 range를 갖는 partition을 만들어보자 : t개의 element partition</p>
+<li>T라는 range를 갖는 partition을 만들어보자 : t개의 element partition
 <ul>
 <li>partition당 개수 = 전체 개수 / partition개수</li>
 <li>n의 값이 굉장히 크다면 Thread를 cpu 개수만큼 띄운 다음 일부 덧셈하고 각각을 aggregation하는 방법 취하기</li>
@@ -424,8 +424,6 @@ int main(int argc, char **argv)
 </doc-codeblock></div>
 </li>
 <li><p>thread 개수를 nthread 개수만큼 띄운다.</p>
-</li>
-</ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">/* Thread routine for psum-mutex.c */
 void *sum_mutex(void *vargp)
@@ -444,6 +442,8 @@ void *sum_mutex(void *vargp)
     return NULL;
 }</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="psum-mutex-thread-routine">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#psum-mutex-thread-routine">#</doc-anchor-trigger>
@@ -451,19 +451,18 @@ void *sum_mutex(void *vargp)
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Simplest approach: Threads sum into a global variable protected by a semaphore mutex.</p>
-</li>
-<li><p>여러 개 thread spawn한 다음</p>
+<li>Simplest approach: Threads sum into a global variable protected by a semaphore mutex.</li>
+<li>여러 개 thread spawn한 다음
 <ul>
 <li>gsum이라는 global variable을 만들어 놓고 이를 주기적으로 update
 <ul>
 <li>→ 모든 thread들이 각각 얼마만큼 실행하면 매번 iteration 돌 때마다 gsum update</li>
 </ul>
 </li>
-<li>0~n-1까지의 값을 가지게 될 것이다</li>
+<li>$0~n-1$까지의 값을 가지게 될 것이다</li>
 </ul>
 </li>
-<li><p>mutex :</p>
+<li>mutex :
 <ul>
 <li>이렇게 코딩하면 여러 thread들이 동시에 접근하는 global variable이기 때문에 mutex를 걸어 두어 동시에 update하지 않도록 함</li>
 <li>expensive하지만 cs 보호를 위해 잡아 둠</li>
@@ -491,21 +490,24 @@ void *sum_mutex(void *vargp)
 <doc-anchor-target id="psum-mutex-performance">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#psum-mutex-performance">#</doc-anchor-trigger>
-        <span>psum-mutex Performance</span>
+        <span><code v-pre>psum-mutex</code> Performance</span>
     </h2>
 </doc-anchor-target>
 <ul>
 <li>Shark machine with 8 cores, <span class="math">n=2^{31}</span></li>
 <li>Nasty surprise:
 <ul>
-<li><p>Single thread is very slow</p>
-</li>
-<li><p>Gets slower as we use more cores  10</p>
+<li>Single thread is very slow</li>
+<li>Gets slower as we use more cores  10
 <ul>
-<li>계속해서 slow down</li>
+<li>계속해서 slow down
+<ul>
+<li>single cpu 자체도 느림 : 혼자 돈다 하더라도 mutex lock을 계속 잡고 풀고 overhead</li>
 </ul>
-<p>single cpu 자체도 느림 : 혼자 돈다 하더라도 mutex lock을 계속 잡고 풀고 overhead</p>
-<p>→ multicore또한 더 느림→ 병렬 프로그래밍 어려움</p>
+</li>
+<li>→ multicore또한 더 느림</li>
+<li>→ 병렬 프로그래밍 어려움</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -538,23 +540,18 @@ void *sum_array(void *vargp)
 }</code></pre>
 </doc-codeblock></div>
 <ul>
-<li><p>partial sum array 만들기</p>
+<li>partial sum array 만들기
 <ul>
 <li>다 끝나면 처음부터 k개 element까지 더함</li>
 <li>마지막에 array를 더하기하고</li>
 <li>자기가 중간에 계산한 값을 gsum에서 sum하지 않고 각자 자신의 array 공간을 가지고 수행</li>
 </ul>
 </li>
-<li><p>앞서 사용했던 mutex가 불필요 : 각자 자기 변수의 작업을 하기 때문에 <code v-pre>psum[myid] += i</code></p>
-</li>
-<li><p>앞에서 보여준 것처럼 thread끼리 compend하는 경우가 없을 것</p>
-</li>
-<li><p>Peer thread i sums into global array element <code v-pre>psum[i]</code></p>
-</li>
-<li><p>Main waits for theads to finish, then sums elements of psum</p>
-</li>
-<li><p>Eliminates need for mutex synchronization</p>
-</li>
+<li>앞서 사용했던 mutex가 불필요 : 각자 자기 변수의 작업을 하기 때문에 <code v-pre>psum[myid] += i</code></li>
+<li>앞에서 보여준 것처럼 thread끼리 compend하는 경우가 없을 것</li>
+<li>Peer thread i sums into global array element <code v-pre>psum[i]</code></li>
+<li>Main waits for theads to finish, then sums elements of psum</li>
+<li>Eliminates need for mutex synchronization</li>
 </ul>
 <doc-anchor-target id="psum-array-performance">
     <h2>
@@ -566,37 +563,33 @@ void *sum_array(void *vargp)
 <li>Orders of magnitude faster than <code v-pre>psum-array</code>
 <ul>
 <li>thread개수가 줄어들며 실행 시간이 쭉 쭉 줄어듦.</li>
-<li>cpu mutex lock unlock할 때는 시간이 너무 많이 들었으나 1/5수준으로 성능이 향상됨</li>
-</ul>
-</li>
-</ul>
-<p><figure class="content-center">
+<li>cpu mutex lock unlock할 때는 시간이 너무 많이 들었으나 1/5수준으로 성능이 향상됨
+<figure class="content-center">
     <img src="../9/untitled_2.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
-</p>
+</li>
+</ul>
+</li>
+</ul>
 <doc-anchor-target id="next-attempt-psum-local">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#next-attempt-psum-local">#</doc-anchor-trigger>
-        <span>Next Attempt: psum-local</span>
+        <span>Next Attempt: <code v-pre>psum-local</code></span>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Reduce memory references by having peer thread i sum into a local variable (register)</p>
-</li>
-<li><p>→ 개선 :</p>
+<li>Reduce memory references by having peer thread i sum into a local variable (register)</li>
+<li>→ 개선 :
 <ul>
 <li>array를 gloabl var로 쓰는게 아닌, 각 thread가 자신의 local var을 가지고 중간값을 저장할 것
 → compiler가 register에 있는 값으로 memory 값 update</li>
 </ul>
 </li>
-<li><p>memory가 아닌 실제 register에서 update되는 local variable</p>
-</li>
-<li><p>iteration을 돌며 중간값 sum (@register) → psum이라는 array에 최종 update</p>
-</li>
-<li><p>즉 본인 register에서 update하고 최종적으로 local psum에서 update
-(장점) Memory reference overhead 줄일 수 있음 (local var의 활용) memory lv까지 가지 않고</p>
-</li>
+<li>memory가 아닌 실제 register에서 update되는 local variable</li>
+<li>iteration을 돌며 중간값 sum (@register) → psum이라는 array에 최종 update</li>
+<li>즉 본인 register에서 update하고 최종적으로 local psum에서 update
+(장점) Memory reference overhead 줄일 수 있음 (local var의 활용) memory lv까지 가지 않고</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">/* Thread routine for psum-local.c */
@@ -635,23 +628,19 @@ void *sum_local(void *vargp)
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>characterize : 얼마만큼 성능을 내는지 분석</p>
+<li>characterize : 얼마만큼 성능을 내는지 분석
 <ul>
 <li>p=8 / 8개 core를 활용하는 CPU</li>
 <li>k&lt;p, k = 4 / thread를 4개 띄운 형태</li>
 </ul>
 </li>
-<li><p>p processor cores, Tk is the running time using k cores</p>
-</li>
-<li><p>Def. <strong>Speedup</strong>: <span class="math">S_p=\frac{T_1} {T_p }</span></p>
+<li>p processor cores, Tk is the running time using k cores</li>
+<li>Def. <strong>Speedup</strong>: <span class="math">S_p=\frac{T_1} {T_p }</span>
 <ul>
-<li><p>relative speedup if T1 is running time of parallel version of the code running on 1 core.</p>
-</li>
-<li><p>absolute speedup if T1 is running time of sequential version of code running on 1 core.</p>
-</li>
-<li><p>Absolute speedup is a much truer measure of the benefits of parallelism.</p>
-</li>
-<li><p>S4 : 4개의 cpu를 활용하여 얼만큼 속도가 빨라지는지 = T1/T4</p>
+<li>relative speedup if T1 is running time of parallel version of the code running on 1 core.</li>
+<li>absolute speedup if T1 is running time of sequential version of code running on 1 core.</li>
+<li>Absolute speedup is a much truer measure of the benefits of parallelism.</li>
+<li>S4 : 4개의 cpu를 활용하여 얼만큼 속도가 빨라지는지 = T1/T4
 <ul>
 <li>T1 : 순수하게 하나의 CPU에서 sequential -&gt; absolute speedup : 혼자 돌았을 때</li>
 <li>T4개 돌았을 때 시간이 있다면 S4 = T1/T4</li>
@@ -659,28 +648,30 @@ void *sum_local(void *vargp)
 </li>
 </ul>
 </li>
-<li><p>Def. <strong>Efficiency</strong> <span class="math">E_p = \frac{S_p}{p} = \frac{T_1} {pT_p}</span> = speedup / process 개수</p>
+<li>Def. <strong>Efficiency</strong> <span class="math">E_p = \frac{S_p}{p} = \frac{T_1} {pT_p}</span> = speedup / process 개수
 <ul>
 <li>Reported as a percentage in the range (0, 100].</li>
 <li>Measures the overhead due to parallelization</li>
 </ul>
 </li>
-<li><p>ex</p>
+<li>ex
 <ul>
-<li><p>순수하게 thread 1개 넣은 t1 = 1, t4 = 0.25</p>
+<li>순수하게 thread 1개 넣은 t1 = 1, t4 = 0.25
 <ul>
 <li>→ S4 = 1/0.25 = 4이므로</li>
 </ul>
 </li>
-<li><p>E4 = 4/4 = 1 -&gt; 결국 100% (손실이 전혀 없다)</p>
+<li>E4 = 4/4 = 1 -&gt; 결국 100% (손실이 전혀 없다)
 <ul>
 <li>이상적으로 효율적으로 parallellize</li>
 </ul>
 </li>
-<li><p>t1 = 1인데 t4=0.5</p>
-<p>→ S4 = 1/0.5 = 2 :process는 1개~4개했지만 speedup은 2개</p>
-<p>→ efficiency = 2/4 = 50%만큼의 성능 손실</p>
-<p>이상적으로 바라는 100%까지는 도달하지 못함</p>
+<li>t1 = 1인데 t4=0.5
+<ul>
+<li>→ S4 = 1/0.5 = 2 :process는 1개~4개했지만 speedup은 2개</li>
+<li>→ efficiency = 2/4 = 50%만큼의 성능 손실</li>
+<li>이상적으로 바라는 100%까지는 도달하지 못함</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -807,38 +798,32 @@ void *sum_local(void *vargp)
 </figure>
 </p>
 <ul>
-<li><p>Write-back caches, without coordination between them</p>
-</li>
-<li><p>cache → 더 복잡해짐/ a=1, b=100</p>
+<li>Write-back caches, without coordination between them</li>
+<li>cache → 더 복잡해짐/ a=1, b=100
 <ul>
 <li>thread 1 : a =2 @ cache</li>
 <li>thread 2 : b =200 @ cache 라고 하자.</li>
 </ul>
 </li>
-<li><p>memory의 값</p>
-</li>
-<li><p>cpu에 register만 있는 것이 아니라 memory까지 가는 길목에 cache 존재</p>
+<li>memory의 값</li>
+<li>cpu에 register만 있는 것이 아니라 memory까지 가는 길목에 cache 존재
 <ul>
-<li>
-<blockquote>
-<p>a,b의 contents copy본이 어디엔가 존재</p>
-</blockquote>
-</li>
+<li>a,b의 contents copy본이 어디엔가 존재</li>
 </ul>
 </li>
-<li><p>thread가 실행하며 update했는데 그 값이 main memory의 original copy본과 과 다름</p>
+<li>thread가 실행하며 update했는데 그 값이 main memory의 original copy본과 과 다름
 <ul>
 <li>memory에서는 복제 값을 가지고 있고 thread로부터 최종 update하지 않은 상태</li>
+<li>→ b=100 print</li>
 </ul>
 </li>
-<li><p>→ b=100 print</p>
+<li>문제 상황 : 이렇게 하면 안됨 (문제상황)
+<ul>
+<li>thread 1번은 thread 2번이 b라는 것을 cpu cache에서 b=200으로 바꾼 것을 모름</li>
+<li>thread 2번은 thread 1번이 a라는 것을 cpu cache에서 a=2으로 바꾼 것을 모름</li>
+</ul>
 </li>
-<li><p>문제 상황 : 이렇게 하면 안됨 (문제상황)</p>
-<p>thread 1번은 thread 2번이 b라는 것을 cpu cache에서 b=200으로 바꾼 것을 모름</p>
-<p>thread 2번은 thread 1번이 a라는 것을 cpu cache에서 a=2으로 바꾼 것을 모름</p>
-</li>
-<li><p>각 cahce에 복제본을 가지고 update한 다음 실행하게 되면 a =1 프린트하고 b=100을 print하게 됨 (최신의 값으로 update되지 않음)</p>
-</li>
+<li>각 cahce에 복제본을 가지고 update한 다음 실행하게 되면 a =1 프린트하고 b=100을 print하게 됨 (최신의 값으로 update되지 않음)</li>
 </ul>
 <doc-anchor-target id="snoopy-caches">
     <h1>
@@ -855,52 +840,38 @@ void *sum_local(void *vargp)
     <img src="../9/untitled_14.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
-</p>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th><Invalid></th>
-<th>Cannot use value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><Shared></td>
-<td>Readable copy</td>
-</tr>
-<tr>
-<td><Exclusive></td>
-<td>Writable copy</td>
-</tr>
-</tbody>
-</table>
-</div>
+|Status|Contents|
+|------|---|
+| Invalid | Cannot use value |
+| Shared | Readable copy |
+| Exclusive | Writable copy |</p>
 <ul>
-<li>각 CPU에서 돌아가는 memory contents에 cacheing될 때 tag를 붙여 둠</li>
-<li>main memory로부터 cache로 copy본을 가지고 있어 값을 바꾼 후 update되지 않은 상태
-→ exclusive tag</li>
+<li><p>각 CPU에서 돌아가는 memory contents에 cacheing될 때 tag를 붙여 둠</p>
+</li>
+<li><p>main memory로부터 cache로 copy본을 가지고 있어 값을 바꾼 후 update되지 않은 상태</p>
+<ul>
+<li>→ exclusive tag</li>
 </ul>
-<p>만약, thread2번이 a를 접근하는 경우에</p>
+</li>
+<li><p>만약, thread2번이 a를 접근하는 경우에</p>
 <ul>
 <li>snoopy cahces :
 <ul>
 <li>a라는 copy본을 가지고 있지 않지만 다른 cpu cache에 a라는 값이 복제본 가짐을 알 수 있는 방법</li>
-<li>읽을 때 thread 1의 contents를 shared로, thread 2의 contents 를 sahre</li>
-</ul>
-</li>
-</ul>
-<p><figure class="content-center">
+<li>읽을 때 thread 1의 contents를 shared로, thread 2의 contents 를 sahre
+<figure class="content-center">
     <img src="../9/untitled_15.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
-</p>
-<p><figure class="content-center">
+<figure class="content-center">
     <img src="../9/untitled_16.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
-</p>
-<ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><p>When cache sees request for one of its E-tagged blocks</p>
 <ul>
 <li>Supply value from cache</li>
@@ -927,7 +898,17 @@ void *sum_local(void *vargp)
 </li>
 </ul>
 
-                                
+                                <div class="flex items-center mt-6 mb-6 clear-both">
+                                    <span>
+                                        <a href="../../tags/">
+                                            <svg class="inline-block -mb-px mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" overflow="visible" fill="currentColor"><g><path d="M21.3 9.88l-8.59-8.59C12.52 1.11 12.27 1 12 1H2c-.55 0-1 .45-1 1v10c0 .27.11.52.29.71l8.59 8.58c.57.57 1.32.88 2.12.88s1.55-.31 2.12-.88l7.17-7.17a3.009 3.009 0 00.01-4.24zm-1.42 2.82l-7.17 7.17c-.39.39-1.02.39-1.42 0L3 11.59V3h8.59l8.29 8.29c.39.39.39 1.03 0 1.41z" /><path d="M7.01 6C6.45 6 6 6.45 6 7s.45 1 1 1 1-.45 1-1-.44-1-.99-1z" /></g></svg>
+                                        </a>
+                                        <span class="mr-2"><a href="../../tags/system-programming/" class="no-link inline-flex items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>system programming</span>
+                                </a></span>
+                                    </span>
+                                </div>
+                
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results />
                             </div>
