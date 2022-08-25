@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714465075793">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714719928778">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -15,18 +15,18 @@
     <meta name="description" content="Question: Which variables in a threaded C program are shared?" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="/tech/sp/7-synchronization-basics-ad6224628cdd42339a53e963841c6c68/" />
+    <link rel="canonical" href="/tech/sp/7-synchronization-basics/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/tech/sp/7-synchronization-basics-ad6224628cdd42339a53e963841c6c68/">
+    <meta property="og:url" content="/tech/sp/7-synchronization-basics/">
     <meta property="og:title" content="7. Synchronization: Basics">
     <meta property="og:description" content="Question: Which variables in a threaded C program are shared?">
     <meta property="og:image" content="/tech/sp/7/0/untitled.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/tech/sp/7-synchronization-basics-ad6224628cdd42339a53e963841c6c68/">
+    <meta property="twitter:url" content="/tech/sp/7-synchronization-basics/">
     <meta property="twitter:title" content="7. Synchronization: Basics">
     <meta property="twitter:description" content="Question: Which variables in a threaded C program are shared?">
     <meta property="twitter:image" content="/tech/sp/7/0/untitled.png">
@@ -34,12 +34,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.4.0.714465075793" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.714719928778" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714465075793" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714719928778" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714465075793" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714465075793" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714719928778" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714719928778" defer></script>
     <link href="../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
@@ -219,12 +219,28 @@
 <li>The answer is not as simple as “global variables are shared” and “stack variables are private”</li>
 </ul>
 </li>
-<li>Def: A variable x is shared $\iff$multiple threads reference some instance of x. 다수의 thread가 변수의 일부 instance를 참조할 때</li>
+<li>Def: A variable <span class="math">x</span> is shared <span class="math">\iff</span> multiple threads reference some instance of <span class="math">x</span>.
+<ul>
+<li>다수의 thread가 변수의 일부 instance를 참조할 때</li>
+</ul>
+</li>
 <li>Requires answers to the following questions:
 <ul>
-<li>What is the memory model for threads? Thread를 위한 하부 메모리 모델?</li>
-<li>How are instances of variables mapped to memory? 이는 어떻게 mapping되는가?</li>
-<li>How many threads might reference each of these instances?  얼마나 많은 thread가 이 변스들을 참조하는가?</li>
+<li>What is the memory model for threads?
+<ul>
+<li>Thread를 위한 하부 메모리 모델?</li>
+</ul>
+</li>
+<li>How are instances of variables mapped to memory?
+<ul>
+<li>이는 어떻게 mapping되는가?</li>
+</ul>
+</li>
+<li>How many threads might reference each of these instances?  
+<ul>
+<li>얼마나 많은 thread가 이 변스들을 참조하는가?</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -240,12 +256,20 @@
 <li>Multiple threads run within the context of a single process</li>
 <li>Each thread has its own separate thread context
 <ul>
-<li>자신만의 별도의 thread context : Thread ID, stack, stack pointer, PC, condition codes, and GP registers</li>
+<li>자신만의 별도의 thread context :
+<ul>
+<li>Thread ID, stack, stack pointer, PC, condition codes, and GP registers</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>All threads share the remaining process context
 <ul>
-<li>전체 사용자 virtual address space : Code, data, heap, and shared library segments of the process virtual address space</li>
+<li>전체 사용자 virtual address space :
+<ul>
+<li>Code, data, heap, and shared library segments of the process virtual address space</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Open files and installed handlers</li>
@@ -308,23 +332,39 @@ void *thread(void *vargp)
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Global variables</p>
+<li>Global variables
 <ul>
 <li>Def: Variable declared outside of a function 함수 밖에서 선언된 모든 변수</li>
-<li><strong>Virtual memory contains exactly one instance of any global variable</strong>
-rumtime VM의 r/w영역 - thread에 의해 참조될 수 있는 각 전역 변수에서 정확히 하나의 instance 참조 (Instance : ptr)</li>
+<li><strong>Virtual memory contains exactly one instance of any global variable</strong></li>
+<li>rumtime VM의 r/w영역
+<ul>
+<li>thread에 의해 참조될 수 있는 각 전역 변수에서 정확히 하나의 instance 참조 (Instance : ptr)</li>
 </ul>
 </li>
-<li><p>Local variables</p>
+</ul>
+</li>
+<li>Local variables
 <ul>
 <li>Def: Variable declared inside function without static attribute</li>
 <li><strong>Each thread stack contains one instance of each local variable</strong></li>
+<li>자신만의 local var instance를 가짐
+<ul>
+<li>다수의 thread가 thread routine을 동일하게 가질 때에도 동일</li>
+<li>ex. <code v-pre>tid</code>
+<ul>
+<li>1 instance → main thread stack에 들어감 (<code v-pre>tid.m</code>)</li>
 </ul>
-<p>자신만의 local var instance를 가짐 - 다수의 thread가 thread routine을 동일하게 가질 때에도 동일
-- ex. tid  - 1 instance → main thread stack에 들어감 (tid.m)
-- ex. myid - 2 instance → peer thread 0, 1에 들어감 (myid.p0 , myid.p1)</p>
 </li>
-<li><p>Local static variables</p>
+<li>ex. <code v-pre>myid</code>
+<ul>
+<li>2 instance → peer thread 0, 1에 들어감 (<code v-pre>myid.p0</code> , <code v-pre>myid.p1</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Local static variables
 <ul>
 <li>Def: Variable declared inside function with the static attribute</li>
 <li><strong>Virtual memory contains exactly one instance of any local static variable.</strong></li>
@@ -369,9 +409,13 @@ void *thread(void *vargp)
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>자신으 ㅣinstance 중 하나가 하나 이상의 thread에 의해 reference 되는 경우에만 공유되어 있음</p>
+<li><p>자신의 instance 중 하나가 하나 이상의 thread에 의해 reference 되는 경우에만 공유되어 있음</p>
 <ul>
-<li>ex. cnt : shared (<span class="math">\because</span>  단 1개의 runtime instance를 가지고 있으며, peer thread 모두에 의해서 참조되고 있기 때문에)</li>
+<li>ex. <code v-pre>cnt</code> : shared
+<ul>
+<li>(<span class="math">\because</span>  단 1개의 runtime instance를 가지고 있으며, peer thread 모두에 의해서 참조되고 있기 때문에)</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>Which variables are shared?</p>
@@ -426,10 +470,10 @@ void *thread(void *vargp)
 </table>
 </div>
 </li>
-<li><p>Answer: A variable x is shared iff multiple threads reference at least one instance of x.</p>
+<li><p>Answer: A variable <span class="math">x</span> is shared <span class="math">\iff</span> multiple threads reference at least one instance of <span class="math">x</span>.</p>
 <ul>
-<li>Thus: ptr, cnt, and msgs are shared</li>
-<li>i and myid are not shared</li>
+<li>Thus: <code v-pre>ptr</code>, <code v-pre>cnt</code>, and <code v-pre>msgs</code> are shared</li>
+<li><code v-pre>i</code> and <code v-pre>myid</code> are not shared</li>
 </ul>
 </li>
 </ul>
@@ -516,26 +560,35 @@ linux &gt; </code></pre>
 </doc-codeblock></div>
 </li>
 <li><p>Asm code for thread i</p>
-<p>|    movq (%rdi), %rcx
-testq %rcx,%rcx
-jle .L2
-movl $0, %eax  | Hi : Head  |
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">
+| movq (%rdi), %rcx 
+   testq %rcx,%rcx 
+   jle .L2 
+   movl $0, %eax  | 
+   Hi : Head  |
 | --- | --- |
-| .L3:
-‘movq cnt(%rip),%rdx
-addq $1, %rdx
-movq %rdx, cnt(%rip)  | Li :Loadcnt
-Ui : Update cnt
+| .L3: 
+   ‘movq cnt(%rip),%rdx 
+   addq $1, %rdx 
+   movq %rdx, cnt(%rip) 
+| Li :Loadcnt 
+Ui : Update cnt 
 Si : Store cnt  |
-|    addq $1, %rax
-cmpq %rcx, %rax
-jne .L3
-.L2:  | Ti : Tail |</p>
+|    addq $1, %rax 
+   cmpq %rcx, %rax 
+   jne .L3 
+.L2:  | Ti : Tail |</code></pre>
+</doc-codeblock></div>
 <ul>
 <li><span class="math">H_i</span> : loop 앞에 위치한 Instruction block</li>
-<li><span class="math">L_i</span> : 공유변수 Cnt를 %Rdx에 load하는 Instruction (rdx_i : thread i 내의 register rdx)</li>
-<li><span class="math">U_i</span> : %rdx를 갱신하는 instruction</li>
-<li><span class="math">S_i</span> : renewed %rdx 값을 다시 공유 변수 cnt로 저장하는 Instruction</li>
+<li><span class="math">L_i</span> : 공유변수 Cnt를 <code v-pre>%Rdx</code>에 load하는 Instruction
+<ul>
+<li>(<code v-pre>rdx_i</code> : thread i 내의 register rdx)</li>
+</ul>
+</li>
+<li><span class="math">U_i</span> : <code v-pre>%rdx</code>를 갱신하는 instruction</li>
+<li><span class="math">S_i</span> : renewed <code v-pre>%rdx</code> 값을 다시 공유 변수 cnt로 저장하는 Instruction</li>
 <li><span class="math">T_i</span> : loop 끝에 위치한 Instruction block</li>
 </ul>
 </li>
@@ -556,13 +609,17 @@ jne .L3
 <ul>
 <li><p><span class="math">l_i</span> denotes that thread i executes instruction I</p>
 </li>
-<li><p>%rdx_i is the content of %rdx in thread i’s context</p>
+<li><p><code v-pre>%rdx_i</code> is the content of <code v-pre>%rdx</code> in thread <code v-pre>i</code>’s context</p>
 <p><img src="../7/0/untitled.png" alt="Untitled" /></p>
 </li>
 </ul>
 </li>
 </ul>
-<p>![Untitled](7/0/Untitled 1.png)</p>
+<p><figure class="content-center">
+    <img src="../7/0/untitled_1.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
 <ul>
 <li>Incorrect ordering : two threads increment the counter, but the result is 1 instead of 2
 <ul>
@@ -571,7 +628,7 @@ jne .L3
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="7/0/untitled202.png" alt="Untitled" />
+    <img src="../7/0/untitled_2.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -583,7 +640,7 @@ jne .L3
 </li>
 </ul>
 <p><figure class="content-center">
-    <img src="7/0/untitled203.png" alt="Untitled" />
+    <img src="../7/0/untitled_3.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -597,7 +654,7 @@ jne .L3
 <li>instruction 순서를 process graph를 통해 명확히 할 수 있다.</li>
 </ul>
 <p><figure class="content-center">
-    <img src="7/0/untitled204.png" alt="Untitled" />
+    <img src="../7/0/untitled_4.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -627,17 +684,15 @@ jne .L3
     </h3>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="7/0/untitled205.png" alt="Untitled" />
+    <img src="../7/0/untitled_5.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
-<li><p>A trajectory is a sequence of legal state transitions that describes one possible concurrent execution of the threads.</p>
-</li>
-<li><p>Example: H1, L1, U1, H2, L2, S1, T1, U2, S2, T2</p>
-</li>
-<li><p>어떤 순서로 진행되느냐에 따라 그 궤적이 달라진다.
-(어떻게 interleaving되느냐에 따라)</p>
+<li>A trajectory is a sequence of legal state transitions that describes one possible concurrent execution of the threads.</li>
+<li>Example: <code v-pre>H1, L1, U1, H2, L2, S1, T1, U2, S2, T2</code></li>
+<li>어떤 순서로 진행되느냐에 따라 그 궤적이 달라진다.
+(어떻게 interleaving되느냐에 따라)
 <ul>
 <li>우 상향으로 interleaving됨.</li>
 <li>trajectory 실행하는 thread</li>
@@ -651,28 +706,26 @@ jne .L3
     </h3>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="7/0/untitled206.png" alt="Untitled" />
+    <img src="../7/0/untitled_6.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
-<li><p>Critical section : L, U, S instruction에 의해 형성 (thread i에 대해 shared var의 내용 조작)</p>
+<li>Critical section : <code v-pre>L, U, S</code> instruction에 의해 형성 (thread i에 대해 shared var의 내용 조작)
 <ul>
 <li>다른 Thread의 Critical section과 중첩되면 안됨</li>
 </ul>
 </li>
-<li><p>L, U, and S form a critical section with respect to the shared variable cnt</p>
-</li>
-<li><p>Instructions in critical sections (wrt some shared variable) should not be interleaved</p>
-</li>
-<li><p>Sets of states where such interleaving occurs form unsafe regions</p>
+<li><code v-pre>L, U, S</code> form a critical section with respect to the shared variable cnt</li>
+<li>Instructions in critical sections (wrt some shared variable) should not be interleaved</li>
+<li>Sets of states where such interleaving occurs form unsafe regions
 <ul>
 <li>같이 interleaving되면 안되는 구간 “critical section”
 <ul>
 <li>한 thread 실행 중 다른 thread가 껴드면 안됨</li>
 <li>unsafe region
 <figure class="content-center">
-    <img src="7/0/untitled207.png" alt="Untitled" />
+    <img src="../7/0/untitled_7.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </li>
@@ -680,11 +733,9 @@ jne .L3
 </li>
 </ul>
 </li>
-<li><p>unsafe zone 은 둘레의 state에 접해 있지만 이들을 포함하지는 않는다.</p>
-</li>
-<li><p>Def: A trajectory is safe iff it does not enter any unsafe region</p>
-</li>
-<li><p>Claim: A trajectory is correct (wrt cnt) <span class="math">\iff</span> it is safe</p>
+<li>unsafe zone 은 둘레의 state에 접해 있지만 이들을 포함하지는 않는다.</li>
+<li>Def: A trajectory is safe iff it does not enter any unsafe region</li>
+<li>Claim: A trajectory is correct (wrt cnt) <span class="math">\iff</span> it is safe
 <ul>
 <li>unsafe region acccess를 막을 수 있는 방법 : synchronization</li>
 </ul>
@@ -697,31 +748,29 @@ jne .L3
     </h3>
 </doc-anchor-target>
 <ul>
-<li><p>Question: How can we guarantee a safe trajectory?</p>
-</li>
-<li><p>Answer: We must synchronize the execution of the threads so that they can never have an unsafe trajectory.</p>
+<li>Question: How can we guarantee a safe trajectory?
 <ul>
+<li>Answer: We must synchronize the execution of the threads so that they can never have an unsafe trajectory.</li>
 <li>i.e., need to guarantee mutually exclusive access for each critical section.</li>
 </ul>
 </li>
-<li><p>def : 각각의 thread가 자신의 critical section내의 Instruction을 실행하는 동안에는 exclusively shared variable을 접근하도록 보장하기를 원하는 현상</p>
-</li>
-<li><p>synchronize 됐다 = 상호 배타적으로 access를 guarantee해준다.</p>
+<li>def : 각각의 thread가 자신의 critical section내의 Instruction을 실행하는 동안에는 exclusively shared variable을 접근하도록 보장하기를 원하는 현상</li>
+<li>synchronize 됐다 = 상호 배타적으로 access를 guarantee해준다.
 <ul>
 <li>: 여러 process가 경쟁해서 들어가면 하나만 들어갈 수 있도록 설계함</li>
 </ul>
 </li>
-<li><p>모든 safe trajectory는 shared counter를 정확히 갱신한다.</p>
+<li>모든 safe trajectory는 shared counter를 정확히 갱신한다.
 <ul>
 <li>thread program의 정확한 실행과 전역 data를 공유하는 동시성 프로그램에 대해서도 어떻게든 동기화하여 안전 궤적을 가지도록 해야 한다.</li>
 </ul>
 </li>
-<li><p>Classic solution:</p>
+<li>Classic solution:
 <ul>
 <li>Semaphores (Edsger Dijkstra) : 비음수 정수 값을 값는 전역 변수로 P, V연산으로만 조작 가능</li>
 </ul>
 </li>
-<li><p>Other approaches (out of our scope)</p>
+<li>Other approaches (out of our scope)
 <ul>
 <li>Mutex and condition variables (Pthreads)</li>
 <li>Monitors (Java)</li>
@@ -735,15 +784,14 @@ jne .L3
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p><strong>non-negative global integer synchronization variable. : int s; (&gt;=0)</strong></p>
-</li>
-<li><p>Manipulated by P and V operations.
-semaphore variable을 바꿀 수 있는 방법 p, s 를 통해 manipulate</p>
+<li><strong>non-negative global integer synchronization variable. : int s; (&gt;=0)</strong></li>
+<li>Manipulated by <code v-pre>P</code> and <code v-pre>V</code> operations.
+semaphore variable을 바꿀 수 있는 방법 <code v-pre>p</code>, <code v-pre>s</code> 를 통해 manipulate
 <ul>
 <li>manipulate : int var를 증가, 감소시킴 (+복잡)</li>
 </ul>
 </li>
-<li><p>Binary semaphore vs Counting semaphore</p>
+<li>Binary semaphore vs Counting semaphore
 <ul>
 <li>initialize as 1 (binary) 5, 10</li>
 <li>semaphore의 초기 value는 critical session에 들어갈 수 있는 thread 개수</li>
@@ -751,7 +799,7 @@ semaphore variable을 바꿀 수 있는 방법 p, s 를 통해 manipulate</p>
 <li>Counting semaphore는 그 값을 5로 초기화해두었다면 5개 cricial session에 들어갈 수있음</li>
 </ul>
 </li>
-<li><p>critical session에 들어가고 나서 : P를 통해 들어갈지 안들어갈지 보고,</p>
+<li>critical session에 들어가고 나서 : P를 통해 들어갈지 안들어갈지 보고,
 <ul>
 <li>내가 들어갔다는 이야기 = Semaphore val = 1이고 critical session에서 작업하고 나올 때 누군가가 내가 아직 critical session에서 있을 때 들어오려고 하면 P에서 blocked (semaphore val = 0) -&gt; blocked, suspended</li>
 <li>내가 나올 때 unlock → V fn 호출한다.</li>
@@ -766,7 +814,7 @@ semaphore variable을 바꿀 수 있는 방법 p, s 를 통해 manipulate</p>
 </doc-anchor-target>
 <p>s라는 variable이 0인지 아닌지 봄</p>
 <ol>
-<li><span class="math">**s \neq 0</span> : 0이 아니면 → 1을 빼고 나서 끝난다**
+<li><span class="math">s \neq 0</span> : 0이 아니면 → 1을 빼고 나서 끝난다**
 <ul>
 <li>If s is nonzero, then decrement s by 1 and return immediately.
 <ul>
@@ -777,47 +825,52 @@ semaphore variable을 바꿀 수 있는 방법 p, s 를 통해 manipulate</p>
 </li>
 <li><span class="math">s=0</span> : <strong>본인이 suspend된다</strong>
 <ul>
-<li><p>If s is zero, then suspend thread until s becomes nonzero
-and the thread is restarted by a V operation.</p>
+<li>If s is zero, then suspend thread until s becomes nonzero
+and the thread is restarted by a V operation.
 <ul>
-<li><p>내가 이 var보고나서 이 함수 안에서 여러 thread중 누군가가 decrement했다는 것
-→ 나는 그 값이 0보다 큰 값이 될 때까지 기다릴 것이다 (suspend, sleep)</p>
-<p>until 0보다 큰 값이 될 때 : var x를 0보다 크게 만든 다음 깨워줄 때까지 기다림 (signal 받을 때까지)</p>
-</li>
+<li>내가 이 var보고나서 이 함수 안에서 여러 thread중 누군가가 decrement했다는 것
+→ 나는 그 값이 0보다 큰 값이 될 때까지 기다릴 것이다 (suspend, sleep)</li>
+<li>until 0보다 큰 값이 될 때 : var x를 0보다 크게 만든 다음 깨워줄 때까지 기다림 (signal 받을 때까지)</li>
 </ul>
 </li>
-<li><p>After restarting, the P operation decrements s and returns control to the caller.</p>
-<p>→ 깨어나게 되면, s라는 variable을 decrement하고 진행됨</p>
+<li>After restarting, the P operation decrements s and returns control to the caller.
+<ul>
+<li>→ 깨어나게 되면, s라는 variable을 decrement하고 진행됨</li>
+</ul>
 </li>
 </ul>
 </li>
 </ol>
 <ul>
-<li><p>(binary semaphore기억하고 설명) Semaphore가 1로 initialize -&gt; 두 thread가 P/V</p>
+<li>(binary semaphore기억하고 설명) Semaphore가 1로 initialize -&gt; 두 thread가 <span class="math">\frac P V</span>
 <ul>
 <li>critical session을 앞 뒤로 쌓아서 lock을 가져다 lock을 얻으면 들어가고 얻지 못하면 기다림</li>
-</ul>
-<p>나올 땐 lock을 풀어주는 구조</p>
-<ul>
+<li>나올 땐 lock을 풀어주는 구조</li>
 <li>이 P라는 것은 semaphore value를 가져다 확인하고, 그 값이 0이 아니라면 decrement</li>
 <li>최초로 1로 되있을 때 들어간다고 하면 decrement하여 0으로 만들고, 그리고 critical session으로 들어감</li>
-<li>만약에 들어가려 했는데 semaphore 값을 봤는데 0이다</li>
-</ul>
-<p>→ blocked 된 상태로 남아있고 그 semaphore에 나는 wait하고 있다며 매달려 있음</p>
+<li>만약에 들어가려 했는데 semaphore 값을 봤는데 0이다
 <ul>
+<li>→ blocked 된 상태로 남아있고 그 semaphore에 나는 wait하고 있다며 매달려 있음</li>
+</ul>
+</li>
 <li>Process state transition diagram에서 보면 run 상태에서 block상태로</li>
 </ul>
 </li>
 </ul>
-<ol>
-<li>정리
+<doc-anchor-target id="정리">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#정리">#</doc-anchor-trigger>
+        <span>정리</span>
+    </h3>
+</doc-anchor-target>
 <ol>
 <li>semaphore s 를 Decrement한다</li>
 <li><span class="math">s \neq 0</span> - 그 값이 0보다 크면 decrement,</li>
 <li>$s=0$이면 sleep하고 누군가가 깨워줄 때까지 suspend된다.
-= CPU Cycle을 소모하지 않는다.
-→ 즉 0보다 크거나 같은 값을 계속 체크하지 않고 suspended되어 있다가 signal오면 깨어나는 형태</li>
-</ol>
+<ul>
+<li>= CPU Cycle을 소모하지 않는다.</li>
+<li>→ 즉 0보다 크거나 같은 값을 계속 체크하지 않고 suspended되어 있다가 signal오면 깨어나는 형태</li>
+</ul>
 </li>
 </ol>
 <doc-anchor-target id="vs">
@@ -827,147 +880,151 @@ and the thread is restarted by a V operation.</p>
     </h3>
 </doc-anchor-target>
 <ul>
-<li><p>V의 정의 : 기다리고 있는 thread들이 재시작되는 순서를 정의하지 않는다.</p>
+<li>V의 정의 : 기다리고 있는 thread들이 재시작되는 순서를 정의하지 않는다.
 <ul>
-<li>요구하는 유일한 사항은 V가 정확히 한 개의 waiting thread를 restart → 여러 개의 thread가 하나의 Semaphore를 가지고 있을 때 어떤 것이 V의 결과로 재시작되는지는 예측 불가능</li>
+<li>요구하는 유일한 사항은 V가 정확히 한 개의 waiting thread를 restart</li>
+<li>→ 여러 개의 thread가 하나의 Semaphore를 가지고 있을 때 어떤 것이 V의 결과로 재시작되는지는 예측 불가능</li>
 </ul>
 </li>
-<li><p>Increment s by 1 : s라는 variable을 increment해줌 → 그리고 나서 만일 s variable을 기다리고 있던 suspend thread가 있다면 그 중 한명을 깨워주고 → 그 thread가 decrement할수 있게 해줌</p>
-</li>
-<li><p>Increment operation occurs atomically :
-atomic하게 increment시키고 누군가가 s라는 variable을 decrement하지 못해서 pending되어있는 경우 (suspended된 경우), 여러 thread중 누군가 하나를 wake시켜서 decrement할 수 있게끔 한다.</p>
-</li>
-<li><p>정리하면,</p>
+<li>Increment s by 1 :
 <ul>
-<li><p>S를 increment하고, 이 semaphore value에 기다리고 있던 blocked 된 thread를 깨워줌</p>
+<li>s라는 variable을 increment해줌</li>
+<li>→ 그리고 나서 만일 s variable을 기다리고 있던 suspend thread가 있다면 그 중 한명을 깨워주고</li>
+<li>→ 그 thread가 decrement할수 있게 해줌</li>
+</ul>
 </li>
-<li><p>semaphorevalue s 를 increment</p>
-<p>→ 이 semaphore value의 기다리고 있떤 blocked된 thread를 깨워 줌</p>
-<p>→ 여러 thread가 다같이 깨어남 : thundering herd</p>
+<li>Increment operation occurs atomically :
 <ul>
-<li>block되어 기다리던 thread를 깨워 줌
-→ 깨어나 ready 상태로 가 scheduler에 의해 행사되어 critical session으로 들어감</li>
+<li>atomic하게 increment시키고 누군가가 s라는 variable을 decrement하지 못해서 pending되어있는 경우 (suspended된 경우), 여러 thread중 누군가 하나를 wake시켜서 decrement할 수 있게끔 한다.</li>
+</ul>
+</li>
+<li>정리하면,
+<ul>
+<li>S를 increment하고, 이 semaphore value에 기다리고 있던 blocked 된 thread를 깨워줌</li>
+<li>semaphorevalue s 를 increment
+<ul>
+<li>→ 이 semaphore value의 기다리고 있떤 blocked된 thread를 깨워</li>
+<li>→ 여러 thread가 다같이 깨어남 : thundering herd</li>
+<li>block되어 기다리던 thread를 깨워 줌</li>
+<li>→ 깨어나 ready 상태로 가 scheduler에 의해 행사되어 critical session으로 들어감</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><strong>‘Atomically’</strong></p>
+<li><strong>‘Atomically’</strong>
 <ul>
-<li>P,V는 atomically 수행된다 : indivisibly - 쪼개질 수 없는 함수이다.
+<li><code v-pre>P,V</code>는 atomically 수행된다 : indivisibly
+<ul>
+<li>쪼개질 수 없는 함수이다.
 = p라는 함수는 실행이 되거나, 안 되거나 둘 중 하나이다.</li>
+</ul>
+</li>
 <li>variable이 뭔지 test하고 이 variable을 어떤 값으로 setting해줌 (decrement)</li>
 <li>v또한 Atomically increment해주기 때문에 변수를 하나 증가해줌</li>
 </ul>
 </li>
-<li><p>If there are any threads blocked in a P operation waiting for s to become non- zero, then restart exactly one of those threads, which then completes its P operation by decrementing s.</p>
-</li>
-</ul>
-<p>test와 감소 연산은 semaphore s가 0이 아니면 s의 감소가 중단 없이 일어난다는 의미에서 개별적으로 일어남. V에서도 증가연산 개별적. - Semaphore를 중단 없이 load, 증가, 저장하기 때문</p>
-<ul>
+<li>If there are any threads blocked in a P operation waiting for s to become non- zero, then restart exactly one of those threads, which then completes its P operation by decrementing s.</li>
+<li>test와 감소 연산은 semaphore s가 0이 아니면 s의 감소가 중단 없이 일어난다는 의미에서 개별적으로 일어남. V에서도 증가연산 개별적. - Semaphore를 중단 없이 load, 증가, 저장하기 때문</li>
 <li><strong>Semaphore invariant: (s &gt;= 0)</strong></li>
 </ul>
-<hr />
+<doc-anchor-target id="qna">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#qna">#</doc-anchor-trigger>
+        <span>QnA</span>
+    </h2>
+</doc-anchor-target>
 <ul>
-<li><p>(질문) lock을 잡는다는 것이 cpu 제어권을 가진다는 것과 동치 표현인가?</p>
-<p>single cpu에서는 cpu 제어권을 갖는다는 것과 lock</p>
-<p>Lock잡은 다음 그 누구도 cpu 제어권을 가질 수 없다.</p>
-</li>
-<li><p>(질문) t1은 새로운 경쟁에 참여하지 않는가?</p>
-<p>t1은 새로운 경쟁에 참여하지 않는다. 이미 lock을 풀고 남았기 때문에, critical session으로 다시 들어가지 않는다. 화장실 쓰다 나왔는데, 다시 들어가지 않지 않겠느냐</p>
-<p>key를 누구한테 줄거야 : 나 나왔으니까 일어나-&gt; 둘이 일어나서 둘중 하나 성공</p>
-<p>둘중 하나 성공 :ready상태로 둘 다 보내놓고 경쟁하는 상황</p>
-<p>누가 먼저 running할지 모르겠지만 ready한 상태: 하나가 lock잡으면 들어감.</p>
-<p>나는 들어갔다 나왔기 때문에 다시 안들어감</p>
+<li>(질문) lock을 잡는다는 것이 cpu 제어권을 가진다는 것과 동치 표현인가?
 <ul>
-<li>단, 만일 loop로 짰다고 하면 다시 경쟁에 참여할 것</li>
+<li>single cpu에서는 cpu 제어권을 갖는다는 것과 lock</li>
+<li>Lock잡은 다음 그 누구도 cpu 제어권을 가질 수 없다.</li>
 </ul>
-<p>lock을 풀고 나왔는데 나도 다시 경쟁할 수 있음</p>
 </li>
-<li><p>(질문) interleaving한다는 개념</p>
+<li>(질문) t1은 새로운 경쟁에 참여하지 않는가?
 <ul>
-<li>critical session 이라고 이야기할 수 있는 cnt++</li>
-<li>여러 thread가 cnt++를 부르게 되면</li>
+<li>t1은 새로운 경쟁에 참여하지 않는다. 이미 lock을 풀고 남았기 때문에, critical session으로 다시 들어가지 않는다. 화장실 쓰다 나왔는데, 다시 들어가지 않지 않겠느냐?</li>
+<li>key를 누구한테 줄거야 : 나 나왔으니까 일어나 <span class="math">\rightarrow</span> 둘이 일어나서 둘중 하나 성공
+<ul>
+<li>둘중 하나 성공 :ready상태로 둘 다 보내놓고 경쟁하는 상황</li>
+<li>누가 먼저 running할지 모르겠지만 ready한 상태: 하나가 lock잡으면 들어감.</li>
 </ul>
-<p>cnt는 load-update-store 명령어로 구성되어 있다.</p>
-<p>Thread 1번이 load update store 수행하고 순차적으로 t2, t3가 수행함</p>
+</li>
+<li>나는 들어갔다 나왔기 때문에 다시 안들어감</li>
+<li>단, 만일 loop로 짰다고 하면 다시 경쟁에 참여할 것
 <ul>
-<li>
-<blockquote>
-<p>interleaving이 일어나지 않음</p>
-</blockquote>
+<li>lock을 풀고 나왔는데 나도 다시 경쟁할 수 있음</li>
+</ul>
 </li>
 </ul>
-<p>Interleaving이란 : load하기 전에 다른 thread가 load하여 겹치게 되는 경우</p>
 </li>
-<li><p>(질문) t2, t3를 다 깨워주나요?</p>
+<li>(질문) interleaving한다는 개념
+<ul>
+<li>critical session 이라고 이야기할 수 있는 <code v-pre>cnt++</code></li>
+<li>여러 thread가 cnt++를 부르게 되면 cnt는 load-update-store 명령어로 구성되어 있다.</li>
+<li>Thread 1번이 load update store 수행하고 순차적으로 t2, t3가 수행함 <span class="math">\rightarrow</span> interleaving이 일어나지 않음
+<ul>
+<li>Interleaving이란 : load하기 전에 다른 thread가 load하여 겹치게 되는 경우</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(질문) t2, t3를 다 깨워주나요?
 <ul>
 <li>pthread : 다 깨워주고, 그 중 한 thread만 lock을 잡아 줌.</li>
 <li>lock을 가져다 새 떼들이 한꺼번에 모이는 problem이라고 이야기함.</li>
+<li>여러 thread 100개가 sleep할 때 동시에 wake해주면 성능이 떨어져서 단계적으로 깨워주기도 함.</li>
 </ul>
-<p>여러 thread 100개가 sleep할 때 동시에 wake해주면 성능이 떨어져서 단계적으로 깨워주기도 함.</p>
 </li>
-<li><p>(질문) 순서 부여 방식으로는 해결이 안되는가?</p>
-<p>순서 부여하기 위해 semaphore를 사용함- 순서 부여 방식이 자동적으로 생기는 것임</p>
+<li>(질문) 순서 부여 방식으로는 해결이 안되는가?
 <ul>
+<li>순서 부여하기 위해 semaphore를 사용함- 순서 부여 방식이 자동적으로 생기는 것임</li>
 <li>암묵적으로 먼저 들어간애 있으면 자동적으로 그 다음 thread에 대한 순서가 만들어짐</li>
 <li>형평성 있게 경쟁 다 같이 하게 해놓고, 순서가 자동으로 결정 -&gt; ordering이 만들어짐</li>
-<li>
-<blockquote>
-<p>순서가 있다보니 중간 interleaving되는 경우가 안 나옴.</p>
-</blockquote>
-</li>
+<li><span class="math">\rightarrow</span> 순서가 있다보니 중간 interleaving되는 경우가 안 나옴.</li>
 </ul>
 </li>
-<li><p>(질문) lock을 활용해 오직 하나의 thread만 running될 수 있는 상태면</p>
-<p>context switch는 발생하지 않는가요?</p>
-<p>결과적으론 lock을 들고 있는 thread만 실행될텐데 context switch로 인해</p>
-<p>무의미한 overhead가 발생하지 않나 싶어 질문드립니다.</p>
-<p>overhead : tradeoff</p>
-<p>장점 : 화장실 들어갔다가 나올 때 언제 나올지 모르기 때문에 sleep</p>
+<li>(질문) lock을 활용해 오직 하나의 thread만 running될 수 있는 상태면 context switch는 발생하지 않는가요? 결과적으론 lock을 들고 있는 thread만 실행될텐데 context switch로 인해 무의미한 overhead가 발생하지 않나 싶어 질문드립니다.
 <ul>
-<li>뒤에서 기다리는 thread: sleep -&gt; CPU Cycle 소모 x</li>
+<li>overhead : tradeoff</li>
+<li>장점 : 화장실 들어갔다가 나올 때 언제 나올지 모르기 때문에 sleep
+<ul>
+<li>뒤에서 기다리는 thread: sleep -&gt; CPU Cycle 소모 x
+cpu 사용 : energy cost - battery 많이 먹음<br />
+그래서 일부러 sleep을 시키는것</li>
 </ul>
-<p>cpu 사용 : energy cost - battery 많이 먹음</p>
-<p>그래서 일부러 sleep을 시키는것</p>
-<ul>
+</li>
 <li>sleep한다음 깨어나려면 overhead : (잠깐 자다가 깨어나면 더 힘들지 않나)</li>
 <li>깨어날 때 context switch일어나는데 block-&gt;ready-&gt;running 상태 과정에서 overhead가 있긴 함</li>
-<li>가정) 화장실 갔는데 2,3명 기다리고 있음</li>
-</ul>
-<p>먼저 들어간 사람이 금방 들어갔다 나올거면 금방 나올거니까 기다리는게 나음</p>
-<p>한참 걸릴거 같으면 기다리는 thread들이 자고 있는게 효율적</p>
-<ul>
-<li>semaphore이 에너지 효율 관점에서는 좋음.</li>
-</ul>
-<p>task의 길이가 무척 짧은 경우에는 sleep으로 가지 않는 mutex lock이 효과적일 수 있음.</p>
-<ul>
+<li>가정) 화장실 갔는데 2,3명 기다리고 있
+먼저 들어간 사람이 금방 들어갔다 나올거면 금방 나올거니까 기다리는게 나음
+한참 걸릴거 같으면 기다리는 thread들이 자고 있는게 효율적</li>
+<li>semaphore이 에너지 효율 관점에서는 좋음.
+task의 길이가 무척 짧은 경우에는 sleep으로 가지 않는 mutex lock이 효과적일 수 있음.</li>
 <li>
 <blockquote>
-<p>critical session 크기에 따라 항상 semaphore 쓰는게 좋다곤 할 수 없다.</p>
+<p>critical session 크기에 따라 항상 semaphore 쓰는게 좋다곤 할 수 없다.
+critical session 적당한 크기면 효과적이나, 너무 작을 경우 정말 언제 나올 것인지 polling하면 더 effective할 수 있음</p>
 </blockquote>
 </li>
 </ul>
-<p>critical session 적당한 크기면 효과적이나, 너무 작을 경우 정말 언제 나올 것인지 polling하면 더 effective할 수 있음</p>
 </li>
-<li><p>(질문) thread들이 충분히 많을 경우 운이 없다면 영원히 lock을 받지 못하는 thread가 생길 수 있는가?</p>
+<li>(질문) thread들이 충분히 많을 경우 운이 없다면 영원히 lock을 받지 못하는 thread가 생길 수 있는가?
 <ul>
 <li>맞습니다 (starvation문제 : 경쟁을 계속 시키다보니까)</li>
-<li>OS program 자체도 thread</li>
-</ul>
-</li>
-</ul>
-<p><figure class="content-center">
-    <img src="7/0/untitled208.png" alt="Untitled" />
+<li>OS program 자체도 thread
+<figure class="content-center">
+    <img src="../7/0/untitled_8.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
-</p>
-<ul>
-<li><p>가정</p>
+</li>
+</ul>
+</li>
+<li>가정
 <ul>
 <li>critical session에서 t1, t2, t3 경쟁하는 상황에서 thread 하나밖에 들어갈 수 없으므로 lock을 잡아 들어가야 한다. 물론 누가 들어갈지는 모른다 - 3개 중 하나가 lock을 잡게 될 것이다.</li>
 </ul>
 </li>
-<li><p>ex1. Thread1번이 lock을 잡았다면</p>
+<li>ex1. Thread1번이 lock을 잡았다면
 <ul>
 <li>critical session에 t1들어가고
 <ul>
@@ -979,12 +1036,10 @@ atomic하게 increment시키고 누군가가 s라는 variable을 decrement하지
 <li>이후 t1이 나오게 되면 -&gt; unlock (Lock을 풀어준다 : lock s)</li>
 </ul>
 </li>
-<li><p>현재 Thread 2,3번 모두 sleep된 상태 → 2,3중 하나 : 한 녀석을 깨워준다</p>
+<li>현재 Thread 2,3번 모두 sleep된 상태 → 2,3중 하나 : 한 녀석을 깨워준다
 <ul>
-<li>방법 :모두다 깨워서 경쟁을 다시 시키거나, (s:-&gt;t2-&gt;t3)</li>
-</ul>
-<p>running 상태 → blocked 상태 → ready상태</p>
-<ul>
+<li>방법 :모두다 깨워서 경쟁을 다시 시키거나, (s:-&gt;t2-&gt;t3)
+running 상태 → blocked 상태 → ready상태</li>
 <li>t2, t3가 들어가 있었는데 ready상태로 들어가서 줄 서서 기다린다.
 <ul>
 <li>자기 순서 들어가게 되면 running상태가 되어 깨워 줘서 이 상태로 갈 수 있게 하는 것을 V(s)가 수행해준다. → 그렇게 함으로써 기다리던 녀석 중 하나가 깨어나면 다시 시도해서 complete한다. decrement하게 되면 T2가 들어가게 된다.</li>
@@ -1017,9 +1072,7 @@ int sem_post(sem_t *s); /* V(s) */</code></pre>
 <li>→ 그래서 쪼갤 수 없는 것이다.</li>
 </ul>
 </li>
-</ul>
-<p>sem wait : test and set</p>
-<ul>
+<li><code v-pre>sem wait</code> : test and set</li>
 <li>variable s를 test하고 0보다 크고 작은지 확인, 0보다 크면 decrement (test → set)</li>
 <li>이를 하나의 명령어로 만들어놈 / 그 명령어가 cpu architecture마다 다름</li>
 <li>load, store, add 등 : 쪼갤 수 없는 instruction
@@ -1045,8 +1098,7 @@ void V(sem_t *s); /* Wrapper function for sem_post */  20</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>badcnt.c</li>
-</ul>
+<li>badcnt.c
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">/* Global shared variable */ 
 volatile long cnt = 0; /* Counter */ 
@@ -1073,7 +1125,9 @@ void *thread(void *vargp)
     return NULL;
 }</code></pre>
 </doc-codeblock></div>
-<p>How can we fix this using semaphores ?</p>
+</li>
+<li>How can we fix this using semaphores ?</li>
+</ul>
 <doc-anchor-target id="using-semaphores-for-mutual-exclusion">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#using-semaphores-for-mutual-exclusion">#</doc-anchor-trigger>
@@ -1107,22 +1161,22 @@ void *thread(void *vargp)
         <span><code v-pre>goodcnt.c</code>: Proper Synchronization</span>
     </h3>
 </doc-anchor-target>
-<p>하나만 들어갈 수 있도록</p>
+<ul>
+<li>하나만 들어갈 수 있도록</li>
+</ul>
 <ol>
 <li>volatile로 선언</li>
 </ol>
 <ul>
-<li><p>cacheing되지 않도록, memory에 직접 쓸 수 있도록</p>
-</li>
-<li><p>sem_t : unsigned integer</p>
-</li>
-<li><p>c code를 단순히 변환해주는 것만이 아닌</p>
+<li>cacheing되지 않도록, memory에 직접 쓸 수 있도록</li>
+<li>sem_t : unsigned integer</li>
+<li>c code를 단순히 변환해주는 것만이 아닌
 <ul>
 <li>optimization이 들어가서, code 최적화를 통해 code를 빠르게 하나</li>
 <li>correctness에서 문제가 생길수도 있음</li>
 </ul>
 </li>
-<li><p>Define and initialize a mutex for the shared variable cnt:</p>
+<li>Define and initialize a mutex for the shared variable cnt:
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">volatile long cnt = 0; /* Counter **/ 
 sem_t mutex; /** Semaphore that protects cnt **/ 
@@ -1145,7 +1199,7 @@ Sem_init(&amp;mutex, 0, 1); /** mutex = 1 */ </code></pre>
 항상 결과값을 memory에 저장해두고 진행하는 것이 volatile의 역할</li>
 </ul>
 </li>
-<li><p>Surround critical section with P and V:</p>
+<li>Surround critical section with P and V:
 <ul>
 <li>thread routine에서 P, V연산으로 shared variable cnt를 둘러싸 renew 보호</li>
 </ul>
@@ -1164,7 +1218,7 @@ OK cnt=20000
 linux&gt; </code></pre>
 </doc-codeblock></div>
 </li>
-<li><p>Warning: It’s orders of magnitude slower than badcnt.c.</p>
+<li>Warning: It’s orders of magnitude slower than badcnt.c.
 <ul>
 <li>직렬화되어 있음 : 하나만 들어가고, badcnt 는 마구잡이로 critical session에 들어감</li>
 <li>→ 무작위적으로 들어가고 지금은 순서를 정해 들어감</li>
@@ -1174,47 +1228,41 @@ linux&gt; </code></pre>
 <li>= 직렬화 됨 -&gt; 느림</li>
 </ul>
 </li>
-<li></li>
 </ul>
 </li>
-<li><p>ques</p>
-<p>(질문) cnt가 다른 thread에 의해 수정됨을 막기 위해 p(&amp;mutex)로 다른 thread를 sleep시키고</p>
-<p>cnt++수행 후 깨워주는 것이라고 이해했는데 맞나요?</p>
+<li>question
 <ul>
-<li>
-<blockquote>
-<p>맞다. 막아주고 lock을 가지고 들어갔기 때문에 다른 thread는 들어오지 못함.</p>
-</blockquote>
-</li>
-</ul>
-<p>(질문) semaphore 방식을 이용해도 cnt변수는 volatile로 선언해야만 하나요?</p>
+<li>(질문) cnt가 다른 thread에 의해 수정됨을 막기 위해 p(&amp;mutex)로 다른 thread를 sleep시키고 cnt++수행 후 깨워주는 것이라고 이해했는데 맞나요?
 <ul>
-<li>
-<blockquote>
-<p>cnt++했는데 cache에 있을 수 있으니까 cacheing방지용으로 volatile 선언</p>
-</blockquote>
-</li>
+<li>맞다. 막아주고 lock을 가지고 들어갔기 때문에 다른 thread는 들어오지 못함.</li>
 </ul>
-<p>(질문) semaphore 변수도 여러 thread가 접근가능한데, 여기서 문제 생기지 않는 이유는</p>
-<p>P, V 함수들이 atomic하기 때문인가?</p>
+</li>
+<li>(질문) semaphore 방식을 이용해도 cnt변수는 volatile로 선언해야만 하나요?
+<ul>
+<li>cnt++했는데 cache에 있을 수 있으니까 cacheing방지용으로 volatile 선언</li>
+</ul>
+</li>
+<li>(질문) semaphore 변수도 여러 thread가 접근가능한데, 여기서 문제 생기지 않는 이유는 P, V 함수들이 atomic하기 때문인가?
 <ul>
 <li>맞다. 한 thread가 decrement increment하는 일 자체가 atomic하기 때문에 맞다.</li>
 </ul>
-<p>(질문) thread 여러 개를 깨울 때 이 순서가 암묵적으로 정해져 있나? 완전 랜덤인가?</p>
-<p>다 깨워놓고 그 중 경쟁에서 이긴 thread가 그 다음순서가 됨</p>
-<p>(질문) 코드상 volatile로 선언안하면 memory가 아니라 반드시 cache에서 가져와서 문제가 되는것인가?</p>
+</li>
+<li>(질문) thread 여러 개를 깨울 때 이 순서가 암묵적으로 정해져 있나? 완전 랜덤인가?
+<ul>
+<li>다 깨워놓고 그 중 경쟁에서 이긴 thread가 그 다음순서가 됨</li>
+</ul>
+</li>
+<li>(질문) 코드상 volatile로 선언안하면 memory가 아니라 반드시 cache에서 가져와서 문제가 되는것인가?
 <ul>
 <li>맞다. volatile로 안 선언하면 memory가 아니라 cache에서 가져와서 문제생김</li>
 </ul>
-<p>(질문) semaphore t가 volatile로 선언되는가?</p>
-<ul>
-<li>체크해보겠다.</li>
-</ul>
-<p>(질문) for loop내 p가 block되고 나면 cnt++지나서 v까지 도달할 수 있나?</p>
-<p>v에서 이 thread를 깨워줘야 하는데, v까지 도달할 수 없지 않는가?</p>
+</li>
+<li>(질문) for loop내 p가 block되고 나면 cnt++지나서 v까지 도달할 수 있나? v에서 이 thread를 깨워줘야 하는데, v까지 도달할 수 없지 않는가?
 <ul>
 <li>p부터 resume해서 진행됨</li>
 <li>P, V에 의해 만들어진 forbidden region : multiple thread가 포함된 critical section의 Instruction을 항상 실행할 수 없게 해 준다 = semaphore 연산은 critcal section으로 mutual exclusive approach를 보장해준다.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1225,12 +1273,17 @@ linux&gt; </code></pre>
     </h3>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="7/0/untitled209.png" alt="s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지" />
+    <img src="../7/0/untitled_9.png" alt="s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지" />
     <figcaption class="caption">s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지</figcaption>
 </figure>
-s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 궤적이 unsafe region과 닿음을 방지</p>
-<p>P, V의 조합이 forbidden region이라 불리는 state set을 생성한다 : s&lt;0</p>
+</p>
 <ul>
+<li>s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의
+<ul>
+<li>모든 가능한 궤적이 unsafe region과 닿음을 방지</li>
+</ul>
+</li>
+<li>P, V의 조합이 forbidden region이라 불리는 state set을 생성한다 : s&lt;0</li>
 <li>semaphore invariant으로 인해 <strong>forbidden region state를 포함하는 궤적이 존재하지 않음</strong> + forbidden region이 <strong>완전히 unsafe region을 감싸므로</strong> 모든 가능한 궤적들은 위험 영역의 모든 부분을 지날 수 없다.
 <ul>
 <li><strong>→ 모든 trajectory는 safe + Runtime instruction order와 무관하게 정확하게 Counter 증가</strong></li>
@@ -1263,7 +1316,7 @@ s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 �
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../sp/6-concurrent-prog-(x)-45b279fd4a47407e94aca845a1e99f0d/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../sp/6-concurrent-prog/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
@@ -1273,7 +1326,7 @@ s&lt;0 : unsafe region을 둘러싼 Forbidden region 정의 - 모든 가능한 �
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../sp/8-synchronization-advanced-67a92bf1a54e425fb286eb25f130aedc/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../sp/8-synchronization-advanced/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
                                                 <span class="block mt-1">8. Synchronization: Advanced</span>

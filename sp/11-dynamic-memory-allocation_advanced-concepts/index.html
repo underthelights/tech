@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714465075793">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714719928778">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -15,18 +15,18 @@
     <meta name="description" content="Dynamic Memory Allocation: Advanced Concepts CSE4100: System Programming Youngjae Kim (PhD)" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="/tech/sp/11-dynamic-memory-allocation-advanced-concepts-66fc829848594b47a69bd399782c384d/" />
+    <link rel="canonical" href="/tech/sp/11-dynamic-memory-allocation_advanced-concepts/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="/tech/sp/11-dynamic-memory-allocation-advanced-concepts-66fc829848594b47a69bd399782c384d/">
+    <meta property="og:url" content="/tech/sp/11-dynamic-memory-allocation_advanced-concepts/">
     <meta property="og:title" content="11. Dynamic Memory Allocation: Advanced Concepts">
     <meta property="og:description" content="Dynamic Memory Allocation: Advanced Concepts CSE4100: System Programming Youngjae Kim (PhD)">
     <meta property="og:image" content="/tech/sp/11/untitled.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/tech/sp/11-dynamic-memory-allocation-advanced-concepts-66fc829848594b47a69bd399782c384d/">
+    <meta property="twitter:url" content="/tech/sp/11-dynamic-memory-allocation_advanced-concepts/">
     <meta property="twitter:title" content="11. Dynamic Memory Allocation: Advanced Concepts">
     <meta property="twitter:description" content="Dynamic Memory Allocation: Advanced Concepts CSE4100: System Programming Youngjae Kim (PhD)">
     <meta property="twitter:image" content="/tech/sp/11/untitled.png">
@@ -34,12 +34,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.4.0.714465075793" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.714719928778" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714465075793" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714719928778" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714465075793" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714465075793" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714719928778" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714719928778" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -252,31 +252,27 @@ Youngjae Kim (PhD)</p>
 <li>successor- precedesor : Explicit한 방법으로 free list 관리 가능.</li>
 </ul>
 <p><figure class="content-center">
-    <img src="11/untitled201.png" alt="Untitled" />
+    <img src="../11/untitled_1.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
-<li><p>Maintain list(s) of free blocks, not all blocks</p>
-</li>
-<li><p>The “next” free block could be anywhere</p>
+<li>Maintain list(s) of free blocks, not all blocks</li>
+<li>The “next” free block could be anywhere
 <ul>
 <li>So we need to store forward/back pointers, not just sizes</li>
 </ul>
 </li>
-<li><p>Still need boundary tags for coalescing</p>
-</li>
-<li><p>Luckily we track only free blocks, so we can use payload area</p>
+<li>Still need boundary tags for coalescing</li>
+<li>Luckily we track only free blocks, so we can use payload area
 <ul>
 <li>lucky하게도 free list만 관리 가능 → payload 영역 사용의 단점</li>
 </ul>
 </li>
-<li><p>Logically:</p>
-<p><img src="11/untitled202.png" alt="Untitled" /></p>
-</li>
-<li><p>Physically: blocks can be in any order AB</p>
-<p><img src="11/untitled203.png" alt="Untitled" /></p>
-</li>
+<li>Logically:
+<img src="../11/untitled_2.png" alt="Untitled" /></li>
+<li>Physically: blocks can be in any order AB
+<img src="../11/untitled_3.png" alt="Untitled" /></li>
 </ul>
 <doc-anchor-target id="allocating-from-explicit-free-lists">
     <h2>
@@ -284,18 +280,21 @@ Youngjae Kim (PhD)</p>
         <span>Allocating From Explicit Free Lists</span>
     </h2>
 </doc-anchor-target>
-<p>Doubly linked list로 연결되어있다고 하자 :</p>
-<p>회색 해당한 만큼을 allocate → free list에 있을 필요 없으므로 split하고 남은 block과 연결해줌</p>
 <ul>
+<li>Doubly linked list로 연결되어있다고 하자 :
+<ul>
+<li>회색 해당한 만큼을 allocate → free list에 있을 필요 없으므로 split하고 남은 block과 연결해줌</li>
+</ul>
+</li>
 <li>ptr update를 통해 앞에서부터/뒤에서부터 연결, splitting</li>
 </ul>
 <p><figure class="content-center">
-    <img src="11/untitled204.png" alt="Untitled" />
+    <img src="../11/untitled_4.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <p><figure class="content-center">
-    <img src="11/untitled205.png" alt="Untitled" />
+    <img src="../11/untitled_5.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -306,14 +305,13 @@ Youngjae Kim (PhD)</p>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Insertion policy: Where in the free list do you put a newly freed block?</p>
-</li>
-<li><p>복잡 : free list를 관리해야 하는데 가져다 return하게 되면 insertion해야 하는데 그 policy</p>
+<li>Insertion policy: Where in the free list do you put a newly freed block?</li>
+<li>복잡 : free list를 관리해야 하는데 가져다 return하게 되면 insertion해야 하는데 그 policy
 <ul>
 <li>→ search time overhead가 큼</li>
 </ul>
 </li>
-<li><p>LIFO (last-in-first-out) policy</p>
+<li>LIFO (last-in-first-out) policy
 <ul>
 <li>Insert freed block at the beginning of the free list
 맨 앞에다 free block을 가져다 연결시켜줌</li>
@@ -321,7 +319,7 @@ Youngjae Kim (PhD)</p>
 <li>Con: studies suggest fragmentation is worse than address ordered</li>
 </ul>
 </li>
-<li><p>Address-ordered policy</p>
+<li>Address-ordered policy
 <ul>
 <li>Insert freed blocks so that free list blocks are always in address order:
 <ul>
@@ -330,15 +328,11 @@ Youngjae Kim (PhD)</p>
 </li>
 <li>Con: requires search</li>
 <li>Pro: studies suggest fragmentation is lower than LIFO</li>
-</ul>
-<ol start="2">
-<li>Address ordered policy</li>
-</ol>
+<li>insert되는 block들이 작은 주소부터 높은 주소 순으로 sorting
 <ul>
-<li>insert되는 block들이 작은 주소부터 높은 주소 순으로 sorting</li>
+<li>→ addr ordered 방법보다 fragmentation 경감</li>
 </ul>
-<p>→ addr ordered 방법보다 fragmentation 경감</p>
-<ul>
+</li>
 <li>실제 allocation할 때 어떤 block을 allocation하느냐를 Allocation해야 하기 때문에, address에 따라 순서대로 search하며 선택해야 하는 문제가 있음</li>
 </ul>
 </li>
@@ -360,13 +354,13 @@ Youngjae Kim (PhD)</p>
 <li>즉) 앞 뒤가 allocate되면 상대적으로 simple</li>
 </ul>
 <p><figure class="content-center">
-    <img src="11/untitled206.png" alt="Untitled" />
+    <img src="../11/untitled_6.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
 <li><p>Insert the freed block at the root of the list</p>
-<p><img src="11/untitled207.png" alt="Untitled" /></p>
+<p><img src="../11/untitled_7.png" alt="Untitled" /></p>
 </li>
 </ul>
 <doc-anchor-target id="freeing-with-a-lifo-policy-case-2">
@@ -376,13 +370,13 @@ Youngjae Kim (PhD)</p>
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="11/untitled208.png" alt="Untitled" />
+    <img src="../11/untitled_8.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
 <li><p>Splice out successor block, coalesce both memory blocks and insert the new block at the root of the list</p>
-<p><img src="11/untitled209.png" alt="Untitled" /></p>
+<p><img src="../11/untitled_9.png" alt="Untitled" /></p>
 </li>
 </ul>
 <doc-anchor-target id="freeing-with-a-lifo-policy-case-3">
@@ -392,13 +386,13 @@ Youngjae Kim (PhD)</p>
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="11/untitled2010.png" alt="Untitled" />
+    <img src="../11/untitled_10.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
 <li><p>Splice out predecessor block, coalesce both memory blocks, and insert the new block at the root of the list</p>
-<p><img src="11/untitled2011.png" alt="Untitled" /></p>
+<p><img src="../11/untitled_11.png" alt="Untitled" /></p>
 </li>
 </ul>
 <doc-anchor-target id="freeing-with-a-lifo-policy-case-4">
@@ -408,13 +402,13 @@ Youngjae Kim (PhD)</p>
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="11/untitled2012.png" alt="Untitled" />
+    <img src="../11/untitled_12.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
 <li><p>Splice out predecessor and successor blocks, coalesce all 3 memory blocks and insert the new block at the root of the list</p>
-<p><img src="11/untitled2013.png" alt="Untitled" /></p>
+<p><img src="../11/untitled_13.png" alt="Untitled" /></p>
 </li>
 </ul>
 <doc-anchor-target id="explicit-list-summary">
@@ -423,11 +417,12 @@ Youngjae Kim (PhD)</p>
         <span>Explicit List Summary</span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>모든 block을 뒤지지 않아 좀 더 빠른 속도를 가지지만 좀 복잡함 : free state 관리 구현</p>
+</blockquote>
 <ul>
-<li><p>block의 크기가 최소 5word 이상이어야 함</p>
-</li>
-<li><p>Comparison to implicit list:</p>
+<li>block의 크기가 최소 5word 이상이어야 함</li>
+<li>Comparison to implicit list:
 <ul>
 <li>Allocate is linear time in number of free blocks instead of all blocks
 <ul>
@@ -442,15 +437,15 @@ Youngjae Kim (PhD)</p>
 </li>
 </ul>
 </li>
-<li><p>Most common use of linked lists is in conjunction with segregated free lists
-Free block들을 ptr로 연결하여 ll로 관리함</p>
+<li>Most common use of linked lists is in conjunction with segregated free lists
+Free block들을 ptr로 연결하여 ll로 관리함
 <ul>
-<li><p>Keep multiple linked lists of different size classes, or possibly for different types of objects</p>
-</li>
-<li><p>LIFO queue</p>
-</li>
-<li><p>단점 : free block을 link했지만 각 block 크기 가변적</p>
-<p>→ fragmentation이 작은 block을 찾으려면 best fit policy에 따라 처음부터 끝까지 뒤져봐야 함.</p>
+<li>Keep multiple linked lists of different size classes, or possibly for different types of objects</li>
+<li>LIFO queue</li>
+<li>단점 : free block을 link했지만 각 block 크기 가변적
+<ul>
+<li>→ fragmentation이 작은 block을 찾으려면 best fit policy에 따라 처음부터 끝까지 뒤져봐야 함.</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -462,8 +457,10 @@ Free block들을 ptr로 연결하여 ll로 관리함</p>
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>어떻게 segregate : n개의 size class를 만들어 n개의 free block을 안에다 집합</p>
-<p>→ 다른 크기의 size class에 따라서 각각 다른 free list 관리하는 기법</p>
+<li>어떻게 segregate : n개의 size class를 만들어 n개의 free block을 안에다 집합
+<ul>
+<li>→ 다른 크기의 size class에 따라서 각각 다른 free list 관리하는 기법</li>
+</ul>
 </li>
 </ul>
 <doc-anchor-target id="segregated-list-seglist-allocators">
@@ -473,22 +470,20 @@ Free block들을 ptr로 연결하여 ll로 관리함</p>
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="11/untitled2014.png" alt="Untitled" />
+    <img src="../11/untitled_14.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
 <ul>
-<li><p>Each size class of blocks has its own free list</p>
+<li>Each size class of blocks has its own free list</li>
+<li>Often have separate classes for each small size</li>
+<li>For larger sizes: One class for each two-power size</li>
+<li>이전 explicit free list : 하나의 단일 lifo queue
+<ul>
+<li>→ 지금 : 각각의 size을 가지는 list</li>
+</ul>
 </li>
-<li><p>Often have separate classes for each small size</p>
-</li>
-<li><p>For larger sizes: One class for each two-power size</p>
-</li>
-<li><p>이전 explicit free list : 하나의 단일 lifo queue</p>
-<p>→ 지금 : 각각의 size을 가지는 list</p>
-</li>
-<li><p>장점 : best fit - fragmentation 최소화할 수 있는 block을 찾았다면 여기서는 class 별 로 나누었기에 내게 맞는 class를 찾을 수 있는 기법</p>
-</li>
+<li>장점 : best fit - fragmentation 최소화할 수 있는 block을 찾았다면 여기서는 class 별 로 나누었기에 내게 맞는 class를 찾을 수 있는 기법</li>
 </ul>
 <doc-anchor-target id="seglist-allocator">
     <h2>
@@ -496,33 +491,35 @@ Free block들을 ptr로 연결하여 ll로 관리함</p>
         <span>Seglist Allocator</span>
     </h2>
 </doc-anchor-target>
-<p>malloc(n)</p>
-<p>새롭게 요청된 메모리로부터 n개의 byte block 할당.</p>
-<p><figure class="content-center">
-    <img src="11/untitled2015.png" alt="Untitled" />
+<p><code v-pre>malloc(n)</code></p>
+<blockquote>
+<p>새롭게 요청된 메모리로부터 n개의 byte block 할당.
+<figure class="content-center">
+    <img src="../11/untitled_15.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
+</blockquote>
 <ul>
-<li><p>Given an array of free lists, each one for some size class</p>
-</li>
-<li><p>To allocate a block of size n:</p>
+<li>Given an array of free lists, each one for some size class</li>
+<li>To allocate a block of size n:
 <ul>
 <li>Search appropriate free list for block of size m &gt; n
 처음부터 찾는다 : m&gt;n인 m의 크기를 가진 free list를 찾는다
 <ul>
-<li><p>ex. malloc(4)라고 하면 4를 수용하는 block을 가진 class를 찾음</p>
-<p>→ block이 있는 경우는 block할당, 나머지 frag는 집어넣음</p>
+<li>ex. malloc(4)라고 하면 4를 수용하는 block을 가진 class를 찾음
 <ul>
-<li><p>malloc(6)을 요청했다면 5-8 class에서 할당받는다.</p>
-<p>→ 8 size block 중 나머지 2개는 1-2class로 이동한다.</p>
-</li>
+<li>→ block이 있는 경우는 block할당, 나머지 frag는 집어넣음</li>
+<li>malloc(6)을 요청했다면 5-8 class에서 할당받는다.
+<ul>
+<li>→ 8 size block 중 나머지 2개는 1-2class로 이동한다.</li>
 </ul>
-<p>(구현 별 문제 : 나머지 fragment를 어떻게 처리할 것인가. 앞에다 붙이는게 빠를수도 있다 (LIFO니까))</p>
 </li>
-<li><p>m payload, n 실제 class의 size
-Payload를 고려하는 것에 따라 m&gt;=n</p>
+<li>(구현 별 문제 : 나머지 fragment를 어떻게 처리할 것인가. 앞에다 붙이는게 빠를수도 있다 (LIFO니까))</li>
+</ul>
 </li>
+<li>m payload, n 실제 class의 size
+Payload를 고려하는 것에 따라 m&gt;=n</li>
 </ul>
 </li>
 <li>If an appropriate block is found:
@@ -535,14 +532,14 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
 <li>Repeat until block is found</li>
 </ul>
 </li>
-<li><p>If no block is found:</p>
+<li>If no block is found:
 <ul>
 <li>Request additional heap memory from OS (using sbrk())</li>
 <li>Allocate block of n bytes from this new memory</li>
 <li>Place remainder as a single free block in largest size class.</li>
 </ul>
 </li>
-<li><p>To free a block:</p>
+<li>To free a block:
 <ul>
 <li>Coalesce and place on appropriate list
 <ul>
@@ -551,7 +548,7 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
 </li>
 </ul>
 </li>
-<li><p>Advantages of seglist allocators</p>
+<li>Advantages of seglist allocators
 <ul>
 <li><strong>Higher throughput) malloc을 할 때 성능이 좋다</strong>
 <ul>
@@ -575,7 +572,6 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
 </li>
 </ul>
 </li>
-<li></li>
 </ul>
 <doc-anchor-target id="more-info-on-allocators">
     <h2>
@@ -610,17 +606,18 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
         <span>Implicit Memory Management: Garbage Collection</span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>integer pointer</p>
+</blockquote>
 <ul>
-<li><p>int type 128 byte (32 * 4byte) (heap에 할당)</p>
-</li>
-<li><p>stack에 할당 (local variable)</p>
-</li>
-<li><p>address space를 보면</p>
-<p><img src="11/untitled2016.png" alt="Untitled" /></p>
-</li>
+<li>int type 128 byte (32 * 4byte) (heap에 할당)</li>
+<li>stack에 할당 (local variable)</li>
+<li>address space를 보면
+<img src="../11/untitled_16.png" alt="Untitled" /></li>
 </ul>
+<blockquote>
 <p>실제 사용하지 않는 공간임에도 불구하고 자리를 차지함</p>
+</blockquote>
 <ul>
 <li><p>garbage collection : 자동으로 heap에 할당된 storage들에 대한 reclamation</p>
 </li>
@@ -649,40 +646,41 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
         <span>Garbage Collection</span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>c에서의 garbage collection 구현의 어려움</p>
+</blockquote>
 <ul>
-<li><p>How does the memory manager know when memory can be freed?
-내가 할당한 memory allocation이 runtime시에 언제 free될 것이냐</p>
+<li>How does the memory manager know when memory can be freed?
+내가 할당한 memory allocation이 runtime시에 언제 free될 것이냐
 <ul>
 <li>In general we cannot know what is going to be used in the future since it depends on conditionals</li>
 <li>But we can tell that certain blocks cannot be used if there are no pointers to them</li>
 <li>= program이 어떻게 실행될지 execution order를 정확히 모르면 모른다.
 그러나 적어도, heap에 할당된 memory object를 point하는 ptr가 없다면 해당 allocated block은 사용되지 않는다.</li>
+<li>(point하는 ptr가 없으니까 나중에 garbage collect해도 되는구나)</li>
 </ul>
-<p>(point하는 ptr가 없으니까 나중에 garbage collect해도 되는구나)</p>
 </li>
-<li><p>Must make certain assumptions about pointers</p>
+<li>Must make certain assumptions about pointers
 <ol>
-<li>memory int type에 있는 변수 안의 값이 ptr 일수도 아닐수도 있다.</li>
-</ol>
+<li>memory int type에 있는 변수 안의 값이 ptr 일수도 아닐수도 있다.
 <ul>
 <li>Memory manager can distinguish pointers from non-pointers</li>
 <li>ptr 는 다른 memory obj를 가리키는 address일수도, int일수도 있으나 이를 구분할 방법은 c에서는 없음.</li>
 <li>memory manager가 할 수 있다고 가정</li>
 </ul>
-<ol start="2">
-<li>어떤 block이든간에 시작을 point함</li>
-</ol>
+</li>
+<li>어떤 block이든간에 시작을 point함
 <ul>
 <li>All pointers point to the start of a block</li>
 </ul>
-<ol start="3">
-<li>type casting같이 ptr 숨김을 못한다.</li>
-</ol>
+</li>
+<li>type casting같이 ptr 숨김을 못한다.
 <ul>
 <li>Cannot hide pointers</li>
 <li>(e.g., by coercing them to an int, and then back again)</li>
 </ul>
+</li>
+</ol>
 </li>
 </ul>
 <doc-anchor-target id="classical-gc-algorithms">
@@ -729,33 +727,33 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
         <span>Memory as a Graph</span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>grapy로 표현 : heap memory object로 만든 direct graph</p>
+</blockquote>
 <ul>
-<li><p>어떤 ds를 만들었는데 heap 안에 있는 object를 stack밖에서 point하는 경우</p>
+<li>어떤 ds를 만들었는데 heap 안에 있는 object를 stack밖에서 point하는 경우
 <ul>
 <li>root node는 heap 안에 있는 것을 가리키는 형상</li>
 </ul>
 </li>
-<li><p>direct graph :</p>
+<li>direct graph :
 <ul>
 <li>모종의 자료구조로 인해 binary tree를 heap 안에서 만들었다고 하면 Root로부터 시작하여 heap 안의 object를 point하는 direct graph</li>
 </ul>
 </li>
-<li><p>어느 순간에 가게 되면 외부에서 가리키는 ptr이 없어지는 경우도 존재.</p>
+<li>어느 순간에 가게 되면 외부에서 가리키는 ptr이 없어지는 경우도 존재.</li>
+<li>ex. heap에는 이미 할당되어 있지만 함수가 return되며 point하는 local var이 사라짐
+<ul>
+<li>→ not-reachable garbage 생성</li>
+<li>heap node는 이런식으로 tree로 표현되지만 실제로는 1dim array : 어떤 부분은 free하고 어떤 부분은 allocated, 어떤 부분은 reachable-not reachable</li>
+</ul>
 </li>
-<li><p>ex. heap에는 이미 할당되어 있지만 함수가 return되며 point하는 local var이 사라짐</p>
-<p>→ not-reachable garbage 생성</p>
-<p>heap node는 이런식으로 tree로 표현되지만 실제로는 1dim array : 어떤 부분은 free하고 어떤 부분은 allocated, 어떤 부분은 reachable-not reachable</p>
-</li>
-<li><p>식별할 수 있다면 reachable하지 않는 놈들을 free하면 됨 : mark and sweep algorithm</p>
-</li>
-<li><p>We view memory as a directed graph</p>
+<li>식별할 수 있다면 reachable하지 않는 놈들을 free하면 됨 : mark and sweep algorithm</li>
+<li>We view memory as a directed graph
 <ul>
 <li>Each block is a node in the graph /  Each pointer is an edge in the graph</li>
-<li>Locations not in the heap that contain pointers into the heap are called root nodes (e.g. registers, locations on the stack, global variables)</li>
-</ul>
-<p><img src="11/untitled2017.png" alt="Untitled" /></p>
-<ul>
+<li>Locations not in the heap that contain pointers into the heap are called root nodes (e.g. registers, locations on the stack, global variables)
+<img src="../11/untitled_17.png" alt="Untitled" /></li>
 <li>A node (block) is reachable if there is a path from any root to that node.</li>
 <li>Non-reachable nodes are garbage (cannot be needed by the application)</li>
 </ul>
@@ -799,7 +797,7 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
 </ul>
 </li>
 </ul>
-<p><img src="11/untitled2018.png" alt="Untitled" /></p>
+<p><img src="../11/untitled_18.png" alt="Untitled" /></p>
 <ul>
 <li>Before mark - free list를 pt하는게 아닌 application 관점에서 앞서의 tree를 구현</li>
 <li>after mark - rechable한 경우 mark bit을 setting해줌</li>
@@ -814,7 +812,7 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Application</p>
+<li>Application
 <ul>
 <li><code v-pre>new(n)</code>: returns pointer to new block with all locations cleared
 <ul>
@@ -833,14 +831,14 @@ Payload를 고려하는 것에 따라 m&gt;=n</p>
 </li>
 </ul>
 </li>
-<li><p>Each block will have a header word
-앞에는 header word가 있다고 가정하고 collector를 구현하자.</p>
+<li>Each block will have a header word
+앞에는 header word가 있다고 가정하고 collector를 구현하자.
 <ul>
 <li>addressed as b[-1], for a block b</li>
 <li>Used for different purposes in different collectors</li>
 </ul>
 </li>
-<li><p>functions/Instructions used by the Garbage Collector</p>
+<li>functions/Instructions used by the Garbage Collector
 <ul>
 <li><code v-pre>is_ptr(p)</code>: determines whether p is a pointer
 p가 ptr인지 int인지 구분할 수 없지만 구분된다고 가정하자.</li>
@@ -882,9 +880,9 @@ block b에서의 header를 제외한 word개수</li>
 mark(p[i]); // in the block return;</code></pre>
 </doc-codeblock></div>
 <ul>
-<li><p>Sweep using lengths to find next block</p>
-<p>P (시작) end (breakpoint(</p>
-</li>
+<li>Sweep using lengths to find next block
+<ul>
+<li>P (시작) end (breakpoint)</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">ptr sweep(ptr p, ptr end)
@@ -899,13 +897,17 @@ mark(p[i]); // in the block return;</code></pre>
     }
 }</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="conservative-mark--sweep-in-c">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#conservative-mark--sweep-in-c">#</doc-anchor-trigger>
         <span>Conservative Mark &amp; Sweep in C</span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>c 언어 상 p가 가리키는 것이 memory block 중 ptr block, int block일 수 있음</p>
+</blockquote>
 <ul>
 <li>memory value type를 저장하지 않기에 우리는 구분 불가능했던 것</li>
 <li>구현 방법 : block에서 left/right해서 있는 값은 무조건 ptr라고 하고
@@ -915,15 +917,15 @@ mark(p[i]); // in the block return;</code></pre>
 </ul>
 </li>
 </ul>
+<blockquote>
 <p>실제 가리키는게 not allocated이지만 allocated라고 가정해놓고 point</p>
+</blockquote>
 <ul>
 <li><p>A “conservative garbage collector” for C programs</p>
 <ul>
-<li><p><code v-pre>is_ptr()</code> determines if a word is a pointer by checking if it points to an allocated block of memory</p>
-</li>
-<li><p>But, in C pointers can point to the middle of a block</p>
-<p><img src="11/untitled2019.png" alt="Untitled" /></p>
-</li>
+<li><code v-pre>is_ptr()</code> determines if a word is a pointer by checking if it points to an allocated block of memory</li>
+<li>But, in C pointers can point to the middle of a block
+<img src="../11/untitled_19.png" alt="Untitled" /></li>
 </ul>
 </li>
 <li><p>So how to find the beginning of the block?</p>
@@ -934,7 +936,7 @@ mark(p[i]); // in the block return;</code></pre>
 </li>
 <li><p>Left: smaller addresses  / Right: larger addresses</p>
 <p>(Left / right)를 통해 balanced bt를 구축하게 됏을 때 left가 alloc 안되어 있지만 되어 있다는 block이라고 하면 garbage collection할 때 memory leak이 발생하기는 하나 구현할 수는 있다.</p>
-<p><img src="11/untitled2020.png" alt="Untitled" /></p>
+<p><img src="../11/untitled_20.png" alt="Untitled" /></p>
 </li>
 </ul>
 <doc-anchor-target id="memory-related-perils-and-pitfalls">
@@ -965,13 +967,14 @@ mark(p[i]); // in the block return;</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>The classic scanf bug</li>
-</ul>
+<li>The classic scanf bug
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">int val;
 ...
 scanf(“%d”, val);</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="reading-uninitialized-memory">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#reading-uninitialized-memory">#</doc-anchor-trigger>
@@ -979,8 +982,7 @@ scanf(“%d”, val);</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Assuming that heap data is initialized to zero</li>
-</ul>
+<li>Assuming that heap data is initialized to zero
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">/* return y = Ax */
 int *matvec(int **A, int *x)
@@ -993,6 +995,8 @@ int *matvec(int **A, int *x)
     return y;
 }</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="overwriting-memory">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#overwriting-memory">#</doc-anchor-trigger>
@@ -1000,8 +1004,7 @@ int *matvec(int **A, int *x)
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Allocating the (possibly) wrong sized object</li>
-</ul>
+<li><p>Allocating the (possibly) wrong sized object</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">int **p;
 p = malloc(Nsizeof(int));
@@ -1010,9 +1013,8 @@ for (i = 0; i &lt; N; i++)
     p[i] = malloc(Msizeof(int));
 }</code></pre>
 </doc-codeblock></div>
-<ul>
-<li>Off-by-one error</li>
-</ul>
+</li>
+<li><p>Off-by-one error</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">int **p;
 p = malloc(N * sizeof(int));
@@ -1021,18 +1023,17 @@ for (i = 0; i &lt;= N; i++)
     p[i] = malloc(Msizeof(int));
 }</code></pre>
 </doc-codeblock></div>
-<ul>
-<li>Not checking the max string size</li>
-</ul>
+</li>
+<li><p>Not checking the max string size</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">char s[8];
 int i;
 gets(s); /* reads “123456789” from stdin */</code></pre>
 </doc-codeblock></div>
-<ul>
-<li>Basis for classic buffer overflow attacks</li>
-<li>Misunderstanding pointer arithmetic</li>
-</ul>
+</li>
+<li><p>Basis for classic buffer overflow attacks</p>
+</li>
+<li><p>Misunderstanding pointer arithmetic</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">int *search(int *p, int val)
 {
@@ -1041,9 +1042,8 @@ gets(s); /* reads “123456789” from stdin */</code></pre>
     return p;
 }</code></pre>
 </doc-codeblock></div>
-<ul>
-<li>Referencing a pointer instead of the object it points to</li>
-</ul>
+</li>
+<li><p>Referencing a pointer instead of the object it points to</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">int *BinheapDelete(int **binheap, int *size)
 {
@@ -1055,6 +1055,8 @@ gets(s); /* reads “123456789” from stdin */</code></pre>
     return (packet);
 }</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="referencing-nonexistent-variables">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#referencing-nonexistent-variables">#</doc-anchor-trigger>
@@ -1062,15 +1064,16 @@ gets(s); /* reads “123456789” from stdin */</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Forgetting that local variables disappear when a function returns</li>
-</ul>
+<li>Forgetting that local variables disappear when a function returns
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">int *foo () 
 {
-		int val;
-		return &amp;val;
+        int val;
+        return &amp;val;
 }</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="freeing-blocks-multiple-times">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#freeing-blocks-multiple-times">#</doc-anchor-trigger>
@@ -1078,8 +1081,7 @@ gets(s); /* reads “123456789” from stdin */</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Nasty!</li>
-</ul>
+<li>Nasty!
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">x = malloc(N*sizeof(int));
 // &lt;manipulate x&gt;
@@ -1089,6 +1091,8 @@ y = malloc(M*sizeof(int));
 // &lt;manipulate y&gt;
 free(x);</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="referencing-freed-blocks">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#referencing-freed-blocks">#</doc-anchor-trigger>
@@ -1096,8 +1100,7 @@ free(x);</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Evil!</li>
-</ul>
+<li>Evil!
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">x = malloc(Nsizeof(int));
 // &lt;manipulate x&gt; 
@@ -1108,6 +1111,8 @@ y = malloc(Msizeof(int));
 for (i = 0; i &lt; M; i++)
     y[i] = x[i]++;</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="failing-to-free-blocks-memory-leaks">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#failing-to-free-blocks-memory-leaks">#</doc-anchor-trigger>
@@ -1115,8 +1120,7 @@ for (i = 0; i &lt; M; i++)
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Slow, long-term killer!</li>
-</ul>
+<li>Slow, long-term killer!
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">foo()
 {
@@ -1124,9 +1128,8 @@ for (i = 0; i &lt; M; i++)
     ... return;
 }</code></pre>
 </doc-codeblock></div>
-<ul>
-<li>Freeing only part of a data structure</li>
-</ul>
+</li>
+<li>Freeing only part of a data structure
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">struct list
 {
@@ -1139,11 +1142,13 @@ foo()
     struct list *head = malloc(sizeof(struct list));
     head-&gt;val = 0;
     head-&gt;next = NULL;
-   // &lt;create and manipulate the rest of the list&gt;
+// &lt;create and manipulate the rest of the list&gt;
 ... free(head);
     return;
 }</code></pre>
 </doc-codeblock></div>
+</li>
+</ul>
 <doc-anchor-target id="dealing-with-memory-bugs">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#dealing-with-memory-bugs">#</doc-anchor-trigger>
@@ -1151,14 +1156,14 @@ foo()
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Debugger:gdb
+<li>Debugger : gdb
 <ul>
-<li>Good for finding bad pointer dereferences § Hard to detect the other memory bugs</li>
+<li>Good for finding bad pointer dereferences  Hard to detect the other memory bugs</li>
 </ul>
 </li>
 <li>Data structure consistency checker
 <ul>
-<li>Runs silently, prints message only on error § Use as a probe to zero in on error</li>
+<li>Runs silently, prints message only on error  Use as a probe to zero in on error</li>
 </ul>
 </li>
 <li>Binary translator: valgrind
@@ -1184,7 +1189,7 @@ foo()
                             
                                 <nav class="flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../sp/10-dynamic-memory-allocation-basic-concepts-6f95f4988f6040b9a8d8c70024ae2817/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../sp/10-dynamic-memory-allocation_basic-concepts/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
@@ -1194,7 +1199,7 @@ foo()
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../sp/12-linking-153b2a5f6c5f4fec9bb0a9ef3ba14036/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../sp/12-linking/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
                                                 <span class="block mt-1">12. Linking</span>
