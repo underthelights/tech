@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714719996794">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714721180881">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -22,24 +22,24 @@
     <meta property="og:url" content="/tech/sp/12-linking/">
     <meta property="og:title" content="12. Linking">
     <meta property="og:description" content="A process of collecting and combining various pieces of code and data into a single file that can be loaded (copied) into memory and executed">
-    <meta property="og:image" content="/tech/sp/12/untitled.png">
+    <meta property="og:image" content="/tech/sp/12/untitled_1.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="/tech/sp/12-linking/">
     <meta property="twitter:title" content="12. Linking">
     <meta property="twitter:description" content="A process of collecting and combining various pieces of code and data into a single file that can be loaded (copied) into memory and executed">
-    <meta property="twitter:image" content="/tech/sp/12/untitled.png">
+    <meta property="twitter:image" content="/tech/sp/12/untitled_1.png">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.4.0.714719996794" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.4.0.714721180881" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714719996794" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.4.0.714721180881" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714719996794" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714719996794" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.4.0.714721180881" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.4.0.714721180881" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -218,23 +218,24 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li>A process of collecting and combining various pieces of code and data into a single file that can be loaded (copied) into memory and executed
-여러 코드와 데이터를 모아 memory에 load될 수 있고 executable file 하나로 만드는 작업
+<li><p>A process of collecting and combining various pieces of code and data into a single file that can be loaded (copied) into memory and executed
+여러 코드와 데이터를 모아 memory에 load될 수 있고 executable file 하나로 만드는 작업</p>
 <ul>
 <li>큰 규모의 프로그램을 한 개의 소스 파일로 구성하는 대신</li>
 <li>별도로 editable, compilable smaller module로 나눌 수 있음</li>
 <li>edit할 때 단순히 해당 파일을 recompile하고 다른 file을 recompile할 필요 없이 link함.</li>
 </ul>
 </li>
-<li>작은 프로그램을 만든다고 하면 linking이 필요 없지만 큰 프로그램을 만들면 잘게 잘게 기능을 나누어 쪼갤 필요가 있다.</li>
-<li>Linking can be performed at compile time, load time, and run time
+<li><p>작은 프로그램을 만든다고 하면 linking이 필요 없지만 큰 프로그램을 만들면 잘게 잘게 기능을 나누어 쪼갤 필요가 있다.</p>
+</li>
+<li><p>Linking can be performed at compile time, load time, and run time</p>
 <ul>
 <li>compile time 시 수행 - src code는 기계어로 translate됨</li>
 <li>load time - application program에 의해 수행</li>
 <li>run time</li>
 </ul>
 </li>
-<li>Linking is performed automatically by programs called linkers on modern systems
+<li><p>Linking is performed automatically by programs called linkers on modern systems</p>
 <ul>
 <li>초기에는 수동으로 수행된 linking → 현재는 linker가 대신 수행해줌</li>
 </ul>
@@ -381,7 +382,7 @@ linux&gt; ./prog</code></pre>
 <li>Preprocessor, compiler, assembler, linker를 필요에 따라 user 대신하여 호출</li>
 </ul>
 <p><figure class="content-center">
-    <img src="../12/untitled.png" alt="Untitled" />
+    <img src="12_linking_153b2a5f6c5f4fec9bb0a9ef3ba14036/untitled.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -398,31 +399,35 @@ linux&gt; ./prog</code></pre>
 </li>
 <li>Assembler (as)<code v-pre>main.s</code> → <code v-pre>main.o</code>
 <ul>
-<li>translates <code v-pre>main.s</code> into a binary relocatable object file <code v-pre>main.o</code></li>
+<li>translates main.s into a binary relocatable object file main.o</li>
 </ul>
 </li>
 <li>Linker (ld)
 <ul>
-<li>combine <code v-pre>main.o</code> and <code v-pre>sum.o</code> along with the necessary object files,to create the binary executable object file</li>
-<li>ld 실행 : prog을 생성하기 위해 <code v-pre>main.o / sum.o</code> 연결</li>
+<li>combine main.o and sum.o along with the necessary object files,to create the binary executable object file</li>
+<li>ld 실행 : prog을 생성하기 위해 main.o / sum.o 연결</li>
 </ul>
 </li>
-<li>→ <code v-pre>./prog</code> : prog 실행</li>
-<li>Shell은 loader라는 OS Function을 호출하여, 실행 파일 prog의 code, data를 memory로 복사하고 control을 program 시작 부분으로 전환한다.</li>
-<li>Source File
+</ul>
+<p>→ <code v-pre>./prog</code> : prog 실행</p>
+<ul>
+<li><p>Shell은 loader라는 OS Function을 호출하여, 실행 파일 prog의 code, data를 memory로 복사하고 control을 program 시작 부분으로 전환한다.</p>
+</li>
+<li><p>Source File</p>
 <ul>
 <li>각 symbol들의 주소, access하는 주소
 memory할 때 어디에 올라가는지
 VM에서 어디 부분에 올라가는지 등은 잘 정해져 있지 않기 때문에 relocate필요</li>
 </ul>
 </li>
-<li>Separately compiled relocatable obj files
+<li><p>Separately compiled relocatable obj files</p>
 <ul>
 <li>linking해야지 virtual memory 상 어디에 올라가는지 상대적인 offset 부분을 나중에 알 수 있기 때문에, 나중에 relocate되는 obj file이라고 부른다.
 그러고 나서 나중에 linking되게 되면 실행 file 생성</li>
 </ul>
 </li>
-<li>Fully linked</li>
+<li><p>Fully linked</p>
+</li>
 </ul>
 <doc-anchor-target id="why-linkers">
     <h2>
@@ -493,20 +498,21 @@ VM에서 어디 부분에 올라가는지 등은 잘 정해져 있지 않기 때
     </h3>
 </doc-anchor-target>
 <ul>
-<li>Programs define and reference symbols (global variables and functions):
+<li><p>Programs define and reference symbols (global variables and functions):</p>
 <ul>
-<li>program 내부에서 여러 symbol을 가져다가 reference
+<li>program 내부에서 여러 symbol을 가져다가 reference</li>
+</ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">void swap() {...} /* define symbol swap */
 swap(); /* reference symbol swap */
 int *xp = &amp;x; /* define symbol xp, reference x */</code></pre>
 </doc-codeblock></div>
-</li>
+<ul>
 <li>Swap function definition - reference</li>
 <li>xp라는 symbol : x라는 variable의 address value</li>
 </ul>
 </li>
-<li>Symbol definitions are stored in object file (by assembler) in symbol table.
+<li><p>Symbol definitions are stored in object file (by assembler) in symbol table.</p>
 <ul>
 <li>Symbol table is an array of structs → Executable file 생성 이전 object file : section에 symbol table이 들어감.
 <ul>
@@ -516,9 +522,10 @@ int *xp = &amp;x; /* define symbol xp, reference x */</code></pre>
 </li>
 </ul>
 </li>
-<li><strong>During symbol resolution step, the linker associates each symbol reference with exactly one symbol definition.</strong> symbol이 있으면 각각의 reference가 정확히 하나의 symbol definition과 대응되어야 한다.
+<li><p><strong>During symbol resolution step, the linker associates each symbol reference with exactly one symbol definition.</strong> symbol이 있으면 각각의 reference가 정확히 하나의 symbol definition과 대응되어야 한다.</p>
 <ul>
-<li>cnt가 두 번 initialized -&gt; linker error
+<li>cnt가 두 번 initialized -&gt; linker error</li>
+</ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">a.c :
 int cnt= 5;
@@ -528,8 +535,6 @@ b.c :
 int cnt = 0;
 Fun(){…}</code></pre>
 </doc-codeblock></div>
-</li>
-</ul>
 </li>
 </ul>
 <doc-anchor-target id="step-2-relocation">
@@ -547,12 +552,8 @@ Fun(){…}</code></pre>
 </li>
 <li>Executable file로 linux가 만들게 되는데 memory location에 올라가는 절대 주소로 변환 : 실제 가상메모리 주소는 어떻게 할 것이냐
 <ul>
-<li>Relocates symbols from their relative locations in the <code v-pre>.o</code> files to their final absolute memory locations in the executable.</li>
-<li>linker : code/data section을 symbol def과 연결
-<ul>
-<li>→ relocate하며 모든 reference를 모두 수정하여 절대주소를 가리키도록 함</li>
-</ul>
-</li>
+<li>Relocates symbols from their relative locations in the .o files to their final absolute memory locations in the executable.</li>
+<li>linker : code/data section을 symbol def과 연결 → relocate하며 모든 reference를 모두 수정하여 절대주소를 가리키도록 함</li>
 </ul>
 </li>
 <li>relocation entry : symbol에 대한 모든 reference 가 새로운 위치를 가리킬 수 있게 해 줌
@@ -577,7 +578,10 @@ Fun(){…}</code></pre>
 <ul>
 <li>Contains code and data in a form that can be combined with other relocatable object files to form executable object file.</li>
 <li>Each .o file is produced from exactly one source (.c) file</li>
-<li><code v-pre>Main.o, .o</code></li>
+<li></li>
+</ul>
+<p>Main.o, .o</p>
+<ul>
 <li>code, data를 가지고 있는데 다른 relocatable file과 같이 compile되어 실행 file을 만들기 위한 code, data를 가진 object file</li>
 </ul>
 <doc-anchor-target id="executable-object-file-aout-file">
@@ -787,11 +791,8 @@ Fun(){…}</code></pre>
 <li>E.g.: non-static C functions and non-static global variables.
 <ul>
 <li>다른 module에 의해 reference될 수 있는 global variable
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">a.c/Int count = 5
-b.c/Int count;</code></pre>
-</doc-codeblock></div>
-</li>
+a.c/Int count = 5
+b.c/Int count;</li>
 </ul>
 </li>
 </ul>
@@ -847,6 +848,7 @@ b.c/Int count;</code></pre>
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
+<p>-</p>
 <doc-anchor-target id="local-symbols-1">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#local-symbols-1">#</doc-anchor-trigger>
@@ -857,16 +859,19 @@ b.c/Int count;</code></pre>
 <ul>
 <li>단 local var이기 때문에 함수를 다시 호출하게 되면 재접속 가능
 Local nonstatic var : static x, 일반 local var -&gt; @stack</li>
-<li>f, g에서 같은 variable x를 쓰지만 다른 symbol
-X.1, x.2 이런식으로 compiler가 놓고 compiler가 unique한 이름을 가지도록 함.</li>
+</ul>
+<p>f, g에서 같은 variable x를 쓰지만 다른 symbol
+X.1, x.2 이런식으로 compiler가 놓고 compiler가 unique한 이름을 가지도록 함.</p>
+<ul>
 <li>Local non-static C variables vs. local static C variables
 <ul>
-<li>local non-static C variables: stored on the stack</li>
-<li>local static C variables: stored in either .bss, or .data
+<li><p>local non-static C variables: stored on the stack</p>
+</li>
+<li><p>local static C variables: stored in either .bss, or .data</p>
+<p>Local static var : global variable -&gt; .data</p>
 <ul>
-<li>Local static var : global variable -&gt; .data</li>
-<li>단 local var이기 때문에 함수를 다시 호출하게 되면 재접속 가능</li>
-<li>Local nonstatic var : static x, 일반 local var -&gt; @stack</li>
+<li>단 local var이기 때문에 함수를 다시 호출하게 되면 재접속 가능
+Local nonstatic var : static x, 일반 local var -&gt; @stack</li>
 </ul>
 </li>
 </ul>
@@ -918,49 +923,45 @@ X.1, x.2 이런식으로 compiler가 놓고 compiler가 unique한 이름을 가�
     </h2>
 </doc-anchor-target>
 <ul>
-<li><strong>Rule 1: Multiple strong symbols are not allowed</strong>
+<li><p><strong>Rule 1: Multiple strong symbols are not allowed</strong></p>
 <ul>
 <li>Each item can be defined only once</li>
 <li>Otherwise: Linker error</li>
 </ul>
-<blockquote>
 <p>만일 symbol이 strong하다 - 단 한번만 선언 가능</p>
-</blockquote>
-<ul>
-<li>compiler가 보고 나서 foo=5(p1.c) / foo=10(p2.c)
-<ul>
-<li>-&gt; link error</li>
-</ul>
-</li>
-<li>같은 게 strong이면 안됨</li>
-<li>rule 1. : 만일 symbol이 strong하다 - 단 한번만 선언 가능
 <ul>
 <li>compiler가 보고 나서 foo=5(p1.c) / foo=10(p2.c) -&gt; link error</li>
 <li>같은 게 strong이면 안됨</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><strong>Rule 2: Given a strong symbol and multiple weak symbols, choose the strong symbol</strong>
+<li><p><strong>Rule 2: Given a strong symbol and multiple weak symbols, choose the strong symbol</strong></p>
 <ul>
 <li>References to the weak symbol resolve to the strong symbol</li>
 <li>Weak가 strong을 쫓아간다.</li>
 <li>P2의 foo : weak-&gt; p1의 foo : strong을 쫓아감
 p2에서 foo 접근 = p1에서의 foo 접근</li>
-<li>Weak가 strong을 쫓아간다.
-<ul>
-<li>P2의 foo : weak-&gt; p1의 foo : strong을 쫓아감</li>
-<li>p2에서 foo 접근 = p1에서의 foo 접근</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><strong>Rule 3: If there are multiple weak symbols, pick anarbitrary one</strong>
+<li><p><strong>Rule 3: If there are multiple weak symbols, pick anarbitrary one</strong></p>
 <ul>
 <li>둘다 weak면 compiler가 임의로 설정</li>
 </ul>
 </li>
 </ul>
+<p>rule 1.</p>
+<p>만일 symbol이 strong하다 - 단 한번만 선언 가능</p>
+<ul>
+<li>compiler가 보고 나서 foo=5(p1.c) / foo=10(p2.c) -&gt; link error</li>
+<li>같은 게 strong이면 안됨</li>
+</ul>
+<p>Rule 2.</p>
+<p>Weak가 strong을 쫓아간다.</p>
+<ul>
+<li>P2의 foo : weak-&gt; p1의 foo : strong을 쫓아감</li>
+</ul>
+<p>p2에서 foo 접근 = p1에서의 foo 접근</p>
+<p>rule3</p>
+<p>둘다 weak면 compiler가 임의로 설정</p>
 <doc-anchor-target id="linker-puzzle">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#linker-puzzle">#</doc-anchor-trigger>
@@ -980,6 +981,7 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
+<p>-</p>
 <p><figure class="content-center">
     <img src="../12/untitled_9.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
@@ -1008,7 +1010,10 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 </p>
 <ul>
 <li>Nightmare scenario : 2 identical weak structs, compiled by different compilers with different alignment rules (compiler dependent)</li>
-<li>link error : 모종의 이유로 version이 달라 뜨는 error</li>
+</ul>
+<p>link error</p>
+<ul>
+<li>모종의 이유로 version이 달라 뜨는 error</li>
 </ul>
 <doc-anchor-target id="two-weak-definitions-of-x-rule-3">
     <h2>
@@ -1019,10 +1024,13 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 <ul>
 <li>Run-time bugs
 <ul>
-<li>Can cause some insidious run-time bugs that are incomprehensible to the unwary programmer</li>
-<li>compiler error가 발생하지는 않는데</li>
-<li>둘 다 uninitialized된 형태, f 수행 후 15212로 변화
-<img src="../12/untitled_12.png" alt="Untitled" /></li>
+<li><p>Can cause some insidious run-time bugs that are incomprehensible to the unwary programmer</p>
+</li>
+<li><p>compiler error가 발생하지는 않는데</p>
+</li>
+<li><p>둘 다 uninitialized된 형태, f 수행 후 15212로 변화</p>
+<p><img src="../12/untitled_12.png" alt="Untitled" /></p>
+</li>
 </ul>
 </li>
 </ul>
@@ -1033,25 +1041,33 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Subtle and nasty run-time bugs!
+<li><p>Subtle and nasty run-time bugs!</p>
 <ul>
 <li>On an x86-64/Linux machine, doubles are 8 bytes and ints are 4 bytes</li>
 <li>Suppose the address of x is 0x601020 and the address of y is 0x601024</li>
-<li>The assignment x = 0.0 in lin6 6 will overwrite the memory locations for x and y with the double-precision floating-point representation of negative zero!
-<img src="../12/untitled_13.png" alt="Untitled" /></li>
+<li>The assignment x = 0.0 in lin6 6 will overwrite the memory locations for x and y with the double-precision floating-point representation of negative zero!</li>
+</ul>
+<p><img src="../12/untitled_13.png" alt="Untitled" /></p>
+<ul>
 <li>Compile error 전혀 안 뜸</li>
 <li>나도 모르게 y값이 바뀜, 그러나 link error를 runtime때 찾기에는 너무 어렵다
 <ul>
 <li>→ 주의깊게 익혀야 한다.</li>
 </ul>
 </li>
-<li>library에서 우연치 않게 같은 symbol을 써서 이상하게 돌아가는 경우도 발생가능</li>
-<li>Compile error 전혀 안 뜸</li>
+</ul>
+<p>library에서 우연치 않게 같은 symbol을 써서 이상하게 돌아가는 경우도 발생가능</p>
+<p>Compile error 전혀 안 뜸</p>
+<ul>
 <li>나도 모르게 y값이 바뀜</li>
 <li>link error를 runtime때 찾기에는 너무 어렵다</li>
-<li>-&gt; 주의깊게 익혀야 한다.</li>
-<li>library에서 우연치 않게 같은 symbol을 써서 이상하게 돌아가는 경우도 발생가능</li>
+<li>
+<blockquote>
+<p>주의깊게 익혀야 한다.</p>
+</blockquote>
+</li>
 </ul>
+<p>library에서 우연치 않게 같은 symbol을 써서 이상하게 돌아가는 경우도 발생가능</p>
 </li>
 </ul>
 <doc-anchor-target id="global-variables">
@@ -1064,13 +1080,14 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 <li>Avoid if you can</li>
 <li>Otherwise
 <ul>
-<li>Use static if you can
+<li><p>Use static if you can</p>
 <ul>
 <li>data 에서 선언되지만 해당 함수 내에서만 접근 가능</li>
 </ul>
 </li>
-<li>Initialize if you define a global variable : initialize해서 가급적 문제가 발생하지 않도록 함.</li>
-<li>Use extern if you reference an external global variable
+<li><p>Initialize if you define a global variable : initialize해서 가급적 문제가 발생하지 않도록 함.</p>
+</li>
+<li><p>Use extern if you reference an external global variable</p>
 <ul>
 <li>Initialize된 형태로 써라 (쓰지 않을 수 있다면 쓰지 마라)</li>
 <li>→ 예기치 않은 runtime bug에 빠지지 않도록 해라.</li>
@@ -1080,13 +1097,17 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 </li>
 </ul>
 <ol>
-<li>static 선언
+<li>static 선언</li>
+</ol>
 <ul>
 <li>data 에서 선언되지만 해당 함수 내에서만 접근 가능</li>
 </ul>
+<ol start="2">
+<li><p>initialize해서 가급적 문제가 발생하지 않도록 함.</p>
 </li>
-<li>initialize해서 가급적 문제가 발생하지 않도록 함.</li>
-<li>extern
+<li><p>extern</p>
+</li>
+</ol>
 <ul>
 <li>Initialize된 형태로 써라 (쓰지 않을 수 있다면 쓰지 마라)</li>
 <li>
@@ -1095,8 +1116,6 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 </blockquote>
 </li>
 </ul>
-</li>
-</ol>
 <doc-anchor-target id="step-2-relocation-1">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#step-2-relocation-1">#</doc-anchor-trigger>
@@ -1128,13 +1147,12 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 </ul>
 <p><strong>Now, next step is the relocation step (Step 2)</strong></p>
 <ul>
-<li>Merges the input modules and assigns run-time addresses to eachsymbol
-<ul>
-<li>두 개의 object module을 병합하여 실제 각각의 symbol에 run time address를 부여해주는 작업</li>
-</ul>
+<li><p>Merges the input modules and assigns run-time addresses to eachsymbol</p>
+<p>두 개의 object module을 병합하여 실제 각각의 symbol에 run time address를 부여해주는 작업</p>
 </li>
-<li>Moe details will come in the next slides...</li>
-<li>relocation
+<li><p>Moe details will come in the next slides...</p>
+</li>
+<li><p>relocation</p>
 <ul>
 <li>내가 penn university에서 졸업하고 job을 구하면 relocate : relocate negotiation (주소 바뀌는 것에 대한 signing bonus 등) - 내가 penn university에 있다가 다른 회사 사무소 주소로 바귐</li>
 <li>내가 현재 접근하는 변수의 주소를 모르기 때문에 relocate하는 과정 : 주소 찾아서 assign해줌</li>
@@ -1142,7 +1160,8 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 </li>
 </ul>
 <ol>
-<li>Symbol resolution 복습
+<li>Symbol resolution 복습</li>
+</ol>
 <ul>
 <li>linker가 symbol resolution step에 따라 resolve하게 되면 모든 symbol reference는 오직 한개의 symbol definition에 associate된다
 <ul>
@@ -1151,24 +1170,28 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
 </li>
 <li>obj file 생성하게 되면 code, data에 대한 정확한 정보를 알게 됨</li>
 </ul>
-</li>
-<li>relocation step
-<ul>
-<li>₩main.c , .c₩ : 두 개의 object module을 병합하여 실제 각각의 symbol에 run time address를 부여해주는 작업
-<img src="../12/untitled_14.png" alt="Untitled" /></li>
-<li>relocation : 이 세 가지를 하나로 병합하는 과정</li>
-</ul>
-</li>
+<ol start="2">
+<li>relocation step</li>
 </ol>
 <ul>
-<li>ELF File Format
-<ul>
-<li><code v-pre>.Text / .Data</code></li>
-<li>각 symbol에다 address assign하는 것에 대해 알아보자</li>
-<li>relocation : 이 세 가지를 하나로 병합하는 과정</li>
-<li>ELF File Format</li>
-<li>.Text / .Data : 각 symbol에다 address assign하는 것에 대해 알아보자</li>
+<li>main.c , .c : 두 개의 object module을 병합하여 실제 각각의 symbol에 run time address를 부여해주는 작업</li>
 </ul>
+<p><figure class="content-center">
+    <img src="../12/untitled_14.png" alt="Untitled" />
+    <figcaption class="caption">Untitled</figcaption>
+</figure>
+</p>
+<p>relocation : 이 세 가지를 하나로 병합하는 과정</p>
+<p>ELF File Format</p>
+<p>.Text / .Data</p>
+<ul>
+<li><p>각 symbol에다 address assign하는 것에 대해 알아보자</p>
+</li>
+<li><p>relocation : 이 세 가지를 하나로 병합하는 과정</p>
+</li>
+<li><p>ELF File Format</p>
+</li>
+<li><p>.Text / .Data : 각 symbol에다 address assign하는 것에 대해 알아보자</p>
 </li>
 </ul>
 <doc-anchor-target id="relocation-entries">
@@ -1178,24 +1201,24 @@ p2에서 foo 접근 = p1에서의 foo 접근</li>
     </h2>
 </doc-anchor-target>
 <ul>
-<li>object module : Compiler 내 assembler가 기계어 code를 만들어 내는데 이를 obj module</li>
-<li>When an assembler generates an object module, it does not know where the code and data will ultimately be stored in memory.: 이를 생성해 낼 때, 1. code, data가 나중에 executible file 생성하는 시점에서 memory 어디에 적재될지 모름</li>
-<li>Nor does it know the location of any externally defined functions of global variables that are referenced by the module.
-<ul>
-<li>
+<li><p>object module : Compiler 내 assembler가 기계어 code를 만들어 내는데 이를 obj module</p>
+</li>
+<li><p>When an assembler generates an object module, it does not know where the code and data will ultimately be stored in memory.: 이를 생성해 낼 때, 1. code, data가 나중에 executible file 생성하는 시점에서 memory 어디에 적재될지 모름</p>
+</li>
+<li><p>Nor does it know the location of any externally defined functions of global variables that are referenced by the module.</p>
 <ol start="2">
 <li>main.c에서 sum이라는 함수는 외부에서 externally defined : sum이라는 함수를 호출할 때 그 위치가 어디인지 모른다.</li>
 </ol>
 </li>
-</ul>
-</li>
-<li>So, whenever the assembler encounters a reference to an object whose ultimate location is unknown, it generates a relocation entry that tells the linker how to modify the reference when it merges the object file into an executable.
+<li><p>So, whenever the assembler encounters a reference to an object whose ultimate location is unknown, it generates a relocation entry that tells the linker how to modify the reference when it merges the object file into an executable.</p>
+<p>→ 결국에는 location 어디인지 모르는 (global var, external function)은 알려져 있지 않기 때문에 relocation entry라고 해서 하나씩 만든다.</p>
 <ul>
-<li>→ 결국에는 location 어디인지 모르는 (global var, external function)은 알려져 있지 않기 때문에 relocation entry라고 해서 하나씩 만든다.</li>
 <li>ELF file format의 .rel.text / .rel.data에 들어간다</li>
 <li>Linker에게 ‘이 주소를 잘 모르니까 나중에 다른 obj와 merge되어 executable file만들 때 이 reference를 수정해야 한다’고 알려줌
 <ul>
 <li>.rel을 보고 symbol들이 address가 확인되지 않음을 보고 linking 과정에서 병합하며 그 address를 채워준다</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1206,11 +1229,10 @@ int main()
     int val = sum(array, 2);
     return val;
 }
-main.c0000000000000000
-&lt;main&gt; : 0 : 484 : be9 : bfe :
-e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0x2, % esimov $0x0, % edi # % edi = &amp;arraya : R_X86_64_32 array #Relocation entrycallq 13 &lt; main + 0x13 &gt; #sum() f : R_X86_64_PC32 sum - 0x4 #Relocation entryadd $0x8, % rspretqmain.oRelocation EntriesSource : objdump –r –d main.o33</code></pre>
+main.c0000000000000000&lt;main&gt; : 0 : 484 : be9 : bfe :
+ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0x2, % esimov $0x0, % edi # % edi = &amp;arraya : R_X86_64_32 array #Relocation entrycallq 13 &lt; main + 0x13 &gt; #sum() f : R_X86_64_PC32 sum - 0x4 #Relocation entryadd $0x8, % rspretqmain.oRelocation EntriesSource : objdump –r –d main.o33</code></pre>
 </doc-codeblock></div>
-</li>
+<ul>
 <li>Relocation entries for code are placed in .rel.text.</li>
 <li>Relocation entries for data are placed in .rel.data. 32</li>
 </ul>
@@ -1247,21 +1269,14 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
 </figure>
 </p>
 <ul>
-<li>ELF 보면 되고 process address space : 0x400000~2^48 -1 (process)
-<ul>
+<li>ELF 보면 되고 process address space : 0x400000~2^48 -1 (process)</li>
 <li>kernel</li>
 <li>shaerd library : 동적으로 linking 만들어지는 library, API memory map을 위함</li>
 <li>Heap : break point만큼 heap의 크기</li>
 <li>segment : r/w data</li>
 <li>Shared memory 하나 올라오고 Application a, b 뜰 때 필요에 따라 reference함
-<ul>
-<li>(그냥 copy하는게 아님)</li>
-<li>c가 shared library라고 할 때 ptr로 그냥 갈 수 있기 때문에 c는 하나만 있으면 되어 duplicate하지 않아도 됨</li>
-</ul>
-</li>
+(그냥 copy하는게 아님) - c가 shared library라고 할 때 ptr로 그냥 갈 수 있기 때문에 c는 하나만 있으면 되어 duplicate하지 않아도 됨</li>
 <li>memory mapped region에 대한 ptr가 들어가있는 것.</li>
-</ul>
-</li>
 </ul>
 <doc-anchor-target id="packaging-commonly-used-functions">
     <h2>
@@ -1270,20 +1285,19 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
     </h2>
 </doc-anchor-target>
 <ul>
-<li>How to package functions commonly used by programmers?
-<ul>
-<li>자주 쓰는 함수 모아둠  - library 형태로 모아 둠</li>
-</ul>
+<li><p>How to package functions commonly used by programmers?</p>
+<p>자주 쓰는 함수 모아둠  - library 형태로 모아 둠</p>
 </li>
-<li>Math, I/O, memory management, string manipulation, etc.- Awkward, given the linker framework so far:
+<li><p>Math, I/O, memory management, string manipulation, etc.- Awkward, given the linker framework so far:</p>
 <ul>
 <li>memory management : malloc, calloc 등 모아서 자주 쓰니까 어떻게 하나의 패키지로 쓰는가</li>
 </ul>
 </li>
-<li>Option 1: Put all functions into a single source file
+<li><p>Option 1: Put all functions into a single source file</p>
+</li>
+</ul>
 <ol>
-<li>모든 함수들을 코드들에 집어넣음</li>
-</ol>
+<li>모든 함수들을 코드들에 집어넣음
 <ul>
 <li>Programmers link big object file into their programs</li>
 <li>Space and time inefficient
@@ -1293,10 +1307,14 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
 </li>
 </ul>
 </li>
-<li>Option 2: Put each function in a separate source file
-2. modular 접근 방법처럼 기능 별로 file들을 쪼갠다
+</ol>
 <ul>
-<li>각 file들에는 특정 기능 수행하는 fn들을 따로 따로 만들어 줌</li>
+<li>Option 2: Put each function in a separate source file</li>
+</ul>
+<ol start="2">
+<li><p>modular 접근 방법처럼 기능 별로 file들을 쪼갠다</p>
+<p>각 file들에는 특정 기능 수행하는 fn들을 따로 따로 만들어 줌</p>
+<ul>
 <li>필요한 것만 링킹 - 모든 소스 파일을 다 집어넣을 필요 없음</li>
 <li>Programmers explicitly link appropriate binaries into their programs</li>
 <li>More efficient, but burdensome on the programmer36
@@ -1306,7 +1324,7 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
 </li>
 </ul>
 </li>
-</ul>
+</ol>
 <doc-anchor-target id="old-fashioned-solution-static-libraries">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#old-fashioned-solution-static-libraries">#</doc-anchor-trigger>
@@ -1314,17 +1332,22 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Static libraries (.a archive files)</li>
-<li>Concatenate related relocatable object files into a single file with an index (called an archive).</li>
-<li>Enhance linker so that it tries to resolve unresolved external references by looking for the symbols in one or more archives.</li>
-<li>If an archive member file resolves reference, link it into the executable.</li>
-<li>static linking - static library</li>
-<li>archive file
-<ul>
-<li>Object files 들을 concatenate해서 하나의 file로 만듬</li>
-<li>index를 통해 archive 안에 sum, average 등의 함수를 찾아서 참조할 수 있도록 함</li>
-</ul>
+<li><p>Static libraries (.a archive files)</p>
 </li>
+<li><p>Concatenate related relocatable object files into a single file with an index (called an archive).</p>
+</li>
+<li><p>Enhance linker so that it tries to resolve unresolved external references by looking for the symbols in one or more archives.</p>
+</li>
+<li><p>If an archive member file resolves reference, link it into the executable.</p>
+</li>
+<li><p>static linking - static library</p>
+</li>
+<li><p>archive file</p>
+</li>
+</ul>
+<p>Object files 들을 concatenate해서 하나의 file로 만듬</p>
+<p>index를 통해 archive 안에 sum, average 등의 함수를 찾아서 참조할 수 있도록 함</p>
+<ul>
 <li>archive 안에서 symbol 찾아보고 나서 실행 file linking</li>
 </ul>
 <doc-anchor-target id="creating-static-libraries">
@@ -1333,14 +1356,12 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
         <span>Creating Static Libraries</span>
     </h2>
 </doc-anchor-target>
-<blockquote>
-<p>함수별로 모듈만들어 하나의 archive로 만들어 static link 만들 수 있다.
-<figure class="content-center">
+<p>함수별로 모듈만들어 하나의 archive로 만들어 static link 만들 수 있다.</p>
+<p><figure class="content-center">
     <img src="../12/untitled_17.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
-</blockquote>
 <ul>
 <li>Archiver allows incremental updates-</li>
 <li>Recompile function that changes and replace .o file in archive.38</li>
@@ -1352,22 +1373,22 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
     </h2>
 </doc-anchor-target>
 <ul>
-<li><code v-pre>libc.a</code> (the C standard library)
+<li>libc.a (the C standard library)
 <ul>
 <li>4.6 MB archive of 1496 object files.</li>
 </ul>
 </li>
 <li>I/O, memory allocation, signal handling, string handling, data and time, random numbers, integer mathlibm.a (the C math library)
 <ul>
-<li>2 MB archive of 444 object files.
-<figure class="content-center">
+<li>2 MB archive of 444 object files.</li>
+</ul>
+</li>
+</ul>
+<p><figure class="content-center">
     <img src="../12/untitled_18.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
-</li>
-</ul>
-</li>
-</ul>
+</p>
 <doc-anchor-target id="linking-with-static-libraries">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#linking-with-static-libraries">#</doc-anchor-trigger>
@@ -1375,7 +1396,8 @@ e813 : 48 17 : c383ec08 020000 00000000 00 00 83c40800 0000sub $0x8, % rspmov $0
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>libvector.a</p>
+<li>libvector.a</li>
+</ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">#include &lt;stdio.h&gt;
 #include &quot;vector.h&quot;
@@ -1385,10 +1407,9 @@ int z[2];
 int main()
 {
     addvec(x, y, z, 2);
-    printf(&quot;z = [%d %d]\n&quot;, z[0], z[1]);
+    printf(&quot;z = [%d %d]\n”,z[0], z[1]);
     return 0;
 }
-
 main2.c40
 void addvec(int *x, int *y, int *z, int n)
 {
@@ -1404,14 +1425,14 @@ void multvec(int *x, int *y, int *z, int n)
         z[i] = x[i] * y[i];
 }</code></pre>
 </doc-codeblock></div>
-</li>
-<li><p>41page - addvec.o는 무엇을 의미하는가:</p>
+<ul>
+<li>41page - addvec.o는 무엇을 의미하는가:
 <ul>
 <li>Main 함수에서 사용하는 addvec</li>
 <li>다 올리는 게 아니라 archive라는 utility를 통해서 object concatenate하는 건데 addvec만 사용하기에 이거만 빼서 link한다는 의미이다.</li>
 </ul>
 </li>
-<li><p>static link : 사용되는 object file 100개를 모아두고 archive처럼 code generation할 때 다 모아서 symbol reolution하고 link하는 것임.</p>
+<li>static link : 사용되는 object file 100개를 모아두고 archive처럼 code generation할 때 다 모아서 symbol reolution하고 link하는 것임.
 <ul>
 <li>static linking에서 duplication생기는 이유</li>
 <li>똑같이 main함수 생성해서 addvec(x,y,z, 3)을 선언해서 넣었다고 하자.
@@ -1434,9 +1455,9 @@ void multvec(int *x, int *y, int *z, int n)
 </doc-anchor-target>
 <ul>
 <li>symbol resolving algorithm : linker가 사용하는 algorithm</li>
-<li>Scan <code v-pre>.o</code> files and <code v-pre>.a</code> files in the command line order.</li>
+<li>Scan .o files and .a files in the command line order.</li>
 <li>During the scan, keep a list of the current unresolved references.</li>
-<li>As each new <code v-pre>.o</code> or <code v-pre>.a</code> file, obj, is encountered, try to resolve each unresolved reference in the list against the symbols defined in obj.</li>
+<li>As each new .o or .a file, obj, is encountered, try to resolve each unresolved reference in the list against the symbols defined in obj.</li>
 <li>If any entries in the unresolved list at end of scan, then error.</li>
 </ul>
 <doc-anchor-target id="problem">
@@ -1451,12 +1472,15 @@ void multvec(int *x, int *y, int *z, int n)
 </figure>
 </p>
 <ul>
-<li>Command line order matters!</li>
-<li>Moral: put libraries at the end of the command line.unix&gt; gcc -L. libtest.o -lmineunix&gt; gcc -L. -lmine libtest.olibtest.o: In function main&#x27;: libtest.o(.text+0x4): undefined reference to libfun&#x27;42</li>
-<li>Compiler를 통해 example - Gcc -L : object file에서 library에 있는 file을 찾는 것</li>
+<li><p>Command line order matters!</p>
+</li>
+<li><p>Moral: put libraries at the end of the command line.unix&gt; gcc -L. libtest.o -lmineunix&gt; gcc -L. -lmine libtest.olibtest.o: In function main&#x27;: libtest.o(.text+0x4): undefined reference to libfun&#x27;42</p>
+</li>
+<li><p>Compiler를 통해 example - Gcc -L : object file에서 library에 있는 file을 찾는 것</p>
+</li>
 </ul>
 <ol>
-<li>Test file + library : test file 안에 선언되어 있는 걸 external reference해서 없으면 library를 찾아본다
+<li>Test file + library : test file 안에 선언되어 있는 걸 external reference해서 없으면 library를 ㅁ찾아본다
 <ul>
 <li>Test라는 file obj module안에서 없으면 library안에 있으면 해결되기 때문에</li>
 </ul>
@@ -1507,15 +1531,17 @@ void multvec(int *x, int *y, int *z, int n)
     </h3>
 </doc-anchor-target>
 <ul>
-<li>Object files that contain code and data that are loaded and linked
-해당 library 부분만 수정해서 되는게 아니라 application을 relink시켜 또 다시 link해야 함</li>
-<li>into an application dynamically, at either load-time or run-time
+<li><p>Object files that contain code and data that are loaded and linked
+해당 library 부분만 수정해서 되는게 아니라 application을 relink시켜 또 다시 link해야 함</p>
+</li>
+<li><p>into an application dynamically, at either load-time or run-time</p>
 <ul>
 <li>load time, runtime에 동적으로 shared library가 linking됨</li>
 </ul>
 </li>
-<li>Also called: dynamic link libraries, DLLs, .so files</li>
-<li>dynamic library = shared library
+<li><p>Also called: dynamic link libraries, DLLs, .so files43</p>
+</li>
+<li><p>dynamic library = shared library</p>
 <ul>
 <li>Compile time때 static linking을 통한 linking</li>
 <li>지금 돌아가는 executable file이라든지 둘 다 library를 가져다 사용하게 되면 static하게 linking했기 때문에 static이던 running중이던 동일한 file을 본인의 executable에 포함 → 중복된 contents</li>
@@ -1524,9 +1550,9 @@ void multvec(int *x, int *y, int *z, int n)
 <li>shared: load time, runtime에 동적으로 shared library가 linking됨</li>
 </ul>
 </li>
-<li>Library를 여러개 dynamically 사용할 수 있어서 shared</li>
-<li>Loading time, rumtime이 될 수 있음</li>
 </ul>
+<p>Library를 여러개 dynamically 사용할 수 있어서 shared</p>
+<p>Loading time, rumtime이 될 수 있음</p>
 <doc-anchor-target id="dynamic-linking-can-occur-when-executable-is-first-loaded-and-run-load-time-linking">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#dynamic-linking-can-occur-when-executable-is-first-loaded-and-run-load-time-linking">#</doc-anchor-trigger>
@@ -1534,7 +1560,7 @@ void multvec(int *x, int *y, int *z, int n)
     </h3>
 </doc-anchor-target>
 <ul>
-<li>Common case for Linux, handled automatically by the dynamic linker (<a href="http://ld-linux.so/">ld-linux.so</a>).</li>
+<li>Common case for Linux, handled automatically by the dynamic linker (<a href="http://ld-linux.so/">ld-linux.so</a>).§</li>
 <li>Standard C library (<a href="http://libc.so/">libc.so</a>) usually dynamically linked.</li>
 </ul>
 <doc-anchor-target id="dynamic-linking-can-also-occur-after-program-has-begun-run-time-linking">
@@ -1546,7 +1572,7 @@ void multvec(int *x, int *y, int *z, int n)
 <ul>
 <li>In Linux, this is done by calls to the dlopen() interface.</li>
 <li>Distributing software.</li>
-<li>High-performance web servers. Runtime library interpositioning.</li>
+<li>High-performance web servers.§ Runtime library interpositioning.</li>
 </ul>
 <doc-anchor-target id="shared-library-routines-can-be-shared-by-multiple-processes">
     <h3>
@@ -1573,9 +1599,7 @@ void multvec(int *x, int *y, int *z, int n)
 <li>dynamic link : 사용되는 function 중 main2가 reference하겠다는 note정도만 partly 저장</li>
 <li>그리고 나서 실제 program 실행할 때 library 해당하는 external reference 되어 있는 name들을 resolve하면서 나중에 loading할 때 dynamic linker에 의해 memory에 올라갈 때 비로소 shared library가 이어짐.</li>
 </ul>
-<blockquote>
 <p>(둘 다 memory에 load되어 있을 때)</p>
-</blockquote>
 <doc-anchor-target id="dynamic-linking-at-run-time">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#dynamic-linking-at-run-time">#</doc-anchor-trigger>
@@ -1583,11 +1607,13 @@ void multvec(int *x, int *y, int *z, int n)
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>dlopen을 사용해서 shaerd library 선언하고 dlsym을 통해 addvec을 pointer로 넘거받음</p>
+<li>dlopen을 사용해서 shaerd library 선언하고 dlsym을 통해 addvec을 pointer로 넘거받음
 <ul>
 <li>그리고 그 함수를 가지고 원래 있는 함수처럼 사용</li>
 <li>code 실행할 때 linking하겠다 : runtime</li>
 <li>필요에 따라 memory에 그 때 그때 옮긴다</li>
+</ul>
+</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">#include &lt;stdio.h&gt;
@@ -1620,7 +1646,7 @@ int main()
     addvec(x, y, z, 2);
     printf(&quot;z = [%d %d]\n&quot;, z[0], z[1]);
     /* Unload the shared library */ 
-
+    
     if (dlclose(handle) &lt; 0)
     {
         fprintf(stderr, &quot;%s\n&quot;, dlerror());
@@ -1629,8 +1655,6 @@ int main()
     return 0;
 }</code></pre>
 </doc-codeblock></div>
-</li>
-</ul>
 <doc-anchor-target id="linking-summary">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#linking-summary">#</doc-anchor-trigger>
@@ -1654,19 +1678,19 @@ int main()
 </li>
 <li>Understanding linking can help you avoid nasty errors and make you a better programmer.</li>
 </ul>
-<doc-anchor-target id="713-case-study-library-interpositioning">
+<doc-anchor-target id="7-13-case-study-library-interpositioning">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#713-case-study-library-interpositioning">#</doc-anchor-trigger>
-        <span>7.13. Case study: Library interpositioning</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#7-13-case-study-library-interpositioning">#</doc-anchor-trigger>
+        <span>7. 13. Case study: Library interpositioning</span>
     </h1>
 </doc-anchor-target>
 <ul>
 <li><strong>Library interpositioning : powerful linking technique that allows programmers to intercept calls to arbitrary functions</strong></li>
 <li><strong>Interpositioning can occur at:</strong>
 <ul>
-<li>Compile time: When the source code is compiled</li>
-<li>Link time: When the relocatable object files are statically linked to form an executable object file</li>
-<li>Load/run time: When an executable object file is loaded into memory, dynamically linked, and then executed.</li>
+<li>§Compile time: When the source code is compiled</li>
+<li>§Link time: When the relocatable object files are statically linked to form an executable object file</li>
+<li>§Load/run time: When an executable object file is loaded into memory, dynamically linked, and then executed.</li>
 </ul>
 </li>
 </ul>
@@ -1677,21 +1701,21 @@ int main()
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Security
+<li><p>Security</p>
 <ul>
 <li>Confinement (sandboxing)</li>
 <li>Behind the scenes encryption</li>
 </ul>
 </li>
-<li>Debugging
+<li><p>Debugging</p>
 <ul>
 <li>In 2014, two Facebook engineers debugged a treacherous 1-year old bug in their iPhone app using interpositioning</li>
 <li>Code in the SPDY networking stack was writing to the wrong location</li>
-<li>Solved by intercepting calls to Posix write functions (<code v-pre>write, writev, pwrite</code>)</li>
-<li>Source:  Facebook engineering blog post at <a href="https://code.facebook.com/posts/313033472212144/debugging-file-corruption-on-ios/">https://code.facebook.com/posts/313033472212144/debugging-file-corruption-on-ios/</a></li>
+<li>Solved by intercepting calls to Posix write functions (write, writev, pwrite)</li>
 </ul>
+<p>Source:  Facebook engineering blog post at <a href="https://code.facebook.com/posts/313033472212144/debugging-file-corruption-on-ios/">https://code.facebook.com/posts/313033472212144/debugging-file-corruption-on-ios/</a></p>
 </li>
-<li>Monitoring and Profiling
+<li><p>Monitoring and Profiling</p>
 <ul>
 <li>Count number of calls to functions</li>
 <li>Characterize call sites and arguments to functions</li>
@@ -1704,24 +1728,13 @@ int main()
 </ul>
 </li>
 </ul>
-<blockquote>
 <p>Developer가 기존의 function들을 본인의 function으로 intercept하여 실행하고 다시 돌아올 수 있도록 하는 기법</p>
-</blockquote>
 <ol>
-<li>Compile time
-<ul>
-<li>src code compile 될 때 interpositioning. Malloc함수 자체를 내가 짠 코드로 interpositioning</li>
-</ul>
+<li><p>Compile time : src code compile 될 때 interpositioning. Malloc함수 자체를 내가 짠 코드로 interpositioning</p>
 </li>
-<li>Link time
-<ul>
-<li>executable file 만들 때</li>
-</ul>
+<li><p>Link time : executable file 만들 때</p>
 </li>
-<li>Load, run time
-<ul>
-<li>obj file이 load될 때 동적 link</li>
-</ul>
+<li><p>Load, run time : obj file이 load될 때 동적 link</p>
 </li>
 </ol>
 <doc-anchor-target id="example-program">
@@ -1730,13 +1743,11 @@ int main()
         <span>Example program</span>
     </h2>
 </doc-anchor-target>
-<ul>
-<li><p>32byte 할당하여 tracking</p>
+<p>32byte 할당하여 tracking</p>
 <ul>
 <li>compile time에 mymalloc, myfree로 대치</li>
 </ul>
-</li>
-<li><p>지금 배우고 있는 interposition technique</p>
+<p>지금 배우고 있는 interposition technique</p>
 <ul>
 <li>compile, link, loadtime 때 할 수 있다.</li>
 </ul>
@@ -1751,11 +1762,9 @@ int main()
     return(0);
 }</code></pre>
 </doc-codeblock></div>
-</li>
-<li><p>Goal: trace the addresses and sizes of the allocated and freed blocks, without breaking the program, and without modifying the source code.</p>
-</li>
-<li><p>Three solutions: interpose on the lib malloc and free functions at compile time, link time, and load/run time.</p>
-</li>
+<ul>
+<li>Goal: trace the addresses and sizes of the allocated and freed blocks, without breaking the program, and without modifying the source code.</li>
+<li>Three solutions: interpose on the lib malloc and free functions at compile time, link time, and load/run time.</li>
 </ul>
 <doc-anchor-target id="compile-time-interpositioning">
     <h1>
@@ -1764,8 +1773,7 @@ int main()
     </h1>
 </doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">```cpp
-#ifdef COMPILETIME
+<pre class="language-cpp"><code v-pre class="language-cpp">#ifdef COMPILETIME
 #include &lt;stdio.h&gt;
 #include &lt;malloc.h&gt;
 
@@ -1774,7 +1782,7 @@ void *mymalloc(size_t size)
 {
     void *ptr = malloc(size);
     printf(&quot;malloc(%d)=%p\n&quot;,
-        (int)size, ptr);
+           (int)size, ptr);
     return ptr;
 }
 
@@ -1789,43 +1797,32 @@ void myfree(void *ptr)
 #define free(ptr) myfree(ptr)
 
 void *mymalloc(size_t size);
-void myfree(void *ptr);
-```
-
-```cpp
-linux&gt; make intc
+void myfree(void *ptr);</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp">linux&gt; make intc
 gcc -Wall -DCOMPILETIME -c mymalloc.c
 gcc -Wall -I. -o intc int.c mymalloc.o
 linux&gt; make runc
 ./intc
 malloc(32)=0x1edc010
 free(0x1edc010)
-linux&gt;
-```</code></pre>
+linux&gt;</code></pre>
 </doc-codeblock></div>
+<p>mymalloc code</p>
 <ul>
-<li>mymalloc code</li>
-<li>C library에서 제공해 주는 malloc을 사용한 후 그 다음에 무엇을 할 것이냐 : 기존 c library에서 제공하는 malloc을 사용하는 게 아니라 내가 작성한 mymalloc, myfree로 replace (@compile time)
-<ul>
-<li>-&gt; 즉, 현재 mymalloc은 기존의 malloc의 wrapper함수처럼 쓰여지는데 앞에 있던 코드에서 malloc을 compile time때 mymalloc/myfree으로 대치되어 실행하도록 할 수 있다.</li>
+<li>C library에서 제공해 주는 malloc을 사용한 후 그 다음에 무엇을 할 것이냐 : 기존 c library에서 제공하는 malloc을 사용하는 게 아니라 내가 작성한 mymalloc, myfree로 replace (@compile time) -&gt; 즉, 현재 mymalloc은 기존의 malloc의 wrapper함수처럼 쓰여지는데 앞에 있던 코드에서 malloc을 compile time때 mymalloc/myfree으로 대치되어 실행하도록 할 수 있다.</li>
+<li>mymalloc/myfree trace하기 위해서 printf code</li>
 </ul>
-</li>
-<li>mymalloc/myfree trace하기 위해서 printf code
-<ul>
-<li>기존에는 malloc에다 ptr을 가져다가 안에서 mymalloc으로 대치함으로써 실제 malloc을 내부적으로 call하지만 tracing위한 printf 삽입하여 - 어떤 block이 alloc/free되었는지 확인</li>
-</ul>
-</li>
-<li>preprocessing
+<p>기존에는 malloc에다 ptr을 가져다가 안에서 mymalloc으로 대치함으로써 실제 malloc을 내부적으로 call하지만 tracing위한 printf 삽입하여 - 어떤 block이 alloc/free되었는지 확인</p>
+<p>preprocessing</p>
 <ul>
 <li>compilie할 때 내부의 malloc이 mymalloc / free가 myfree로 바뀌어 구동되게 된다.</li>
 </ul>
-</li>
-<li>(linux print 결과)
+<p>(linux print 결과)</p>
 <ul>
 <li>int.c, mymalloc.c 같이 compile</li>
 <li>원래는 아무것도 print하지 않는데 mymalloc, myfree를 통해서 원하는 정보를 tracing할 수 있게 됨. -&gt; 이 주소에다가 우리가 allocate했음을 알고 vm주소를 deallocate했음을 확인할 수 있음</li>
-</ul>
-</li>
 </ul>
 <doc-anchor-target id="link-time-interpositioning">
     <h1>
@@ -1833,11 +1830,7 @@ linux&gt;
         <span>Link-time Interpositioning</span>
     </h1>
 </doc-anchor-target>
-<ul>
-<li><p>linktime 때 하는 경우</p>
-<ul>
-<li>→ object를 만들고 Wl option을 주고 <code v-pre>—wrap, malloc/free</code></li>
-</ul>
+<p>linktime 때 하는 경우 → object를 만들고 Wl option을 주고 —wrap, malloc/free</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">#ifdef LINKTIME
 #include &lt;stdio.h&gt;
@@ -1872,13 +1865,13 @@ malloc(32) = 0x1aa0010
 free(0x1aa0010)
 linux&gt;</code></pre>
 </doc-codeblock></div>
-</li>
-<li><p><strong>The <code v-pre>-Wl</code> flag passes argument to linker, replacing each comma with a space.</strong></p>
 <ul>
-<li><code v-pre>-wl</code> flag 자체가 argument를 linker에게 넘겨주어 각각의 comma로 되어 있는 것을 space로 바꾸어 대치하라는 command</li>
+<li><strong>The <code v-pre>-Wl</code> flag passes argument to linker, replacing each comma with a space.</strong>
+<ul>
+<li>-wl flag 자체가 argument를 linker에게 넘겨주어 각각의 comma로 되어 있는 것을 space로 바꾸어 대치하라는 command</li>
 </ul>
 </li>
-<li><p><strong>The  <code v-pre>--wrap_malloc</code> arg instructs linker to resolve references in a special way:</strong></p>
+<li><strong>The  <code v-pre>--wrap_malloc</code> arg instructs linker to resolve references in a special way:</strong>
 <ul>
 <li>나중에 —wrap,malloc/free를 gcc compiler에게 넘겨줌으로서 linker에 이야기 : reference되어 있는데 Linker에게 gcc compilier가 이런 식으로 resolve하라고 만든다.
 <ul>
@@ -1890,9 +1883,8 @@ linux&gt;</code></pre>
 <li>Refs to   __real_malloc should be resolved as malloc</li>
 </ul>
 </li>
-<li><p>→ link time에 그 값을 가져다 reserve한 다음 원하는 대로 interposition</p>
-</li>
 </ul>
+<p>→ link time에 그 값을 가져다 reserve한 다음 원하는 대로 interposition</p>
 <doc-anchor-target id="loadrun-time-interpositioning">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#loadrun-time-interpositioning">#</doc-anchor-trigger>
@@ -1940,24 +1932,22 @@ void free(void *ptr)
 }
 #endif</code></pre>
 </doc-codeblock></div>
-<blockquote>
-<p>Load/runtime interpositioning</p>
-</blockquote>
+<p>&lt;Load/runtime interpositioning&gt;</p>
 <ul>
-<li><p>dlsym : Library malloc의 address를 받아오기 위함</p>
-</li>
-<li><p>mallocp(size) : malloc이라는 wrapper 함수와 free라는 wrapper 함수가 있는데 나중에 동적으로 malloc이라는 wrapper함수에서 동적으로 malloc이 호출되는 그 순간에 malloc의 ptr address를 return하고 이를 가지고 print하게 하는 방법</p>
-</li>
-<li><p>동적으로 interpositioning을 malloc./ free</p>
+<li>dlsym : Library malloc의 address를 받아오기 위함</li>
+<li>mallocp(size) : malloc이라는 wrapper 함수와 free라는 wrapper 함수가 있는데 나중에 동적으로 malloc이라는 wrapper함수에서 동적으로 malloc이 호출되는 그 순간에 malloc의 ptr address를 return하고 이를 가지고 print하게 하는 방법</li>
+<li>동적으로 interpositioning을 malloc./ free
 <ul>
 <li>동일하게 free함수 호출했을 때 address를 받아오고 free를 한다음 printf를 통해 ptr값에 해당하는 heap에 있는 address 공간을 free</li>
 </ul>
 </li>
-<li><p>The <code v-pre>LD_PRELOAD</code> environment variable tells the dynamic linker to resolve unresolved refs (e.g., to malloc) by looking in mymalloc.so first.</p>
+<li>The <code v-pre>LD_PRELOAD</code> environment variable tells the dynamic linker to resolve unresolved refs (e.g., to malloc) by looking in mymalloc.so first.
 <ul>
 <li>‘LD Preload 환경 변수’를 통해 내가 찾고자 하는 함수를 code 안에서 찾을 수 있음.</li>
 <li>순차적으로 찾고 동적으로 실행되는 그 때, 앞에 print하고자 하는 value들과 size를 print하고 free하며 끝남</li>
 <li>환경 변수가 dynamic link에게 mymalloc.so file (shared library)를 찾아보고 malloc으로 대체할 수 있도록 하는 역할을 수행함</li>
+</ul>
+</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">linux&gt; make intr
@@ -1969,8 +1959,6 @@ malloc(32) = 0xe60010
 free(0xe60010)
 linux&gt;</code></pre>
 </doc-codeblock></div>
-</li>
-</ul>
 <doc-anchor-target id="interpositioning-recap">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#interpositioning-recap">#</doc-anchor-trigger>
@@ -1998,7 +1986,9 @@ linux&gt;</code></pre>
 <li>Implement custom version of malloc/free that use dynamic linking to load library malloc/free under different names</li>
 </ul>
 </li>
-<li>→ 세 가지 방법 중 load/runtime, compile time때 많이 수행. 물론 compile의 경우 preprocess 단계에서 내 것으로 가로채기 할 수 있으나 다 같이 compile해야 하는 문제점</li>
+</ul>
+<p>→ 세 가지 방법 중 load/runtime, compile time때 많이 수행. 물론 compile의 경우 preprocess 단계에서 내 것으로 가로채기 할 수 있으나 다 같이 compile해야 하는 문제점</p>
+<ul>
 <li>load/runtime의 경우에는 이에 반해 따로 compile할 필요 없고, so file을 찾도록 하여 내가 작성한 함수로 interpositioning 기술을 적용할 수 있다</li>
 </ul>
 
