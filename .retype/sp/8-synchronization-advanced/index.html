@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714581951576">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714720187849">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -34,12 +34,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.714581951576" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.3.0.714720187849" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.714581951576" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.714720187849" defer></script>
     <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -1089,21 +1089,19 @@ static void init_echo_cnt(void)
 </doc-anchor-target>
 <p>thread safe하다의 의미가 무엇인지 개념적으로 배워보자.</p>
 <ul>
-<li><p>모든 함수가 safe하지도 unsafe하지도 않다.</p>
-</li>
-<li><p>Functions called from a thread must be <strong>thread-safe</strong></p>
-<p><strong>: A function is thread-safe</strong>  thread에서 호출된 함수가 thread safe하다
+<li>모든 함수가 safe하지도 unsafe하지도 않다.</li>
+<li>Functions called from a thread must be <strong>thread-safe</strong>
+<strong>: A function is thread-safe</strong>  thread에서 호출된 함수가 thread safe하다
 ****<span class="math">\iff</span>
-<strong>it will always produce correct results when called repeatedly from multiple concurrent threads</strong> 여러 thread가 concurrently 호출하고, 각 thread들이 excution flow에 따라 항상 correct한 결과가 나온다.</p>
-</li>
-<li><p>correct한 것이란: 추상적 개념으로 thread safe :
+<strong>it will always produce correct results when called repeatedly from multiple concurrent threads</strong> 여러 thread가 concurrently 호출하고, 각 thread들이 excution flow에 따라 항상 correct한 결과가 나온다.</li>
+<li>correct한 것이란: 추상적 개념으로 thread safe :
 내가 expect한 결과대로 나오면 safe한데
-expected 결과로 나오지 않는다면 unsafe</p>
+expected 결과로 나오지 않는다면 unsafe
 <ul>
 <li>expected : thread-safe : Thread가 그 함수를 호출했을 때 thread-safe하다.</li>
 </ul>
 </li>
-<li><p>Classes of thread-unsafe functions:</p>
+<li>Classes of thread-unsafe functions:
 <ul>
 <li>Class 1: Functions that do not protect shared variables
 →lock variable</li>
@@ -1114,26 +1112,25 @@ expected 결과로 나오지 않는다면 unsafe</p>
 <li>Class 4: Functions that call thread-unsafe functions</li>
 </ul>
 </li>
-<li><p>대부분 여러 system call은 thread safe하게 구현되어 있으니 thread unsafe한 함수가 이렇게 존재한다.</p>
+<li>대부분 여러 system call은 thread safe하게 구현되어 있으니 thread unsafe한 함수가 이렇게 존재한다.
 <ul>
 <li>thread safe하게 바꾼 것이 rand_r, ctime_r이라던지 thread safe하게 만들었다.</li>
 </ul>
 </li>
-<li><p>그러나 unix programming하면은 thread-unsafe한 함수를 쓴다.</p>
+<li>그러나 unix programming하면은 thread-unsafe한 함수를 쓴다.
 <ul>
 <li>옛날 multiprocessing하려고 할 때 single processor, serialized된 상태였다.</li>
 <li>옛날의 함수를 지금 사용하려고 하니까 오류</li>
 </ul>
 </li>
-<li><p>요즘과 같은 multi processor 시대에서는 thread unsafe하네 라는 문제들이 왕왕 생기게 되어 thread safe된 함수를 쓰라고 되어 있다.</p>
-</li>
-<li><p>system call을 변환한 것들이 있는데 개발자로서 ctime과 비슷한 함수를 만들었다고 하면 thread safe한지, thread unsafe한지 확인</p>
+<li>요즘과 같은 multi processor 시대에서는 thread unsafe하네 라는 문제들이 왕왕 생기게 되어 thread safe된 함수를 쓰라고 되어 있다.</li>
+<li>system call을 변환한 것들이 있는데 개발자로서 ctime과 비슷한 함수를 만들었다고 하면 thread safe한지, thread unsafe한지 확인
 <ul>
 <li>thread unsafe하면 multi threading할 때 문제가 생길 수 있음을 인지하기 시작했으므로
 ex. 격투기에 쓰이는 여러 가지 기술처럼 프로그래밍도 처음부터 짜는 것이 아닌, 자신만의 기술을 가지고 있어야 함 - 간헐적으로 발생하여 debug하기가 굉장히 어렵다.</li>
 </ul>
 </li>
-<li><p>Thread-Safe하지 않는 function의 특징 네가지(case를 이해하면 쓰기 어렵지 않음)</p>
+<li>Thread-Safe하지 않는 function의 특징 네가지(case를 이해하면 쓰기 어렵지 않음)
 <ul>
 <li>기억해야 하는 이유 : 정보처리기사 자격증에서 외워 쓰는 것이 아니라, 실제 프로그래밍할 때 이런 규칙들이 있다 보니 신경써야 한다. 개발자가 할 부분이고, 그럼에도 실수하기 때문이다. bug free한 프로그램
 (질문) 내가 한 번 호출하면 1이고 100이고 200이고. seed값이 변하지 않으면 정해진 sequence에 대하여 random : seed값이 바뀌지 않으면 항상 같은 결과값이 나온다. rnadom한 pattern이 동일하게 나옴을 보장할 수 없다. → seed를 누군가가 바꿀수도 있는데 이를 못 바꾸게 해 달라는 것.
@@ -1209,10 +1206,12 @@ void srand(unsigned int seed)
 		next = seed; 
 }</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">  - next를 static하게 공유하게 해 놓는다. → deterministic하게 시작한 처음의 seed가 1이니까 순서대로 나온다. (매 invocation마다 state를 keep하는 형태로 구현)</code></pre>
-</doc-codeblock></div>
 <ul>
+<li>next를 static하게 공유하게 해 놓는다.
+<ul>
+<li>→ deterministic하게 시작한 처음의 seed가 1이니까 순서대로 나온다. (매 invocation마다 state를 keep하는 형태로 구현)</li>
+</ul>
+</li>
 <li>seed를 바꾸는 srand함수
 <ul>
 <li>문제가 되는 이유: 임의의 번호 1 3 5 7 9 생산한다고 가정</li>
@@ -1231,21 +1230,24 @@ void srand(unsigned int seed)
         <span>Thread-Safe Random Number Generator</span>
     </h2>
 </doc-anchor-target>
-<p>Rand에서는 parameter로 void로 넘어갔지만</p>
 <ul>
+<li><p>Rand에서는 parameter로 void로 넘어갔지만</p>
+</li>
 <li><p>nextp pointer : 내 seed와 공유되는 변수가 아닌 것</p>
 <ul>
-<li>Rand_r caller에서 선언한 local var의 ptr를 넘겨주기 때문에 자신 seed가지고 increment
-→ thread unsafe한 것을 safe하게 바꾸어 줄 수 있다.
-→ arg 의 일부로 state를 넘겨라</li>
+<li>Rand_r caller에서 선언한 local var의 ptr를 넘겨주기 때문에 자신 seed가지고 increment</li>
+<li>→ thread unsafe한 것을 safe하게 바꾸어 줄 수 있다.</li>
+<li>→ arg 의 일부로 state를 넘겨라</li>
 </ul>
 </li>
 <li><p>Pass state as part of argument / arg 의 일부로 state를 넘겨라</p>
 </li>
 <li><p>and, thereby, eliminate global state</p>
-<p>next는 thread들이 모두 호출할 수 있다.</p>
-<p>여러 thread들이 각자 공유하고 있기 때문에 생기는 문제</p>
-<p>→ global state가 발생하지 않도록 만드는 방법</p>
+<ul>
+<li>next는 thread들이 모두 호출할 수 있다.</li>
+<li>여러 thread들이 각자 공유하고 있기 때문에 생기는 문제</li>
+<li>→ global state가 발생하지 않도록 만드는 방법</li>
+</ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">/* rand_r - return pseudo-random integer on 0..32767 */
 int rand_r(int *nextp)
@@ -1292,28 +1294,28 @@ char *ctime_ts(const time_t *timep, char *privatep)
     return privatep;
 }</code></pre>
 </doc-codeblock></div>
-<p>lock and copy</p>
 <ul>
-<li><p><code v-pre>ctime :</code> 현재의 시간을 가져다 return해주는 function (from time_t struct)</p>
+<li><code v-pre>lock and copy</code></li>
+<li><code v-pre>ctime :</code> 현재의 시간을 가져다 return해주는 function (from time_t struct)
 <ul>
-<li><p>global variable로 되어 있는데 이를 읽어 오는 것 (by system call)</p>
-</li>
-<li><p>ctime을 수행하고 읽어오는 사이에 우연치 않게 interrupt 걸려 switch된다면</p>
-<p>→ 내가 호출한 시점이 아닌 다음 시점에 ctime으로 내용이 바뀔 수 있다.
-나는 모르고 interrupted 된 시간으로 return받을 수 있다.</p>
+<li>global variable로 되어 있는데 이를 읽어 오는 것 (by system call)</li>
+<li>ctime을 수행하고 읽어오는 사이에 우연치 않게 interrupt 걸려 switch된다면
+<ul>
+<li>→ 내가 호출한 시점이 아닌 다음 시점에 ctime으로 내용이 바뀔 수 있다.
+나는 모르고 interrupted 된 시간으로 return받을 수 있다.</li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p>(ctime 자체가 기지고 있는 문제) 시간이 흘르며 s1→e1 도중 s2→e2에서 time이 들어간다.</p>
+<li>(ctime 자체가 기지고 있는 문제) 시간이 흘르며 s1→e1 도중 s2→e2에서 time이 들어간다.
 <ul>
 <li>함수 자체가 문제 있음 → lock : breakable하지 않게, atomic하게 잡아 중간에 누군가가 interleaving하여 들어오지 않게 함.</li>
 <li>lock을 잡고 return되면 copy하여 줌 : lock을 잡았기 때문에 이를 풀어야지 들어갈 수 있음</li>
 </ul>
 </li>
-<li><p><strong>private으로 받되, caller의 ptr로 받는다면 자기 것으로 받는다</strong></p>
-</li>
-<li><p><strong>ptr를 받은 후 strcpy하는데 caller의 변수 stack에 있는 var의 address를 넘겨주니까
-이를 dereference하며 lock and copy를 수행함</strong></p>
+<li><strong>private으로 받되, caller의 ptr로 받는다면 자기 것으로 받는다</strong></li>
+<li><strong>ptr를 받은 후 strcpy하는데 caller의 변수 stack에 있는 var의 address를 넘겨주니까
+이를 dereference하며 lock and copy를 수행함</strong>
 <ul>
 <li>fix1 : ctime을 다 뜯어 고칠수 있다</li>
 <li>fix2 : ctime을 그대로 쓰되 mutex lock : ctime_ts를 부르는 caller가 있으니가, 해당 caller는 call by reference를 그대로 받을 수 있다.</li>
@@ -1378,9 +1380,9 @@ char *ctime_ts(const time_t *timep, char *privatep)
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>All functions in the Standard C Library (at the back of your K&amp;R text) are thread-safe</p>
+<li>All functions in the Standard C Library (at the back of your K&amp;R text) are thread-safe
 <ul>
-<li>Examples: malloc, free, printf, scanf
+<li>Examples: <code v-pre>malloc, free, printf, scanf</code>
 <ul>
 <li>printf는 thread-safe하긴 하다 (여러 thread 동시접근시) / but not async-signal-safe
 → NOT reentrant</li>
@@ -1388,9 +1390,8 @@ char *ctime_ts(const time_t *timep, char *privatep)
 </li>
 </ul>
 </li>
-<li><p>Most Unix system calls are thread-safe, with a few exceptions:</p>
-<p><img src="../8/untitled_4.png" alt="Untitled" /></p>
-</li>
+<li>Most Unix system calls are thread-safe, with a few exceptions:
+<img src="../8/untitled_4.png" alt="Untitled" /></li>
 </ul>
 <doc-anchor-target id="one-worry-races">
     <h1>
@@ -1399,12 +1400,14 @@ char *ctime_ts(const time_t *timep, char *privatep)
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>A <strong>race</strong> occurs when correctness of the program depends on one thread reaching point x before another thread reaches point y
-thread라는 fn 실행하여 call by reference로 해서 들어와서, I는 main thread의 local variable -&gt; 주소값을 넘김
-→ 새로 생성된 thread는 그 주소값을 myid라는 local variable을 stack에 copy하고 print해줌</p>
+<li>A <strong>race</strong> occurs when correctness of the program depends on one thread reaching point x before another thread reaches point y
+<ul>
+<li>thread라는 fn 실행하여 call by reference로 해서 들어와서, I는 main thread의 local variable</li>
+<li>-&gt; 주소값을 넘김</li>
+<li>→ 새로 생성된 thread는 그 주소값을 myid라는 local variable을 stack에 copy하고 print해줌</li>
+</ul>
 </li>
-<li><p>If) n=2→ iteration은 2번돈다.</p>
-</li>
+<li>If) <span class="math">n=2</span> → iteration은 2번돈다.</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">// race.c 
@@ -1435,11 +1438,14 @@ void *thread(void *vargp)
         <span>Race Illustration</span>
     </h2>
 </doc-anchor-target>
-<p>I라는 것을 dereference하여 print하려고 프로그램을 작성했는데 myid가 1이 나올수도 있다
-→ myid가 0인줄 알고 실행했는데 i=1로 증가시키면 그 주소값을 보고 있기 때문에 0이 아닌 1이 print된다</p>
 <ul>
-<li><strong>이런 상황이 존재하면 thread간 race가 있다.</strong>
-잘못된 상황이 발생하면</li>
+<li>i라는 것을 dereference하여 print하려고 프로그램을 작성했는데 myid가 1이 나올수도 있다
+<ul>
+<li>→ myid가 0인줄 알고 실행했는데 i=1로 증가시키면 그 주소값을 보고 있기 때문에 0이 아닌 1이 print된다</li>
+</ul>
+</li>
+<li><strong>이런 상황이 존재하면 thread간 race가 있다.</strong></li>
+<li>잘못된 상황이 발생하면</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">for (i = 0; i &lt; N; i++)
@@ -1723,17 +1729,12 @@ V(s0);</code></pre>
 </figure>
 </p>
 <ul>
-<li><p>No way for trajectory to get stuck</p>
-</li>
-<li><p>Processes acquire locks in same order</p>
-</li>
-<li><p>Order in which locks released immaterial</p>
-</li>
-<li><p>순서를 바꾸어 수행하게 되면 → forbid region이 변화함</p>
-</li>
-<li><p>overlap되는 부분을 들어가지 않으면 됨.</p>
-</li>
-<li><p>(여담) 김영재 교수님석사 시절,</p>
+<li>No way for trajectory to get stuck</li>
+<li>Processes acquire locks in same order</li>
+<li>Order in which locks released immaterial</li>
+<li>순서를 바꾸어 수행하게 되면 → forbid region이 변화함</li>
+<li>overlap되는 부분을 들어가지 않으면 됨.</li>
+<li>(여담) 김영재 교수님석사 시절,
 <ul>
 <li>thread가 여러개 돌아가는데 서로 msg 주고 받는 프로그램 → 정말 간헐적으로 생김</li>
 <li>내가 짠 sw위에 benchmark를 돌리는데, 어떤 complexity로 돌리느냐에 따라서 정말 잘 돌아가거나 천번에 한번 안 돌아가거나 등 코드가 복잡해지다 보니 나도 모르게 실수하기도 한다 (deadlock 등)

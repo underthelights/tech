@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714581951576">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714720187849">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -34,11 +34,13 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.714581951576" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.3.0.714720187849" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
+    <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
+    <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -234,10 +236,10 @@
 <li>CPU가 main memory 접근을 하게 되면 CPU가 addressing하는 주소는 physical address에 해당하는 주소에 있는 data를 load/store할 수 있게 한다
 <ul>
 <li>ex. Physical memory고 load 를 통해 word를 가지고 옴</li>
-</ul>
-</li>
 <li>→ Used in “simple” systems like embedded microcontrollers in devices like cars, elevators, and digital picture frames Physical address (PA) CPU 4 3 ...
 CPU가 볼 때 물리적으로 load/store하며 수행하는 simple한 system에서 활용</li>
+</ul>
+</li>
 <li>VM지원하지 않는 경우에는 physical memory로 활용 (VM 개념자체가 없다)</li>
 </ul>
 <doc-anchor-target id="a-system-using-virtual-addressing">
@@ -247,7 +249,7 @@ CPU가 볼 때 물리적으로 load/store하며 수행하는 simple한 system에
     </h2>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="13_virtual_memory_concepts_3806d1e0627b4582804ad455340aca9a/untitled_1.png" alt="Untitled" />
+    <img src="../13/untitled_1.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
@@ -273,16 +275,16 @@ CPU가 볼 때 물리적으로 load/store하며 수행하는 simple한 system에
 <ul>
 <li>순서화 되어 있는 음수가 아닌 continguous한 정수 주소</li>
 <li>Ordered set of contiguous non-negative integer addresses</li>
-<li>{0, 1, 2, 3 ... }</li>
+<li><span class="math">\{0, 1, 2, 3 ... \}</span></li>
 </ul>
 </li>
 <li>Virtual address space:
 <ul>
 <li>n개의 bit로 표현한다고 하면 N = 2^n만큼으로</li>
 <li>Set of N = 2n virtual addresses</li>
-<li>{0, 1, 2, 3, ..., N-1}
+<li><span class="math">\{0, 1, 2, 3, ..., N-1\}</span>
 <ul>
-<li>ex. n=4면 N = 2^4 = 16이므로 {0 ~ 15}까지 VA로 표현됨</li>
+<li>ex. $n=4$면 $N = 2^4 = 16$이므로 {0 ~ 15}까지 VA로 표현됨</li>
 </ul>
 </li>
 </ul>
@@ -290,9 +292,13 @@ CPU가 볼 때 물리적으로 load/store하며 수행하는 simple한 system에
 <li>Physical address space:
 <ul>
 <li>물리적인 주소로 표현</li>
-<li>VA&gt;PA인 경우가 많음 (일반 modern PC에서는) - VA를 PA로 표현하기 위한 N &gt; M (N!=M)</li>
+<li>VA&gt;PA인 경우가 많음 (일반 modern PC에서는)
+<ul>
+<li>VA를 PA로 표현하기 위한 <span class="math">N &gt; M (N!=M)</span></li>
+</ul>
+</li>
 <li>Set of M = 2m physical addresses</li>
-<li>{0, 1, 2, 3, ..., M-1}</li>
+<li><span class="math">\{0, 1, 2, 3, ..., M-1\}</span></li>
 </ul>
 </li>
 </ul>
@@ -302,10 +308,12 @@ CPU가 볼 때 물리적으로 load/store하며 수행하는 simple한 system에
         <span>Why Virtual Memory (VM)?</span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>(의문) Linear address 그냥 쓰면 되는데 왜 VA/PA 쓰는 것일까?</p>
+</blockquote>
 <ul>
-<li><p><strong>Uses main memory efficiently
-DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
+<li><strong>Uses main memory efficiently
+DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong>
 <ul>
 <li>Use DRAM as a cache for parts of a virtual address space</li>
 <li>VA의 일부만 DRAM에 올려 둔다 : process 공부할 때 text/ data /heap/ stack도 있고, 실제 process가 보는 virtual한 space</li>
@@ -315,16 +323,14 @@ DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
 <li>그냥 물리적 주소였다면 그냥 memory mapping을 하면 됨</li>
 </ul>
 </li>
-<li><p>Simplifies memory management</p>
+<li>Simplifies memory management
 <ul>
 <li>Each process gets the same uniform linear address space</li>
-</ul>
-<p>0~특정한 값까지 동일하게</p>
-<ul>
+<li>0~특정한 값까지 동일하게</li>
 <li>모든 process가 자기가 접근하는 VA의 값을 0~특정 공간까지 관리할 수 있도록 해 주자</li>
 </ul>
 </li>
-<li><p>Isolates address spaces</p>
+<li>Isolates address spaces
 <ul>
 <li>One process can’t interfere with another’s memory</li>
 <li>User program cannot access privileged kernel information and code 6</li>
@@ -344,14 +350,15 @@ DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>Conceptually, <strong>virtual memory</strong> is an array of N contiguous bytes stored on disk.</p>
-<p><strong>개념적으로 어떻게 표현할 것인가</strong></p>
+<li>Conceptually, <strong>virtual memory</strong> is an array of N contiguous bytes stored on disk.
+<ul>
+<li><strong>개념적으로 어떻게 표현할 것인가</strong>
 <ul>
 <li>process가 보는 memory = VM</li>
 <li>conceptually, process가 실제 memory에 올라와 구동되게 되는데, 개념적으로 VM이라는 것은 disk 공간에서 n개의 연속된 byte array로 보겠다는 것이다.</li>
+<li>= 어떤 process가 있다고 하면 contiguous한 linear addreess (0~)</li>
 </ul>
-<p>= 어떤 process가 있다고 하면 contiguous한 linear addreess (0~)</p>
-<ul>
+</li>
 <li>4KB/8KB page : 동일한 page들을 가상 주소가 disk에 mapping되어 있는 연속된 n개의 byte array로 표현한다고 가정하고 생각을 해 보면 실제 main memory에 올라온 physical memory 영역에서는 cached 부분만 올라옴</li>
 <li>그리고 실제 main memory에 있는 공간은 : VM에 0번지 ~ N-1번지 까지 N개의 page가 있었다고 하면, PM에 0 ~ M-1번지, M&lt;N</li>
 <li>
@@ -362,13 +369,11 @@ DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
 <li>물리적 메모리를 가져다 가상 메모리의 cache처럼 본다.</li>
 </ul>
 </li>
-<li><p>The contents of the array on disk are cached in <strong>physical memory (DRAM cache)</strong></p>
+<li>The contents of the array on disk are cached in <strong>physical memory (DRAM cache)</strong>
 <ul>
 <li>These cache blocks are called pages (size is P = 2p bytes)</li>
-</ul>
-<p>DRAM Cache : disk에 있다고 하면 (virtual page )</p>
-<p>main memory에 있는 건 DRAM에 있는 disk 주소 공간의 cache (physical page)</p>
-<ul>
+<li>DRAM Cache : disk에 있다고 하면 (virtual page )</li>
+<li>main memory에 있는 건 DRAM에 있는 disk 주소 공간의 cache (physical page)</li>
 <li>활성화된 active page들만 memory에 올라와 있음</li>
 <li>
 <blockquote>
@@ -379,7 +384,6 @@ DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
 </li>
 </ul>
 <p>![Untitled](13/Untitled 2.png)</p>
-<hr />
 <doc-anchor-target id="dram-cache-organization">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#dram-cache-organization">#</doc-anchor-trigger>
@@ -398,29 +402,34 @@ DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
 </li>
 <li>Consequences
 <ul>
-<li><p>Large page (block) size: typically 4 KB, sometimes 4 MB</p>
+<li>Large page (block) size: typically 4 KB, sometimes 4 MB
 <ul>
 <li>page는 통상적으로 4KB (가끔 4MB)</li>
 </ul>
 </li>
-<li><p>Fully associative</p>
+<li>Fully associative
 <ul>
-<li><p>Any VP can be placed in any PP</p>
-</li>
-<li><p>Requires a “large” mapping function – different from cache memories</p>
-<p>virtual page들을 physical page로 mapping할 수 있는데 어느 VP도 어느 PP로 들어갈 수 있다.  = CPU Cache는 VP가 물리적 slot에 어디나 들어가도 된다</p>
+<li>Any VP can be placed in any PP</li>
+<li>Requires a “large” mapping function – different from cache memories
+<ul>
+<li>virtual page들을 physical page로 mapping할 수 있는데 어느 VP도 어느 PP로 들어갈 수 있다.  = CPU Cache는 VP가 물리적 slot에 어디나 들어가도 된다</li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p>Highly sophisticated, expensive replacement algorithms</p>
+<li>Highly sophisticated, expensive replacement algorithms
 <ul>
 <li>Too complicated and open-ended to be implemented in hardware</li>
 </ul>
 </li>
-<li><p>Write-back rather than write-through 9</p>
+<li>Write-back rather than write-through 9
 <ul>
 <li>write 하게 되면 cache에 있는 page가 있어 실제 disk공간에 있는 page들인데</li>
-<li>(1) write through : PP를 씀과 동시에 같이 쓸 것이냐</li>
+<li>(1) write through
+<ul>
+<li>PP를 씀과 동시에 같이 쓸 것이냐</li>
+</ul>
+</li>
 <li>(2) write back
 <ul>
 <li>PP에 먼저 쓰고 나중에 evict할 때 VP와 동기화 할 것이냐</li>
@@ -433,17 +442,17 @@ DRAM을 좀 더 효과적으로 사용하기 위하여 VM 사용</strong></p>
 </li>
 </ul>
 </li>
-</ul>
-<hr />
-<ul>
 <li>SRAM Cache는 CPU안에 있음
 <ul>
 <li>HW로도 구현 : main memory중 어떤 memory에 cache한다고 할 때 누구를 쫓아내는가 등은 실제 program이 실행 될 때 cycle을 많이 소요 -&gt; HW로 faster 구현</li>
 <li>SRAM&gt;DRAM&gt;Disk</li>
-<li>SRAM Cache : CPU chip안에 있는 processor cache가 hw적으로 설계됨 -
-CPU안에서 instruction fetch할 때 활용
-(L1, L2) : cpu chip 안에 있어서 on chip cache
-(L3) : off chip cache - 바로 밖에 붙어 있음</li>
+<li>SRAM Cache : CPU chip안에 있는 processor cache가 hw적으로 설계됨
+<ul>
+<li>CPU안에서 instruction fetch할 때 활용</li>
+<li><span class="math">(L1, L2)</span> : cpu chip 안에 있어서 on chip cache</li>
+<li><span class="math">(L3)</span> : off chip cache - 바로 밖에 붙어 있음</li>
+</ul>
+</li>
 <li>DRAM : CPU 밖 memory, l3 옆 가장 붙어 있는 memory</li>
 </ul>
 </li>
@@ -455,37 +464,38 @@ CPU안에서 instruction fetch할 때 활용
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>A <strong>page table</strong> is an array of page table entries (PTEs) that maps virtual pages to physical pages.</p>
+<li>A <strong>page table</strong> is an array of page table entries (PTEs) that maps virtual pages to physical pages.
 <ul>
-<li><p>앞에 있었던(8) : VA-&gt;PA로 mapping function</p>
-</li>
-<li><p>무언가 어쨌든 이 주소를 VP1이 PP1에 mapping되어있다는 정보 + page들의 mapping 정보. 다시 말하면 어떤 page들이 어떤 물리적 page에 mapping되어 있는가에 대한 정보가 필요함. 이를 관리하기 위한 table이 page table</p>
-</li>
-<li><p>inear table의 entry가 VA를 PA로 변환해주는 역할을 수행(translator) - page : 각각의 memory에서의 물리적인 공간</p>
-</li>
-<li><p>일정 크기의 page (block)을 mapping하기 위한 entry가 table에 들어가 있음</p>
-</li>
-<li><p>Entry는 가상 주소에 해당하며 이를 보게 되면 0번부터 N에 해당하는 index에서 N=8이라고 하면 PTE 0~7,</p>
-</li>
-<li><p>page : unallocated/ cached / uncached … - process 공간에서 data와 text로 보게 되고 heap을 쓰게 되면 위로 올라감/ 중간에 allcoate되지 않는 공간이 있을 것임. 영역을 할당하게 되면 위쪽PTE=0이 text/code, n-1쪽으로부터 heap이 쭉 올라간다고 보면 됨</p>
-</li>
-<li><p>entry안의 내용을 보게 되면 실제 physical page number가 들어가 있음</p>
-</li>
-<li><p>process마다 가지고 있는 OS의 data structure: OS Kernel DS로서 10개 프로세스에 해당하는 다음과 같은 table을 process마다 가지고 있음</p>
-</li>
-<li><p>Per-process kernel data structure in DRAM</p>
-</li>
+<li>앞에 있었던(8) : VA-&gt;PA로 mapping function</li>
+<li>무언가 어쨌든 이 주소를 VP1이 PP1에 mapping되어있다는 정보 + page들의 mapping 정보. 다시 말하면 어떤 page들이 어떤 물리적 page에 mapping되어 있는가에 대한 정보가 필요함. 이를 관리하기 위한 table이 page table</li>
+<li>inear table의 entry가 VA를 PA로 변환해주는 역할을 수행(translator)
+<ul>
+<li>page : 각각의 memory에서의 물리적인 공간</li>
 </ul>
-<p><img src="../13/untitled_3.png" alt="Untitled" /></p>
 </li>
-<li><p>질문</p>
+<li>일정 크기의 page (block)을 mapping하기 위한 entry가 table에 들어가 있음</li>
+<li>Entry는 가상 주소에 해당하며 이를 보게 되면 0번부터 N에 해당하는 index에서 N=8이라고 하면 PTE 0~7,</li>
+<li>page : unallocated/ cached / uncached …
+<ul>
+<li>process 공간에서 data와 text로 보게 되고 heap을 쓰게 되면 위로 올라감/ 중간에 allcoate되지 않는 공간이 있을 것임.</li>
+<li>영역을 할당하게 되면 위쪽PTE=0이 text/code, n-1쪽으로부터 heap이 쭉 올라간다고 보면 됨</li>
+</ul>
+</li>
+<li>entry안의 내용을 보게 되면 실제 physical page number가 들어가 있음</li>
+<li>process마다 가지고 있는 OS의 data structure: OS Kernel DS로서 10개 프로세스에 해당하는 다음과 같은 table을 process마다 가지고 있음</li>
+<li>Per-process kernel data structure in DRAM
+<img src="../13/untitled_3.png" alt="Untitled" /></li>
+</ul>
+</li>
+<li>질문
 <ul>
 <li>CPU 개수랑은 완전히 orthogonal : process 개수 만큼</li>
 <li>page table size : 1MB/4MB (OS시간에 배움)</li>
-<li>page table 자체가 DRAM에 저장됨. 자체 주소는 process의</li>
-</ul>
-<p>process마다 process control block이라고 해서 자료구조가 있는데 여기서 page table에 대한 주소를 가지고 있음. 그 주소에 대한 page table이 선형적으로 들어가 있고, 나중에는 base line register에다가 process가 context switch될 때 주소를 가져다 넣는다.</p>
+<li>page table 자체가 DRAM에 저장됨. 자체 주소는 process의
 <ul>
+<li>process마다 process control block이라고 해서 자료구조가 있는데 여기서 page table에 대한 주소를 가지고 있음. 그 주소에 대한 page table이 선형적으로 들어가 있고, 나중에는 base line register에다가 process가 context switch될 때 주소를 가져다 넣는다.</li>
+</ul>
+</li>
 <li>
 <blockquote>
 <p>Page Table은 kernel이 보는 것이고, kernel은 physical 주소를 본다. Virtual 주소도 보기는 하지만 physical 주소와도 1대1 대응하기에 Page table자체의 주소는 물리주소로 저장된다고 봐도 될 듯.</p>
@@ -494,15 +504,15 @@ CPU안에서 instruction fetch할 때 활용
 <li>fork하면 child process는 parent process와 같은 page table을 공유하는가? 그럼 같은 virtual memory가 서로 다른 physical memory를 가리키게 되는가? -&gt; page table이 복제되는데 새로은 page table로 update됨 (공유하지 않음) 부모 것 하나, 자식 것 하나 각각 따로따로 가지고 있음. 즉, 서로 다른 physical memory를 가리키게 됨.</li>
 </ul>
 </li>
-<li><p>(PM) 실제 physically mapped : cached 영역 (1,2,7,4) to PP 0,1,2,3</p>
-</li>
-<li><p>(VM) unallocate / allocate되어 있지만 아직 cached 안 됨</p>
-</li>
-<li><p>page table을 통해서 주소 변환</p>
+<li>(PM) 실제 physically mapped : cached 영역 (1,2,7,4) to PP 0,1,2,3</li>
+<li>(VM) unallocate / allocate되어 있지만 아직 cached 안 됨</li>
+<li>page table을 통해서 주소 변환
+<ul>
+<li>→Disk공간이라고 봐도 되고
+page table을 통하여 주소 변환을 해 주는 역할을 감당하게 된다.</li>
+</ul>
 </li>
 </ul>
-<p>→Disk공간이라고 봐도 되고</p>
-<p>page table을 통하여 주소 변환을 해 주는 역할을 감당하게 된다.</p>
 <doc-anchor-target id="page-hit">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#page-hit">#</doc-anchor-trigger>
@@ -541,11 +551,11 @@ CPU안에서 instruction fetch할 때 활용
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Page fault: reference to VM word that is not in physical memory (DRAM cache miss)</p>
+<li>Page fault: reference to VM word that is not in physical memory (DRAM cache miss)
 <ul>
-<li>Page가 없기 때문에 page missing →fault handling 필요</li>
+<li>Page가 없기 때문에 page missing →fault handling 필요
+<img src="../13/untitled_5.png" alt="Untitled" /></li>
 </ul>
-<p><img src="../13/untitled_5.png" alt="Untitled" /></p>
 </li>
 </ul>
 <doc-anchor-target id="handling-page-fault">
@@ -569,27 +579,19 @@ CPU안에서 instruction fetch할 때 활용
 <li>PP 0~3 중 모종의 이유로 PP3을 쫓아내겠다고 결정 (evict)</li>
 <li>evict하게 될 때 VP4는 VM으로, VP3은 PM으로 이동</li>
 <li>3번이 올라왔으니깐 virtual page number 3번으로 이동하게 된다. 이러한 어떤 작업을 수행해주어야 한다.</li>
+<li>→ Fault가 나오게 되면 누군가를 evict시켜주고 page table 을 update해주어야 한다. (4를 disk mapping, 3은 DRAM에 mapping)</li>
 </ul>
 </li>
+<li>demand paging</li>
+<li>누군가를 evict하고 누군가를 가져와야 함</li>
+<li>Page miss causes page fault (an exception)
+<img src="../13/untitled_7.png" alt="Untitled" /></li>
+<li>Page fault handler selects a victim to be evicted (here VP 4)
+<img src="../13/untitled_8.png" alt="Untitled" />
+<img src="../13/untitled_9.png" alt="Untitled" /></li>
+<li>Offending instruction is restarted : page hit
+<img src="13/untitled210.png" alt="Untitled" /></li>
 </ul>
-<p>→ Fault가 나오게 되면 누군가를 evict시켜주고 page table 을 update해주어야 한다. (4를 disk mapping, 3은 DRAM에 mapping)</p>
-<ul>
-<li><p>demand paging</p>
-</li>
-<li><p>누군가를 evict하고 누군가를 가져와야 함</p>
-</li>
-<li><p>Page miss causes page fault (an exception)</p>
-<p><img src="../13/untitled_7.png" alt="Untitled" /></p>
-</li>
-<li><p>Page fault handler selects a victim to be evicted (here VP 4)</p>
-<p><img src="../13/untitled_8.png" alt="Untitled" /></p>
-<p><img src="../13/untitled_9.png" alt="Untitled" /></p>
-</li>
-<li><p>Offending instruction is restarted : page hit</p>
-<p><img src="13/untitled210.png" alt="Untitled" /></p>
-</li>
-</ul>
-<hr />
 <doc-anchor-target id="allocating-pages">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#allocating-pages">#</doc-anchor-trigger>
@@ -597,9 +599,8 @@ CPU안에서 instruction fetch할 때 활용
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Allocating a new page (VP 5) of virtual memory.</p>
-<p><img src="13/untitled211.png" alt="Untitled" /></p>
-</li>
+<li>Allocating a new page (VP 5) of virtual memory.<br />
+<img src="../13/untitled_11.png" alt="Untitled" /></li>
 </ul>
 <hr />
 <doc-anchor-target id="locality-to-the-rescue-again">
@@ -609,9 +610,8 @@ CPU안에서 instruction fetch할 때 활용
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Virtual memory seems terribly inefficient, but it works because of locality.</p>
-</li>
-<li><p>At any point in time, programs tend to access a set of active virtual pages called the <strong>working set</strong></p>
+<li>Virtual memory seems terribly inefficient, but it works because of locality.</li>
+<li>At any point in time, programs tend to access a set of active virtual pages called the <strong>working set</strong>
 <ul>
 <li>Programs with better temporal locality will have smaller working sets</li>
 <li>process 관점에서 봤을 때, VA를 PA로 바꾸어 주는 과정 자체가
@@ -622,23 +622,29 @@ CPU안에서 instruction fetch할 때 활용
 </li>
 </ul>
 </li>
-<li><p>If (working set size &lt; main memory size)
-Working set &lt; 내가 가진 main memory size</p>
+<li>If (working set size &lt; main memory size)
+Working set &lt; 내가 가진 main memory size
 <ul>
 <li>Good performance for one process after compulsory misses
 (Page fault가 발생하지 않을 것이니까)</li>
 </ul>
 </li>
-<li><p>If ( SUM(working set sizes) &gt; main memory size )
-Working set &gt; 내가 가진 main memory size</p>
+<li>If ( SUM(working set sizes) &gt; main memory size )
+Working set &gt; 내가 가진 main memory size
 <ul>
 <li><strong>Thrashing:</strong> Performance meltdown where pages are swapped (copied) in and out continuously 18</li>
 <li>working set이 커지게 되면 thrashing문제 발생 : 자꾸 disk mapping / dram 이랬다 저랬다 하면 disk 접근 때문에 발생하게 된다. (어떤 페이지가 in and out from disk -&gt; 성능이 완전히 melt down된다)</li>
 </ul>
 </li>
-<li><p>cache size라는 것은 어느정도 적당한 크기로 보장되어야 함.</p>
-<p>CPU 성능도 중요하지만 메모리 성능이 중요한 이유이다: 여러 프로그램을 돌리기 때문에 각 process마다 지금과 같은 process마다 dram cache영역이 확보되어야 한다. 구동시키는 프로그램(웹/다양한 프로그램)들로 인한 in n out으로 인해  thrashing 이 발생하여 속도가 완전히 죽어버림.</p>
-<p>→ 가급적이면 memory 큰 pc를 구입</p>
+<li>cache size라는 것은 어느정도 적당한 크기로 보장되어야 함.
+<ul>
+<li>CPU 성능도 중요하지만 메모리 성능이 중요한 이유이다: 여러 프로그램을 돌리기 때문에 각 process마다 지금과 같은 process마다 dram cache영역이 확보되어야 한다.</li>
+<li>구동시키는 프로그램(웹/다양한 프로그램)들로 인한 in n out으로 인해  thrashing 이 발생하여 속도가 완전히 죽어버림.
+<ul>
+<li>→ 가급적이면 memory 큰 pc를 구입</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 <doc-anchor-target id="vm-as-a-tool-for-memory-management">
@@ -654,14 +660,12 @@ Working set &gt; 내가 가진 main memory size</p>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>It can view memory as a simple linear array</p>
-</li>
-<li><p>Mapping function scatters addresses through physical memory</p>
+<li>It can view memory as a simple linear array</li>
+<li>Mapping function scatters addresses through physical memory
 <ul>
-<li>Well-chosen mappings can improve locality</li>
+<li>Well-chosen mappings can improve locality
+<img src="../13/untitled_12.png" alt="Untitled" /></li>
 </ul>
-<p><img src="../13/untitled_12.png" alt="Untitled" /></p>
-<hr />
 </li>
 </ul>
 <p>VM as a Tool for Memory Management</p>
@@ -784,6 +788,6 @@ Working set &gt; 내가 가진 main memory size</p>
 
     <div id="docs-overlay-target"></div>
 
-    <script>window.__DOCS__ = { "title": "13. Virtual Memory: Concepts", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false }</script>
+    <script>window.__DOCS__ = { "title": "13. Virtual Memory: Concepts", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: true }</script>
 </body>
 </html>

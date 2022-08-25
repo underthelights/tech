@@ -236,7 +236,7 @@ of Edmonton, Alberta, Canada.
 
 If the Software or any related documentation is licensed to the U.S. Government or any agency
 thereof, it will be considered to be "commercial computer software" or "commercial computer
-software documentation," as those terms are used in 48 CFR  12.212 or 48 CFR  227.7202, and is
+software documentation," as those terms are used in 48 CFR § 12.212 or 48 CFR § 227.7202, and is
 being licensed with only those rights as are granted to all other licensees as set forth in this
 Agreement.
 

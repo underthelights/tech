@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/tech">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714581951576">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714720187849">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -34,12 +34,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/tech/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../favicon.ico" rel="icon" />
-    <link href="../../resources/css/retype.css?v=2.3.0.714581951576" rel="stylesheet" />
+    <link href="../../resources/css/retype.css?v=2.3.0.714720187849" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../resources/js/config.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714581951576" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.714581951576" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../resources/js/lunr.js?v=2.3.0.714720187849" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../resources/js/prism.js?v=2.3.0.714720187849" defer></script>
     <link href="../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -254,17 +254,18 @@
 </ul>
 </li>
 </ul>
-<p>Dynamic memory allocator</p>
+<doc-anchor-target id="dynamic-memory-allocator">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dynamic-memory-allocator">#</doc-anchor-trigger>
+        <span>Dynamic memory allocator</span>
+    </h3>
+</doc-anchor-target>
 <ul>
-<li><p>process의 가상메모리 공간에 0부터 max에 해당하는 process의 가상메모리 공간</p>
-</li>
-<li><p>code, data 부분 제외하고 heap부터 시작</p>
-</li>
-<li><p>dynamic memmory allocator를 활용해 가상 메모리 공간 안 heap space memory를 run time시 할당하고 해제할 수 있다. Dynamic memory allocators manage an area of process virtual memory known as the heap.</p>
-</li>
-<li><p>Allocator입장에서 heap은 ‘collection of variable sized blocks’ : allcoated /  free</p>
-</li>
-<li><p>Types of allocators</p>
+<li>process의 가상메모리 공간에 0부터 max에 해당하는 process의 가상메모리 공간</li>
+<li>code, data 부분 제외하고 heap부터 시작</li>
+<li>dynamic memmory allocator를 활용해 가상 메모리 공간 안 heap space memory를 run time시 할당하고 해제할 수 있다. Dynamic memory allocators manage an area of process virtual memory known as the heap.</li>
+<li>Allocator입장에서 heap은 ‘collection of variable sized blocks’ : allcoated /  free</li>
+<li>Types of allocators
 <ul>
 <li>Exlicit allocator: application allocates and frees space
 <ul>
@@ -293,58 +294,54 @@
     </h3>
 </doc-anchor-target>
 <ul>
-<li><p>c language 같은 경우 standard c malloc library 할당하는 system library</p>
-</li>
-<li><p>runtime 시에 필요한 vm 값을 요청하기 위함 : dynamic memory allocator</p>
+<li>c language 같은 경우 standard c malloc library 할당하는 system library</li>
+<li>runtime 시에 필요한 vm 값을 요청하기 위함 : dynamic memory allocator
 <ul>
 <li>일반적으로 얼만큼 data가 필요한지 모르니, static하게 잡기보다도 runtime시에만 필요로 하는 자료구조 크기가 알려진 경우 dynamic memory allocator 사용하여 malloc</li>
 </ul>
 </li>
-<li><p>brk ptr = heap의 top</p>
-</li>
-<li><p>가상 메모리 공간 = process마다 각자 자신의 가상 메모리 공간을 가짐</p>
+<li>brk ptr = heap의 top</li>
+<li>가상 메모리 공간 = process마다 각자 자신의 가상 메모리 공간을 가짐
 <ul>
 <li>일부 영역 ‘heap’ - brk ptr  : heap 공간 크기를 결정할 수 있는 range를 가리킬 수 있음</li>
 </ul>
 </li>
-<li><p>0번지부터 brk : heap 의 크기</p>
+<li>0번지부터 brk : heap 의 크기
 <ul>
-<li><p>Brk ptr로부터 증가 : sbrk라는 system call</p>
-</li>
-<li><p>내부적인 malloc같은 sbrk system call을 통해 brk ptr를 증가시킬 수 있음</p>
-</li>
-<li><p>어떤 특정한 시점에서는 변하지 않은 값으로 저장</p>
+<li>Brk ptr로부터 증가 : sbrk라는 system call</li>
+<li>내부적인 malloc같은 sbrk system call을 통해 brk ptr를 증가시킬 수 있음</li>
+<li>어떤 특정한 시점에서는 변하지 않은 값으로 저장
 <ul>
 <li>내가 사용할 수 있는 heap이라는 공간은 그 크기만큼 사용할 수 있다</li>
 </ul>
 </li>
-<li><p>이 공간을 가져다 사용 : brk ptr를 증가시켜줌으로서 heap의 공간이 더 커질 수 있음</p>
-<p>→ brk ptr가 가리킴</p>
+<li>이 공간을 가져다 사용 : brk ptr를 증가시켜줌으로서 heap의 공간이 더 커질 수 있음
+<ul>
+<li>→ brk ptr가 가리킴</li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p>Heap : 동일한 크기의 chunk로 이루어진 array이다.</p>
+<li>Heap : 동일한 크기의 chunk로 이루어진 array이다.
 <ul>
 <li>ex. malloc을 사용해 block 선언 / chunk 크기 3</li>
 <li>→ chunk 3개 가진 block을 할당하고, chunk 2, chunk 1 할당 / 나머지 공간은 free한 공간</li>
+<li>3 chunk - 2 chunk - 1 chunk block</li>
 </ul>
-<p>3 chunk - 2 chunk - 1 chunk block</p>
 </li>
-<li><p>memory alloc 관점엥서 보면 Allocate되어 있고 / free한 상태이고</p>
-<p>→ 이 메모리를 가져다 : 가변적 크기를 가진 이 block들의 allocate된 것들과 free된 것들의 집합.
-각각은 allocate 되어 있거나 free되어 있다.</p>
-</li>
-<li><p>vm 공간안에서 있는, 0부터 max값이라고 하면 code, data 부분을 제외하고 heap이라고 되어 있는 부분에 top에서 Brk가 가리키는 ptr</p>
-<p>→ 이 지금 말한 heap 부분이 지금 말한 부분에 해당함</p>
+<li>memory alloc 관점엥서 보면 Allocate되어 있고 / free한 상태이고
 <ul>
+<li>→ 이 메모리를 가져다 : 가변적 크기를 가진 이 block들의 allocate된 것들과 free된 것들의 집합.
+각각은 allocate 되어 있거나 free되어 있다.</li>
+</ul>
+</li>
+<li>vm 공간안에서 있는, 0부터 max값이라고 하면 code, data 부분을 제외하고 heap이라고 되어 있는 부분에 top에서 Brk가 가리키는 ptr
+<ul>
+<li>→ 이 지금 말한 heap 부분이 지금 말한 부분에 해당함</li>
 <li>top heap brk ptr →  heap의 top에 해당하는 주소이다.</li>
 </ul>
 </li>
-<li><p>Will discuss simple explicit memory allocation today</p>
-</li>
-</ul>
-<hr />
-<ul>
+<li>Will discuss simple explicit memory allocation today</li>
 <li>explicit allocator</li>
 <li>implicit allocator</li>
 </ul>
@@ -355,21 +352,22 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>실험</p>
+<li>실험
 <ul>
-<li><p>top of the heap를 setting해 놓고 그 공간 안에 더이상 빈 공간을 찾을수 없다고 하면 sbrk를 지속적으로 늘려 주면</p>
+<li>top of the heap를 setting해 놓고 그 공간 안에 더이상 빈 공간을 찾을수 없다고 하면 sbrk를 지속적으로 늘려 주면
 <ul>
 <li>→ memory가 없다라고 실토함 : 현재 가용 가능한 memory를 tracking하다가 없으면 failuress</li>
 </ul>
 </li>
-<li><p>(until OS kernel이 최소로 필요로 하는 공간 (cspro 500MB))</p>
-<p>(실제 OS의 rsrc를 print했을 때 나오는 값보다 → process에게 그 이상은 주지 못한다)</p>
-</li>
-<li><p>sbrk도 요청해서 할당받고 하면 top of the heap을 가져다 brk ptr를 증가시키고 언젠가는 실패 : kernel안에서 sbrk system call handler가 threshold를 가지고 있음</p>
-</li>
+<li>(until OS kernel이 최소로 필요로 하는 공간 (cspro 500MB))
+<ul>
+<li>(실제 OS의 rsrc를 print했을 때 나오는 값보다 → process에게 그 이상은 주지 못한다)</li>
 </ul>
 </li>
-<li><p>brk ptr : os kernel이 가짐</p>
+<li>sbrk도 요청해서 할당받고 하면 top of the heap을 가져다 brk ptr를 증가시키고 언젠가는 실패 : kernel안에서 sbrk system call handler가 threshold를 가지고 있음</li>
+</ul>
+</li>
+<li><code v-pre>brk ptr</code> : os kernel이 가짐
 <ul>
 <li>top of the heap이 넘쳐나는 경우에는 내부적으로 sbrk라는 system call을 통해 증가</li>
 <li>→ 그 때 heap 공간에서 free하지만 원하는 공간이 continuous하길 원한다.</li>
@@ -377,13 +375,11 @@
 = 성공하지 못해 메모리를 할당할 수 없다.</li>
 </ul>
 </li>
-<li><p>동적으로 결정되는 크기 : program 실행 순서에 따라 결정되는 값</p>
-</li>
-<li><p>virtual memory의 시작 주소 return</p>
-</li>
-<li><p><code v-pre>void *malloc(size_t size)</code></p>
+<li>동적으로 결정되는 크기 : program 실행 순서에 따라 결정되는 값</li>
+<li>virtual memory의 시작 주소 return</li>
+<li><code v-pre>void *malloc(size_t size)</code>
 <ul>
-<li><p>Successful: Returns a pointer to a memory block of at least size bytes aligned to an 8-byte (x86) or 16-byte (x86-64) boundary</p>
+<li>Successful: Returns a pointer to a memory block of at least size bytes aligned to an 8-byte (x86) or 16-byte (x86-64) boundary
 <ul>
 <li>If size == 0, returns NULL</li>
 </ul>
@@ -403,14 +399,14 @@
 </li>
 </ul>
 </li>
-<li><p>Unsuccessful: returns NULL (0) and sets errno</p>
+<li>Unsuccessful: returns NULL (0) and sets errno
 <ul>
 <li>heap stage에서 할당할 부분이 없는 경우</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><code v-pre>void free(void *p)</code></p>
+<li><code v-pre>void free(void *p)</code>
 <ul>
 <li>Returns the block pointed at by p to pool of available memory
 <ul>
@@ -424,7 +420,7 @@ p라는 가상 메모리 ptr가 가리키는 memory</li>
 <li>free할 메모리의 크기는 내부적으로 알 수 있다 : meta정보를 읽고 word 2개 사이즈를 free하는구나</li>
 </ul>
 </li>
-<li><p>Other functions</p>
+<li>Other functions
 <ul>
 <li><code v-pre>calloc</code>: Version of malloc that initializes allocated block to zero.
 <ul>
@@ -443,10 +439,10 @@ p라는 가상 메모리 ptr가 가리키는 memory</li>
 <ul>
 <li>allocator 안에서 사용되는 system call</li>
 <li>brk ptr를 올리거나 내리는, heap을 조절해주기 위한 함수</li>
+<li>malloc은 brk</li>
 </ul>
 </li>
 </ul>
-<p>malloc은 brk</p>
 </li>
 </ul>
 <doc-anchor-target id="malloc-example">
@@ -476,14 +472,14 @@ void foo(int n)
 }</code></pre>
 </doc-codeblock></div>
 <ul>
-<li><p>굳이 그렇게 할 필요 없다 : API만 프로그래머에게 전달해주면 되는 상황이다.</p>
+<li>굳이 그렇게 할 필요 없다 : API만 프로그래머에게 전달해주면 되는 상황이다.
 <ul>
 <li>사용자 입장에서 api 안에서 제공되는 함수 사용</li>
 <li>malloc의 class version을 만들겠다, pm hint를 주겠다</li>
 <li>인접하게 할당하는 등 mymalloc에서 그렇게 구현하면 됨</li>
 </ul>
 </li>
-<li><p>allocator</p>
+<li>allocator
 <ul>
 <li>word 크기 4byte 가정할 때 heap 관리자, heap 공간 중 free한 공간</li>
 <li>모종의 알고리즘을 통해 할당할 공간을 찾는다.</li>
@@ -499,22 +495,19 @@ void foo(int n)
         <span><strong>Assumptions Made in This Lecture</strong></span>
     </h2>
 </doc-anchor-target>
-<p>(몇가지 가정 후 설명 진행)</p>
 <ul>
-<li><p>memory address : 가장 최소 단위 word (8byte or 16byte)</p>
-</li>
-<li><p>Heap : 연속된 가상 메모리 공간</p>
-</li>
-<li><p>실제 memory allocator 구현하는 입장에서 보면 생각할 게 많음</p>
+<li>(몇가지 가정 후 설명 진행)</li>
+<li>memory address : 가장 최소 단위 word (8byte or 16byte)</li>
+<li>Heap : 연속된 가상 메모리 공간</li>
+<li>실제 memory allocator 구현하는 입장에서 보면 생각할 게 많음
 <ul>
 <li>두 칸을 가져다 free하는데, free후 p만 인자로 받음</li>
 <li>word를 어떻게 free할것이냐에 대한 내용은 논의하지 않음 (나중에 배울 예정)</li>
 <li>→ free를 할 때 p가 가진 memory 두 개 공간이 있는데 이를 free하면 됨</li>
 </ul>
 </li>
-<li><p>memory 크기는 딱 두개의 word로 되어 있다</p>
-</li>
-<li><p>malloc-DB</p>
+<li>memory 크기는 딱 두개의 word로 되어 있다</li>
+<li>malloc-DB
 <ul>
 <li>memory 공간 할당자
 <ul>
@@ -526,10 +519,8 @@ void foo(int n)
 <li>어떤 data의 영역을 관리하기 위한 system을 어떻게 build할 것이냐로 확장할 수 있음</li>
 </ul>
 </li>
-<li><p>Memory is word addressed.</p>
-</li>
-<li><p>Words are int-sized.</p>
-</li>
+<li>Memory is word addressed.</li>
+<li>Words are int-sized.</li>
 </ul>
 <p><figure class="content-center">
     <img src="../10/untitled_2.png" alt="Untitled" />
@@ -542,7 +533,9 @@ void foo(int n)
         <span><strong>Allocation Example</strong></span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>동적 memory allocator : gdc에서 효율적으로 잘 짜여 있음</p>
+</blockquote>
 <ul>
 <li>두 가지의 metric.
 <ol>
@@ -551,14 +544,14 @@ void foo(int n)
 </ol>
 </li>
 </ul>
+<blockquote>
 <p>가상 메모리 공간 continguous</p>
+</blockquote>
 <ul>
-<li><p>OS가 해줘야 하는 역할 / 프로그래머 입장에서는 Vm 공간 중 heap이라는 일부 공간을 contiguous하게 할당받아 그 공간들만 할당해주고 해제해주고</p>
-</li>
-<li><p>block storage</p>
-</li>
-<li><p>다음과 같은 heap이라는 공간이 있다. - chunk 크기로 된 연속적인 공간</p>
-</li>
+<li>OS가 해줘야 하는 역할 / 프로그래머 입장에서는 Vm 공간 중 heap이라는 일부 공간을 contiguous하게 할당받아 그 공간들만 할당해주고 해제해주고</li>
+<li>block storage</li>
+<li>다음과 같은 heap이라는 공간이 있다.</li>
+<li>chunk 크기로 된 연속적인 공간</li>
 </ul>
 <p><figure class="content-center">
     <img src="../10/untitled_3.png" alt="Untitled" />
@@ -576,8 +569,8 @@ void foo(int n)
 <li>→ 모종의 방법을 통해 다음과 같이 할당된다.</li>
 </ul>
 </li>
+<li>이런 식으로, block storage 관점에서 보더라도 상당히 비슷하다. 가상 메모리 공간에서 contiguous한 공간이고, 크기 공간들 중 빈 공간들을 관리하는 관리자라고 보면 됨</li>
 </ul>
-<p>이런 식으로, block storage 관점에서 보더라도 상당히 비슷하다. 가상 메모리 공간에서 contiguous한 공간이고, 크기 공간들 중 빈 공간들을 관리하는 관리자라고 보면 됨</p>
 <doc-anchor-target id="constraints">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#constraints">#</doc-anchor-trigger>
@@ -642,18 +635,18 @@ allocate하게 되면 free한 memory에 할당</li>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Given some sequence of malloc and free requests:
-어떤 program에서 malloc. &amp; free request</p>
+<li>Given some sequence of malloc and free requests:
+어떤 program에서 malloc. &amp; free request
 <ul>
 <li><span class="math">R_0, R_1, ..., R_k, ... , R_{n-1 }</span></li>
 </ul>
 </li>
-<li><p>Goals: maximize throughput and peak memory utilization</p>
+<li>Goals: maximize throughput and peak memory utilization
 <ul>
 <li>These goals are often conflicting</li>
 </ul>
 </li>
-<li><p>Throughput:</p>
+<li>Throughput:
 <ul>
 <li>Number of completed requests per unit time</li>
 <li>throughput을 높인다
@@ -677,11 +670,9 @@ allocate하게 되면 free한 memory에 할당</li>
 <ul>
 <li>→ 이를 처리할 수 있는 allocator
 1000개의 operation per second보다 낮아질수도 있음</li>
+<li>→ 첫 목표 : throughput 높이는 것</li>
 </ul>
 </li>
-</ul>
-<p>→ 첫 목표 : throughput 높이는 것</p>
-<ul>
 <li>나중에 설계, 구현을 보면 알 수 있음
 <ul>
 <li>throughput이 1000보다 높을수도 낮을수도 있다.</li>
@@ -696,14 +687,16 @@ allocate하게 되면 free한 memory에 할당</li>
         <span><strong>Performance Goal: Peak Memory Utilization</strong></span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>앞과 example은 똑같고, 다음과 같은 def를 이해해야 한다.</p>
+</blockquote>
 <ul>
 <li>Given some sequence of malloc and free requests:
 <ul>
 <li><span class="math">R_0, R_1, ..., R_k, ... , R_{n-1 }</span></li>
 </ul>
 </li>
-<li>Def: Aggregate payload Pk
+<li>Def: Aggregate payload <span class="math">P_k</span>
 <ul>
 <li><code v-pre>malloc(p)</code> results in a block with a payload of p bytes</li>
 <li>After request <span class="math">R_k</span> has completed, the aggregate payload Pk is the sum of currently allocated payloads</li>
@@ -756,17 +749,17 @@ allocate하게 되면 free한 memory에 할당</li>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>For a given block, <strong>internal fragmentation</strong> occurs if payload is smaller than block size</p>
-<p><img src="../10/untitled_4.png" alt="Untitled" /></p>
-</li>
-<li><p>Caused by</p>
+<li>For a given block, <strong>internal fragmentation</strong> occurs if payload is smaller than block size
+<img src="../10/untitled_4.png" alt="Untitled" /></li>
+<li>Caused by
 <ul>
-<li><p>Overhead of maintaining heap data structures</p>
-<p>heap을 관리하는 data structure의 overhead</p>
+<li>Overhead of maintaining heap data structures
+<ul>
+<li>heap을 관리하는 data structure의 overhead</li>
+</ul>
 </li>
-<li><p>Padding for alignment purposes</p>
-</li>
-<li><p>Explicit policy decisions</p>
+<li>Padding for alignment purposes</li>
+<li>Explicit policy decisions
 <ul>
 <li>큰 block을 return해야 하는 경우
 (e.g., to return a big block to satisfy a small request)</li>
@@ -774,19 +767,18 @@ allocate하게 되면 free한 memory에 할당</li>
 </li>
 </ul>
 </li>
-<li><p>Depends only on the pattern of previous requests</p>
-<p>이전에 어떤 게 왔는지에 따라 왕왕 생김</p>
+<li>Depends only on the pattern of previous requests
 <ul>
-<li>Thus, easy to measure</li>
+<li>이전에 어떤 게 왔는지에 따라 왕왕 생김</li>
 </ul>
 </li>
-<li><p>10byte + 나머지 6byte 앞과 뒤에 나뉘어 짐</p>
+<li>Thus, easy to measure</li>
+<li>10byte + 나머지 6byte 앞과 뒤에 나뉘어 짐
 <ul>
 <li>나머지 6byte는 사용되지 않음</li>
 </ul>
 </li>
-<li><p>구현에 따라 internal fragmentation을 상당히 줄일 수 있음</p>
-</li>
+<li>구현에 따라 internal fragmentation을 상당히 줄일 수 있음</li>
 </ul>
 <doc-anchor-target id="external-fragmentation">
     <h2>
@@ -800,12 +792,10 @@ allocate하게 되면 free한 memory에 할당</li>
 </figure>
 </p>
 <ul>
-<li><p>연속적으로 이어진 공간이 5개, 2개임 (free(p2))</p>
-</li>
-<li><p>Occurs when there is enough aggregate heap memory, but no single free block is large enough - external fragmentation 발생하면 할당하지 못하는 경우가 발생할 수 있음</p>
-</li>
-<li><p>Depends on the pattern of future requests
-미래에 어떤 요청을 하는지에 따라 생길수도 생기지 않을수도 있음</p>
+<li>연속적으로 이어진 공간이 5개, 2개임 (free(p2))</li>
+<li>Occurs when there is enough aggregate heap memory, but no single free block is large enough - external fragmentation 발생하면 할당하지 못하는 경우가 발생할 수 있음</li>
+<li>Depends on the pattern of future requests
+미래에 어떤 요청을 하는지에 따라 생길수도 생기지 않을수도 있음
 <ul>
 <li>Thus, difficult to measure</li>
 </ul>
@@ -817,92 +807,81 @@ allocate하게 되면 free한 memory에 할당</li>
         <span><strong>Implementation Issues</strong></span>
     </h2>
 </doc-anchor-target>
-<p>memory allocator를 어떻게 design하고 구현하느냐에 따라 여러가지 issue</p>
 <ul>
-<li><p>naive한 구현 시</p>
+<li>memory allocator를 어떻게 design하고 구현하느냐에 따라 여러가지 issue</li>
+<li>naive한 구현 시
 <ul>
 <li>앞의 그림처럼 이런식으로 heap을 가져다 large array로 보고, 처음엔 p를 0으로 두어 구현됨</li>
-<li>오래된 p를 stack에 집어 넣고 (push(p)), oldptr = pop(p)</li>
-</ul>
-<p>→ 둘을 가져다 allocate상태로 만들어 주고 나머지 뒤는 free하게 만들어 줌.</p>
+<li>오래된 p를 stack에 집어 넣고 (<code v-pre>push(p)</code>), <code v-pre>oldptr = pop(p)</code>
 <ul>
+<li>→ 둘을 가져다 allocate상태로 만들어 주고 나머지 뒤는 free하게 만들어 줌.</li>
+</ul>
+</li>
 <li>Ptr = malloc(2) : 이전에 있던 결국은 oldptr</li>
 <li>malloc할 때마다 앞으로 가는 쪽을 보면 무조건 free</li>
 <li>malloc (3)을 한다고 하면 2+3 부분을 가리키고 old ptr를 return</li>
 <li>fast: 뒤로 forwarding하면서 return하면 됨</li>
+<li>→ 그러나, 이렇게 구현하면 memory ineffective</li>
 </ul>
 </li>
+<li>allocate가 이렇게 되어있는 상태에서 free한다고 가정하자.</li>
 </ul>
-<p>→ 그러나, 이렇게 구현하면 memory ineffective</p>
+<blockquote>
+<p>point) 뒤로는 절대로 안 돌아간다.
+- 중간중간 fere하게 되면 빈 공간이 생기는데 다시 절대 reuse할 수 있는 구현이 아님. 말 그대로 naive implementation의 경우임
+- feed forward하며 alloc을 효율적으로 할 수 있으나 memory utilization
+- → throughput은 좋으나 peek는 성능이 좋지 않아짐.
+- 그냥 구동만 하면 되는거 아니냐? 하지만, memroy가 굉장히 중요한 작은 embedded환경에서는 절대 허용되지 않는다.
+- system 관점에서 보면 작은 memory를 어떻게 utilize해서 꾸겨 넣을 것인가에 좌우된다.</p>
+</blockquote>
 <ul>
-<li><p>allocate가 이렇게 되어있는 상태에서 free한다고 가정하자.</p>
-</li>
-<li><p>point ) 뒤로는 절대로 안 돌아간다.</p>
+<li>1byte, 2byte로 표현할 수 있는 것을 32byte
 <ul>
-<li>중간중간 fere하게 되면 빈 공간이 생기는데 다시 절대 reuse할 수 있는 구현이 아님. 말 그대로 naive implementation의 경우임</li>
-<li>feed forward하며 alloc을 효율적으로 할 수 있으나 memory utilization
-<ul>
-<li>→ throughput은 좋으나 peek는 성능이 좋지 않아짐.</li>
+<li>→ memory utilization이 maximize되지 않는다.</li>
 </ul>
 </li>
-<li>그냥 구동만 하면 되는거 아니냐? 하지만, memroy가 굉장히 중요한 작은 embedded환경에서는 절대 허용되지 않는다.</li>
-<li>system 관점에서 보면 작은 memory를 어떻게 utilize해서 꾸겨 넣을 것인가에 좌우된다.</li>
 </ul>
-</li>
-<li><p>1byte, 2byte로 표현할 수 있는 것을 32byte</p>
-<p>→ memory utilization이 maximize되지 않는다.</p>
-</li>
-</ul>
+<blockquote>
 <p>malloc을 직접 구현하며 ptr를 exercise, memory allocator 개념을 이해할 수 있을 것</p>
+</blockquote>
 <ul>
-<li><p>How do we know how much memory to free given just a pointer?</p>
+<li>How do we know how much memory to free given just a pointer?
 <ol>
-<li>Pointer</li>
-</ol>
+<li>Pointer
 <ul>
 <li>ptr로 가리키고 있는 memory object를 free시킨다고 할 때, 그 memory object 크기가 얼만큼 되는지 어떻게 아느냐?</li>
-<li>free(ptr) : ptr이. 가리키는 object가 있는데, 이 object가 32byte라 하면</li>
-</ul>
-<p>free시키는 시점에 obj가 32b라는 것을 어떻게 아느냐?</p>
-</li>
-<li><p>How do we keep track of the free blocks?</p>
-<ol start="2">
-<li>어떤 free한 공간이 있는지 track하기</li>
-</ol>
-<ul>
-<li>heap이라는 공간은 앞서 이야기한대로 쭉 vm에서 allocate-free된 형태로 남아있다.</li>
-<li>free한 space들을 tracking해야 하는데 이를 어떻게 해야 하느냐?</li>
-<li>block 크기들은 가변적</li>
+<li>free(ptr) : ptr이. 가리키는 object가 있는데, 이 object가 32byte라 하면 free시키는 시점에 obj가 32b라는 것을 어떻게 아느냐?</li>
 </ul>
 </li>
-<li><p>What do we do with the extra space when allocating a structure that is smaller than the free block it is placed in?</p>
-<ol start="3">
-<li>free block에 allocate하려고 하는데 자료구조가 내가 받은 free block보다 작아서 그 block을 다 사용하지 못한다고 하면 extra space는 어떻게 할 것이냐?</li>
 </ol>
-<p>Ex. Free block하나를 할당 받았고 그사이즈는 64byte이다.</p>
-<p>내가 쓰려고 하는 data 공간은 48byte이다. 그럼 나머지 부분은 어떻게 할 것이냐?</p>
-<ol start="3">
-<li>얼마만큼 free하면 되는지도 알고 있어야 함</li>
-</ol>
-<p>free한 공간보다 작을 때 padding을 붙이거나 다른 공간을 사용하거나</p>
+</li>
+<li>How do we keep track of the free blocks?
+2. 어떤 free한 공간이 있는지 track하기<br />
+- heap이라는 공간은 앞서 이야기한대로 쭉 vm에서 allocate-free된 형태로 남아있다.
+- free한 space들을 tracking해야 하는데 이를 어떻게 해야 하느냐?
+- block 크기들은 가변적</li>
+<li>What do we do with the extra space when allocating a structure that is smaller than the free block it is placed in?<br />
+3. free block에 allocate하려고 하는데 자료구조가 내가 받은 free block보다 작아서 그 block을 다 사용하지 못한다고 하면 extra space는 어떻게 할 것이냐?
+- Ex. Free block하나를 할당 받았고 그사이즈는 64byte이다.
+- 내가 쓰려고 하는 data 공간은 48byte이다. 그럼 나머지 부분은 어떻게 할 것이냐?
 <ul>
+<li>얼마만큼 free하면 되는지도 알고 있어야 함
+<ul>
+<li>free한 공간보다 작을 때 padding을 붙이거나 다른 공간을 사용하거나</li>
+</ul>
+</li>
 <li>어떤 것을 가져다 선택할 것인가</li>
 <li>allocate된 것을 pool로 어떻게 return할 것인가.</li>
 </ul>
 </li>
-<li><p>How do we pick a block to use for allocation -- many might fit?</p>
-<ol start="4">
-<li>allocation하려 하는데 free block이 여러개 있다. 그럼 어떤 block을 선택할 것이냐?</li>
-</ol>
+<li>How do we pick a block to use for allocation -- many might fit?<br />
+4. allocation하려 하는데 free block이 여러개 있다. 그럼 어떤 block을 선택할 것이냐?
 <ul>
 <li>모두 free block인데 어떤 block을 선택할 것이냐?</li>
 </ul>
 </li>
-<li><p>How do we reinsert freed block?</p>
-<ol start="5">
-<li>free block 어떻게 return할 것이냐?</li>
-</ol>
-</li>
+<li>How do we reinsert freed block?
+5. free block 어떻게 return할 것이냐?</li>
 </ul>
 <doc-anchor-target id="knowing-how-much-to-free">
     <h2>
@@ -931,9 +910,11 @@ allocate하게 되면 free한 memory에 할당</li>
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
-<p>block의 크기 만큼을 free시켜주면 됨</p>
-<p>p0가 가리키는 block의 크기가 5였음을</p>
-<p>P0가 가리키는 word를 읽어 봄으로써 사이즈를 읽어내 deallocate할 수 있다.</p>
+<ul>
+<li>block의 크기 만큼을 free시켜주면 됨</li>
+<li><code v-pre>p0</code>가 가리키는 block의 크기가 5였음을</li>
+<li><code v-pre>P0</code>가 가리키는 word를 읽어 봄으로써 사이즈를 읽어내 deallocate할 수 있다.</li>
+</ul>
 <doc-anchor-target id="keeping-track-of-free-blocks">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#keeping-track-of-free-blocks">#</doc-anchor-trigger>
@@ -944,22 +925,19 @@ allocate하게 되면 free한 memory에 할당</li>
 <ul>
 <li><p>free block을 어떻게 track할 것인가.</p>
 </li>
-<li><p><strong>Method 1: Implicit list using length—links all blocks</strong></p>
-<p><img src="../10/untitled_7.png" alt="Untitled" /></p>
+<li><p><strong>Method 1: Implicit list using length—links all blocks</strong>
+<img src="../10/untitled_7.png" alt="Untitled" /></p>
 <ul>
-<li><p>block의 크기를 가지고 free block을 track하는 방법</p>
-</li>
-<li><p>모든 block들 : 5 free block / 4 alloc block / 6 free block / 2 alloc block</p>
-</li>
-<li><p>맨 앞 word size 앞에 적혀진 size</p>
+<li>block의 크기를 가지고 free block을 track하는 방법</li>
+<li>모든 block들 : 5 free block / 4 alloc block / 6 free block / 2 alloc block</li>
+<li>맨 앞 word size 앞에 적혀진 size
 <ul>
 <li>Ptr를 heap의 맨 시작부터 읽기 시작하면 첫 번째 block의 크기이기 때문에 p에서 5를 더해주면 그 다음 block의 첫 번째 앞을 보게 되고, 4를 더해주면 다음 block 맨앞, 2 더해주면 다음 block맨 앞</li>
+<li>→ logically linking 가능 : ptr값이 있으면 다음 다음 block을 계속하여 traverse 가능</li>
 </ul>
-<p>→ logically linking 가능 : ptr값이 있으면 다음 다음 block을 계속하여 traverse 가능</p>
 </li>
-<li><p>모든 block을 traverse해보면서 free var tracking 가능</p>
-</li>
-<li><p>단점) method1 : 모든 block을 linking하기 때문에 실제 우리가 필요한 건 allocated block보다는 free bock이다. 심지어 allocated block까지 traverse해야 하는 단점.</p>
+<li>모든 block을 traverse해보면서 free var tracking 가능</li>
+<li>단점) method1 : 모든 block을 linking하기 때문에 실제 우리가 필요한 건 allocated block보다는 free bock이다. 심지어 allocated block까지 traverse해야 하는 단점.
 <ul>
 <li>직접 free한 block으로 가고 싶지만 못한다 (모든 block 앞의 크기 정보를 가지고 모든 block을 traverse하다보니 linking할수는 있지만 free block만을 traverse는 불가능)</li>
 </ul>
@@ -972,14 +950,8 @@ allocate하게 되면 free한 memory에 할당</li>
 <li>앞의 것과는 다름 : free block을 track하기 위해 link로 만든 것을 활용해서 모든 block을 traverse하는 앞의 것 / 앞의 size 정보를 사용해 다음 block으로 갔다</li>
 <li>그 다음의 free block을 가리키는 word를 할당함. :주소 정보 다음 word에 그 다음 free word의 주소값을 가지고 있다.</li>
 <li>앞의 모든 block들을 free</li>
-</ul>
-<p>단점) extra로 그 다음 free block을 가리키는 만큼의 extra memory 비용을 지불해야 함</p>
-<ul>
-<li>
-<blockquote>
-<p>공간 효율이 떨어짐</p>
-</blockquote>
-</li>
+<li>단점) extra로 그 다음 free block을 가리키는 만큼의 extra memory 비용을 지불해야 함</li>
+<li>-&gt; 공간 효율이 떨어짐</li>
 </ul>
 </li>
 <li><p><strong>Method 3: Segregated free list</strong></p>
@@ -1016,11 +988,12 @@ allocate하게 되면 free한 memory에 할당</li>
 </li>
 <li>header : payload의 크기</li>
 <li>LSB : allocated or deallocated bit (1 : allocated / 0 : free)</li>
-</ul>
-<p>For example, if a block is imposed a double word alignemnt, the block size is a multiple of 8 and the 3 low order bits of the block size are always zero.</p>
+<li>For example, if a block is imposed a double word alignemnt, the block size is a multiple of 8 and the 3 low order bits of the block size are always zero.</li>
+<li><span class="math">31 … 4 3 2 1 0</span> / 29bit를 가지고 size를 표현함
 <ul>
-<li>31 … 4 3 2 1 0 / 29bit를 가지고 size를 표현함</li>
-<li>맨 끝 2 - 1 - 0 : 0th bit에서는 allocate or deallocate indicator, 실제로 2-1th bit는 unused형태</li>
+<li>맨 끝 <span class="math">2 - 1 - 0</span> : 0th bit에서는 allocate or deallocate indicator, 실제로 2-1th bit는 unused형태</li>
+</ul>
+</li>
 <li>Heap이라는 것은 결국 block의 집합이다 : free block 3 / block 3</li>
 </ul>
 <doc-anchor-target id="method-1-implicit-list">
@@ -1029,7 +1002,9 @@ allocate하게 되면 free한 memory에 할당</li>
         <span><strong>Method 1: Implicit List</strong></span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>Implicit list</p>
+</blockquote>
 <ul>
 <li>두 가지 정보를 가지고 있어야 함.
 <ul>
@@ -1043,17 +1018,18 @@ status 정보도 필요해서 각각을 가져다가 8byte씩 할당했다고 �
 <li>두 가지를 저장하기 위해 16byte spatial cost 지불</li>
 </ul>
 </li>
-<li>size와 allocation status를 16byte가 아니라 8byte만큼 저장할 수 있지 않을까?</li>
-</ul>
-<p>→ 각각 8byte word로 저장한다고 하면,</p>
+<li>size와 allocation status를 16byte가 아니라 8byte만큼 저장할 수 있지 않을까?
 <ul>
-<li><p>1 million block * 2 * 8 = 16MB / 1 million block * 8 = 8MB</p>
+<li>→ 각각 8byte word로 저장한다고 하면,</li>
+</ul>
+</li>
+<li>1 million block * 2 * 8 = 16MB / 1 million block * 8 = 8MB
 <ul>
 <li>8MB만큼의 비용을 더 지불해야 함. : 16byte로 저장해야 하는걸 8byte로 지불하자</li>
 <li>Block들은 alignment되어 있는데, 어떤 system architecture이느냐에 따라서 8byte or 16byte alignment되어 있을 것이다.</li>
 </ul>
 </li>
-<li><p>8 byte alignment되어 있다면 : block size가 8-16-24-32-48-56-64-…의 형식</p>
+<li>8 byte alignment되어 있다면 : block size가 8-16-24-32-48-56-64-…의 형식
 <ul>
 <li>8 byte를 2진법으로 표현한다고 하면, 8byte = 64bit 00..001000
 <ul>
@@ -1065,20 +1041,18 @@ status 정보도 필요해서 각각을 가져다가 8byte씩 할당했다고 �
 <li>→ 그러면 이 안에서, 맨 마지막 bit를 allocated. Free status를 구분하기 위해 flag로 사용해도 되지 않을까? 어차피 alignment되어 있기 때문에 사용하지 않으니까, 저 장소에 embedding하자</li>
 </ul>
 </li>
-<li><p>1 : allocated / 0 : free / 나머지 bit는 size로 쓰면 됨</p>
-</li>
-<li><p>8byte가 alignment되는 unit이고 malloc(5)라고 하면
+<li>1 : allocated / 0 : free / 나머지 bit는 size로 쓰면 됨</li>
+<li>8byte가 alignment되는 unit이고 malloc(5)라고 하면
 1byte : size / allocation status
 나머지 5byte : payload
 그리고 2byte : padding
-(Spatial cost를 다음과 같이 줄일 수 있다)</p>
-</li>
-<li><p>For each block we need both <strong>size</strong> and <strong>allocation status</strong></p>
+(Spatial cost를 다음과 같이 줄일 수 있다)</li>
+<li>For each block we need both <strong>size</strong> and <strong>allocation status</strong>
 <ul>
 <li>Could store this information in two words: wasteful!</li>
 </ul>
 </li>
-<li><p>Standard trick</p>
+<li>Standard trick
 <ul>
 <li>If blocks are aligned, some low-order address bits are always 0</li>
 <li>Instead of storing an always-0 bit, use it as a allocated/free flag</li>
@@ -1091,7 +1065,9 @@ status 정보도 필요해서 각각을 가져다가 8byte씩 할당했다고 �
     <figcaption class="caption">Format of allocated and free blocks</figcaption>
 </figure>
 </p>
+<blockquote>
 <p>Format of allocated and free blocks</p>
+</blockquote>
 <doc-anchor-target id="detailed-implicit-free-list-example">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#detailed-implicit-free-list-example">#</doc-anchor-trigger>
@@ -1104,23 +1080,22 @@ status 정보도 필요해서 각각을 가져다가 8byte씩 할당했다고 �
 </figure>
 </p>
 <ul>
-<li><p>word size : 4byte인 경우에 대해 설명해보자.</p>
+<li>word size : 4byte인 경우에 대해 설명해보자.
 <ul>
 <li>block 각각이 8/16/32/16byte, word size information / LSB : 0 free 1 allocated</li>
 <li>dotted :double word에 대해 align된 point</li>
 <li>payload는 2word니까 allocate되어 있지만 사용되지 않는 부분</li>
 </ul>
 </li>
-<li><p>advantage : simplicity</p>
-</li>
-<li><p>Disadvantage :</p>
+<li>advantage : simplicity</li>
+<li>Disadvantage :
 <ul>
 <li>any operation requires a search of the free list, such a placing allocated blocks</li>
 <li>Free block을 찾기 위해 traverse를 계속 해야 함. -&gt; free list를 찾아야 하는 time overhead</li>
 </ul>
 </li>
+<li>여러 free block이 있을 때 어떤걸 선택할 것이냐?</li>
 </ul>
-<p>여러 free block이 있을 때 어떤걸 선택할 것이냐?</p>
 <doc-anchor-target id="implicit-list-finding-a-free-block">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-list-finding-a-free-block">#</doc-anchor-trigger>
@@ -1130,7 +1105,7 @@ status 정보도 필요해서 각각을 가져다가 8byte씩 할당했다고 �
 <ul>
 <li>First fit:
 <ul>
-<li><p>Search list from beginning, choose first free block that fits:</p>
+<li>Search list from beginning, choose first free block that fits:
 <ul>
 <li>block 처음부터 scanning을 쭉 함</li>
 </ul>
@@ -1142,7 +1117,7 @@ while ((p &lt; end) &amp;&amp; // not passed end
 			p = p + (*p &amp; -2); // goto next block(word addressed)</code></pre>
 </doc-codeblock></div>
 <ul>
-<li><p>allocate되어 있다고 하면 무조건 skip하는 세번째 condition</p>
+<li>allocate되어 있다고 하면 무조건 skip하는 세번째 condition
 <ul>
 <li>word 크기가 4byte였다고 하면, 32bit 중 31bit (size) + 1bit(1 or 0)</li>
 <li>0을 가져다 만드려면 and operation을 할 때</li>
@@ -1151,25 +1126,21 @@ while ((p &lt; end) &amp;&amp; // not passed end
 <li>→ 그 만큼의 크기를 더해준다는 의미로 jump해줌</li>
 </ul>
 </li>
-</ul>
-<p>만일) 1이라는 값과 non allocate였으면 *p&lt;=len 확인</p>
-</li>
+<li>만일) 1이라는 값과 non allocate였으면 *p&lt;=len 확인</li>
 </ul>
 </li>
-<li><p>Can take linear time in total number of blocks (allocated and free)
-항상 앞에서부터 시작해야 하기에 느림</p>
+</ul>
 </li>
-<li><p>In practice it can cause “splinters” at beginning of list</p>
-</li>
-<li><p>free block을 찾기 위해 쭉 들어가 있는데 들어와서 찾고 들어와서 찾고 …</p>
+<li>Can take linear time in total number of blocks (allocated and free)
+항상 앞에서부터 시작해야 하기에 느림</li>
+<li>In practice it can cause “splinters” at beginning of list</li>
+<li>free block을 찾기 위해 쭉 들어가 있는데 들어와서 찾고 들어와서 찾고 …
 <ul>
 <li>찾아서 내가 필요로 하는 크기보다 작은것을 요구했음에도 처음부터 또 들어가 찾아내고</li>
 </ul>
 </li>
-<li><p>→ 항상 내가 한 번 찾으면 처음부터 search하고, 처음에 검색하고 그다음부터 쭉</p>
-</li>
-<li><p>allocation하기 전 free 한 부분을 찾는 것이 시작</p>
-</li>
+<li>→ 항상 내가 한 번 찾으면 처음부터 search하고, 처음에 검색하고 그다음부터 쭉</li>
+<li>allocation하기 전 free 한 부분을 찾는 것이 시작</li>
 </ul>
 </li>
 <li><strong>Next fit:</strong>
@@ -1251,7 +1222,9 @@ while ((p &lt; end) &amp;&amp; // not passed end
         <span><strong>Implicit List: Freeing a Block</strong></span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>allocate : 비교적 simple</p>
+</blockquote>
 <ul>
 <li><p>내가 만족하는 free한 block을 찾을 때 까지, 앞에서 끝까지 다 scan해서 최적의 여분을 가장 적은 frag을 남기는 free를 찾던, allocation 한 후 split하면 됨.</p>
 </li>
@@ -1293,13 +1266,13 @@ while ((p &lt; end) &amp;&amp; // not passed end
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
-<p>free(p)</p>
+<p><code v-pre>free(p)</code></p>
 <p><figure class="content-center">
     <img src="../10/untitled_12.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
 </figure>
 </p>
-<p>malloc(p) → OOPS!</p>
+<p><code v-pre>malloc(p)</code> → OOPS!</p>
 <ul>
 <li>P부분을 free 시켰다고 하자 : allocate bit를 free로
 <ul>
@@ -1332,12 +1305,10 @@ while ((p &lt; end) &amp;&amp; // not passed end
 </li>
 <li><p>Coalescing with next block</p>
 <p><img src="../10/untitled_13.png" alt="Untitled" /></p>
-<p>free(p)</p>
+<p><code v-pre>free(p)</code></p>
 <p><img src="../10/untitled_14.png" alt="Untitled" /></p>
 <ul>
-<li>free(p) : 가상 주소를 가지고 빈 공간으로 free list를 return하는 상황으로 고려</li>
-</ul>
-</li>
+<li><code v-pre>free(p)</code> : 가상 주소를 가지고 빈 공간으로 free list를 return하는 상황으로 고려</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-c"><code v-pre class="language-c">void free_block(ptr p)
@@ -1349,8 +1320,8 @@ while ((p &lt; end) &amp;&amp; // not passed end
 
     }</code></pre>
 </doc-codeblock></div>
-<ul>
-<li>코드 설명 :
+</li>
+<li><p>코드 설명 :</p>
 <ul>
 <li>Word size 4인 block : free할 때</li>
 <li>4 &amp; -2 연산 : 00000010, 11111101 +1 -&gt;11111110
@@ -1364,7 +1335,7 @@ while ((p &lt; end) &amp;&amp; // not passed end
 <li>→ 다음 block에 있는 현재 free하단 block이랑 합침.</li>
 </ul>
 </li>
-<li>But how do we coalesce with previous block?
+<li><p>But how do we coalesce with previous block?</p>
 <ul>
 <li>이전 block은 어떻게 합칠 것인가? (이 슬라이드에서는 forward)</li>
 <li>이전 block이 free인지를 봐야하는데, 이전 block을 reference할 수 있는 방법이 없다 : 문제 발생</li>
@@ -1389,32 +1360,35 @@ while ((p &lt; end) &amp;&amp; // not passed end
 </figure>
 </p>
 <ul>
-<li><p><strong>Boundary tags [Knuth73] - bidirectional coalescing : 앞, 뒤 모두를 합치는 방법</strong></p>
+<li><strong>Boundary tags [Knuth73] - bidirectional coalescing : 앞, 뒤 모두를 합치는 방법</strong>
 <ul>
 <li>Replicate size/allocated word at “bottom” (end) of free blocks</li>
 <li>Allows us to traverse the “list” backwards, but requires extra space</li>
 <li>Important and general technique!</li>
 </ul>
 </li>
-<li><p>원래 : 그 다음으로 forward하며 traverse하는 방법은 현재 block의 크기 header를 알면 그 다음 block의 시작 주소를 알 수 있었음</p>
+<li>원래 : 그 다음으로 forward하며 traverse하는 방법은 현재 block의 크기 header를 알면 그 다음 block의 시작 주소를 알 수 있었음
 <ul>
 <li>double word alignment를 해서 그 다음이 누군지 addressing할 수 있었음</li>
 </ul>
 </li>
-<li><p>header라는 block에 이 block의 크기라는 hint를 심어둔 것.</p>
+<li>header라는 block에 이 block의 크기라는 hint를 심어둔 것.
 <ul>
 <li>이전 block size를 알 수 있는 방법이 있다면 이전 block을 찾아볼 수 있음</li>
-<li>→ header가 아니라 footer를 가져다 boundary tag 삽입</li>
+<li>→ header가 아니라 footer를 가져다 boundary tag 삽입
+<ul>
+<li>: 각 block의 bottom에다 size에 해당하는 word만큼을 복제해보자</li>
 </ul>
-<p>: 각 block의 bottom에다 size에 해당하는 word만큼을 복제해보자</p>
 </li>
-<li><p>*p : p를 free한다고 하자</p>
+</ul>
+</li>
+<li><code v-pre>*p</code> : p를 free한다고 하자
 <ul>
 <li>forward :</li>
 <li>backward.: 이전의 word의 ptr 값을 보면, 이전 block의 크기를 알 수 있기 때문에 전의 시작 주소를 알 수 있음 -&gt; LSB 값을 보고 이전 block이 free인지 allocate인지 알 수 있음</li>
 </ul>
 </li>
-<li><p>단점 : extra space 필요</p>
+<li>단점 : extra space 필요
 <ul>
 <li>사실 backward로 갈 수 있는 size에 대한 정보를 word 크기만큼 추가적으로 사용한 것 : 실제 data를 저장할 공간 payload를 backward traverse 가능한 meta info로 활용한 것이기에 실제 extra space heap space는 줄게 됨.</li>
 </ul>
@@ -1426,20 +1400,17 @@ while ((p &lt; end) &amp;&amp; // not passed end
         <span><strong>Constant Time Coalescing Case</strong></span>
     </h2>
 </doc-anchor-target>
+<blockquote>
 <p>coalescing 하는 방법</p>
+</blockquote>
 <ul>
-<li>heap안에서 이전과 이후,</li>
+<li>heap안에서 이전과 이후, 각 상황을 네가지로 분리</li>
 </ul>
-<p>각각으 ㅣ상황을 네가지로 분리</p>
 <ol>
-<li><p>이전 block과 다음 block이 allocate되어 있는 block</p>
-</li>
-<li><p>Alloc - free</p>
-</li>
-<li><p>Free - alloc</p>
-</li>
-<li><p>Free - free</p>
-</li>
+<li>이전 block과 다음 block이 allocate되어 있는 block</li>
+<li>Alloc - free</li>
+<li>Free - alloc</li>
+<li>Free - free</li>
 </ol>
 <p><figure class="content-center">
     <img src="../10/untitled_17.png" alt="Untitled" />
@@ -1452,8 +1423,13 @@ while ((p &lt; end) &amp;&amp; // not passed end
         <span>Case 1</span>
     </h3>
 </doc-anchor-target>
-<p>Alloc-alloc
--&gt; coalescing자체가 발생하지 않음</p>
+<ul>
+<li><code v-pre>Alloc-alloc</code>
+<ul>
+<li>-&gt; coalescing자체가 발생하지 않음</li>
+</ul>
+</li>
+</ul>
 <p><figure class="content-center">
     <img src="../10/untitled_18.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
@@ -1465,8 +1441,13 @@ while ((p &lt; end) &amp;&amp; // not passed end
         <span>Case 2</span>
     </h3>
 </doc-anchor-target>
-<p>Allocate - free
--&gt; n(1), m2(0)이므로 n+m2 (0) merge</p>
+<ul>
+<li><code v-pre>Allocate - free</code>
+<ul>
+<li>-&gt; n(1), m2(0)이므로 n+m2 (0) merge</li>
+</ul>
+</li>
+</ul>
 <p><figure class="content-center">
     <img src="../10/untitled_19.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
@@ -1478,8 +1459,13 @@ while ((p &lt; end) &amp;&amp; // not passed end
         <span>Case 3</span>
     </h3>
 </doc-anchor-target>
-<p>case 2와 동일
--&gt; Size 정보 update</p>
+<ul>
+<li>case 2와 동일
+<ul>
+<li>-&gt; Size 정보 update</li>
+</ul>
+</li>
+</ul>
 <p><figure class="content-center">
     <img src="../10/untitled_20.png" alt="Untitled" />
     <figcaption class="caption">Untitled</figcaption>
@@ -1491,8 +1477,8 @@ while ((p &lt; end) &amp;&amp; // not passed end
         <span>Case 4</span>
     </h3>
 </doc-anchor-target>
-<p>앞, 뒤 둘다 free 인 경우에 각각의 block size를 더해 n + m1 + m2 (0)</p>
 <ul>
+<li>앞, 뒤 둘다 free 인 경우에 각각의 block size를 더해 n + m1 + m2 (0)</li>
 <li>이미 allocate 되어 있었다 하면 앞 뒤를 합쳐 first fragmentation 최고화, contiguous 하게 최대한 크게 만들어서 free list를 구축해 free block 발견</li>
 </ul>
 <p><figure class="content-center">
@@ -1508,11 +1494,19 @@ while ((p &lt; end) &amp;&amp; // not passed end
 </doc-anchor-target>
 <ul>
 <li><p>Internal fragmentation</p>
-<p>이전에는 bounday point가 없었다.</p>
-<p>extra로 padding을 payload로 사용할 수 있었는데 동일한 정보임에도 duplicate를 해야 함</p>
-<p>→ internal fragmentation 발생 확률 커짐</p>
-<p>만일 그래프같은 연산을 한다면 node, edge에서 node가 작은 크기의 memory alloc해준다고 하자</p>
-<p>→ 수 byte를 alloc하지만 앞 뒤 header footer를 둠으로서 상대적으로 payload 크기가 작아 extra overhead를 지불해야 함</p>
+<ul>
+<li>이전에는 bounday point가 없었다.</li>
+<li>extra로 padding을 payload로 사용할 수 있었는데 동일한 정보임에도 duplicate를 해야 함
+<ul>
+<li>→ internal fragmentation 발생 확률 커짐</li>
+</ul>
+</li>
+<li>만일 그래프같은 연산을 한다면 node, edge에서 node가 작은 크기의 memory alloc해준다고 하자
+<ul>
+<li>→ 수 byte를 alloc하지만 앞 뒤 header footer를 둠으로서 상대적으로 payload 크기가 작아 extra overhead를 지불해야 함</li>
+</ul>
+</li>
+</ul>
 </li>
 <li><p>Can it be optimized?</p>
 <ul>
@@ -1532,14 +1526,15 @@ while ((p &lt; end) &amp;&amp; // not passed end
 <li>block 자체가 free였으면 바로 이전까지는 쉽게 갈 수 있음</li>
 <li>만일 allocate되어있다면 합칠 이유가 없음
 (allocate되어 있으면 footer 필요 없음 = 앞으로 갈 일이 없음)</li>
+<li>→ trick : 이전에 있는게 free 아니라면 footer가 굳이 필요없다.</li>
 </ul>
 </li>
-</ul>
-<p>→ trick : 이전에 있는게 free 아니라면 footer가 굳이 필요없다.</p>
-<ul>
-<li>현재 이전의 block이 free인지 아닌지 식별할 bit를 보고, 만일 이전의 block이 allocate되어 있다면 안에서 질책</li>
-<li>free block -&gt; footer / allocated -&gt; footer 굳이 필요 없음.</li>
-<li>free인지는 그 이전으로 돌아가야 함.</li>
+<li><p>현재 이전의 block이 free인지 아닌지 식별할 bit를 보고, 만일 이전의 block이 allocate되어 있다면 안에서 질책</p>
+</li>
+<li><p>free block -&gt; footer / allocated -&gt; footer 굳이 필요 없음.</p>
+</li>
+<li><p>free인지는 그 이전으로 돌아가야 함.</p>
+</li>
 </ul>
 <doc-anchor-target id="summary-of-key-allocator-policies">
     <h1>
@@ -1548,20 +1543,20 @@ while ((p &lt; end) &amp;&amp; // not passed end
     </h1>
 </doc-anchor-target>
 <ul>
-<li><p>Placement policy:</p>
+<li>Placement policy:
 <ul>
 <li>First-fit, next-fit, best-fit, etc.</li>
 <li>Trades off lower throughput for less fragmentation</li>
 <li>Interesting observation: segregated free lists (next lecture) approximate a best fit placement policy without having to search entire free list</li>
 </ul>
 </li>
-<li><p>Splitting policy:</p>
+<li>Splitting policy:
 <ul>
 <li>When do we go ahead and split free blocks?</li>
 <li>How much internal fragmentation are we willing to tolerate?</li>
 </ul>
 </li>
-<li><p>Coalescing policy:</p>
+<li>Coalescing policy:
 <ul>
 <li>Immediate coalescing: coalesce each time free is called</li>
 <li>Deferred coalescing: try to improve performance of free by deferring coalescing until needed. Examples:
@@ -1572,9 +1567,9 @@ while ((p &lt; end) &amp;&amp; // not passed end
 </li>
 </ul>
 </li>
+<li>여러개가 동시에 free한다고 하면 새로 써 주고 free</li>
+<li>필요하면 처믐부터 scan해가며 할 수도 있을 것</li>
 </ul>
-<p>여러개가 동시에 free한다고 하면 새로 써 주고 free</p>
-<p>필요하면 처믐부터 scan해가며 할 수도 있을 것</p>
 <doc-anchor-target id="implicit-lists-summary">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#implicit-lists-summary">#</doc-anchor-trigger>
