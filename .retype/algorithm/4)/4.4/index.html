@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.715268998224">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -30,12 +30,12 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.715268998224" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.714726975900" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.715268998224" defer></script>
     <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -209,22 +209,17 @@
 </div>
 
 <ul>
-<li><p><span class="math">C_{ij}</span> = the cost of the shortest path from <span class="math">(0,0)</span> to <span class="math">(i,j)</span></p>
+<li><span class="math">C_{ij}</span> = the cost of the shortest path from <span class="math">(0,0)</span> to <span class="math">(i,j)</span>
 <ul>
-<li><p>Then <span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></p>
-</li>
+<li>Then <span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></li>
 <li><img width="441" alt="image" src="https://user-images.githubusercontent.com/46957634/182860263-f7326485-48a1-4906-996d-baa6c4e6677c.png">
 </li>
 </ul>
 </li>
-<li><p>Recursive formulation</p>
-</li>
-<li><p>Optimal substructure</p>
-</li>
-<li><p>Overlapping subproblems</p>
-</li>
-<li><p>Bottom-up approach</p>
-</li>
+<li>Recursive formulation</li>
+<li>Optimal substructure</li>
+<li>Overlapping subproblems</li>
+<li>Bottom-up approach</li>
 </ul>
 <doc-anchor-target id="441-optimal-substructure-wiki">
     <h2>
@@ -233,14 +228,13 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Dynamic programming algorithms are often <strong>used for     optimization</strong>.</p>
-</li>
-<li><p>A problem is said to have <strong>optimal substructure</strong></p>
+<li>Dynamic programming algorithms are often <strong>used for     optimization</strong>.</li>
+<li>A problem is said to have <strong>optimal substructure</strong>
 <ul>
 <li>if a solution to a given optimization problem can be constructed efficiently from optimal solutions of its subproblems.</li>
 </ul>
 </li>
-<li><p>Consequently, the first step towards devising a dynamic programming solution is to check whether the problem exhibits such optimal substructure.</p>
+<li>Consequently, the first step towards devising a dynamic programming solution is to check whether the problem exhibits such optimal substructure.
 <ul>
 <li>Such optimal substructures are <strong>usually described by means of recursion</strong>.</li>
 <li><span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></li>
@@ -254,30 +248,23 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>To solve a problem, we often need to <strong>solve different     parts of the problem (subproblems), then combine the solutions of the     subproblems to reach an overall solution</strong>.</p>
-</li>
-<li><p>A problem is said to have <strong>overlapping subproblems</strong> if</p>
+<li>To solve a problem, we often need to <strong>solve different     parts of the problem (subproblems), then combine the solutions of the     subproblems to reach an overall solution</strong>.</li>
+<li>A problem is said to have <strong>overlapping subproblems</strong> if
 <ul>
-<li><p>the problem can be broken down into subproblems which are reused several times or</p>
-</li>
-<li><p>a recursive algorithm for the problem solves the same subproblem over and over rather than always generating new subproblems.</p>
-</li>
-<li><p><span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></p>
-</li>
+<li>the problem can be broken down into subproblems which are reused several times or</li>
+<li>a recursive algorithm for the problem solves the same subproblem over and over rather than always generating new subproblems.</li>
+<li><span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></li>
 </ul>
 </li>
-<li><p>The dynamic programming approach seeks to <strong>solve each subproblem only once</strong>, thus reducing the number of computations:</p>
+<li>The dynamic programming approach seeks to <strong>solve each subproblem only once</strong>, thus reducing the number of computations:
 <ul>
 <li>(i) once the solution to a given subproblem has been computed, it is stored or &quot;<strong>memoized</strong>&quot;:</li>
 <li>(ii) the next time the same solution is needed, it is simply <strong>looked up</strong>.</li>
 </ul>
 </li>
-<li><p>This approach is <strong>especially useful when the number of repeating subproblems grows exponentially</strong> as a function of the size of the input.</p>
-</li>
-<li><p><strong>If a problem can be solved by combining optimal solutions to non-overlapping sub-problems</strong>, the strategy is called &quot;divide-and- conquer&quot; instead. This is why merge sort and quick sort are not classified as dynamic programming problems.</p>
-</li>
-<li><p><span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></p>
-</li>
+<li>This approach is <strong>especially useful when the number of repeating subproblems grows exponentially</strong> as a function of the size of the input.</li>
+<li><strong>If a problem can be solved by combining optimal solutions to non-overlapping sub-problems</strong>, the strategy is called &quot;divide-and- conquer&quot; instead. This is why merge sort and quick sort are not classified as dynamic programming problems.</li>
+<li><span class="math">C_{ij} = min \{C_{i-1,j} + w_{i-1, j} ^{s},C_{i-1,j-1} + w_{i-1, j-1} ^{se},C_{i,j-1} + w_{i, j-1} ^{e}  \}</span></li>
 </ul>
 <doc-anchor-target id="443-the-checkerboard-problem">
     <h2>
@@ -286,27 +273,24 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Courtesy of Wikipedia</p>
-</li>
-<li><p>Restrictions</p>
+<li>Courtesy of Wikipedia</li>
+<li>Restrictions
 <ul>
 <li>A checker can start at any square on the first row (i= 1).</li>
 <li>It can move only diagonally left forward, diagonally right forward, or straight forward.</li>
 <li>It must pay the cost <em>c</em>[i] when visiting the (i, j)-position.</li>
 </ul>
 </li>
-<li><p>Cost table c [i] [j]</p>
-  <img width="488" alt="image" src="https://user-images.githubusercontent.com/46957634/182861507-736bada6-e400-45ae-88bf-05d9772c8944.png">
-</li>
-<li><p>Problem</p>
+<li>Cost table c [i] [j]
+<img width="488" alt="image" src="https://user-images.githubusercontent.com/46957634/182861507-736bada6-e400-45ae-88bf-05d9772c8944.png"></li>
+<li>Problem
 <ul>
 <li>Given a checkerboard with <span class="math">n \times n</span> squares, and a cost function <code v-pre>c[i][j]</code>, <strong>find the minimum-cost path from the first row to the last row</strong>.</li>
 </ul>
 </li>
-<li><p>Optimal substructure</p>
-  <img width="604" alt="image" src="https://user-images.githubusercontent.com/46957634/182861815-b8ba1ff1-a80a-4664-b152-ffc4c7268fca.png">   
-</li>
-<li><p>code</p>
+<li>Optimal substructure<br />
+<img width="604" alt="image" src="https://user-images.githubusercontent.com/46957634/182861815-b8ba1ff1-a80a-4664-b152-ffc4c7268fca.png"></li>
+<li>code
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">#include &lt;stdio.h&gt; #define N 5
 #define INFTY 100000

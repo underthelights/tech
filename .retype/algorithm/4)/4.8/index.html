@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.715268998224">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -30,12 +30,12 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.715268998224" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.714726975900" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.715268998224" defer></script>
     <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -209,19 +209,19 @@
 </div>
 
 <ul>
-<li><p>Problem</p>
+<li>Problem
 <ul>
 <li>Given two sets of positive integers <span class="math">\{w_1, w_2, ..., w_n\}</span> and <span class="math">\{p_1, p_2, ..., p_n\}</span> of size <span class="math">n</span> and a positive integer <span class="math">W</span>, find a subset <span class="math">A</span> of <span class="math">\{1,2,...,n\}</span> that maximizes <span class="math">\Sigma_{i \in A} p_i</span> subject to <span class="math">\Sigma_{i \in A} w_i \leq W</span></li>
 </ul>
 </li>
-<li><p>Example</p>
+<li>Example
 <ul>
 <li><span class="math">\{w_1, w_2, ..., w_5\} = \{6,5,10,3,4\}</span></li>
 <li><span class="math">\{p_1, p_2, ..., p_5\} = \{9,7,11,6,8\}, W=15</span></li>
 <li><span class="math">\rightarrow \{1,2,5\}</span></li>
 </ul>
 </li>
-<li><p>An intuitive interpretation</p>
+<li>An intuitive interpretation
 <ul>
 <li>There are <span class="math">n</span> items in a store.</li>
 <li>The <span class="math">i</span> th item weighs <span class="math">w_i</span> kilograms and is worth <span class="math">p_i</span> wons, where <span class="math">w_i</span> and <span class="math">p_i</span> are positive integers.</li>
@@ -300,12 +300,12 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Naïve approach</p>
+<li>Naïve approach
 <ul>
 <li>There are <span class="math">2^n</span> subsets of <span class="math">\{1, 2, ..., n\}!</span></li>
 </ul>
 </li>
-<li><p>Dynamic programming approach</p>
+<li>Dynamic programming approach
 <ul>
 <li>Let <span class="math">P(i,w)</span> be the <strong>maximized profit</strong> obtained when choosing items *<em>only from the first <span class="math">i</span></em> items under the restriction that <strong>the total weight cannot exceed <span class="math">w</span></strong>.</li>
 <li>If we let <span class="math">A*</span> be an optimal subset of <span class="math">\{1, 2, ..., n\}</span>,</li>
@@ -325,86 +325,20 @@
 </li>
 </ul>
 </li>
-<li><p>Example</p>
+<li>Example
 <ul>
-<li><p><span class="math">\{w_1, w_2, ..., w_4\} = \{4,3,2,3\}</span></p>
-</li>
-<li><p><span class="math">\{p_1, p_2, ..., p_4\} = \{3,2,4,4\}, W=6</span></p>
-</li>
-<li><p><span class="math">P(2,4) = \max{(P(1,4), p_2 + P(1, 4-w_2))} = 3</span></p>
-</li>
-<li><p><span class="math">P(4,2) = P(3,2) = 4</span></p>
-</li>
-<li><p><span class="math">P(3,5) = \max{(P(2,5), p_3 + P(2,5-w_3))} = 6</span></p>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th></th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr>
-<td>3</td>
-<td>0</td>
-<td>0</td>
-<td>4</td>
-<td>4</td>
-<td>4</td>
-<td>6</td>
-<td>7</td>
-</tr>
-<tr>
-<td>4</td>
-<td>0</td>
-<td>0</td>
-<td>4</td>
-<td>4</td>
-<td>4</td>
-<td>8</td>
-<td>8</td>
-</tr>
-</tbody>
-</table>
-</div>
-</li>
+<li><span class="math">\{w_1, w_2, ..., w_4\} = \{4,3,2,3\}</span></li>
+<li><span class="math">\{p_1, p_2, ..., p_4\} = \{3,2,4,4\}, W=6</span></li>
+<li><span class="math">P(2,4) = \max{(P(1,4), p_2 + P(1, 4-w_2))} = 3</span></li>
+<li><span class="math">P(4,2) = P(3,2) = 4</span></li>
+<li><span class="math">P(3,5) = \max{(P(2,5), p_3 + P(2,5-w_3))} = 6</span>
+|      | 0    | 1    | 2    | 3    | 4    | 5    | 6    |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 0    | 0    | 0    | 0    | 0    | 0    | 0    |
+| 1    | 0    | 0    | 0    | 0    | 3    | 3    | 3    |
+| 2    | 0    | 0    | 0    | 2    | 3    | 3    | 3    |
+| 3    | 0    | 0    | 4    | 4    | 4    | 6    | 7    |
+| 4    | 0    | 0    | 4    | 4    | 4    | 8    | 8    |</li>
 </ul>
 </li>
 </ul>
@@ -933,23 +867,19 @@
 </table>
 </div>
 <ul>
-<li><p>Selected items: i = 2, 3, 4, 6</p>
-</li>
-<li><p>Obtained profit: 19</p>
-</li>
-<li><p>Is the time-complexity <span class="math">O(nW)</span> an efficient one?</p>
+<li>Selected items: i = 2, 3, 4, 6</li>
+<li>Obtained profit: 19</li>
+<li>Is the time-complexity <span class="math">O(nW)</span> an efficient one?
 <ul>
-<li><p>This is not a linear-time algorithm!</p>
+<li>This is not a linear-time algorithm!
 <ul>
 <li>A problem is that <span class="math">W</span> is not bounded with respect to <span class="math">n</span>.</li>
 <li>What if <span class="math">n = 20</span> and <span class="math">W = 20!</span>? → <span class="math">O(n*n!)</span></li>
 <li>When <span class="math">W</span> is extremely large in comparison with <span class="math">n</span>, this algorithm is worse than the brute-force algorithm that simply considers all subsets.</li>
 </ul>
 </li>
-<li><p>This algorithm can be improved so that the worst-case number of entries computed is <span class="math">O(2^n)</span>.</p>
-</li>
-<li><p>No one has ever found an algorithm for the 0-1 Knapsack problem whose worst-case time complexity is better than exponential, yet no one has proven that such an algorithm is not possible!</p>
-</li>
+<li>This algorithm can be improved so that the worst-case number of entries computed is <span class="math">O(2^n)</span>.</li>
+<li>No one has ever found an algorithm for the 0-1 Knapsack problem whose worst-case time complexity is better than exponential, yet no one has proven that such an algorithm is not possible!</li>
 </ul>
 </li>
 </ul>
@@ -967,8 +897,8 @@
 </ul>
 </li>
 <li><p>Example
-<span class="math">\{ 1, 2, 7, 14, 49, 98, 343, 686, 2409, 2793, 16808, 17206, 117705, 117993 \}, \\ L = 138457</span></p>
-<p>→ <span class="math">\{1, 2, 7, 98, 343, 686, 2409, 17206, 117705\}</span></p>
+<span class="math">\{ 1, 2, 7, 14, 49, 98, 343, 686, 2409, 2793, 16808, 17206, 117705, 117993 \}, \\ L = 138457</span>
+→ <span class="math">\{1, 2, 7, 98, 343, 686, 2409, 17206, 117705\}</span></p>
 </li>
 <li><p>Dynamic programming approach</p>
 <ul>
@@ -991,15 +921,14 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Let <code v-pre>fill(i,j)</code> return TRUE <span class="math">\iff</span> <span class="math">\exists</span> subset of the first <span class="math">i</span> items that has total length <span class="math">j</span>.</p>
-</li>
-<li><p>When <code v-pre>fill(i,j)</code> returns TRUE,</p>
+<li>Let <code v-pre>fill(i,j)</code> return TRUE <span class="math">\iff</span> <span class="math">\exists</span> subset of the first <span class="math">i</span> items that has total length <span class="math">j</span>.</li>
+<li>When <code v-pre>fill(i,j)</code> returns TRUE,
 <ol>
 <li>If the $i$th item is used, fill(i - 1, j - <span class="math">l_i</span>)  must return TRUE.</li>
 <li>If the $i$th item is not used, <code v-pre>fill(i - 1, j)</code> must return TRUE.</li>
 </ol>
 </li>
-<li><p>To solve <code v-pre>fill(int n, int L)</code>,</p>
+<li>To solve <code v-pre>fill(int n, int L)</code>,
 <ul>
 <li><span class="math">T(n) \geq c</span> if <span class="math">n=0</span></li>
 <li><span class="math">T(n) \geq 2T(n-1) +d</span> if <span class="math">n&gt;0</span></li>
@@ -1028,14 +957,14 @@ else if (l[i] &lt;= j)
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>The optimal substructure :</p>
+<li>The optimal substructure :
 <ul>
 <li><span class="math">F(i,j)=</span> <code v-pre>FALSE</code> if <span class="math">i=0, j!=0</span></li>
 <li><span class="math">F(i,j)=</span> <code v-pre>TRUE</code> if <span class="math">i=0, j=0</span></li>
 <li><span class="math">F(i,j)= F(i-1,j) || ((l_i \geq j) || F(i-1, j-l_i))</span> if <span class="math">i&gt;0</span></li>
 </ul>
 </li>
-<li><p><span class="math">O(nL)</span> time implementation</p>
+<li><span class="math">O(nL)</span> time implementation
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">...
 F[0][0] = TRUE;
@@ -1051,189 +980,20 @@ for (i = 1; i &lt;= n; i++) {
 return (F[n][L]);</code></pre>
 </doc-codeblock></div>
 </li>
-<li><p>Example</p>
+<li>Example
 <ul>
-<li><span class="math">L = 15, (l_1, l_2, l_3, l_4, l_5, l_6, l_7)= (1, 2, 2, 4, 5, 2, 4)</span></li>
+<li><span class="math">L = 15, (l_1, l_2, l_3, l_4, l_5, l_6, l_7)= (1, 2, 2, 4, 5, 2, 4)</span>
+|      | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 14   | 15   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | T    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    |
+| 1    | T    | T    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    |
+| 2    | T    | T    | T    | T    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    |
+| 3    | T    | T    | T    | T    | T    | T    | F    | F    | F    | F    | F    | F    | F    | F    | F    | F    |
+| 4    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | F    | F    | F    | F    | F    | F    |
+| 5    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | F    |
+| 6    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    |
+| 7    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    |</li>
 </ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th></th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
-<th>8</th>
-<th>9</th>
-<th>10</th>
-<th>11</th>
-<th>12</th>
-<th>13</th>
-<th>14</th>
-<th>15</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>T</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-</tr>
-<tr>
-<td>1</td>
-<td>T</td>
-<td>T</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-</tr>
-<tr>
-<td>2</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-</tr>
-<tr>
-<td>3</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-</tr>
-<tr>
-<td>4</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-</tr>
-<tr>
-<td>5</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>F</td>
-</tr>
-<tr>
-<td>6</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>7</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-</tr>
-</tbody>
-</table>
-</div>
 </li>
 </ul>
 <doc-anchor-target id="9-subset-sum">
@@ -1243,32 +1003,30 @@ return (F[n][L]);</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Problem</p>
+<li>Problem
 <ul>
 <li>Given a set of positive integers <span class="math">\{w_1, w_2, ..., w_n\}</span> of size <span class="math">n</span> and a postivie integer <span class="math">W</span>, Find a subset <span class="math">A</span> of <span class="math">\{1,2,...,n\}</span> that maximizes <span class="math">\Sigma_{i\in A}{w_i}</span> subject to <span class="math">\Sigma_{i\in A}{w_i} \geq W</span></li>
 </ul>
 </li>
-<li><p>Example</p>
+<li>Example
 <ul>
 <li><span class="math">\{w_1, ..., w_9\} = \{20,30,14,70,40,50,15,25,80,60,10,95\}, W=99 \rightarrow \{20,14,40,25\}</span></li>
 </ul>
 </li>
-<li><p>Application</p>
+<li>Application
 <ul>
 <li>There are <span class="math">n</span> jobs, each of which takes <span class="math">w_i</span> time.</li>
 <li>Now we have a CPU with <span class="math">W</span> free cycles, and want to choose the set of jobs that minimizes the number of idle cycles.</li>
 </ul>
 </li>
-<li><p>Relation to the 0-1 Knapsack problem</p>
+<li>Relation to the 0-1 Knapsack problem
 <ul>
-<li>Given two sets of positive integers <span class="math">\{w_1, w_2, ..., w_n\}</span> and <span class="math">\{p_1, p_2, ..., p_n\}</span> of size <span class="math">n</span> and a positive integer <span class="math">W</span>, find a subset <span class="math">A</span> of <span class="math">\{1,2,...,n\}</span> that maximizes <span class="math">\Sigma_{i \in A} p_i</span> subject to <span class="math">\Sigma_{i \in A} w_i \geq W</span></li>
-</ul>
-<p><span class="math">\iff</span></p>
-<ul>
+<li>Given two sets of positive integers <span class="math">\{w_1, w_2, ..., w_n\}</span> and <span class="math">\{p_1, p_2, ..., p_n\}</span> of size <span class="math">n</span> and a positive integer <span class="math">W</span>, find a subset <span class="math">A</span> of <span class="math">\{1,2,...,n\}</span> that maximizes <span class="math">\Sigma_{i \in A} p_i</span> subject to <span class="math">\Sigma_{i \in A} w_i \geq W</span>
+<span class="math">\iff</span></li>
 <li>Given a set of positive integers <span class="math">\{w_1, w_2, ..., w_n\}</span> of size <span class="math">n</span> and a postivie integer <span class="math">W</span>, Find a subset <span class="math">A</span> of <span class="math">\{1,2,...,n\}</span> that maximizes <span class="math">\Sigma_{i\in A}{w_i}</span> subject to <span class="math">\Sigma_{i\in A}{w_i} \geq W</span></li>
 </ul>
 </li>
-<li><p>참고</p>
+<li>참고
 <ul>
 <li>If it is possible to solve the <strong>0-1 knapsack</strong> problem in <strong>polynomial time</strong>, the <strong>subset sum</strong> problem can be solved in <strong>polynomial time</strong> too.</li>
 <li>Somebody has already proven that the subset sum problem is very hard.</li>
@@ -1283,42 +1041,40 @@ return (F[n][L]);</code></pre>
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Problem</p>
+<li>Problem
 <ul>
 <li>Given two sets of positive integers <span class="math">\{w_1, w_2, ..., w_n\}</span> and <span class="math">\{p_1, p_2, ..., p_n\}</span> of size <span class="math">n</span> and a positive integer <span class="math">W</span>, find a set of ratios of <span class="math">\{r_1, r_2, ..., r_n\}</span> <span class="math">(0 \leq r)i \geq 1)</span> that maximizes <span class="math">\Sigma_{i} r_i \cdot p_i</span> subject to <span class="math">\Sigma_{i} r_i \cdot w_i \leq W</span></li>
 </ul>
 </li>
-<li><p>A greedy approach</p>
+<li>A greedy approach
 <ol>
 <li>Sort the items in nonincreasing order by profits per unit weight <span class="math">\frac{p_i}{w_i}</span>.</li>
 <li>Choose the items, possibly partially, one by one until the knapsack is full.</li>
 </ol>
 </li>
-<li><p>Example: <span class="math">\{w_1, w_2, w_3\} = \{5, 10, 20\},\\ \{p_1, p_2, p_3\} = \{50, 60, 140\}, w = 30</span>
-<span class="math">\\ \frac{p_1}{w_1} = 10, \frac{p_2}{w_2} = 6, \frac{p_3}{w_3} = 7</span></p>
+<li>Example: <span class="math">\{w_1, w_2, w_3\} = \{5, 10, 20\},\\ \{p_1, p_2, p_3\} = \{50, 60, 140\}, w = 30</span>
+<span class="math">\\ \frac{p_1}{w_1} = 10, \frac{p_2}{w_2} = 6, \frac{p_3}{w_3} = 7</span>
 <ul>
 <li>Choose all of the 1st item: (5, 50)</li>
 <li>Choose all of the 3rd item: (20, 140)</li>
 <li>Choose half of the 2nd item: (<span class="math">\frac {10}{2}</span>, <span class="math">\frac{60}{2}</span>)</li>
 </ul>
 </li>
-<li><p>Implementation 1 : $O(n \log n +n) = O(n \log n) $</p>
+<li>Implementation 1 : $O(n \log n +n) = O(n \log n) $
 <ul>
 <li>Sort the items → $O(n \log n) $</li>
 <li>Repeat the choice → <span class="math">O(n)</span></li>
 </ul>
 </li>
-<li><p>Implementation 2 : <span class="math">O(n + k \log n) = ?</span></p>
+<li>Implementation 2 : <span class="math">O(n + k \log n) = ?</span>
 <ul>
 <li>Put the items in a heap → <span class="math">O(n)</span></li>
 <li>Repeat the choice → <span class="math">O(k \log n)</span></li>
 <li><span class="math">\rightarrow</span> Could be faster if only a small number of items are necessary to fill the knapsack.</li>
 </ul>
 </li>
-<li><p>The greedy method always find an optimal solution to the fractional Knapsack problem! <span class="math">\leftarrow</span> Correctness</p>
-</li>
-<li><p>Does the greedy approach always find an optimal solution to the 0- 1 Knapsack problem?</p>
-</li>
+<li>The greedy method always find an optimal solution to the fractional Knapsack problem! <span class="math">\leftarrow</span> Correctness</li>
+<li>Does the greedy approach always find an optimal solution to the 0- 1 Knapsack problem?</li>
 </ul>
 <doc-anchor-target id="0-1-knapsack-example-2-">
     <h3>
@@ -1327,200 +1083,52 @@ return (F[n][L]);</code></pre>
     </h3>
 </doc-anchor-target>
 <ul>
-<li><p>0-1 knapsack (dynamic programming)</p>
+<li>0-1 knapsack (dynamic programming)
 <ul>
 <li>Selected items: <span class="math">i = 3, 4</span></li>
 <li>Obtained profit: <span class="math">15</span></li>
-<li>Time Complexity: <span class="math">O(nW)</span></li>
+<li>Time Complexity: <span class="math">O(nW)</span>
+|      | 1    | 2    | 3    | 4    | 5    | 6    |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| <span class="math">p_i</span>   | 4    | 5    | 12   | 3    | 4    | 3    |
+| <span class="math">w_i</span>   | 4    | 2    | 9    | 1    | 6    | 2    |</li>
 </ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th></th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="math">p_i</span></td>
-<td>4</td>
-<td>5</td>
-<td>12</td>
-<td>3</td>
-<td>4</td>
-<td>3</td>
-</tr>
-<tr>
-<td><span class="math">w_i</span></td>
-<td>4</td>
-<td>2</td>
-<td>9</td>
-<td>1</td>
-<td>6</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-</div>
 </li>
-<li><p>Fractional knapsack (greedy)</p>
+<li>Fractional knapsack (greedy)
 <ul>
 <li>Selected items: <span class="math">i = 4, 2, 6, 3(5)</span></li>
 <li>Obtained profit: <span class="math">17.67</span></li>
-<li>Time Complexity: <span class="math">O(n \log n)</span></li>
+<li>Time Complexity: <span class="math">O(n \log n)</span>
+|       | 4     | 2     | 6     | 3     | 1     | 5     |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| <span class="math">p_i</span>    | 3     | 5     | 3     | 12    | 4     | 4     |
+| <span class="math">w_i</span>    | 1     | 2     | 2     | 9     | 4     | 6     |
+| <span class="math">p_i/w_i</span> | 3.000 | 2.500 | 1.500 | 1.333 | 1.000 | 0.667 |</li>
 </ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th></th>
-<th>4</th>
-<th>2</th>
-<th>6</th>
-<th>3</th>
-<th>1</th>
-<th>5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="math">p_i</span></td>
-<td>3</td>
-<td>5</td>
-<td>3</td>
-<td>12</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><span class="math">w_i</span></td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>9</td>
-<td>4</td>
-<td>6</td>
-</tr>
-<tr>
-<td><span class="math">p_i/w_i</span></td>
-<td>3.000</td>
-<td>2.500</td>
-<td>1.500</td>
-<td>1.333</td>
-<td>1.000</td>
-<td>0.667</td>
-</tr>
-</tbody>
-</table>
-</div>
 </li>
-<li><p>0-1 knapsack (greedy 1)</p>
+<li>0-1 knapsack (greedy 1)
 <ul>
 <li>Selected items: $i = 4, 2, 6 $</li>
 <li>Obtained profit: <span class="math">11</span></li>
-<li>Time Complexity: <span class="math">O(n \log n)</span></li>
+<li>Time Complexity: <span class="math">O(n \log n)</span>
+|       | 4     | 2     | 6     | 3     | 1     | 5     |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| <span class="math">p_i</span>    | 3     | 5     | 3     | 12    | 4     | 4     |
+| <span class="math">w_i</span>    | 1     | 2     | 2     | 9     | 4     | 6     |
+| <span class="math">p_i/w_i</span> | 3.000 | 2.500 | 1.500 | 1.333 | 1.000 | 0.667 |</li>
 </ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th></th>
-<th>4</th>
-<th>2</th>
-<th>6</th>
-<th>3</th>
-<th>1</th>
-<th>5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="math">p_i</span></td>
-<td>3</td>
-<td>5</td>
-<td>3</td>
-<td>12</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><span class="math">w_i</span></td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>9</td>
-<td>4</td>
-<td>6</td>
-</tr>
-<tr>
-<td><span class="math">p_i/w_i</span></td>
-<td>3.000</td>
-<td>2.500</td>
-<td>1.500</td>
-<td>1.333</td>
-<td>1.000</td>
-<td>0.667</td>
-</tr>
-</tbody>
-</table>
-</div>
 </li>
-<li><p>0-1 knapsack (greedy 2)</p>
+<li>0-1 knapsack (greedy 2)
 <ul>
 <li>Selected items: <span class="math">i = 3</span></li>
 <li>Obtained profit: <span class="math">12</span></li>
-<li>Time Complexity: <span class="math">O(n \log n)</span></li>
+<li>Time Complexity: <span class="math">O(n \log n)</span>
+|       | 4     | 2     | 6     | 3     | 1     | 5     |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| <span class="math">p_i</span>    | 3     | 5     | 3     | 12    | 4     | 4     |
+| <span class="math">w_i</span>    | 1     | 2     | 2     | 9     | 4     | 6     |
+| <span class="math">p_i/w_i</span> | 3.000 | 2.500 | 1.500 | 1.333 | 1.000 | 0.667 |</li>
 </ul>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th></th>
-<th>4</th>
-<th>2</th>
-<th>6</th>
-<th>3</th>
-<th>1</th>
-<th>5</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="math">p_i</span></td>
-<td>3</td>
-<td>5</td>
-<td>3</td>
-<td>12</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><span class="math">w_i</span></td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>9</td>
-<td>4</td>
-<td>6</td>
-</tr>
-<tr>
-<td><span class="math">p_i/w_i</span></td>
-<td>3.000</td>
-<td>2.500</td>
-<td>1.500</td>
-<td>1.333</td>
-<td>1.000</td>
-<td>0.667</td>
-</tr>
-</tbody>
-</table>
-</div>
 </li>
 </ul>
 

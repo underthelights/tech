@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.715268998224">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -30,12 +30,12 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.715268998224" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.714726975900" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.715268998224" defer></script>
     <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -209,20 +209,19 @@
 </div>
 
 <ul>
-<li><p><a href="https://en.wikipedia.org/wiki/Disjoint-set_data_structure">ref</a></p>
-</li>
-<li><p>Partition</p>
+<li><a href="https://en.wikipedia.org/wiki/Disjoint-set_data_structure">ref</a></li>
+<li>Partition
 <ul>
 <li>A partition of a set <span class="math">X</span> is a set of non-empty subsets of <span class="math">X</span> such that every element x in <span class="math">X</span> is in exactly one of these subsets.</li>
 <li>Example: <span class="math">X = \{1, 2, 3, 4, 5, 6\}→\{ \{1, 3, 5\}, \{2\}, \{4, 6\} \}</span></li>
 </ul>
 </li>
-<li><p>Disjoint-set data structure (union-find data structure)</p>
+<li>Disjoint-set data structure (union-find data structure)
 <ul>
 <li>Used to effectively manage a collection of subsets that partition a given set of elements.</li>
 </ul>
 </li>
-<li><p>Basic operations on disjoint sets</p>
+<li>Basic operations on disjoint sets
 <ul>
 <li><code v-pre>Makeset(x)</code>
 <ul>
@@ -246,7 +245,7 @@
 </li>
 </ul>
 </li>
-<li><p>Applications</p>
+<li>Applications
 <ul>
 <li><strong>Tracking the connected components of an undirected graph</strong>
 <ul>
@@ -256,15 +255,11 @@
 </li>
 </ul>
 </li>
-<li><p><strong>Scheduling with deadlines</strong></p>
-</li>
-<li><p>Computing shorelines of a terrain</p>
-</li>
-<li><p>Classifying a set of atoms into molecules or fragments.</p>
-</li>
-<li><p>Connected component labeling in image analysis</p>
-</li>
-<li><p>Example</p>
+<li><strong>Scheduling with deadlines</strong></li>
+<li>Computing shorelines of a terrain</li>
+<li>Classifying a set of atoms into molecules or fragments.</li>
+<li>Connected component labeling in image analysis</li>
+<li>Example
 <ul>
 <li><span class="math">U=\{a,b,c,d,e\}</span></li>
 <li>For (each <span class="math">x</span> <span class="math">\in</span> <span class="math">U</span>)
@@ -277,9 +272,9 @@
 </li>
 </ul>
 </li>
-<li><p>Implementation of disjoint sets using reversed trees</p>
+<li>Implementation of disjoint sets using reversed trees
 <ul>
-<li><p>Makeset(x)</p>
+<li><code v-pre>Makeset(x)</code>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">Makeset(x){
 	parent(x) := x
@@ -287,23 +282,21 @@
 }</code></pre>
 </doc-codeblock></div>
 <ul>
-<li><strong>Time complexity:</strong> <span class="math">O(1)</span></li>
-</ul>
-<img width="413" alt="image" src="https://user-images.githubusercontent.com/46957634/183077173-493198bb-7ff0-488a-a17e-f39797f35046.png">
-</li>
+<li><strong>Time complexity:</strong> <span class="math">O(1)</span>
+<img width="413" alt="image" src="https://user-images.githubusercontent.com/46957634/183077173-493198bb-7ff0-488a-a17e-f39797f35046.png"></li>
 </ul>
 </li>
-<li><p>Two ways of implementing the Union Operation</p>
+</ul>
+</li>
+<li>Two ways of implementing the Union Operation
 <ul>
-<li><p><strong>Time complexity:</strong> <span class="math">O(n)</span></p>
-<img width="446" alt="image" src="https://user-images.githubusercontent.com/46957634/183077270-d6d40d88-c7b4-4ae9-9dfb-dc9a6eb7a409.png">
-</li>
-<li><p><strong>Time complexity:</strong> <span class="math">O(\log n)</span></p>
-<img width="435" alt="image" src="https://user-images.githubusercontent.com/46957634/183077286-5edbd587-a531-4ebe-bbd2-20e9a0b2fa1b.png">
-</li>
+<li><strong>Time complexity:</strong> <span class="math">O(n)</span>
+<img width="446" alt="image" src="https://user-images.githubusercontent.com/46957634/183077270-d6d40d88-c7b4-4ae9-9dfb-dc9a6eb7a409.png"></li>
+<li><strong>Time complexity:</strong> <span class="math">O(\log n)</span>
+<img width="435" alt="image" src="https://user-images.githubusercontent.com/46957634/183077286-5edbd587-a531-4ebe-bbd2-20e9a0b2fa1b.png"></li>
 </ul>
 </li>
-<li><p><strong>Union by rank</strong></p>
+<li><strong>Union by rank</strong>
 <ul>
 <li>Always attach the smaller tree to the root of the larger tree.</li>
 <li>The <strong>rank</strong> increases by one only if two trees of the same rank are merged.
@@ -324,7 +317,7 @@
 <p>Disjoint set의 path compression 연산에 대해서도 알아볼 것.</p>
 </blockquote>
 <ul>
-<li><p><code v-pre>S = Find(x)</code></p>
+<li><code v-pre>S = Find(x)</code>
 <ul>
 <li><strong>Time complexity</strong>: <span class="math">O(depth of x in the tree)</span>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -343,7 +336,7 @@ Find(x) {
 </li>
 </ul>
 </li>
-<li><p><code v-pre>Union(x, y)</code></p>
+<li><code v-pre>Union(x, y)</code>
 <ul>
 <li><strong>Time complexity:</strong> 2 Find op’s + <span class="math">O (1)</span>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -371,17 +364,13 @@ Find(x) {
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Method</p>
+<li>Method
 <ul>
-<li><p><span class="math">d_{max}</span> : the maximum of the deadlines for <span class="math">n</span> jobs.</p>
-</li>
-<li><p>Add a job as late as possible to the schedule being built, but no later than its deadline.</p>
-</li>
-<li><p>Sort the jobs in non-increasing order by profit.</p>
-</li>
-<li><p>Initialize <span class="math">d_{max}+1</span> disjoint sets, containing the integers <span class="math">0, 1, 2, ..., d_{max}</span></p>
-</li>
-<li><p>For each job in the sorted order,</p>
+<li><span class="math">d_{max}</span> : the maximum of the deadlines for <span class="math">n</span> jobs.</li>
+<li>Add a job as late as possible to the schedule being built, but no later than its deadline.</li>
+<li>Sort the jobs in non-increasing order by profit.</li>
+<li>Initialize <span class="math">d_{max}+1</span> disjoint sets, containing the integers <span class="math">0, 1, 2, ..., d_{max}</span></li>
+<li>For each job in the sorted order,
 <ul>
 <li>Find the set <span class="math">S</span> containing the minimum of its deadline and <span class="math">n</span>.
 <ul>
@@ -393,15 +382,14 @@ Find(x) {
 </li>
 </ul>
 </li>
-<li><p>Time complexity</p>
+<li>Time complexity
 <ul>
 <li><span class="math">O(n \log m)</span> for the disjoint set manipulation, where <span class="math">m</span> is the minimum of <span class="math">n</span> and <span class="math">d_{max}</span></li>
 <li><span class="math">O(n \log n)</span> for sorting the profits.</li>
 </ul>
 </li>
-<li><p>Example</p>
-<img width="588" alt="image" src="https://user-images.githubusercontent.com/46957634/183078297-b8408425-c890-451e-8769-bee605b71e55.png">
-</li>
+<li>Example
+<img width="588" alt="image" src="https://user-images.githubusercontent.com/46957634/183078297-b8408425-c890-451e-8769-bee605b71e55.png"></li>
 </ul>
 
                                 <div class="flex items-center mt-6 mb-6 clear-both">

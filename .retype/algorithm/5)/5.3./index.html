@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.715268998224">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -30,12 +30,12 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.715268998224" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.714726975900" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.3.0.715268998224" defer></script>
     <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -215,21 +215,21 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Idea</p>
+<li>Idea
 <ul>
 <li>Put the rarest characters at the bottom of the tree.</li>
 </ul>
 </li>
-<li><p>A <strong>greedy</strong> approach</p>
+<li>A <strong>greedy</strong> approach
 <ul>
-<li><p>Repeat the following until only one tree is left:</p>
+<li>Repeat the following until only one tree is left:
 <ol>
 <li>Start from a set of single node trees.</li>
 <li>Pick up two trees <span class="math">u</span> and <span class="math">v</span> with <strong>the lowest frequencies</strong>.</li>
 <li>Merge them by adding a root node w where the frequency of the new node is the sum of those of <span class="math">u</span> and <span class="math">v</span>.</li>
-<li>Replace <span class="math">u</span> and <span class="math">v</span> by <span class="math">w</span>.</li>
+<li>Replace <span class="math">u</span> and <span class="math">v</span> by <span class="math">w</span>.
+<img width="627" alt="image" src="https://user-images.githubusercontent.com/46957634/183035240-a87088bf-89c3-4875-9e00-1f297a1456f2.png"></li>
 </ol>
-<img width="627" alt="image" src="https://user-images.githubusercontent.com/46957634/183035240-a87088bf-89c3-4875-9e00-1f297a1456f2.png">
 </li>
 </ul>
 </li>
@@ -241,60 +241,27 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p><strong>Implementation issues</strong></p>
+<li><strong>Implementation issues</strong>
 <ul>
-<li><p>How can you manage a dynamic set to which the following operations occur frequently:</p>
+<li>How can you manage a dynamic set to which the following operations occur frequently:
 <ul>
 <li>Delete the elements with the highest priority from the list.</li>
 <li>Insert an element with some priority into the list.</li>
 <li><strong>The answer is to use Priority Queue.</strong></li>
 </ul>
 </li>
-<li><p>The priority queue can be implemented in many ways. Which one would you use?</p>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Representation</th>
-<th>Insertion</th>
-<th>Deletion</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Unordered array</td>
-<td><span class="math">O(1)</span></td>
-<td><span class="math">O(n)</span></td>
-</tr>
-<tr>
-<td>Unordered linked list</td>
-<td><span class="math">O(1)</span></td>
-<td><span class="math">O(n)</span></td>
-</tr>
-<tr>
-<td>Sorted array</td>
-<td><span class="math">O(n)</span></td>
-<td><span class="math">O(1)</span></td>
-</tr>
-<tr>
-<td>Sorted linked list</td>
-<td><span class="math">O(n)</span></td>
-<td><span class="math">O(1)</span></td>
-</tr>
-<tr>
-<td>Heap</td>
-<td><span class="math">O(\log n)</span></td>
-<td><span class="math">O(\log n)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</li>
+<li>The priority queue can be implemented in many ways. Which one would you use?
+| Representation        | Insertion    | Deletion     |
+| --------------------- | ------------ | ------------ |
+| Unordered array       | <span class="math">O(1)</span>       | <span class="math">O(n)</span>     |
+| Unordered linked list | <span class="math">O(1)</span>       | <span class="math">O(n)</span>     |
+| Sorted array          | <span class="math">O(n)</span>    | <span class="math">O(1)</span>       |
+| Sorted linked list    | <span class="math">O(n)</span>     | <span class="math">O(1)</span>       |
+| Heap                  | <span class="math">O(\log n)</span> | <span class="math">O(\log n)</span> |</li>
 </ul>
 </li>
-<li><p><strong>✓ The answer is to use the priority queue based on (min) heap.</strong></p>
-</li>
-<li><p><strong>→ <span class="math">O (n\log n)</span> time</strong></p>
+<li><strong>✓ The answer is to use the priority queue based on (min) heap.</strong></li>
+<li><strong>→ <span class="math">O (n\log n)</span> time</strong>
 <ul>
 <li>insert the n single-node trees : <span class="math">O(n)</span></li>
 <li><span class="math">\log n + \log (n-1) + ... + \log(2) = \log n! = O (n \log n)</span></li>
@@ -340,27 +307,20 @@ w = PQ_delete();
 <li>siblings, branch</li>
 <li><strong>(Proof by mathematical induction)</strong>
 <ul>
-<li><p>If the set of trees obtained in the <span class="math">i</span>-th step are branches in a binary tree corresponding to an optimal code, then the set of trees obtained in the $(i+1)$st step are also branches in a binary tree corresponding to an optimal code.</p>
-</li>
-<li><p>Optimal binary tree</p>
-<img width="293" alt="image" src="https://user-images.githubusercontent.com/46957634/183036237-373cc67f-65c6-437e-beef-f09de9eb17e4.png">
-</li>
-<li><p><span class="math">i</span>-th step</p>
-<img width="315" alt="image" src="https://user-images.githubusercontent.com/46957634/183036249-7261bc88-0be1-4e3a-996a-697b1bc3a0e3.png">
-</li>
-<li><p><span class="math">\rightarrow (i+1)</span>-th step</p>
-<img width="366" alt="image" src="https://user-images.githubusercontent.com/46957634/183036276-fe6599bf-3b25-425f-9a85-0220654e5c48.png">
-</li>
-<li><p><strong>(Base step)</strong> When <span class="math">k = 0</span>, each tree is trivially a branch of an optimal tree.</p>
-<img width="364" alt="image" src="https://user-images.githubusercontent.com/46957634/183036436-7fa59788-8fcb-40c5-bfa3-9e81244a12d6.png">
-</li>
-<li><p><strong>(Induction step)</strong> Suppose that the proposition is true when <span class="math">k = i</span>, that <span class="math">S</span> is the set of trees that exist after the $i$th step, and that <span class="math">T</span> is the corresponding optimal tree. Let <span class="math">u</span> and <span class="math">v</span> be the root of the trees combined in the $(i+1)$st step.</p>
-<img width="870" alt="image" src="https://user-images.githubusercontent.com/46957634/183036765-85e6fc31-789a-4e96-afd2-6ccb4cac3a2f.png">
-</li>
-<li><p>Case 1: If <span class="math">u</span> and <span class="math">v</span> are siblings in <span class="math">T</span>, we are done.</p>
-<img width="257" alt="image" src="https://user-images.githubusercontent.com/46957634/183037246-a5b0475d-d39d-464d-9c90-a98c36ad14d3.png">
-</li>
-<li><p>Case 2: Otherwise, assume that <span class="math">u</span> is at a level in <span class="math">T</span> at least as low as <span class="math">v</span>, and that <span class="math">w</span> is the <span class="math">u</span>’s sibling in <span class="math">T</span>.</p>
+<li>If the set of trees obtained in the <span class="math">i</span>-th step are branches in a binary tree corresponding to an optimal code, then the set of trees obtained in the $(i+1)$st step are also branches in a binary tree corresponding to an optimal code.</li>
+<li>Optimal binary tree
+<img width="293" alt="image" src="https://user-images.githubusercontent.com/46957634/183036237-373cc67f-65c6-437e-beef-f09de9eb17e4.png"></li>
+<li><span class="math">i</span>-th step
+<img width="315" alt="image" src="https://user-images.githubusercontent.com/46957634/183036249-7261bc88-0be1-4e3a-996a-697b1bc3a0e3.png"></li>
+<li><span class="math">\rightarrow (i+1)</span>-th step
+<img width="366" alt="image" src="https://user-images.githubusercontent.com/46957634/183036276-fe6599bf-3b25-425f-9a85-0220654e5c48.png"></li>
+<li><strong>(Base step)</strong> When <span class="math">k = 0</span>, each tree is trivially a branch of an optimal tree.<br />
+<img width="364" alt="image" src="https://user-images.githubusercontent.com/46957634/183036436-7fa59788-8fcb-40c5-bfa3-9e81244a12d6.png"></li>
+<li><strong>(Induction step)</strong> Suppose that the proposition is true when <span class="math">k = i</span>, that <span class="math">S</span> is the set of trees that exist after the $i$th step, and that <span class="math">T</span> is the corresponding optimal tree. Let <span class="math">u</span> and <span class="math">v</span> be the root of the trees combined in the $(i+1)$st step.
+<img width="870" alt="image" src="https://user-images.githubusercontent.com/46957634/183036765-85e6fc31-789a-4e96-afd2-6ccb4cac3a2f.png"></li>
+<li>Case 1: If <span class="math">u</span> and <span class="math">v</span> are siblings in <span class="math">T</span>, we are done.
+<img width="257" alt="image" src="https://user-images.githubusercontent.com/46957634/183037246-a5b0475d-d39d-464d-9c90-a98c36ad14d3.png"></li>
+<li>Case 2: Otherwise, assume that <span class="math">u</span> is at a level in <span class="math">T</span> at least as low as <span class="math">v</span>, and that <span class="math">w</span> is the <span class="math">u</span>’s sibling in <span class="math">T</span>.
 <ul>
 <li>The branch in <span class="math">T</span> with root <span class="math">w</span> is one of the trees in S or contains one of those trees as a subtree.
 <ul>
@@ -369,13 +329,12 @@ w = PQ_delete();
 </li>
 <li>Therefore, <span class="math">freq(w) ≥ freq(v)</span> and <span class="math">depth(w) ≥ depth(v)</span> in <span class="math">T</span></li>
 <li>If we create a new tree <span class="math">T’</span> by swapping the two branches with root <span class="math">v</span> and <span class="math">w</span>, then <span class="math">bits(T’) = bits(T) + (depth(w) – depth(v))(freq(v) – freq(w)) ≤ bits(T)</span>.</li>
-<li>Since <span class="math">bits(T) ≤ bits(T’), T’</span> is also optimal. Hence, the proposition also holds when <span class="math">k = i+1</span>.</li>
-</ul>
+<li>Since <span class="math">bits(T) ≤ bits(T’), T’</span> is also optimal. Hence, the proposition also holds when <span class="math">k = i+1</span>.<br />
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/46957634/183054217-1e008465-6583-4366-abfb-45c0537bf133.png">
-  <img width="510" alt="image" src="https://user-images.githubusercontent.com/46957634/183054242-a5836ba1-67b0-4e3c-b4ed-4b012a1c8d7c.png">
+<img width="510" alt="image" src="https://user-images.githubusercontent.com/46957634/183054242-a5836ba1-67b0-4e3c-b4ed-4b012a1c8d7c.png"></li>
+</ul>
 </li>
-<li><p>What happens if all the steps are done?</p>
-</li>
+<li>What happens if all the steps are done?</li>
 </ul>
 </li>
 </ul>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.715268998224">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.715268998224" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -246,17 +246,12 @@
 <ul>
 <li>Problem
 <ul>
-<li><p>Dodgers and Yankees are playing the World Series in which either team needs to win <span class="math">n</span> games first.</p>
-</li>
-<li><p>Suppose that each team has a $50%$chance of winning any game.</p>
-</li>
-<li><p>Let <span class="math">P(i,j)</span> be the probability that if Dodgers needs <span class="math">i</span> games to win, and Yankees needs <span class="math">j</span> games, Dodgers will eventually win the Series.</p>
-</li>
-<li><p>Ex: <span class="math">P(2, 3) = \frac {11}{16}</span></p>
-</li>
-<li><p>Compute <span class="math">P(i,j)</span>  <span class="math">0 \leq i,j \leq n</span> <span class="math">\forall n</span></p>
-<img width="155" alt="image" src="https://user-images.githubusercontent.com/46957634/182853718-641f7569-6d51-4afd-85e4-2a59f6a2de85.png">
-</li>
+<li>Dodgers and Yankees are playing the World Series in which either team needs to win <span class="math">n</span> games first.</li>
+<li>Suppose that each team has a $50%$chance of winning any game.</li>
+<li>Let <span class="math">P(i,j)</span> be the probability that if Dodgers needs <span class="math">i</span> games to win, and Yankees needs <span class="math">j</span> games, Dodgers will eventually win the Series.</li>
+<li>Ex: <span class="math">P(2, 3) = \frac {11}{16}</span></li>
+<li>Compute <span class="math">P(i,j)</span>  <span class="math">0 \leq i,j \leq n</span> <span class="math">\forall n</span>
+<img width="155" alt="image" src="https://user-images.githubusercontent.com/46957634/182853718-641f7569-6d51-4afd-85e4-2a59f6a2de85.png"></li>
 </ul>
 </li>
 </ul>
@@ -267,22 +262,30 @@
     </h3>
 </doc-anchor-target>
 <ul>
-<li><p>Recursive formulation
-$P(i,j) = $
-<span class="math">\\ = 1</span> if <span class="math">i=0, j&gt;0</span>
-<span class="math">\\ = 0</span> if <span class="math">i=0, j=0</span>
-<span class="math">\\ = \frac{P(i-1,j)+P(i,j-1)}{2}</span> if <span class="math">i&gt;0, j&gt;0</span></p>
-<img width="234" alt="image" src="https://user-images.githubusercontent.com/46957634/182853735-163e079a-8b1f-4744-9242-91ee15da89f6.png">
+<li><p>Recursive formulation</p>
+<ul>
+<li>$P(i,j) $</li>
+<li><span class="math">\\ = 1</span> if <span class="math">i=0, j&gt;0</span></li>
+<li><span class="math">\\ = 0</span> if <span class="math">i=0, j=0</span></li>
+<li><span class="math">\\ = \frac{P(i-1,j)+P(i,j-1)}{2}</span> if <span class="math">i&gt;0, j&gt;0</span></li>
+<li><img width="234" alt="image" src="https://user-images.githubusercontent.com/46957634/182853735-163e079a-8b1f-4744-9242-91ee15da89f6.png">
+</li>
+</ul>
 </li>
 <li><p>If we solve this recurrence relation in the divide-and-conquer way,</p>
 <ul>
-<li>Let <span class="math">T</span>(<span class="math">n</span>) be the maximum time taken by a call to <span class="math">P</span>(<span class="math">i</span>),where <span class="math">i</span>+<span class="math">j</span> =<span class="math">n</span>. Then we can prove that <span class="math">T</span>(<span class="math">n</span>) is exponential!</li>
-</ul>
-<p><span class="math">T(1)=1</span>, <span class="math">T(n) = 2T(n-1) + c \rightarrow O(2^n)</span></p>
-<img width="228" alt="image" src="https://user-images.githubusercontent.com/46957634/182853744-a946f4b1-a06d-4fac-9d6a-cd633147cee5.png">
+<li>Let <span class="math">T</span>(<span class="math">n</span>) be the maximum time taken by a call to <span class="math">P</span>(<span class="math">i</span>),where <span class="math">i</span>+<span class="math">j</span> =<span class="math">n</span>.</li>
+<li>Then we can prove that <span class="math">T</span>(<span class="math">n</span>) is exponential!</li>
+<li><span class="math">T(1)=1</span>, <span class="math">T(n) = 2T(n-1) + c \rightarrow O(2^n)</span></li>
+<li><img width="228" alt="image" src="https://user-images.githubusercontent.com/46957634/182853744-a946f4b1-a06d-4fac-9d6a-cd633147cee5.png">
 </li>
-<li><p>What is the problem of this approach?
-<img width="228" alt="image" src="https://user-images.githubusercontent.com/46957634/182853744-a946f4b1-a06d-4fac-9d6a-cd633147cee5.png"></p>
+</ul>
+</li>
+<li><p>What is the problem of this approach?</p>
+<ul>
+<li><img width="228" alt="image" src="https://user-images.githubusercontent.com/46957634/182853744-a946f4b1-a06d-4fac-9d6a-cd633147cee5.png">
+</li>
+</ul>
 </li>
 </ul>
 <doc-anchor-target id="4323-better-a-dynamic-programming-approach">
@@ -292,14 +295,18 @@ $P(i,j) = $
     </h3>
 </doc-anchor-target>
 <ul>
-<li><p>Instead of computing the same repeatedly, fill in a table as suggested below:</p>
-<img width="312" alt="image" src="https://user-images.githubusercontent.com/46957634/182854773-13aa89cf-f95d-4242-b29e-ce48e8e24b19.png">
+<li>Instead of computing the same repeatedly, fill in a table as suggested below:
+<ul>
+<li><img width="312" alt="image" src="https://user-images.githubusercontent.com/46957634/182854773-13aa89cf-f95d-4242-b29e-ce48e8e24b19.png">
 </li>
-<li><p>Time Complexity</p>
+</ul>
+</li>
+<li>Time Complexity
 <ul>
 <li>For input size <span class="math">(m, n)</span>, computing <span class="math">P(m, n)</span> takes <span class="math">O(mn)</span>-time.</li>
-<li>By far better than the Divide-and-Conquer approach.
-<img width="210" alt="image" src="https://user-images.githubusercontent.com/46957634/182854784-2b079d1f-0c34-4f59-817f-5a54fcdc55f8.png"></li>
+<li>By far better than the Divide-and-Conquer approach.</li>
+<li><img width="210" alt="image" src="https://user-images.githubusercontent.com/46957634/182854784-2b079d1f-0c34-4f59-817f-5a54fcdc55f8.png">
+</li>
 </ul>
 </li>
 </ul>
@@ -326,7 +333,7 @@ $P(i,j) = $
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
-                                                <span class="block mt-1">4.​0. Algorithm Design Techniques</span>
+                                                <span class="block mt-1">4.​1. Dynamic Programming: Overview</span>
                                             </span>
                                         </a>
                                     </div>

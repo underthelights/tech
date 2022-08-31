@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.714726975900">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.3.0.715268998224">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.3.0">
@@ -30,11 +30,11 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.3.0.714726975900" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.3.0.715268998224" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.3.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.714726975900" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.3.0.715268998224" data-turbo-eval="false" defer></script>
     <link href="../../../resources/css/katex.css?v=2.3.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.3.0" defer></script>
 </head>
@@ -214,18 +214,15 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Let <span class="math">J = \{1, 2, ..., n\}</span> be a set of jobs to be served.</p>
-</li>
-<li><p>Each job takes one unit of time to finish.</p>
-</li>
-<li><p>Each job has a <strong>deadline and a profit</strong>.</p>
+<li>Let <span class="math">J = \{1, 2, ..., n\}</span> be a set of jobs to be served.</li>
+<li>Each job takes one unit of time to finish.</li>
+<li>Each job has a <strong>deadline and a profit</strong>.
 <ul>
 <li>If the job starts before or at its deadline, the profit is obtained.</li>
 </ul>
 </li>
-<li><p>Schedule the jobs so as to <strong>maximize</strong> the total profit (not all jobs have to be scheduled).</p>
-<img width="207" alt="image" src="https://user-images.githubusercontent.com/46957634/183061219-96e36b0c-f5e2-425e-86ae-28cfceea312b.png">
-</li>
+<li>Schedule the jobs so as to <strong>maximize</strong> the total profit (not all jobs have to be scheduled).
+<img width="207" alt="image" src="https://user-images.githubusercontent.com/46957634/183061219-96e36b0c-f5e2-425e-86ae-28cfceea312b.png"></li>
 </ul>
 <doc-anchor-target id="example">
     <h3>
@@ -256,9 +253,9 @@
 </doc-anchor-target>
 <ul>
 <li>Sort the jobs in <strong>non-increasing</strong> order by profit.</li>
-<li>Scan each job in the sorted list, adding it to the schedule if possible.</li>
+<li>Scan each job in the sorted list, adding it to the schedule if possible.
+<img width="192" alt="image" src="https://user-images.  githubusercontent.com/46957634/183061422-382928f4-aafd-435e-8500-67423f0d8cda.png"></li>
 </ul>
-  <img width="192" alt="image" src="https://user-images.  githubusercontent.com/46957634/183061422-382928f4-aafd-435e-8500-67423f0d8cda.png">
 <doc-anchor-target id="example-1">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#example-1">#</doc-anchor-trigger>
@@ -299,69 +296,23 @@
 </li>
 <li>Is S = {1, 2, 4, 7} OK?
 <ul>
-<li>No.</li>
+<li>No.
+<img width="197" alt="image" src="https://user-images.githubusercontent.com/46957634/183061438-695b6e13-fde5-453a-9d30-f85cb29daade.png"></li>
 </ul>
 </li>
 </ul>
-  <img width="197" alt="image" src="https://user-images.githubusercontent.com/46957634/183061438-695b6e13-fde5-453a-9d30-f85cb29daade.png">
 <!-- 
   <After sorting by profit>
-<div class="table-wrapper scrollbar overflow-hidden">
-<table class="comfortable">
-<thead>
-<tr>
-<th>Job</th>
-<th>Deadline</th>
-<th>Profit</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>3</td>
-<td>40</td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td>1</td>
-<td>35</td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td>1</td>
-<td>30</td>
-<td></td>
-</tr>
-<tr>
-<td>4</td>
-<td>3</td>
-<td>25</td>
-<td></td>
-</tr>
-<tr>
-<td>5</td>
-<td>1</td>
-<td>20</td>
-<td></td>
-</tr>
-<tr>
-<td>6</td>
-<td>3</td>
-<td>15</td>
-<td></td>
-</tr>
-<tr>
-<td>7</td>
-<td>2</td>
-<td>10</td>
-<td>--&gt;</td>
-</tr>
-</tbody>
-</table>
-</div>
+
+| Job  | Deadline | Profit |
+| ---- | -------- | ------ |
+| 1    | 3        | 40     |
+| 2    | 1        | 35     |
+| 3    | 1        | 30     |
+| 4    | 3        | 25     |
+| 5    | 1        | 20     |
+| 6    | 3        | 15     |
+| 7    | 2        | 10     | -->
 <!-- 
 | Job   | Deadline | Profit |
 | ----- | -------- | ------ |
@@ -388,16 +339,15 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>A key operation in the greedy approach</p>
+<li>A key operation in the greedy approach
 <ul>
-<li><p>Determine if a set of jobs <span class="math">S</span> is feasible.</p>
-</li>
-<li><p>Fact</p>
+<li>Determine if a set of jobs <span class="math">S</span> is feasible.</li>
+<li>Fact
 <ul>
 <li>S is feasible if and only if the sequence obtained by ordering the jobs in <span class="math">S</span> according to nondecreasing deadlines is feasible.</li>
 </ul>
 </li>
-<li><p>Example</p>
+<li>Example
 <ul>
 <li>Is <span class="math">S = \{1, 2, 4\}</span> OK?→$[2(1), 1(3), 4(3)]$→Yes!</li>
 <li>Is <span class="math">S = \{1, 2, 4, 7\}</span> OK?→$[2(1), 7(2), 1(3), 4(3)]$→No</li>
@@ -405,11 +355,10 @@
 </li>
 </ul>
 </li>
-<li><p>An $O(n^2)$implementation</p>
+<li>An $O(n^2)$implementation
 <ul>
-<li><p>Sort the jobs in non-increasing order by profit.</p>
-</li>
-<li><p>For each job in the sorted order,</p>
+<li>Sort the jobs in non-increasing order by profit.</li>
+<li>For each job in the sorted order,
 <ul>
 <li>See if the current job can be scheduled together with the previously selected jobs, using a linked list data structure.
 <ul>
@@ -419,7 +368,7 @@
 </li>
 </ul>
 </li>
-<li><p>Time complexity</p>
+<li>Time complexity
 <ul>
 <li><span class="math">O(n \log n) + \Sigma_{i=2}^{n}{\{(i-1)+i\}} = O(n^2)</span></li>
 <li>When there are <span class="math">i-1</span> jobs in the sequence,
@@ -432,19 +381,19 @@
 </li>
 </ul>
 </li>
-<li><p>Is the time complexity always <span class="math">O(n^2)</span>?</p>
+<li>Is the time complexity always <span class="math">O(n^2)</span>?
 <ul>
-<li><p>What if <span class="math">n &gt;&gt; d_{max}</span>?</p>
+<li>What if <span class="math">n &gt;&gt; d_{max}</span>?
 <ul>
 <li><span class="math">O(n \log n+n d_{max})</span></li>
 </ul>
 </li>
-<li><p>What if <span class="math">n &gt;&gt; d_{max}</span> and <span class="math">n &gt;&gt; k_{scanned}</span>?</p>
+<li>What if <span class="math">n &gt;&gt; d_{max}</span> and <span class="math">n &gt;&gt; k_{scanned}</span>?
 <ul>
 <li><span class="math">O(n + k_{scanned} \log n + k_{scanned} d_{max}) = O(n)</span></li>
-<li>Is this complexity achievable when a max heap data structure is employed?</li>
+<li>Is this complexity achievable when a max heap data structure is employed
+<img width="519" alt="image" src="https://user-images.githubusercontent.com/46957634/183062558-e7981536-cc3d-4f42-b5ba-56a4330d608a.png"></li>
 </ul>
-<img width="519" alt="image" src="https://user-images.githubusercontent.com/46957634/183062558-e7981536-cc3d-4f42-b5ba-56a4330d608a.png">
 </li>
 </ul>
 </li>
