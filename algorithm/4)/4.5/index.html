@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714734610618">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.715269862709">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,12 +30,12 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.4.0.714734610618" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.4.0.715269862709" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.715269862709" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.714734610618" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.715269862709" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.715269862709" defer></script>
     <link href="../../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
@@ -209,56 +209,51 @@
 </div>
 
 <ul>
-<li><p><strong>[T. Cormen et al., Introduction to Algorithms (3rd ed.), The MIT Press, 2009. 16.3]</strong></p>
-</li>
-<li><p>Definitions</p>
+<li><strong>[T. Cormen et al., Introduction to Algorithms (3rd ed.), The MIT Press, 2009. 16.3]</strong></li>
+<li>Definitions
 <ul>
-<li><p>Given a sequence <span class="math">X = &lt;x_1, x_2, ..., xm &gt;</span> another sequence <span class="math">Z = &lt;z_1, z_2, ..., zk &gt;</span> is a <strong>subsequence</strong> of X if there exists a strictly increasing sequence <span class="math">&lt;_i1, i_2, ..., i_k &gt;</span> of indices of <span class="math">X</span> such that <span class="math">\forall j = 1, 2, ..., k</span>, we have <span class="math">x_{ij} = z_j</span>.</p>
+<li>Given a sequence <span class="math">X = &lt;x_1, x_2, ..., xm &gt;</span> another sequence <span class="math">Z = &lt;z_1, z_2, ..., zk &gt;</span> is a <strong>subsequence</strong> of X if there exists a strictly increasing sequence <span class="math">&lt;_i1, i_2, ..., i_k &gt;</span> of indices of <span class="math">X</span> such that <span class="math">\forall j = 1, 2, ..., k</span>, we have <span class="math">x_{ij} = z_j</span>.
 <ul>
 <li>A subsequence of a given sequence is just the given sequence with some elements (possibly none) left out.</li>
 <li>Ex:  <span class="math">\\ X=&lt;A,B,C,B,D,A,B&gt;, \\ Z=&lt;B,C,D,B&gt;(&lt;2,3,5,7&gt;)</span></li>
 </ul>
 </li>
-<li><p>Given two sequences <span class="math">X</span> and <span class="math">Y</span>, we say that a sequence <span class="math">Z</span> is a <strong>common subsequence</strong> of <span class="math">X</span> and <span class="math">Y</span> if <span class="math">Z</span> is a subsequence of both <span class="math">X</span> and <span class="math">Y</span>.</p>
+<li>Given two sequences <span class="math">X</span> and <span class="math">Y</span>, we say that a sequence <span class="math">Z</span> is a <strong>common subsequence</strong> of <span class="math">X</span> and <span class="math">Y</span> if <span class="math">Z</span> is a subsequence of both <span class="math">X</span> and <span class="math">Y</span>.
 <ul>
 <li>Ex: <span class="math">X = &lt;A, B, C, B, D, A, B&gt;, \\ Y = &lt;B, D, C, A, B, A&gt;,\\ Z_1 = &lt;B, C, A&gt;,\\ Z_2 = &lt;B, C, B, A&gt;,\\ Z_3 = &lt;B, D, A, B&gt;</span></li>
 </ul>
 </li>
-<li><p>Given a sequence <span class="math">X = &lt;x_1, x_2, ..., x_m &gt;, X_i = &lt;x_1, x_2, ..., x_i &gt;</span> is the ith <strong>prefix</strong> of <span class="math">X</span>, for <span class="math">i = 0, 1, ..., m</span>.</p>
+<li>Given a sequence <span class="math">X = &lt;x_1, x_2, ..., x_m &gt;, X_i = &lt;x_1, x_2, ..., x_i &gt;</span> is the ith <strong>prefix</strong> of <span class="math">X</span>, for <span class="math">i = 0, 1, ..., m</span>.
 <ul>
 <li>Ex: <span class="math">X = &lt;A, B, C, B, D, A, B&gt;, \\ X_4 = &lt;A, B, C, B&gt;,\\ X_0 =</span> null sequence</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>Problem</p>
+<li>Problem
 <ul>
-<li><p>Given two sequences <span class="math">X = &lt;x_1, x_2, ..., x_m &gt;</span> and <span class="math">Y = &lt;y_1, y_2, ..., y_n &gt;</span></p>
-</li>
-<li><p>find a <strong>longest common subsequence</strong> of <span class="math">X</span> and <span class="math">Y</span>.</p>
-<img width="593" alt="image" src="https://user-images.githubusercontent.com/46957634/182863178-a89fa951-132d-415c-878d-96bc033514cd.png">
-</li>
+<li>Given two sequences <span class="math">X = &lt;x_1, x_2, ..., x_m &gt;</span> and <span class="math">Y = &lt;y_1, y_2, ..., y_n &gt;</span></li>
+<li>find a <strong>longest common subsequence</strong> of <span class="math">X</span> and <span class="math">Y</span>.
+<img width="593" alt="image" src="https://user-images.githubusercontent.com/46957634/182863178-a89fa951-132d-415c-878d-96bc033514cd.png"></li>
 </ul>
 </li>
-<li><p>Naïve approach</p>
+<li>Naïve approach
 <ul>
 <li>Enumerate all subsequences of X and check each subsequence to see if it is also a subsequence of Y, keeping track of the longest subsequence found.
 → Exponential algorithm!</li>
 <li>The LCS problem can be solved efficiently using dynamic programming.</li>
 </ul>
 </li>
-<li><p><strong>Optimal substructure of an LCS</strong></p>
+<li><strong>Optimal substructure of an LCS</strong>
 <ul>
-<li><p>Let <span class="math">X = &lt;x_1, x_2, ..., x_m &gt;</span> and $Y = &lt;y_1, y_2, ..., y_n &gt; $be sequences, and let <span class="math">Z = &lt;z_1, z_2, ..., z_k &gt;</span> be any LCS of <span class="math">X</span> and <span class="math">Y</span>.</p>
+<li>Let <span class="math">X = &lt;x_1, x_2, ..., x_m &gt;</span> and $Y = &lt;y_1, y_2, ..., y_n &gt; $be sequences, and let <span class="math">Z = &lt;z_1, z_2, ..., z_k &gt;</span> be any LCS of <span class="math">X</span> and <span class="math">Y</span>.
 <ol>
-<li><p>If <span class="math">x_m = y_n</span>,
+<li>If <span class="math">x_m = y_n</span>,
 then <span class="math">z_k = x_m = y_n</span>,
-and <span class="math">Z_{k-1}</span> is an LCS of <span class="math">X_{m-1}</span> and <span class="math">Y_{n-1}</span>.</p>
-</li>
-<li><p>If <span class="math">x_m \neq y_n</span>,
+and <span class="math">Z_{k-1}</span> is an LCS of <span class="math">X_{m-1}</span> and <span class="math">Y_{n-1}</span>.</li>
+<li>If <span class="math">x_m \neq y_n</span>,
 then an LCS of <span class="math">X</span> and <span class="math">Y</span> is either an LCS of <span class="math">X_{m-1}</span> and <span class="math">Y</span>
-or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.</p>
-</li>
+or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.</li>
 </ol>
 <ul>
 <li><img width="386" alt="image" src="https://user-images.githubusercontent.com/46957634/182865168-73845976-c228-4299-9a1a-b97db76e2fbf.png">
@@ -267,11 +262,9 @@ or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.<
 </li>
 </ul>
 </li>
-<li><p>Let <span class="math">c[i, j]</span> be the length of an LCS of the sequences <span class="math">X_i</span> and <span class="math">Y_j</span></p>
-</li>
-<li><p>Optimal substructure for computing <span class="math">c[i, j]</span>
-<img width="561" alt="image" src="https://user-images.githubusercontent.com/46957634/182865312-f350342a-e381-4709-88b8-ca9895f170d3.png"></p>
-</li>
+<li>Let <span class="math">c[i, j]</span> be the length of an LCS of the sequences <span class="math">X_i</span> and <span class="math">Y_j</span></li>
+<li>Optimal substructure for computing <span class="math">c[i, j]</span>
+<img width="561" alt="image" src="https://user-images.githubusercontent.com/46957634/182865312-f350342a-e381-4709-88b8-ca9895f170d3.png"></li>
 </ul>
 <doc-anchor-target id="451--algorithm">
     <h2>
@@ -280,12 +273,10 @@ or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.<
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Filling the table</p>
-  <img width="630" alt="image" src="https://user-images.githubusercontent.com/46957634/182865489-36edf0f5-6cbe-47ac-a62d-7ddd416f53f2.png">
-</li>
-<li><p>Printing the LCS</p>
-  <img width="613" alt="image" src="https://user-images.githubusercontent.com/46957634/182865513-cb4b398c-d67d-4347-aad3-f8950d16b9f5.png">
-</li>
+<li>Filling the table
+<img width="630" alt="image" src="https://user-images.githubusercontent.com/46957634/182865489-36edf0f5-6cbe-47ac-a62d-7ddd416f53f2.png"></li>
+<li>Printing the LCS
+<img width="613" alt="image" src="https://user-images.githubusercontent.com/46957634/182865513-cb4b398c-d67d-4347-aad3-f8950d16b9f5.png"></li>
 </ul>
 <doc-anchor-target id="452-c-implementation">
     <h2>
@@ -294,7 +285,7 @@ or an LCS of <span class="math">X</span> and <span class="math">Y_{n-1}</span>.<
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Courtesy of <a href="http://www.bioalgorithms.info/downloads/code/">link</a></p>
+<li>Courtesy of <a href="http://www.bioalgorithms.info/downloads/code/">link</a>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">/** Copyright (C) 2005 Neil Jones. **/
 #include &lt;stdio.h&gt;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714734610618">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.715269862709">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -11,7 +11,7 @@
     <!-- Primary Meta Tags -->
     <title>3.2.2. Selection of the k-th Smallest Element</title>
     <meta name="title" content="3.2.2. Selection of the k-th Smallest Element">
-    <meta name="description" content="[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]" />
+    <meta name="description" content="ref.[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://tech/algorithm/3)/3.2.2/" />
@@ -20,23 +20,23 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tech/algorithm/3)/3.2.2/">
     <meta property="og:title" content="3.2.2. Selection of the k-th Smallest Element">
-    <meta property="og:description" content="[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]">
+    <meta property="og:description" content="ref.[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]">
     <meta property="og:image" content="https://user-images.githubusercontent.com/46957634/122671326-fe1bcd80-d200-11eb-8be5-42c57ba72ed1.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://tech/algorithm/3)/3.2.2/">
     <meta property="twitter:title" content="3.2.2. Selection of the k-th Smallest Element">
-    <meta property="twitter:description" content="[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]">
+    <meta property="twitter:description" content="ref.[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]">
     <meta property="twitter:image" content="https://user-images.githubusercontent.com/46957634/122671326-fe1bcd80-d200-11eb-8be5-42c57ba72ed1.png">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.4.0.714734610618" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.4.0.715269862709" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.715269862709" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.715269862709" data-turbo-eval="false" defer></script>
     <link href="../../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
@@ -210,44 +210,46 @@
 </div>
 
 <ul>
-<li><p>[A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]</p>
-</li>
-<li><p>Problem</p>
+<li><span class="math">ref.</span> [A. Aho, J. Hopcroft, and J. Ullman, Design and Analysis of Algorithms, Addison-Wesley, 1974. 3.6]</li>
+<li>Problem
 <ul>
 <li>Given a sequence of <span class="math">S</span> of <span class="math">n</span> elements and an integer <span class="math">k (1 &lt;= k &lt;= n)</span>, find the <span class="math">k^{th}</span> smallest element of <span class="math">S</span>.</li>
 </ul>
 </li>
-<li><p><strong>Solution 1:</strong></p>
+<li><strong>Solution 1:</strong>
 <ul>
-<li><p>Choose the smallest element repeatedly k times.</p>
-<p><span class="math">C = c(n-1)+c(n-2)+c(n-3)+...+c(n-k) = c \cdot k \cdot n - c \cdot \frac {k(k+1)} 2</span></p>
-<p>if <span class="math">k= \frac n 2</span> then <span class="math">C = c \cdot \frac {n^2} 2 - c \cdot \frac {n^2 + 2n} 8 = O(n^2)</span></p>
-</li>
-</ul>
-</li>
-<li><p><strong>Solution 2:</strong></p>
+<li>Choose the smallest element repeatedly k times.
 <ul>
-<li><p>Build a min-heap, and then extract the smallest element repeatedly <span class="math">k</span> times.</p>
-<p><span class="math">C = c \cdot n + d \cdot k \cdot log n</span></p>
-<p>if <span class="math">k= \frac n 2</span> then <span class="math">C = c \cdot n + d \cdot \frac n 2 \cdot log n = O(n log n)</span></p>
+<li><span class="math">C = c(n-1)+c(n-2)+c(n-3)+...+c(n-k) = c \cdot k \cdot n - c \cdot \frac {k(k+1)} 2</span></li>
+<li>if <span class="math">k= \frac n 2</span> then <span class="math">C = c \cdot \frac {n^2} 2 - c \cdot \frac {n^2 + 2n} 8 = O(n^2)</span></li>
+</ul>
 </li>
 </ul>
 </li>
-<li><p><strong>Can we design an <span class="math">O(n)</span>-time algorithm?</strong></p>
+<li><strong>Solution 2:</strong>
+<ul>
+<li>Build a min-heap, and then extract the smallest element repeatedly <span class="math">k</span> times.
+<ul>
+<li><span class="math">C = c \cdot n + d \cdot k \cdot log n</span></li>
+<li>if <span class="math">k= \frac n 2</span> then <span class="math">C = c \cdot n + d \cdot \frac n 2 \cdot \log n = O(n \log n)</span></li>
+</ul>
 </li>
 </ul>
-<doc-anchor-target id="31-observation">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#31-observation">#</doc-anchor-trigger>
-        <span>3.1. Observation</span>
-    </h4>
+</li>
+<li><strong>Can we design an <span class="math">O(n)</span>-time algorithm?</strong></li>
+</ul>
+<doc-anchor-target id="1-observation">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-observation">#</doc-anchor-trigger>
+        <span>1. Observation</span>
+    </h2>
 </doc-anchor-target>
 <ul>
 <li><p>At least <span class="math">O(n)</span> time is necessary.</p>
 </li>
 <li><p>If we use a divide-and-conquer scheme like the merge sort,</p>
 </li>
-<li><p>What about <span class="math">T(n) = 3T(n/3) + cn</span>?</p>
+<li><p>What about <span class="math">T(n) = 3T(\frac n 3) + cn</span>?</p>
 </li>
 <li><p><img src="https://user-images.githubusercontent.com/46957634/122671326-fe1bcd80-d200-11eb-8be5-42c57ba72ed1.png" alt="image" /></p>
 </li>
@@ -263,14 +265,14 @@
 </ul>
 </li>
 </ul>
-<doc-anchor-target id="32-algorithm">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#32-algorithm">#</doc-anchor-trigger>
-        <span>3.2. Algorithm</span>
-    </h4>
+<doc-anchor-target id="2-algorithm">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-algorithm">#</doc-anchor-trigger>
+        <span>2. Algorithm</span>
+    </h2>
 </doc-anchor-target>
 <ul>
-<li>Step 1: Divide S into floor(|S|/5) sequence of 5 elements each with up to four leftover elements.
+<li>Step 1: Divide S into <span class="math">\lfloor \frac {|S|} 5 \rfloor</span> sequence of 5 elements each with up to four leftover elements.
 <ul>
 <li><img src="https://user-images.githubusercontent.com/46957634/122671443-8d28e580-d201-11eb-9814-afbdb12c426e.png" alt="image" /></li>
 </ul>
@@ -280,8 +282,8 @@
 <li><img src="https://user-images.githubusercontent.com/46957634/122671447-91550300-d201-11eb-9cd1-d959760a5607.png" alt="image" /></li>
 </ul>
 </li>
-<li>Step 3: Let M be the sequence of medians of the 5-element sets. Then, let m be the median of the elements in M.</li>
-<li>Step 4: Let S1, S2, and S3 be the sequences of elements in S less than, equal to, and greater than m, respectively.
+<li>Step 3: Let M be the sequence of medians of the 5-element sets. Then, let m be the median of the elements in <span class="math">M</span>.</li>
+<li>Step 4: Let <span class="math">S1, S2</span>, and <span class="math">S3</span> be the sequences of elements in S less than, equal to, and greater than m, respectively.
 <ul>
 <li><img src="https://user-images.githubusercontent.com/46957634/122671458-a2057900-d201-11eb-85c5-9339d85fe7be.png" alt="image" /></li>
 <li>If <span class="math">|S1| &gt;= k</span>, then find the k-th smallest element of S1.</li>
@@ -310,15 +312,14 @@ else
 			return SELECT (k-|s1|-|s2|, s3)
 	end</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-none"><code v-pre class="language-none">		A divide-and-conquer strategy</code></pre>
-</doc-codeblock></div>
 <ul>
+<li>A divide-and-conquer strategy</li>
 <li>Facts
 <ul>
-<li>At least one-fourth of the elements of S are less than or equal to m.</li>
-<li>At least one-fourth of the elements of S are greater than or equal to m.</li>
-<li>|S1| &lt;= 3n/4 and |S3| &lt;= 3n/4</li>
+<li>At least one-fourth of the elements of S are less than or equal to <span class="math">m</span>.</li>
+<li>At least one-fourth of the elements of S are greater than or equal to <span class="math">m</span>.</li>
+<li><span class="math">|S_1| &lt;= \frac {3n} 4</span></li>
+<li><span class="math">|S_3| &lt;= \frac {3n} 4</span></li>
 </ul>
 </li>
 </ul>
@@ -335,19 +336,17 @@ else
 </figure>
 </p>
 <doc-anchor-target id="33-time-complexity">
-    <h4>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#33-time-complexity">#</doc-anchor-trigger>
         <span>3.3. Time Complexity</span>
-    </h4>
+    </h2>
 </doc-anchor-target>
-<blockquote>
 <ul>
-<li>Input size n = |S|</li>
-<li>|M| &lt;= ceil(n/5)</li>
-<li>|S1| &lt;= 3n/4</li>
-<li>|S3| &lt;= 3n/4</li>
+<li>Input size <span class="math">n = |S|</span></li>
+<li><span class="math">|M| &lt;= \lceil( \frac n 5)\rceil</span></li>
+<li><span class="math">|S_1| &lt;= \frac {3n} 4</span></li>
+<li><span class="math">|S_3| &lt;= \frac {3n} 4</span></li>
 </ul>
-</blockquote>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">procedure SELECT(k,s):
 if |S|&lt;50 then	
@@ -397,7 +396,7 @@ else
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/3)/3.2.4/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../../algorithm/3)/3.2.3/">
                                             <span>
                                                 <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
                                                 <span class="block mt-1">3.​2.​3. Selection Algorithm: Complexity Analysis</span>

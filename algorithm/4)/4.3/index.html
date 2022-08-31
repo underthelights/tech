@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.714734610618">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.715269862709">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -30,12 +30,12 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../../resources/css/retype.css?v=2.4.0.714734610618" rel="stylesheet" />
+    <link href="../../../resources/css/retype.css?v=2.4.0.715269862709" rel="stylesheet" />
 
-    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../../../resources/js/config.js?v=2.4.0.715269862709" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../../../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.714734610618" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.714734610618" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../../../resources/js/lunr.js?v=2.4.0.715269862709" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../../../resources/js/prism.js?v=2.4.0.715269862709" defer></script>
     <link href="../../../resources/css/katex.css?v=2.4.0" rel="stylesheet" />
     <script id="katex-js" type="text/javascript" src="../../../resources/js/katex.js?v=2.4.0" defer></script>
 </head>
@@ -208,29 +208,35 @@
     <div><a href="../../../categories/alg/">alg</a></div>
 </div>
 
+<blockquote>
 <p>Top-down → Bottom-up</p>
+</blockquote>
 <ul>
-<li><p>When the <strong>divide-and-conquer</strong> approach produces an <strong>exponential algorithm</strong> where <strong>the same sub-problems are solved iteratively</strong>,</p>
+<li>When the <strong>divide-and-conquer</strong> approach produces an <strong>exponential algorithm</strong> where <strong>the same sub-problems are solved iteratively</strong>,
+<ul>
+<li>
 <ol>
 <li>Take the recursive relation from the divide-and-conquer algorithm, and</li>
+</ol>
+</li>
+<li>
+<ol start="2">
 <li>replace <strong>the recursive calls with table lookups</strong> by recording a value in a table entry instead of returning it.</li>
 </ol>
 </li>
-<li><p>Three elements to consider in designing a dynamic programming algorithm</p>
+</ul>
+</li>
+<li>Three elements to consider in designing a dynamic programming algorithm
 <ul>
-<li><p>Recursive relation</p>
+<li>Recursive relation
 <ul>
 <li>Optimal substructure</li>
 </ul>
 </li>
-<li><p>Table setup</p>
-</li>
-<li><p>Table fill order</p>
-</li>
-<li><p><span class="math">B(i,j)=B(i-1,j-1) + B(i-1,j)</span> if <span class="math">0&lt;j&lt;i</span></p>
-</li>
-<li><p><span class="math">B(i,j)=1</span> if <span class="math">j=0</span> or <span class="math">j=i</span></p>
-</li>
+<li>Table setup</li>
+<li>Table fill order</li>
+<li><span class="math">B(i,j)=B(i-1,j-1) + B(i-1,j)</span> if <span class="math">0&lt;j&lt;i</span></li>
+<li><span class="math">B(i,j)=1</span> if <span class="math">j=0</span> or <span class="math">j=i</span></li>
 </ul>
 </li>
 </ul>
@@ -247,51 +253,60 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>Courtesy of [Jones &amp; Pevzner 6.3]
-<img width="300" alt="image" src="https://user-images.githubusercontent.com/46957634/182855740-5495d153-3b81-4e8f-9122-bc609ce4f82d.png"></p>
-</li>
-<li><p>Problem:</p>
+<li>Courtesy of [Jones &amp; Pevzner 6.3]
+<img width="300" alt="image" src="https://user-images.githubusercontent.com/46957634/182855740-5495d153-3b81-4e8f-9122-bc609ce4f82d.png"></li>
+<li>Problem:
 <ul>
 <li>Given two street corners in the borough of Manhattan in New York City, find the path between them with the maximum number of attractions, that is, a path of maximum overall weight.</li>
 <li>Assume that a tourist may <strong>move either to east or to south only</strong></li>
 </ul>
 </li>
-<li><p>A brute force approach</p>
+<li>A brute force approach
 <ul>
 <li>Search among all paths in the grid for the longest path!</li>
 </ul>
 </li>
-<li><p>A greedy approach</p>
+<li>A greedy approach
 <ul>
 <li>다음 강의 주제</li>
 </ul>
 </li>
-<li><p>A formal description of this problem</p>
+<li>A formal description of this problem
 <ul>
-<li>Given a weighted graph (grid) <span class="math">G</span> of size <span class="math">(n, m)</span> with two distinguished vertices, a source <span class="math">(0, 0)</span> and a sink <span class="math">(n, m)</span>, find a longest path between them in its weighted graph.</li>
+<li>Given a weighted graph (grid) <span class="math">G</span> of size <span class="math">(n, m)</span> with two distinguished vertices, a source <span class="math">(0, 0)</span> and a sink <span class="math">(n, m)</span>, find a longest path between them in its weighted graph.
+<span class="math">(0, 0)</span></li>
 </ul>
 </li>
-</ul>
-<p><span class="math">(0, 0)</span></p>
+<li>An example grid of size <span class="math">(4, 4)</span>
 <ul>
-<li><p>An example grid of size <span class="math">(4, 4)</span></p>
-<img width="247" alt="image" src="https://user-images.githubusercontent.com/46957634/182855874-07759ef3-3ab6-47ba-a787-ee4b73dca3a7.png">
-</li>
-<li><p>A possible selection determined by a greedy approach</p>
-<img width="200" alt="image" src="https://user-images.githubusercontent.com/46957634/182855889-70b4d722-e7dd-4d32-95f7-e13c3d41a67f.png">
-</li>
-<li><p>Basic idea</p>
-<ul>
-<li><p>How can you use the solutions of smaller problems to build a solution of a problem?</p>
-<img width="177" alt="image" src="https://user-images.githubusercontent.com/46957634/182856188-91dbbe18-20ec-46ad-b516-a4c5f75b63c9.png">
-</li>
-<li><p>A given optimization problem can be constructed efficiently from optimal solutions of its subproblems.<br />
-→ optimal substructure</p>
-<img width="254" alt="image" src="https://user-images.githubusercontent.com/46957634/182856166-aca9545d-f3f4-425d-80e4-2cffc00df820.png">
+<li><img width="247" alt="image" src="https://user-images.githubusercontent.com/46957634/182855874-07759ef3-3ab6-47ba-a787-ee4b73dca3a7.png">
 </li>
 </ul>
 </li>
-<li><p>Optimal substructure  : <span class="math">S_{n,m} =?</span></p>
+<li>A possible selection determined by a greedy approach
+<ul>
+<li><img width="200" alt="image" src="https://user-images.githubusercontent.com/46957634/182855889-70b4d722-e7dd-4d32-95f7-e13c3d41a67f.png">
+</li>
+</ul>
+</li>
+<li>Basic idea
+<ul>
+<li>How can you use the solutions of smaller problems to build a solution of a problem?
+<ul>
+<li><img width="177" alt="image" src="https://user-images.githubusercontent.com/46957634/182856188-91dbbe18-20ec-46ad-b516-a4c5f75b63c9.png">
+</li>
+</ul>
+</li>
+<li>A given optimization problem can be constructed efficiently from optimal solutions of its subproblems.
+<ul>
+<li>→ optimal substructure</li>
+<li><img width="254" alt="image" src="https://user-images.githubusercontent.com/46957634/182856166-aca9545d-f3f4-425d-80e4-2cffc00df820.png">
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Optimal substructure  : <span class="math">S_{n,m} =?</span>
 <ol>
 <li><span class="math">i,j \geq 1</span></li>
 </ol>
@@ -317,18 +332,25 @@
 <li><span class="math">S_{0,0} = 0</span></li>
 </ul>
 </li>
-<li><p>Table setup and fill
-<img width="381" alt="image" src="https://user-images.githubusercontent.com/46957634/182857435-49ddc3cb-0e73-4027-9903-774f37c7e65d.png"></p>
+<li>Table setup and fill
+<ul>
+<li><img width="381" alt="image" src="https://user-images.githubusercontent.com/46957634/182857435-49ddc3cb-0e73-4027-9903-774f37c7e65d.png">
 </li>
-<li><p>Pseudocode
-<img width="300" alt="image" src="https://user-images.githubusercontent.com/46957634/182857420-4a3a72cb-cbf0-4fec-8893-09a4c166347f.png"></p>
+</ul>
 </li>
-<li><p>Given a <span class="math">(n, m)</span> grid, what is the time complexity T(n, m)?</p>
+<li>Pseudocode
+<ul>
+<li><img width="300" alt="image" src="https://user-images.githubusercontent.com/46957634/182857420-4a3a72cb-cbf0-4fec-8893-09a4c166347f.png">
 </li>
-<li><p>So far, we have found the <strong>cost of the longest path</strong> from source to each vertex in the grid.</p>
+</ul>
 </li>
-<li><p>Then, how can you print out the <strong>actual optimal path</strong> from source to sink?</p>
-<img width="222" alt="image" src="https://user-images.githubusercontent.com/46957634/182857457-e8b54e35-ea18-4565-9a4e-a4fab2e867a0.png">
+<li>Given a <span class="math">(n, m)</span> grid, what is the time complexity T(n, m)?</li>
+<li>So far, we have found the <strong>cost of the longest path</strong> from source to each vertex in the grid.</li>
+<li>Then, how can you print out the <strong>actual optimal path</strong> from source to sink?
+<ul>
+<li><img width="222" alt="image" src="https://user-images.githubusercontent.com/46957634/182857457-e8b54e35-ea18-4565-9a4e-a4fab2e867a0.png">
+</li>
+</ul>
 </li>
 </ul>
 <doc-anchor-target id="432-chained-matrix-multiplication">
@@ -338,34 +360,27 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li><p>[Neapolitan 3.4]</p>
-</li>
-<li><p>In general, to multiply an <span class="math">a</span> x <span class="math">b</span> matrix with a <span class="math">b</span> x <span class="math">c</span> matrix using the standard method, it is necessary to do <em>abc</em> elementary multiplications.</p>
+<li>[Neapolitan 3.4]</li>
+<li>In general, to multiply an <span class="math">a</span> x <span class="math">b</span> matrix with a <span class="math">b</span> x <span class="math">c</span> matrix using the standard method, it is necessary to do <em>abc</em> elementary multiplications.
 <ul>
 <li><img width="356" alt="image" src="https://user-images.githubusercontent.com/46957634/182857686-091aad51-5f89-4238-a850-0df721fc4826.png">
 </li>
 </ul>
 </li>
-<li><p>Problem</p>
+<li>Problem
 <ul>
 <li>Determine the minimum number of elementary multiplications, needed to multiply <span class="math">n</span> matrices where $ A_i \in R^{d_ \times d_i}$</li>
 </ul>
 </li>
-<li><p>Examples: <span class="math">A_1 (20 \times 2) \bullet A_2 (2 \times 30) \bullet A_3 (30 \times 12) \bullet A_4 (12 \times 8)</span></p>
+<li>Examples: <span class="math">A_1 (20 \times 2) \bullet A_2 (2 \times 30) \bullet A_3 (30 \times 12) \bullet A_4 (12 \times 8)</span>
 <ul>
-<li><p><span class="math">A_1: 20 \times 2, A_2: 2 \times 30</span></p>
-</li>
-<li><p>$A_1(A_2(A_3 A_4)) : 30 \times 12 \times 8 + 2 \times 30 \times 8 + 20 \times 2 \times 8  = 3,680 $ multiplications</p>
-</li>
-<li><p><span class="math">(A_1 A_2)(A_3 A_4) : = 8,880</span> multiplications</p>
-</li>
-<li><p><span class="math">A_1((A_2 A_3 )A_4) : = 1,232</span> multiplications</p>
-</li>
-<li><p><span class="math">((A_1 A_2)A_3 )A_4 := 10,320</span> multiplications</p>
-</li>
-<li><p><span class="math">(A_1(A_2 A_3  ))A_4 := 3,120</span> multiplications</p>
-</li>
-<li><p>The order of multiplication is very important!</p>
+<li><span class="math">A_1: 20 \times 2, A_2: 2 \times 30</span></li>
+<li>$A_1(A_2(A_3 A_4)) : 30 \times 12 \times 8 + 2 \times 30 \times 8 + 20 \times 2 \times 8  = 3,680 $ multiplications</li>
+<li><span class="math">(A_1 A_2)(A_3 A_4) : = 8,880</span> multiplications</li>
+<li><span class="math">A_1((A_2 A_3 )A_4) : = 1,232</span> multiplications</li>
+<li><span class="math">((A_1 A_2)A_3 )A_4 := 10,320</span> multiplications</li>
+<li><span class="math">(A_1(A_2 A_3  ))A_4 := 3,120</span> multiplications</li>
+<li>The order of multiplication is very important!
 <ul>
 <li><span class="math">(a \times b) \times c = a \times (b \times c)</span></li>
 </ul>
@@ -382,19 +397,19 @@
 <ul>
 <li><p>Definition</p>
 <ul>
-<li><p><span class="math">M(i, j)</span> : the minimum number of multiplications needed to multiply <span class="math">A_i</span> through <span class="math">A_j (i \leq j )</span></p>
-<img width="477" alt="image" src="https://user-images.githubusercontent.com/46957634/182858664-f49f3213-b454-4ba8-baa6-52e21b01f0b7.png">
+<li><span class="math">M(i, j)</span> : the minimum number of multiplications needed to multiply <span class="math">A_i</span> through <span class="math">A_j (i \leq j )</span></li>
+<li><img width="477" alt="image" src="https://user-images.githubusercontent.com/46957634/182858664-f49f3213-b454-4ba8-baa6-52e21b01f0b7.png">
 </li>
 </ul>
 </li>
-<li><p>Optimal subtructure</p>
-<img width="606" alt="image" src="https://user-images.githubusercontent.com/46957634/182858934-40fbd66e-af6f-42f5-8a50-e60a9d367bae.png">
+<li><p>Optimal subtructure
+<img width="606" alt="image" src="https://user-images.githubusercontent.com/46957634/182858934-40fbd66e-af6f-42f5-8a50-e60a9d367bae.png"></p>
 </li>
 <li><p>Example: <span class="math">M(2, 7)</span></p>
 <ul>
-<li><span class="math">M(2,7) = \min_{2\leq k \leq 6}{\{ M(2,k) + M(k+1,7)+d_1 d_k d_7}\}</span></li>
+<li><span class="math">M(2,7) = \min_{2\leq k \leq 6}{\{ M(2,k) + M(k+1,7)+d_1 d_k d_7}\}</span>
+<img width="652" alt="image" src="https://user-images.githubusercontent.com/46957634/182859310-9e6dd85c-4aa2-455b-a019-cc649c9622e3.png"></li>
 </ul>
-<img width="652" alt="image" src="https://user-images.githubusercontent.com/46957634/182859310-9e6dd85c-4aa2-455b-a019-cc649c9622e3.png">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -610,8 +625,8 @@
 </table>
 </div>
 </li>
-<li><p>Table fill order</p>
-<img width="689" alt="image" src="https://user-images.githubusercontent.com/46957634/182859429-5c4c8642-13ad-49e7-81bf-4395270591a9.png">
+<li><p>Table fill order
+<img width="689" alt="image" src="https://user-images.githubusercontent.com/46957634/182859429-5c4c8642-13ad-49e7-81bf-4395270591a9.png"></p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-cpp"><code v-pre class="language-cpp">for (i = 1; i &lt;= n; i++)
     M[i][i] = 0;
